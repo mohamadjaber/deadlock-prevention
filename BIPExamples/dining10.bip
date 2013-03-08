@@ -1,0 +1,88 @@
+model dining
+  connector type SyncThree(Port p1, Port p2, Port p3)
+    define  p1 p2 p3
+    on p1 p2 p3 provided true 
+      up   {}
+      down {}
+  end
+  //Atomic component for Philosopher
+  atomic type Philosopher(int id)
+    export port Port get()
+	 export port Port release()
+    place Hungry, Eating
+    initial to Hungry do {}
+    on get from Hungry to Eating 
+      provided true 
+      do { printf("Philosopher %d starts eating\n", id); }
+    on release from Eating to Hungry 
+      provided true 
+      do { printf("Philosopher %d finishes eating\n", id); }
+  end
+  // Atomic component for Fork
+  atomic type Fork(int id)
+    export port Port getRight()
+    export port Port getLeft()
+    export port Port releaseRight()
+    export port Port releaseLeft()
+    place Available, OccupiedRight, OccupiedLeft
+   initial to Available do {}
+    on getRight from Available to OccupiedRight 
+      provided true 
+     do { printf("Fork %d has been reserved by the philo in the Right\n", id); }
+    on getLeft from Available to OccupiedLeft 
+      provided true 
+     do { printf("Fork %d has been reserved by the philo in the Left\n", id); }
+    on releaseRight from OccupiedRight to Available 
+      provided true 
+     do { printf("Fork %d has been released from the philo in the Right\n", id); }
+    on releaseLeft from OccupiedLeft to Available 
+      provided true 
+     do { printf("Fork %d has been released from the philo in the Left\n", id); }
+  end
+
+
+  compound type DiningPhilosopher
+    component Philosopher p0(0)
+    component Fork f0(0)
+    component Philosopher p1(1)
+    component Fork f1(1)
+    component Philosopher p2(2)
+    component Fork f2(2)
+    component Philosopher p3(3)
+    component Fork f3(3)
+    component Philosopher p4(4)
+    component Fork f4(4)
+    component Philosopher p5(5)
+    component Fork f5(5)
+    component Philosopher p6(6)
+    component Fork f6(6)
+    component Philosopher p7(7)
+    component Fork f7(7)
+    component Philosopher p8(8)
+    component Fork f8(8)
+    component Philosopher p9(9)
+    component Fork f9(9)
+    connector SyncThree connGet0(f0.getRight, p0.get, f1.getLeft)
+    connector SyncThree connRelease0(f0.releaseRight, p0.release, f1.releaseLeft)
+    connector SyncThree connGet1(f1.getRight, p1.get, f2.getLeft)
+    connector SyncThree connRelease1(f1.releaseRight, p1.release, f2.releaseLeft)
+    connector SyncThree connGet2(f2.getRight, p2.get, f3.getLeft)
+    connector SyncThree connRelease2(f2.releaseRight, p2.release, f3.releaseLeft)
+    connector SyncThree connGet3(f3.getRight, p3.get, f4.getLeft)
+    connector SyncThree connRelease3(f3.releaseRight, p3.release, f4.releaseLeft)
+    connector SyncThree connGet4(f4.getRight, p4.get, f5.getLeft)
+    connector SyncThree connRelease4(f4.releaseRight, p4.release, f5.releaseLeft)
+    connector SyncThree connGet5(f5.getRight, p5.get, f6.getLeft)
+    connector SyncThree connRelease5(f5.releaseRight, p5.release, f6.releaseLeft)
+    connector SyncThree connGet6(f6.getRight, p6.get, f7.getLeft)
+    connector SyncThree connRelease6(f6.releaseRight, p6.release, f7.releaseLeft)
+    connector SyncThree connGet7(f7.getRight, p7.get, f8.getLeft)
+    connector SyncThree connRelease7(f7.releaseRight, p7.release, f8.releaseLeft)
+    connector SyncThree connGet8(f8.getRight, p8.get, f9.getLeft)
+    connector SyncThree connRelease8(f8.releaseRight, p8.release, f9.releaseLeft)
+    connector SyncThree connGet9(f9.getRight, p9.get, f0.getLeft)
+    connector SyncThree connRelease9(f9.releaseRight, p9.release, f0.releaseLeft)
+end
+
+component DiningPhilosopher top
+end

@@ -1,0 +1,136 @@
+model gas
+  connector type rendezvous2(Port p1, Port p2)
+    define [ p1 p2 ]
+  end
+  connector type rendezvous3(Port p1, Port p2, Port p3)
+    define [ p1 p2 p3]
+  end
+  connector type single(Port p1)
+    define [ p1]
+  end
+
+  atomic type Customers
+    export port Port prepay
+    export port Port start
+    export port Port finish
+    export port Port change
+    place S0, S1, S2, S3
+    initial to S0
+    on prepay from S0 to S1
+    on start from S1 to S2
+    on finish from S2 to S3
+    on change from S3 to S0
+  end
+
+
+  atomic type Pumps
+  	export port Port activate
+  	export port Port start
+  	export port Port finish
+  	place S0, S1, S2
+  	initial to S0
+  		on activate from S0 to S1
+  		on start from S1 to S2
+  		on finish from S2 to S0
+  end
+
+  atomic type Operator
+    export port Port finish
+    export port Port change
+    export port Port prepay0
+    export port Port prepay1
+    export port Port prepay2
+    place S0, S1
+    initial to S0
+    on prepay0 from S0 to S0
+    on prepay1 from S0 to S0
+    on prepay2 from S0 to S0
+    on finish from S0 to S1
+    on change from S1 to S0
+  end
+
+
+  compound type GasStation_Type
+    component Customers custom0
+    component Customers custom1
+    component Customers custom2
+    component Customers custom3
+    component Customers custom4
+    component Customers custom5
+    component Customers custom6
+    component Customers custom7
+    component Customers custom8
+    component Customers custom9
+    component Customers custom10
+    component Customers custom11
+    component Customers custom12
+    component Customers custom13
+    component Customers custom14
+    component Pumps pump0
+    component Pumps pump1
+    component Pumps pump2
+    component Operator op
+    connector rendezvous3 prepayCustom0 (custom0.prepay, op.prepay0 , pump0.activate)
+    connector rendezvous2 startCustom0 (custom0.start, pump0.start)
+    connector rendezvous3 finishCustom0 (custom0.finish, pump0.finish, op.finish)
+    connector rendezvous2 changeCustom0 (custom0.change, op.change)
+    connector rendezvous3 prepayCustom1 (custom1.prepay, op.prepay0 , pump0.activate)
+    connector rendezvous2 startCustom1 (custom1.start, pump0.start)
+    connector rendezvous3 finishCustom1 (custom1.finish, pump0.finish, op.finish)
+    connector rendezvous2 changeCustom1 (custom1.change, op.change)
+    connector rendezvous3 prepayCustom2 (custom2.prepay, op.prepay0 , pump0.activate)
+    connector rendezvous2 startCustom2 (custom2.start, pump0.start)
+    connector rendezvous3 finishCustom2 (custom2.finish, pump0.finish, op.finish)
+    connector rendezvous2 changeCustom2 (custom2.change, op.change)
+    connector rendezvous3 prepayCustom3 (custom3.prepay, op.prepay1 , pump1.activate)
+    connector rendezvous2 startCustom3 (custom3.start, pump1.start)
+    connector rendezvous3 finishCustom3 (custom3.finish, pump1.finish, op.finish)
+    connector rendezvous2 changeCustom3 (custom3.change, op.change)
+    connector rendezvous3 prepayCustom4 (custom4.prepay, op.prepay1 , pump1.activate)
+    connector rendezvous2 startCustom4 (custom4.start, pump1.start)
+    connector rendezvous3 finishCustom4 (custom4.finish, pump1.finish, op.finish)
+    connector rendezvous2 changeCustom4 (custom4.change, op.change)
+    connector rendezvous3 prepayCustom5 (custom5.prepay, op.prepay1 , pump1.activate)
+    connector rendezvous2 startCustom5 (custom5.start, pump1.start)
+    connector rendezvous3 finishCustom5 (custom5.finish, pump1.finish, op.finish)
+    connector rendezvous2 changeCustom5 (custom5.change, op.change)
+    connector rendezvous3 prepayCustom6 (custom6.prepay, op.prepay2 , pump2.activate)
+    connector rendezvous2 startCustom6 (custom6.start, pump2.start)
+    connector rendezvous3 finishCustom6 (custom6.finish, pump2.finish, op.finish)
+    connector rendezvous2 changeCustom6 (custom6.change, op.change)
+    connector rendezvous3 prepayCustom7 (custom7.prepay, op.prepay2 , pump2.activate)
+    connector rendezvous2 startCustom7 (custom7.start, pump2.start)
+    connector rendezvous3 finishCustom7 (custom7.finish, pump2.finish, op.finish)
+    connector rendezvous2 changeCustom7 (custom7.change, op.change)
+    connector rendezvous3 prepayCustom8 (custom8.prepay, op.prepay2 , pump2.activate)
+    connector rendezvous2 startCustom8 (custom8.start, pump2.start)
+    connector rendezvous3 finishCustom8 (custom8.finish, pump2.finish, op.finish)
+    connector rendezvous2 changeCustom8 (custom8.change, op.change)
+    connector rendezvous3 prepayCustom9 (custom9.prepay, op.prepay0 , pump0.activate)
+    connector rendezvous2 startCustom9 (custom9.start, pump0.start)
+    connector rendezvous3 finishCustom9 (custom9.finish, pump0.finish, op.finish)
+    connector rendezvous2 changeCustom9 (custom9.change, op.change)
+    connector rendezvous3 prepayCustom10 (custom10.prepay, op.prepay0 , pump0.activate)
+    connector rendezvous2 startCustom10 (custom10.start, pump0.start)
+    connector rendezvous3 finishCustom10 (custom10.finish, pump0.finish, op.finish)
+    connector rendezvous2 changeCustom10 (custom10.change, op.change)
+    connector rendezvous3 prepayCustom11 (custom11.prepay, op.prepay0 , pump0.activate)
+    connector rendezvous2 startCustom11 (custom11.start, pump0.start)
+    connector rendezvous3 finishCustom11 (custom11.finish, pump0.finish, op.finish)
+    connector rendezvous2 changeCustom11 (custom11.change, op.change)
+    connector rendezvous3 prepayCustom12 (custom12.prepay, op.prepay1 , pump1.activate)
+    connector rendezvous2 startCustom12 (custom12.start, pump1.start)
+    connector rendezvous3 finishCustom12 (custom12.finish, pump1.finish, op.finish)
+    connector rendezvous2 changeCustom12 (custom12.change, op.change)
+    connector rendezvous3 prepayCustom13 (custom13.prepay, op.prepay1 , pump1.activate)
+    connector rendezvous2 startCustom13 (custom13.start, pump1.start)
+    connector rendezvous3 finishCustom13 (custom13.finish, pump1.finish, op.finish)
+    connector rendezvous2 changeCustom13 (custom13.change, op.change)
+    connector rendezvous3 prepayCustom14 (custom14.prepay, op.prepay1 , pump1.activate)
+    connector rendezvous2 startCustom14 (custom14.start, pump1.start)
+    connector rendezvous3 finishCustom14 (custom14.finish, pump1.finish, op.finish)
+    connector rendezvous2 changeCustom14 (custom14.change, op.change)
+end
+
+component GasStation_Type top
+end
