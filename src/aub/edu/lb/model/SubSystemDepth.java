@@ -60,18 +60,18 @@ public class SubSystemDepth extends SubSystem{
 	}
 	
 	public boolean increase() {
-		if(length % 2 == 1) 
-			return increaseOdd();
-		else 
+		if(length % 2 == 0) 
 			return increaseEven();
+		else 
+			return increaseOdd();
 	}
 
 	
 	/**
-	 * 
+	 * Add interactions
 	 * @return
 	 */
-	private boolean increaseEven() {
+	private boolean increaseOdd() {
 		boolean isIncreased = false;		
 		boundInteractions.clear();
 		for(BIPInteraction inter: BIPAPI.getInteractions()) {
@@ -91,10 +91,10 @@ public class SubSystemDepth extends SubSystem{
 
 
 	/**
-	 * 
+	 * Add components
 	 * @return
 	 */
-	private boolean increaseOdd() {
+	private boolean increaseEven() {
 		boolean isIncreased = false;		
 		boundComponents.clear();
 		for(BIPInteraction inter: boundInteractions) {
