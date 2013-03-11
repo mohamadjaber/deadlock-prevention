@@ -1,12 +1,6 @@
 package aub.edu.lb.kripke;
 
 import java.util.ArrayList;
-
-
-
-
-
-
 import java.util.LinkedList;
 import aub.edu.lb.model.BIPAPI;
 import aub.edu.lb.model.BIPInteraction;
