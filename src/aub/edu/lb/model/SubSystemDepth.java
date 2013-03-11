@@ -8,7 +8,7 @@ import ujf.verimag.bip.Core.Interactions.Component;
  * 
  * @author Mohamad Jaber
  * OVERVIEW: this class constructs a subsystem with a specific depth given an interaction. 
- * Initially, we construct the system of depth 1. The set of components connected to the interaction
+ * Initially, we construct the system of depth 0. The set of components connected to the interaction
  * are stored in the components variable
  */
 
@@ -20,9 +20,19 @@ public class SubSystemDepth extends SubSystem{
 	private ArrayList<BIPInteraction> boundInteractions;
 	private ArrayList<Component> boundComponents;
 	
+	/**
+	 * We start by length = 0. 
+	 * That is, for an interaction a we take the components of a and 
+	 * their interactions. 
+	 * a -> B -> a' (length = 0).
+	 * a -> B -> a' -> B' (length = 1). 
+	 * and so on.
+	 * See paper for more information. 
+	 * @param interaction
+	 */
 	public SubSystemDepth(BIPInteraction interaction) {
 		super(interaction.getComponents(), getInteractions(interaction));
-		length = 1;	
+		length = 0;	
 		boundInteractions = new ArrayList<BIPInteraction>(interactions);
 		boundComponents = new ArrayList<Component>();
 	}

@@ -1,6 +1,7 @@
 package aub.edu.lb.conditions;
 
 
+import aub.edu.lb.configuration.Configuration;
 import aub.edu.lb.kripke.Kripke;
 import aub.edu.lb.kripke.KripkeState;
 import aub.edu.lb.kripke.Transition;
@@ -17,17 +18,24 @@ public class LDFC {
 	 * @return
 	 */
 	private static boolean localLDFC(SubSystemDepth subSystem, BIPInteraction interaction) {
+		// Debug
+		Configuration.startTime = System.currentTimeMillis();
+
 		Kripke kripke = new Kripke(subSystem);
 		for(KripkeState state : kripke.getStates()) {
 			for(Transition transition: state.getTransitions()) {
 				if(transition.getLabel().equals(interaction)) {
 					WaitForGraph wfg = new WaitForGraph(transition.getEndState().getState());
-					if(!wfg.checkNoInNoOut(interaction.getComponents(), subSystem.getLength())) {
+					if(!wfg.checkNoInNoOut(interaction.getComponents(), subSystem.getLength() + 1)) {
 						return false;
 					}
+					
 				}
 			}
 		}
+		// Debug
+		Configuration.stopTime = System.currentTimeMillis();
+		Configuration.totalTime += (Configuration.stopTime - Configuration.startTime);
 		return true; 
 	}
 	
@@ -39,7 +47,7 @@ public class LDFC {
 			else {
 				boolean isIncreased = subSystem.increase();
 				if(isIncreased) {
-					// Print Debug
+					Configuration.println("Increasing -> Length = " + subSystem.getLength());
 				}
 				else  {
 					return false;
@@ -54,9 +62,21 @@ public class LDFC {
 	 */
 	public static boolean check() {
 		for(BIPInteraction interaction: BIPAPI.getInteractions()) {
+			// Debug
+			Configuration.print("\nInteraction: " + interaction);
+
 			SubSystemDepth subSystem = new SubSystemDepth(interaction);
-			if(!checkLocalLDFC(subSystem, interaction))
-				return false;	
+			
+			// Debug
+			Configuration.println(" - Length = "+ subSystem.getLength());
+			
+			if(!checkLocalLDFC(subSystem, interaction)) {
+				return false;
+			}
+			else {
+				// Debug
+				Configuration.println("locLDFC(a,"+subSystem.getLength() +") = true");
+			}
 		}
 		return true;
 	}

@@ -6,6 +6,7 @@ import ujf.verimag.bip.Core.Interactions.CompoundType;
 import BIPTransformation.TransformationFunction;
 import aub.edu.lb.bip.examples.*;
 import aub.edu.lb.conditions.LDFC;
+import aub.edu.lb.configuration.Configuration;
 import aub.edu.lb.model.BIPAPI;
 
 public class Test1 {
@@ -27,6 +28,7 @@ public class Test1 {
 		System.out.println("LDFC " + LDFC.check());
 		stopTime = System.currentTimeMillis();
 		System.out.println(stopTime-startTime);
+		System.out.println(Configuration.totalTime);
 
 	}
 	

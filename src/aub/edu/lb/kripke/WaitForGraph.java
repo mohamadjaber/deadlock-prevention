@@ -1,8 +1,14 @@
 package aub.edu.lb.kripke;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
+
+
+
+
+
+import java.util.LinkedList;
+import aub.edu.lb.model.BIPAPI;
 import aub.edu.lb.model.BIPInteraction;
 import aub.edu.lb.model.GlobalState;
 import aub.edu.lb.model.LocalState;
@@ -11,7 +17,6 @@ import ujf.verimag.bip.Core.Interactions.Component;
 
 
 public class WaitForGraph {
-	private int lengthNoInNoOut;
 	
 	private ArrayList<Component> components;
 	private ArrayList<BIPInteraction> interactions; 
@@ -89,76 +94,135 @@ public class WaitForGraph {
 	 * 
 	 * @param node is a component or BIP interaction
 	 * @param length
-	 * @return
+	 * @return: true if there exists in path of length equal to bound.
+	 *   false otherwise. 
 	 */
-	public boolean noIn(Object node, int length) {
+	private boolean inPathLength(Object node, int length, int bound) {
 		// stop condition
-		if(length == lengthNoInNoOut) return false;
+		if(length == bound) return true;
 		
 		if(node instanceof Component) {
 			length++;
-			boolean noIn = true;
+			boolean inPath = false;
 			for(Edge edge: waitEdges) {
 				if(edge.getComponent().equals((Component) node)) {
-					noIn = noIn && noIn(edge.getInteraction(), length);
+					inPath = inPath || inPathLength(edge.getInteraction(), length, bound);
 				}
 			}
-			return noIn;
+			return inPath;
 		}
 		else { // node is an instance of BIPInteraction
-			boolean noIn = true;
+			boolean inPath = false;
 			length++;
 			for(Edge edge: readyEdges) {
 				if(edge.getInteraction().equals((BIPInteraction) node)) {
-					noIn = noIn && noIn(edge.getComponent(), length);
+					inPath = inPath || inPathLength(edge.getComponent(), length, bound);
 				}
 			}
-			return noIn;
+			return inPath;
 		}
 	}
 	
 	/**
 	 * 
-	 * @param node is a component or BIP interaction
+	 * @param node is a component or an interaction
 	 * @param length
-	 * @return
+	 * @return true if there exists a out path of length bound, 
+	 *    false otherwise. When we rich the bound we check:
+	 *    1. if it is an interaction and all its participants are in 
+	 *       the sub-system and readies the interaction.
+	 *    2. if if is a component and all the interactions connected
+	 *       to this component are in the sub-system and the component
+	 *       and are waiting for the component. 
+	 *    If (1) and (2) we return false; true otherwise. 
+	 *        
 	 */
-	public boolean noOut(Object node, int length) {
+	private boolean outPathLength(Object node, int length, int bound) {
 		// stop condition
-		if(length == lengthNoInNoOut) return false;
-		
+		// We reach the bound length of the subsystem
+		if(length == bound) {
+			return checkOutBoundOptimization(node);
+		}
+
 		if(node instanceof Component) {
 			length++;
-			boolean noOut = true;
+			boolean outPath = false;
 			for(Edge edge: readyEdges) {
 				if(edge.getComponent().equals((Component) node)) {
-					noOut = noOut && noOut(edge.getInteraction(), length);
+					outPath = outPath || outPathLength(edge.getInteraction(), length, bound);
 				}
 			}
-			return noOut;
+			return outPath;
 		}
 		else { // node is an instance of BIPInteraction
-			boolean noOut = true;
+			boolean outPath = false;
 			length++;
 			for(Edge edge: waitEdges) {
 				if(edge.getInteraction().equals((BIPInteraction) node)) {
-					noOut = noOut && noOut(edge.getComponent(), length);
+					outPath = outPath || outPathLength(edge.getComponent(), length, bound);
 				}
 			}
-			return noOut;
+			return outPath;
 		}
+	}
+	
+	
+	
+	private boolean checkOutBoundOptimization(Object node) {
+		if(node instanceof BIPInteraction) {
+			return checkOutBoundOptimization((BIPInteraction) node);
+		}
+		else { // node is instance of component 
+			return checkOutBoundOptimization((Component) node);
+		}
+	}
+	
+	
+	private boolean checkOutBoundOptimization(BIPInteraction interaction) {
+		// all the participants of the interaction are in the subsystem
+		// and no out edges, in this case we can say that there is no out
+		if(components.containsAll(interaction.getComponents())) {
+			for(Edge edge: waitEdges) {
+				if(edge.getInteraction().equals(interaction)) {
+					return true;
+				}
+			}
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	
+	private boolean checkOutBoundOptimization(Component component) {
+		// all the interactions of the component are in the subsystem
+		// and no out edges, in this case we can say that there is no out
+		if(interactions.containsAll(BIPAPI.getInteractions(component))) {
+			for(Edge edge: readyEdges) {
+				if(edge.getComponent().equals(component))
+					return true;
+			}
+			return false;
+		}
+		else
+			return true;
 	}
 	
 
 	
+	private boolean outPathLengthL(Object node, int length) {
+		return outPathLength(node, 0, length); 
+	}
+	
+	private boolean inPathLengthL(Object node, int length) {
+		return inPathLength(node, 0, length); 
+	}
 
 	
 	public boolean checkNoInNoOut(ArrayList<Component> components, int length) {
-		lengthNoInNoOut = length; 
 		for(Component component: components) {
-			if(!noIn(component, 0) && !noOut(component, 0)) {
+			if(outPathLengthL(component,length) && inPathLengthL(component, length))
 				return false;
-			}
 		}
 		return true;
 	}

@@ -59,6 +59,15 @@ public class BIPAPI {
 		return compoundType;
 	}
 	
+
+	public static ArrayList<BIPInteraction> getInteractions(Component component) {
+		ArrayList<BIPInteraction> interactionsofComponent = new ArrayList<BIPInteraction>();
+		for(BIPInteraction inter: interactions) {
+			if(inter.getComponents().contains(component) && !interactionsofComponent.contains(inter))
+				interactionsofComponent.add(inter);
+		}
+		return interactionsofComponent;
+	}
 	
  
 }
