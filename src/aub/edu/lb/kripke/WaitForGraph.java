@@ -91,7 +91,7 @@ public class WaitForGraph {
 	 * @return: true if there exists in path of length equal to bound.
 	 *   false otherwise. 
 	 */
-	private boolean inPathLength(Object node, int length, int bound) {
+	private boolean inPathDepth(Object node, int length, int bound) {
 		// stop condition
 		if(length == bound) return true;
 		
@@ -100,7 +100,7 @@ public class WaitForGraph {
 			boolean inPath = false;
 			for(Edge edge: waitEdges) {
 				if(edge.getComponent().equals((Component) node)) {
-					inPath = inPath || inPathLength(edge.getInteraction(), length, bound);
+					inPath = inPath || inPathDepth(edge.getInteraction(), length, bound);
 				}
 			}
 			return inPath;
@@ -110,7 +110,7 @@ public class WaitForGraph {
 			length++;
 			for(Edge edge: readyEdges) {
 				if(edge.getInteraction().equals((BIPInteraction) node)) {
-					inPath = inPath || inPathLength(edge.getComponent(), length, bound);
+					inPath = inPath || inPathDepth(edge.getComponent(), length, bound);
 				}
 			}
 			return inPath;
@@ -131,7 +131,7 @@ public class WaitForGraph {
 	 *    If (1) and (2) we return false; true otherwise. 
 	 *        
 	 */
-	private boolean outPathLength(Object node, int length, int bound) {
+	private boolean outPathDepth(Object node, int length, int bound) {
 		// stop condition
 		// We reach the bound length of the subsystem
 		if(length == bound) {
@@ -143,7 +143,7 @@ public class WaitForGraph {
 			boolean outPath = false;
 			for(Edge edge: readyEdges) {
 				if(edge.getComponent().equals((Component) node)) {
-					outPath = outPath || outPathLength(edge.getInteraction(), length, bound);
+					outPath = outPath || outPathDepth(edge.getInteraction(), length, bound);
 				}
 			}
 			return outPath;
@@ -153,7 +153,7 @@ public class WaitForGraph {
 			length++;
 			for(Edge edge: waitEdges) {
 				if(edge.getInteraction().equals((BIPInteraction) node)) {
-					outPath = outPath || outPathLength(edge.getComponent(), length, bound);
+					outPath = outPath || outPathDepth(edge.getComponent(), length, bound);
 				}
 			}
 			return outPath;
@@ -204,18 +204,31 @@ public class WaitForGraph {
 	
 
 	
-	private boolean outPathLengthL(Object node, int length) {
-		return outPathLength(node, 0, length); 
+	private boolean outPathDepthL(Object node, int length) {
+		return outPathDepth(node, 0, length); 
 	}
 	
-	private boolean inPathLengthL(Object node, int length) {
-		return inPathLength(node, 0, length); 
+	private boolean inPathDepthL(Object node, int length) {
+		return inPathDepth(node, 0, length); 
 	}
 
-	
+	/**
+	 * 
+	 * @param components
+	 * @param length
+	 * @return
+	 *   For a given l we check if there exist out path and in path of length = l + 1. 
+	 *   The condition is satisfied if for all participants of the interaction (e.g., components)
+	 *   inDepth(component) <= l or outDepth(component) <= l
+	 *   For this, we check: inDepth(component) == l + 1 and outDepth(component) == l + 1
+	 *   If this condition is not satisfied we can say that: either 
+	 *     1. component has in-depth at most l, 
+	 *     2. or out-depth at most l
+	 * The actual value of length is equal l + 1. 
+	 */
 	public boolean checkNoInNoOut(ArrayList<Component> components, int length) {
 		for(Component component: components) {
-			if(outPathLengthL(component,length) && inPathLengthL(component, length))
+			if(outPathDepthL(component,length) && inPathDepthL(component, length))
 				return false;
 		}
 		return true;
