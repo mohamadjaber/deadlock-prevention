@@ -16,7 +16,10 @@ public class Configuration {
 	}
 	
 	public static String cmdHelp() {
-		return "java -jar DFBIP.jar example.bip [--debug]";
+		return "java -jar LDFCBIP.jar example.bip [--debug]\n\n" +
+				"--debug Prints useful information at each iteration of the algorithm. \n" +
+				"        Example: selected interaction, depth length, etc.\n" +
+				"        This information could be useful in case when the LDFC condition fails.\n";
 	}
 	
 	public static String deadlockFreeMessage() {

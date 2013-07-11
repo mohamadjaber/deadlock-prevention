@@ -27,8 +27,10 @@ public class Main {
 				if(args.length == 2) {
 					if(args[1].equals("--debug"))
 						Configuration.debug = true;
-					else
+					else {
 						System.err.print(Configuration.cmdHelp());
+						System.exit(0);
+					}
 				}	
 				startTime = System.currentTimeMillis();
 				if(LDFC.check())
