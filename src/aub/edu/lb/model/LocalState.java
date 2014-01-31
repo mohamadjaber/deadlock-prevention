@@ -1,6 +1,7 @@
 package aub.edu.lb.model;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import ujf.verimag.bip.Core.Behaviors.PortDefinitionReference;
 import ujf.verimag.bip.Core.Behaviors.State;
@@ -50,6 +51,9 @@ public class LocalState {
 			return transitions.get(port);
 	}
 	
+	public Set<String> getPorts() {
+		return transitions.keySet();
+	}
 	
 	/**
 	 * @param interaction

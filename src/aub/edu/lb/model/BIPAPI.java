@@ -3,6 +3,7 @@ package aub.edu.lb.model;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ujf.verimag.bip.Core.Behaviors.AtomType;
 import ujf.verimag.bip.Core.Behaviors.PetriNet;
@@ -15,14 +16,23 @@ public class BIPAPI {
 	private static ArrayList<LocalState> initialStates; 
 	private static CompoundType compoundType;
 	private static ArrayList<BIPInteraction> interactions;
+	private static ArrayList<Component> components;
+
 
 	
 	public static void initialize(CompoundType compoundType) {
 		BIPAPI.compoundType = compoundType;
 		setInitialStates();
 		setInteractions();
+		setComponents();
 	}
 	
+	private static void setComponents() {
+		components = new ArrayList<Component>(compoundType.getSubcomponent().size());
+		for(Component component: compoundType.getSubcomponent()) {
+			components.add(component);
+		}
+	}
 	
 	private static void setInteractions() {
 		interactions = new ArrayList<BIPInteraction>(compoundType.getConnector().size());
@@ -59,7 +69,19 @@ public class BIPAPI {
 		return compoundType;
 	}
 	
+	public static ArrayList<Component> getComponents() {
+		return components;
+	}
+	
 
+	public static Component getComponent(String name) {
+		for(Component component: components) {
+			if(component.getName().equals(name))
+				return component;
+		}
+		return null;
+	}
+	
 	public static ArrayList<BIPInteraction> getInteractions(Component component) {
 		ArrayList<BIPInteraction> interactionsofComponent = new ArrayList<BIPInteraction>();
 		for(BIPInteraction inter: interactions) {
@@ -67,6 +89,15 @@ public class BIPAPI {
 				interactionsofComponent.add(inter);
 		}
 		return interactionsofComponent;
+	}
+	
+	public static List<BIPInteraction> getInteractionsContainsPort(String port) {
+		List<BIPInteraction> interactions = new ArrayList<BIPInteraction>();
+		for(BIPInteraction interaction: BIPAPI.interactions) {
+			if(interaction.getPorts().contains(port))
+				interactions.add(interaction);
+		}
+		return interactions; 
 	}
 	
  

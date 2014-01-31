@@ -39,6 +39,16 @@ public class GlobalState {
 	 }
 	 
 
+	 public boolean readies(BIPInteraction interaction) {
+		 for(Component component: interaction.getComponents()) {
+			 if(!getLocalState(component).readies(interaction)) {
+				 return false;
+			 }
+		 }
+		 return true; 
+	 }
+	 
+	
 	 
 	 /**
 	  * 
@@ -63,6 +73,15 @@ public class GlobalState {
 	  */
 	 public ArrayList<LocalState> getLocalStates() {
 		 return localStates;
+	 }
+	 
+
+	 public LocalState getLocalState(Component component) {
+		 for(LocalState localState: localStates) {
+			 if(localState.getComponent().equals(component))
+				 return localState;
+		 }
+		 return null; 
 	 }
 	 
 	 /**

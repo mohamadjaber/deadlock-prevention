@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 import ujf.verimag.bip.Core.Interactions.Component;
-
 import aub.edu.lb.model.BIPInteraction;
 import aub.edu.lb.model.GlobalState;
 import aub.edu.lb.model.LocalState;
@@ -15,11 +14,12 @@ import aub.edu.lb.model.SubSystem;
 public class Kripke {
 	
 	private GlobalState initialState;
+	private KripkeState kripkeStateInitial;
 	private SubSystem subSystem; 
 	
 	//DFS
 	private Stack<KripkeState> stack = new Stack<KripkeState>();
-	private HashSet<KripkeState> stateSpace = new HashSet<KripkeState>();
+	protected HashSet<KripkeState> stateSpace = new HashSet<KripkeState>();
 	
 	/**
 	 * 
@@ -28,11 +28,27 @@ public class Kripke {
 	public Kripke(SubSystem subSystem) {
 		this.subSystem = subSystem; 
 		initialState = subSystem.getInitialState();
-		KripkeState kripkeStateInitial = new KripkeState(initialState);
+		kripkeStateInitial = new KripkeState(initialState);
 
 		stack.push(kripkeStateInitial);
 		stateSpace.add(kripkeStateInitial);
 		DFS();
+	}
+	
+	public Kripke(Kripke kripke) {
+		this.subSystem = kripke.subSystem; 
+		initialState = kripke.initialState;
+		kripkeStateInitial = kripke.kripkeStateInitial;
+		cloneStateSpace(kripke.stateSpace);	
+	}
+	
+	private void cloneStateSpace(HashSet<KripkeState> stateSpace) {
+		this.stateSpace = new HashSet<KripkeState>(stateSpace.size());
+		
+		for(KripkeState state: stateSpace) {
+			this.stateSpace.add(new KripkeState(state));
+		}
+
 	}
 	
 	
@@ -112,9 +128,15 @@ public class Kripke {
 		return stateSpace;
 	}
 	
+	public KripkeState getInitialState() {
+		return kripkeStateInitial;
+	}
+	
 	public SubSystem getSubSystem() {
 		return subSystem;
 	}
+	
+
 	
 	 public String toString() {
 		 String kripkeName = "[ ";
@@ -123,6 +145,19 @@ public class Kripke {
 		 return kripkeName + "]";
 	 }
 	
+	 
+	 /**
+	  * 
+	  * @param kripkeState - 
+	  * @return the kripkeState that "equals" to the kripkState given as input
+	  */
+	 public KripkeState getKripkeState(KripkeState kripkeState) {
+		 for(KripkeState state: stateSpace) {
+			 if(state.equals(kripkeState))
+				 return state;
+		 }
+		 return null;
+	 }
 	
 	
 
