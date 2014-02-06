@@ -46,7 +46,9 @@ public class Kripke {
 		this.stateSpace = new HashSet<KripkeState>(stateSpace.size());
 		
 		for(KripkeState state: stateSpace) {
-			this.stateSpace.add(new KripkeState(state));
+			KripkeState copyState = new KripkeState(state);
+			this.stateSpace.add(copyState);
+			if(state == kripkeStateInitial) kripkeStateInitial = copyState;
 		}
 
 	}

@@ -21,12 +21,19 @@ public class StrongNonInterference {
 		this.architectureA2 = architectureA2;
 	}
 
+	/**
+	 * Fig. 2: Pseudo-code for checking strong non-interference (page 11-12).
+	 * For more info, see architecture-tacas14.pdf in the papers folder.
+	 * @param architecture
+	 * @return
+	 */
 	private boolean checkSTrongNonInterference(Component architecture) {
 		SubSystem top = new SubSystem(BIPAPI.getComponents(),
 				BIPAPI.getInteractions());
 		KripkeAbstractArchitecture kripkeRemoveTransitionArch = 
 				new KripkeAbstractArchitecture(top, architecture);
 		Kripke kripkeGlobal = kripkeRemoveTransitionArch.getKripkeGlobal();
+		kripkeRemoveTransitionArch.removeTransitionsInvolvingArchitecture();
 		KripkeMatrix kripkeMatrix = new KripkeMatrix(kripkeRemoveTransitionArch.getKripkeWithoutTransArch());
 
 		List<List<Integer>> components = new TarjanSCC().scc(kripkeMatrix.getGraph());
@@ -48,6 +55,8 @@ public class StrongNonInterference {
 							// where some transitions are removed.
 							// TO VERIFY
 							if(!kripkeGlobal.getKripkeState(kripkeStateSCC).isEnabled(interaction)) {
+								System.out.println(interaction);
+								System.out.println(kripkeGlobal.getKripkeState(kripkeStateSCC));
 								return false;
 							}
 						}

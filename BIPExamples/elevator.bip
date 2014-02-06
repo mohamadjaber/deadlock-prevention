@@ -20,6 +20,16 @@ connector type Sync4(Port p1, Port p2, Port p3, Port p4)
   on p1 p2 p3 p4 provided true up {} down {}
 end
 
+connector type Sync5(Port p1, Port p2, Port p3, Port p4, Port p5)
+  define [p1 p2 p3 p4 p5]
+  on p1 p2 p3 p4 p5 provided true up {} down {}
+end
+
+connector type Sync6(Port p1, Port p2, Port p3, Port p4, Port p5, Port p6)
+  define [p1 p2 p3 p4 p5 p6]
+  on p1 p2 p3 p4 p5 p6 provided true up {} down {}
+end
+
 atomic type ElevatorEngine
    export port Port stop
    export port Port goup
@@ -176,7 +186,7 @@ compound type ArchitectureControllerC1C2
 
 
  connector Sync2 conn1(ed.open, c1.open)
- connector Sync2 conn2(ed.close, c1.close)
+ connector Sync3 conn2(ed.close, c1.close, c2.elevator)
 
  connector Sync1 conn3(cs0.floorcall)
  connector Sync1 conn4(cs1.floorcall)
@@ -187,66 +197,17 @@ compound type ArchitectureControllerC1C2
  connector Sync1 conn8(cs2.inputcall)
 
 
- connector Sync3 conn9(ee.stop, c1.stop, cs0.floorstop)
- connector Sync3 conn10(ee.stop, c1.stop, cs1.floorstop)
- connector Sync3 conn11(ee.stop, c1.stop, cs2.floorstop)
+ connector Sync4 conn9(ee.stop, c1.stop, c2.door, cs0.floorstop)
+ connector Sync4 conn10(ee.stop, c1.stop, c2.door, cs1.floorstop)
+ connector Sync4 conn11(ee.stop, c1.stop, c2.door, cs2.floorstop)
 
- connector Sync3 conn12(ee.stop, c1.stop, cs0.inputstop)
- connector Sync3 conn13(ee.stop, c1.stop, cs1.inputstop)
- connector Sync3 conn14(ee.stop, c1.stop, cs2.inputstop)
+ connector Sync4 conn12(ee.stop, c1.stop, c2.door, cs0.inputstop)
+ connector Sync4 conn13(ee.stop, c1.stop, c2.door, cs1.inputstop)
+ connector Sync4 conn14(ee.stop, c1.stop, c2.door, cs2.inputstop)
  
- connector Sync2 conn15(ee.goup, c1.move)
+ connector Sync3 conn15(ee.goup, c1.move, c2.move)
   
- connector Sync2 conn16(ee.godown, c1.move)
-
-
- connector Sync2 conn17(c1.stop, c2.door)
- connector Sync2 conn18(c1.close, c2.elevator)
- connector Sync2 conn19(c1.move, c2.move)
-
-end
-
-compound type ArchitectureControllerC1C2TMP
- component ElevatorEngine ee
- component ElevatorDoor ed
-
- component CallerSystem cs0
- component CallerSystem cs1
- component CallerSystem cs2
-
- component ControllerC1 c1
- component ControllerC2 c2
-
-
-
- connector Sync2 conn1(ed.open, c1.open)
- connector Sync2 conn2(ed.close, c1.close)
-
- connector Sync1 conn3(cs0.floorcall)
- connector Sync1 conn4(cs1.floorcall)
- connector Sync1 conn5(cs2.floorcall)
- 
- connector Sync1 conn6(cs0.inputcall)
- connector Sync1 conn7(cs1.inputcall)
- connector Sync1 conn8(cs2.inputcall)
-
-
- connector Sync3 conn9(ee.stop, c1.stop, cs0.floorstop)
- connector Sync3 conn10(ee.stop, c1.stop, cs1.floorstop)
- connector Sync3 conn11(ee.stop, c1.stop, cs2.floorstop)
-
- connector Sync3 conn12(ee.stop, c1.stop, cs0.inputstop)
- connector Sync3 conn13(ee.stop, c1.stop, cs1.inputstop)
- connector Sync3 conn14(ee.stop, c1.stop, cs2.inputstop)
- 
- connector Sync2 conn15(ee.goup, c1.move)
-  
- connector Sync2 conn16(ee.godown, c1.move)
-
-
- connector Sync2 conn17(c1.stop, c2.door)
- connector Sync2 conn18(c1.close, c2.elevator)
- connector Sync2 conn19(c1.move, c2.move)
+ connector Sync3 conn16(ee.godown, c1.move, c2.move)
 
 end
 
@@ -275,9 +236,9 @@ compound type ArchitectureControllerC1C3
  connector Sync1 conn8(cs2.inputcall)
 
 
-// connector Sync3 conn9(ee.stop, c1.stop, cs0.floorstop)
-// connector Sync3 conn10(ee.stop, c1.stop, cs1.floorstop)
-// connector Sync3 conn11(ee.stop, c1.stop, cs2.floorstop)
+ connector Sync4 conn9(ee.stop, c1.stop,  c3.notfull, cs0.floorstop)
+ connector Sync4 conn10(ee.stop, c1.stop,  c3.notfull, cs1.floorstop)
+ connector Sync4 conn11(ee.stop, c1.stop,  c3.notfull, cs2.floorstop)
 
  connector Sync3 conn12(ee.stop, c1.stop, cs0.inputstop)
  connector Sync3 conn13(ee.stop, c1.stop, cs1.inputstop)
@@ -289,10 +250,47 @@ compound type ArchitectureControllerC1C3
 
  connector Sync1 conn17(c3.add)
  connector Sync1 conn18(c3.sub)
- connector Sync4 conn19(ee.stop, c1.stop, c3.notfull, cs0.floorstop)
- connector Sync4 conn20(ee.stop, c1.stop, c3.notfull, cs1.floorstop)
- connector Sync4 conn21(ee.stop, c1.stop, c3.notfull, cs2.floorstop)
+end
 
+compound type ArchitectureControllerC1C2C3
+ component ElevatorEngine ee
+ component ElevatorDoor ed
+
+ component CallerSystem cs0
+ component CallerSystem cs1
+ component CallerSystem cs2
+
+ component ControllerC1 c1
+ component ControllerC2 c2
+ component ControllerC3 c3
+
+
+ connector Sync2 conn1(ed.open, c1.open)
+ connector Sync3 conn2(ed.close, c1.close, c2.elevator)
+
+ connector Sync1 conn3(cs0.floorcall)
+ connector Sync1 conn4(cs1.floorcall)
+ connector Sync1 conn5(cs2.floorcall)
+ 
+ connector Sync1 conn6(cs0.inputcall)
+ connector Sync1 conn7(cs1.inputcall)
+ connector Sync1 conn8(cs2.inputcall)
+
+
+ connector Sync5 conn9(ee.stop, c1.stop, c2.door,  c3.notfull, cs0.floorstop)
+ connector Sync5 conn10(ee.stop, c1.stop, c2.door,  c3.notfull, cs1.floorstop)
+ connector Sync5 conn11(ee.stop, c1.stop, c2.door,  c3.notfull, cs2.floorstop)
+
+ connector Sync4 conn12(ee.stop, c1.stop, c2.door, cs0.inputstop)
+ connector Sync4 conn13(ee.stop, c1.stop, c2.door, cs1.inputstop)
+ connector Sync4 conn14(ee.stop, c1.stop, c2.door, cs2.inputstop)
+ 
+ connector Sync3 conn15(ee.goup, c1.move, c2.move)
+  
+ connector Sync3 conn16(ee.godown, c1.move, c2.move)
+
+ connector Sync1 conn17(c3.add)
+ connector Sync1 conn18(c3.sub)
 end
 
 compound type ArchitectureControllerC1C3C4
@@ -309,47 +307,152 @@ compound type ArchitectureControllerC1C3C4
 
 
 
- connector Sync2 conn1(ed.open, c1.open)
+ connector Sync3 conn1(ed.open, c1.open, c4.free)
  connector Sync2 conn2(ed.close, c1.close)
 
  connector Sync1 conn3(cs0.floorcall)
  connector Sync1 conn4(cs1.floorcall)
- //connector Sync1 conn5(cs2.floorcall)
+ connector Sync2 conn5(cs2.floorcall, c4.request)
  
  connector Sync1 conn6(cs0.inputcall)
  connector Sync1 conn7(cs1.inputcall)
- //connector Sync1 conn8(cs2.inputcall)
+ connector Sync2 conn8(cs2.inputcall, c4.request)
 
 
-// connector Sync3 conn9(ee.stop, c1.stop, cs0.floorstop)
-// connector Sync3 conn10(ee.stop, c1.stop, cs1.floorstop)
-// connector Sync3 conn11(ee.stop, c1.stop, cs2.floorstop)
+ connector Sync4 conn9(ee.stop, c1.stop, c3.notfull,  cs0.floorstop)
+ connector Sync4 conn10(ee.stop, c1.stop, c3.notfull, cs1.floorstop)
+ connector Sync5 conn11(ee.stop, c1.stop, c3.notfull, c4.finish, cs2.floorstop)
 
  connector Sync3 conn12(ee.stop, c1.stop, cs0.inputstop)
  connector Sync3 conn13(ee.stop, c1.stop, cs1.inputstop)
- connector Sync3 conn14(ee.stop, c1.stop, cs2.inputstop)
+ connector Sync4 conn14(ee.stop, c1.stop, c4.finish, cs2.inputstop)
+ 
  connector Sync2 conn15(ee.goup, c1.move)
- connector Sync2 conn16(ee.godown, c1.move)
-
-
-
+ connector Sync3 conn16(ee.godown, c1.move, c4.free)
 
  connector Sync1 conn17(c3.add)
  connector Sync1 conn18(c3.sub)
- connector Sync4 conn19(ee.stop, c1.stop, c3.notfull, cs0.floorstop)
- connector Sync4 conn20(ee.stop, c1.stop, c3.notfull, cs1.floorstop)
- connector Sync4 conn21(ee.stop, c1.stop, c3.notfull, cs2.floorstop)
+ 
+end
+
+compound type ArchitectureControllerC1C2C3C4
+ component ElevatorEngine ee
+ component ElevatorDoor ed
+
+ component CallerSystem cs0
+ component CallerSystem cs1
+ component CallerSystem cs2
+
+ component ControllerC1 c1
+ component ControllerC2 c2
+ component ControllerC3 c3
+ component ControllerC4 c4
 
 
- connector Sync2 conn22(cs2.floorcall, c4.request)
- connector Sync2 conn23(cs2.inputcall, c4.request)
- connector Sync2 conn24(ed.open, c4.free)
- connector Sync2 conn25(ee.godown, c4.free)
 
- connector Sync3 conn26(cs2.floorstop, ee.stop, c4.finish)
- connector Sync3 conn27(cs2.inputstop, ee.stop, c4.finish)
+ connector Sync3 conn1(ed.open, c1.open, c4.free)
+ connector Sync3 conn2(ed.close, c1.close, c2.elevator)
+
+ connector Sync1 conn3(cs0.floorcall)
+ connector Sync1 conn4(cs1.floorcall)
+ connector Sync2 conn5(cs2.floorcall, c4.request)
+ 
+ connector Sync1 conn6(cs0.inputcall)
+ connector Sync1 conn7(cs1.inputcall)
+ connector Sync2 conn8(cs2.inputcall, c4.request)
 
 
+ connector Sync5 conn9(ee.stop, c1.stop, c2.door, c3.notfull,  cs0.floorstop)
+ connector Sync5 conn10(ee.stop, c1.stop, c2.door, c3.notfull, cs1.floorstop)
+ connector Sync6 conn11(ee.stop, c1.stop, c2.door, c3.notfull, c4.finish, cs2.floorstop)
+
+ connector Sync4 conn12(ee.stop, c1.stop, c2.door, cs0.inputstop)
+ connector Sync4 conn13(ee.stop, c1.stop, c2.door, cs1.inputstop)
+ connector Sync5 conn14(ee.stop, c1.stop, c2.door, c4.finish, cs2.inputstop)
+ 
+ connector Sync3 conn15(ee.goup, c1.move, c2.move)
+ connector Sync4 conn16(ee.godown, c1.move, c2.move, c4.free)
+
+ connector Sync1 conn17(c3.add)
+ connector Sync1 conn18(c3.sub)
+ 
+end
+
+compound type ArchitectureControllerC1C2C4
+ component ElevatorEngine ee
+ component ElevatorDoor ed
+
+ component CallerSystem cs0
+ component CallerSystem cs1
+ component CallerSystem cs2
+
+ component ControllerC1 c1
+ component ControllerC2 c2
+ component ControllerC4 c4
+
+
+
+ connector Sync3 conn1(ed.open, c1.open, c4.free)
+ connector Sync3 conn2(ed.close, c1.close, c2.elevator)
+
+ connector Sync1 conn3(cs0.floorcall)
+ connector Sync1 conn4(cs1.floorcall)
+ connector Sync2 conn5(cs2.floorcall, c4.request)
+ 
+ connector Sync1 conn6(cs0.inputcall)
+ connector Sync1 conn7(cs1.inputcall)
+ connector Sync2 conn8(cs2.inputcall, c4.request)
+
+
+ connector Sync4 conn9(ee.stop, c1.stop, c2.door,  cs0.floorstop)
+ connector Sync4 conn10(ee.stop, c1.stop, c2.door, cs1.floorstop)
+ connector Sync5 conn11(ee.stop, c1.stop, c2.door, c4.finish, cs2.floorstop)
+
+ connector Sync4 conn12(ee.stop, c1.stop, c2.door, cs0.inputstop)
+ connector Sync4 conn13(ee.stop, c1.stop, c2.door, cs1.inputstop)
+ connector Sync5 conn14(ee.stop, c1.stop, c2.door, c4.finish, cs2.inputstop)
+ 
+ connector Sync3 conn15(ee.goup, c1.move, c2.move)
+ connector Sync4 conn16(ee.godown, c1.move, c2.move, c4.free)
+
+end
+
+compound type ArchitectureControllerC1C4
+ component ElevatorEngine ee
+ component ElevatorDoor ed
+
+ component CallerSystem cs0
+ component CallerSystem cs1
+ component CallerSystem cs2
+
+ component ControllerC1 c1
+ component ControllerC4 c4
+
+
+
+ connector Sync3 conn1(ed.open, c1.open, c4.free)
+ connector Sync2 conn2(ed.close, c1.close)
+
+ connector Sync1 conn3(cs0.floorcall)
+ connector Sync1 conn4(cs1.floorcall)
+ connector Sync2 conn5(cs2.floorcall, c4.request)
+ 
+ connector Sync1 conn6(cs0.inputcall)
+ connector Sync1 conn7(cs1.inputcall)
+ connector Sync2 conn8(cs2.inputcall, c4.request)
+
+
+ connector Sync3 conn9(ee.stop, c1.stop, cs0.floorstop)
+ connector Sync3 conn10(ee.stop, c1.stop, cs1.floorstop)
+ connector Sync4 conn11(ee.stop, c1.stop, c4.finish, cs2.floorstop)
+
+ connector Sync3 conn12(ee.stop, c1.stop, cs0.inputstop)
+ connector Sync3 conn13(ee.stop, c1.stop, cs1.inputstop)
+ connector Sync4 conn14(ee.stop, c1.stop, c4.finish, cs2.inputstop)
+ 
+ connector Sync2 conn15(ee.goup, c1.move)
+ connector Sync3 conn16(ee.godown, c1.move, c4.free)
+ 
 end
 
 component ArchitectureControllerC1C2 top

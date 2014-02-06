@@ -2,6 +2,7 @@ package aub.edu.lb.architectures;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import ujf.verimag.bip.Core.Interactions.Component;
 import aub.edu.lb.kripke.Kripke;
@@ -27,22 +28,30 @@ public class KripkeAbstractArchitecture  {
 		kripkeGlobal = new Kripke(subSystem);
 		kripkeWithoutTransArch = new Kripke(kripkeGlobal);
 		this.architecture = architecture; 
-		removeTransitionsInvolvingArchitecture();
 	}
 	
 	public KripkeAbstractArchitecture(SubSystem subSystem, String architectureName) {
 		this(subSystem, BIPAPI.getComponent(architectureName));
 	}
 
-	private void removeTransitionsInvolvingArchitecture() {
+	public void removeTransitionsInvolvingArchitecture() {
 		for(KripkeState state: kripkeWithoutTransArch.getStates()) {
 		    Collection<Transition> transitionsToRemove = new LinkedList<Transition>();
 			for(Transition transition: state.getTransitions()) {
 				if(isArchitectureInvolved(transition))
 					transitionsToRemove.add(transition);
-			}
+			}			
 			state.getTransitions().removeAll(transitionsToRemove);
 		}
+	}
+	
+	public void removeIdleStates(List<String> idleStates) {
+	    Collection<KripkeState> statesToRemove = new LinkedList<KripkeState>();
+		for(KripkeState state: kripkeWithoutTransArch.getStates()) {
+			String archStateProjection = state.getState().getLocalState(architecture).getState().getName();
+			if(idleStates.contains(archStateProjection)) statesToRemove.add(state);
+		}
+		kripkeWithoutTransArch.getStates().removeAll(statesToRemove);	
 	}
 	
 	private boolean isArchitectureInvolved(Transition t) {
