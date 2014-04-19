@@ -13,7 +13,7 @@ public class BIPInteraction {
 	private ArrayList<Component> components;
 	private ArrayList<String> ports;
 	private int size;
-	
+	private Connector connector; 
 	public BIPInteraction() {
 	}
 	
@@ -22,6 +22,7 @@ public class BIPInteraction {
 	 * @param c
 	 */
 	public BIPInteraction(Connector c) {
+		this.connector = c; 
 		size = c.getActualPort().size();
 		components = new ArrayList<Component>(size);
 		ports = new ArrayList<String>(size);
@@ -93,10 +94,13 @@ public class BIPInteraction {
 	 
 	 
 	 public String toString() {
+		 /*
 		 String bipInteractionName = "[";
 		 for(int i = 0; i < components.size(); i++) 
 			 bipInteractionName += components.get(i).getName() + "." + ports.get(i) + " ";
 		 return bipInteractionName + "]";
+		 */
+		 return connector.getName();
 	 }
 	 
 	

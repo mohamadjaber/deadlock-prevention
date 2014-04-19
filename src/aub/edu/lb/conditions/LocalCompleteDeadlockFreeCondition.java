@@ -61,7 +61,7 @@ public class LocalCompleteDeadlockFreeCondition extends
 		ArrayList<Component> components = interaction.getComponents();
 
 		for (Object node : borders) {
-			// component could not be a border
+			// Initially, a component could not be a border
 			// as we consider G_a^{l+2}, so all interactions of C_a are
 			// included.
 			for (Component component : components) {

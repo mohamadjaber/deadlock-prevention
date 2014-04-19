@@ -1,0 +1,55 @@
+model a
+
+  connector type Sync2Port(Port p0, Port p1)
+    define  p0 p1
+    on p0 p1 provided true up {} down {}
+  end
+
+  connector type SyncPort(Port p0)
+    define  p0
+    on p0 provided true up {} down {}
+  end
+
+  atomic type Generator1
+    export port Port p0
+    export port Port p1
+    export port Port p2
+
+
+    place l0,l1
+    initial to l0
+    on p0 from l0 to l1
+    on p1 from l1 to l0
+    on p2 from l1 to l1
+
+  end
+
+  atomic type Generator2
+    export port Port p0
+    export port Port p1
+    export port Port p2
+
+
+    place l0,l1
+    initial to l0
+    on p1 from l0 to l1
+    on p0 from l1 to l0
+    on p2 from l1 to l1
+
+  end
+
+
+  compound type SimpleDealdockedSystem
+    component Generator1 b0
+    component Generator2 b1
+    connector Sync2Port a(b0.p0, b1.p0)
+    connector Sync2Port b(b0.p1, b1.p1)
+    connector SyncPort c(b0.p2)
+    connector SyncPort d(b1.p2)
+
+
+  end
+
+component SimpleDealdockedSystem top
+
+end

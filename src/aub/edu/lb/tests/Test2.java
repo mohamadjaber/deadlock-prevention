@@ -17,7 +17,7 @@ public class Test2 {
 				
 		LocalCompleteDeadlockFreeCondition ldfc = new LocalCompleteDeadlockFreeCondition("BIPExamples/atm6.bip", true);
 		startTime = System.currentTimeMillis();
-		System.out.println("LDFC " + ldfc.check());
+		System.out.println("LCDFC " + ldfc.check());
 		stopTime = System.currentTimeMillis();
 		System.out.println(stopTime-startTime);
 		System.out.println(Configuration.totalTime);

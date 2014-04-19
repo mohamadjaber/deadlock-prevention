@@ -48,13 +48,15 @@ public class LocalDeadlockFreeCondition {
 
 		Kripke kripke = new Kripke(subSystem);
 		for(KripkeState state : kripke.getStates()) {
+			// if(state.getTransitions().size() == 0) return false; // VERIFY
 			for(Transition transition: state.getTransitions()) {
+				
 				if(transition.getLabel().equals(interaction)) {
 					WaitForGraph wfg = new WaitForGraph(transition.getEndState().getState());
+					System.out.println(wfg);
 					if(!wfg.checkNoInNoOut(interaction.getComponents(), subSystem.getLength() + 1)) {
 						return false;
-					}
-					
+					}	
 				}
 			}
 		}
