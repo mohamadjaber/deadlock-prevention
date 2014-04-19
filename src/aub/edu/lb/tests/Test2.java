@@ -2,12 +2,11 @@ package aub.edu.lb.tests;
 
 import java.io.FileNotFoundException;
 
-
 import aub.edu.lb.bip.examples.*;
-import aub.edu.lb.conditions.LocalDeadlockFreeCondition;
+import aub.edu.lb.conditions.LocalCompleteDeadlockFreeCondition;
 import aub.edu.lb.configuration.Configuration;
 
-public class Test1 {
+public class Test2 {
 	
 
 	public static void main(String[] args) throws FileNotFoundException {
@@ -16,13 +15,12 @@ public class Test1 {
 		GasStation gs = new GasStation();
 		gs.generateGasStation(9);
 				
-		LocalDeadlockFreeCondition ldfc = new LocalDeadlockFreeCondition("BIPExamples/dining10.bip", true);
+		LocalCompleteDeadlockFreeCondition ldfc = new LocalCompleteDeadlockFreeCondition("BIPExamples/elevator1.bip", true);
 		startTime = System.currentTimeMillis();
 		System.out.println("LDFC " + ldfc.check());
 		stopTime = System.currentTimeMillis();
 		System.out.println(stopTime-startTime);
 		System.out.println(Configuration.totalTime);
-
 	}
 	
 

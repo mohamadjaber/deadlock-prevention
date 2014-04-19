@@ -21,5 +21,9 @@ public class Edge {
 		return interaction;
 	}
 	
+	public String toString() {
+		return component.getName() + "--" + interaction;
+	}
+	
 
 }

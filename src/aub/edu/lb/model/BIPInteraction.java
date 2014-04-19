@@ -8,7 +8,7 @@ import ujf.verimag.bip.Core.Interactions.Component;
 import ujf.verimag.bip.Core.Interactions.Connector;
 import ujf.verimag.bip.Core.Interactions.InnerPortReference;
 
-public class BIPInteraction{
+public class BIPInteraction {
 	
 	private ArrayList<Component> components;
 	private ArrayList<String> ports;

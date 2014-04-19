@@ -27,12 +27,12 @@ public class StrongNonInterferenceSubmitted {
 	}
 
 	/**
-	 * Fig. 2: Pseudo-code for checking strong non-interference (page 11-12).
-	 * For more info, see architecture-tacas14.pdf in the papers folder.
+	 * This implements the algo described in the submitted version of forte 14. 
+	 * For more info, see the algo (Fig. 4) in the architecture-forte.pdf in the papers folder. 
 	 * @param architecture
 	 * @return
 	 */
-	private boolean checkSTrongNonInterference(Component architecture) {
+	boolean checkSTrongNonInterference(Component architecture) {
 		SubSystem top = new SubSystem(BIPAPI.getComponents(),
 				BIPAPI.getInteractions());
 		KripkeAbstractArchitecture kripkeRemoveTransitionArch = new KripkeAbstractArchitecture(top, architecture);
@@ -84,6 +84,11 @@ public class StrongNonInterferenceSubmitted {
 	public boolean checkStrongNonInterference() {
 		return checkSTrongNonInterference(architectureA1)
 				 && checkSTrongNonInterference(architectureA2);
+	}
+	
+	public boolean[] checkStrongNonInterference1() {
+		return new boolean[] { checkSTrongNonInterference(architectureA1), 
+				checkSTrongNonInterference(architectureA2) };
 	}
 
 

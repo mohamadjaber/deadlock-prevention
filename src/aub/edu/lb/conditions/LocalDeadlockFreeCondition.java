@@ -1,24 +1,40 @@
 package aub.edu.lb.conditions;
 
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import ujf.verimag.bip.Core.Interactions.CompoundType;
+import BIPTransformation.TransformationFunction;
 import aub.edu.lb.configuration.Configuration;
 import aub.edu.lb.kripke.Kripke;
 import aub.edu.lb.kripke.KripkeState;
 import aub.edu.lb.kripke.Transition;
 import aub.edu.lb.kripke.WaitForGraph;
+import aub.edu.lb.logging.LogFormatter;
 import aub.edu.lb.model.BIPAPI;
 import aub.edu.lb.model.BIPInteraction;
 import aub.edu.lb.model.SubSystemDepth;
 
-
-public class LDFC {
+public class LocalDeadlockFreeCondition {
+	
+	protected SubSystemDepth subSystem; 
+	private static Logger log = Logger.getLogger(LocalCompleteDeadlockFreeCondition.class.getName());
+	
+	public LocalDeadlockFreeCondition(String fileName, boolean debug) {
+		CompoundType ct = TransformationFunction.ParseBIPFile(fileName);
+		BIPAPI.initialize(ct);
+		if(!debug) 
+			log.setLevel(Level.OFF);
+	}
+	
 	/**
 	 * 
 	 * @param subSystem
 	 * @param interaction
 	 * @return
 	 */
-	private static boolean localLDFC(SubSystemDepth subSystem, BIPInteraction interaction) {
+	protected boolean localLDFC(BIPInteraction interaction) {
 		// Debug
 		Configuration.startTime = System.currentTimeMillis();
 
@@ -40,15 +56,15 @@ public class LDFC {
 		return true; 
 	}
 	
-	private static boolean checkLocalLDFC(SubSystemDepth subSystem, BIPInteraction interaction) {
+	protected boolean checkLocalLDFC(BIPInteraction interaction) {
 		while(true) {
-			if(localLDFC(subSystem, interaction)) {
+			if(localLDFC(interaction)) {
 				return true;
 			}
 			else {
 				boolean isIncreased = subSystem.increase();
 				if(isIncreased) {
-					Configuration.println("Increasing -> Length = " + subSystem.getLength());
+					log.info("Increasing -> Length = " + subSystem.getLength());
 				}
 				else  {
 					return false;
@@ -61,25 +77,27 @@ public class LDFC {
 	 * 
 	 * @return
 	 */
-	public static boolean check() {
+	public boolean check() {
 		for(BIPInteraction interaction: BIPAPI.getInteractions()) {
-			// Debug
-			Configuration.print("\nInteraction: " + interaction);
+			log.info("\nInteraction: " + interaction);
 
-			SubSystemDepth subSystem = new SubSystemDepth(interaction);
+			subSystem = new SubSystemDepth(interaction);
 			
-			// Debug
-			Configuration.println(" - Length = "+ subSystem.getLength());
+			log.info(" - Length = "+ subSystem.getLength());
 			
-			if(!checkLocalLDFC(subSystem, interaction)) {
+			if(!checkLocalLDFC(interaction)) {
 				return false;
 			}
 			else {
 				// Debug
-				Configuration.println("locLDFC(a,"+subSystem.getLength() +") = true");
+				log.info(getName() + "(a,"+subSystem.getLength() +") = true");
 			}
 		}
 		return true;
+	}
+	
+	public String getName() {
+		return "locLDFC";
 	}
 	
 }
