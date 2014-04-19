@@ -1,6 +1,5 @@
 package aub.edu.lb.conditions;
 
-import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,7 +10,6 @@ import aub.edu.lb.kripke.Kripke;
 import aub.edu.lb.kripke.KripkeState;
 import aub.edu.lb.kripke.Transition;
 import aub.edu.lb.kripke.WaitForGraph;
-import aub.edu.lb.logging.LogFormatter;
 import aub.edu.lb.model.BIPAPI;
 import aub.edu.lb.model.BIPInteraction;
 import aub.edu.lb.model.SubSystemDepth;
