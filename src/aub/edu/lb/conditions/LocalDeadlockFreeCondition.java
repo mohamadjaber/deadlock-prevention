@@ -1,6 +1,8 @@
 package aub.edu.lb.conditions;
 
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import ujf.verimag.bip.Core.Interactions.CompoundType;
@@ -10,6 +12,7 @@ import aub.edu.lb.kripke.Kripke;
 import aub.edu.lb.kripke.KripkeState;
 import aub.edu.lb.kripke.Transition;
 import aub.edu.lb.kripke.WaitForGraph;
+import aub.edu.lb.logging.LogFormatter;
 import aub.edu.lb.model.BIPAPI;
 import aub.edu.lb.model.BIPInteraction;
 import aub.edu.lb.model.SubSystemDepth;
@@ -18,6 +21,13 @@ public class LocalDeadlockFreeCondition {
 	
 	protected SubSystemDepth subSystem; 
 	private static Logger log = Logger.getLogger(LocalCompleteDeadlockFreeCondition.class.getName());
+	
+	static {
+		LogManager.getLogManager().reset();
+		ConsoleHandler handler = new ConsoleHandler();
+		handler.setFormatter(new LogFormatter());
+		log.addHandler(handler);
+	}
 	
 	public LocalDeadlockFreeCondition(String fileName, boolean debug) {
 		CompoundType ct = TransformationFunction.ParseBIPFile(fileName);
@@ -62,7 +72,7 @@ public class LocalDeadlockFreeCondition {
 			else {
 				boolean isIncreased = subSystem.increase();
 				if(isIncreased) {
-					log.info("Increasing -> Length = " + subSystem.getLength());
+					log.info("Increasing -> Length = " + subSystem.getLength() + "\n");
 				}
 				else  {
 					return false;
@@ -81,14 +91,13 @@ public class LocalDeadlockFreeCondition {
 
 			subSystem = new SubSystemDepth(interaction);
 			
-			log.info(" - Length = "+ subSystem.getLength());
+			log.info(" - Length = "+ subSystem.getLength() + "\n");
 			
 			if(!checkLocalLDFC(interaction)) {
 				return false;
 			}
 			else {
-				// Debug
-				log.info(getName() + "(a,"+subSystem.getLength() +") = true");
+				log.info(getName() + "(a,"+subSystem.getLength() +") = true\n");
 			}
 		}
 		return true;

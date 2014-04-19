@@ -21,16 +21,21 @@ public class WaitForGraph {
 	private LinkedList<Edge> waitEdges = new LinkedList<Edge>();
 	private LinkedList<Edge> readyEdges = new LinkedList<Edge>();
 
+	public WaitForGraph() {
+		components = new ArrayList<Component>();
+		interactions = new ArrayList<BIPInteraction>();
+	}
+	
 	public WaitForGraph(GlobalState state) {
 		this.state = state;
 		buildWaitForGraph();
 	}
 
-	private void addWaitEdge(Edge e) {
+	public void addWaitEdge(Edge e) {
 		waitEdges.add(e);
 	}
 
-	private void addReadyEdge(Edge e) {
+	public void addReadyEdge(Edge e) {
 		readyEdges.add(e);
 	}
 
@@ -311,7 +316,7 @@ public class WaitForGraph {
 
 	public boolean superCycle() {
 		Set<Object> marked = new HashSet<Object>(enabledInteractions());
-
+		
 		boolean changeMarking;
 		do {
 			changeMarking = false;
@@ -346,7 +351,7 @@ public class WaitForGraph {
 						break;
 					}
 				}
-				if(existOutgoingMarked)
+				if(existOutgoingMarked) // check - to be optimized - mark all 
 					break;
 			}
 		} while(changeMarking);

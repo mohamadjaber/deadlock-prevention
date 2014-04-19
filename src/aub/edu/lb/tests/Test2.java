@@ -15,7 +15,7 @@ public class Test2 {
 		GasStation gs = new GasStation();
 		gs.generateGasStation(9);
 				
-		LocalCompleteDeadlockFreeCondition ldfc = new LocalCompleteDeadlockFreeCondition("BIPExamples/elevator1.bip", true);
+		LocalCompleteDeadlockFreeCondition ldfc = new LocalCompleteDeadlockFreeCondition("BIPExamples/atm6.bip", true);
 		startTime = System.currentTimeMillis();
 		System.out.println("LDFC " + ldfc.check());
 		stopTime = System.currentTimeMillis();

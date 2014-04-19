@@ -14,6 +14,8 @@ public class BIPInteraction {
 	private ArrayList<String> ports;
 	private int size;
 	
+	public BIPInteraction() {
+	}
 	
 	/**
 	 * 
@@ -96,7 +98,6 @@ public class BIPInteraction {
 			 bipInteractionName += components.get(i).getName() + "." + ports.get(i) + " ";
 		 return bipInteractionName + "]";
 	 }
-	
-	
+	 
 	
 }
