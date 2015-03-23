@@ -1,0 +1,20 @@
+
+Dear all,
+
+Attached please find a draft journal version of our FORTE
+deadlock-freedom paper from last year. I have generalized the
+condition for deadlock freedom so that it takes into account
+"branching", ie the possibility for choice of enabled actions in a
+component. I think this will make the condition much more general, and
+we will have less "false negatives".
+
+Of course we need to implement the new algorithm and run experiments. 
+Please read the draft, and please suggest examples and case
+studies to try the new algorithm on. Cheers,
+
+Paul
+
+
+PS. the abstract, intro and conclusions are the same as the FORTE
+paper. Mainly please read the new definitions, the new conditions for
+deadlock freedom (GALT, LALT) and the new algorithm for computing LALT

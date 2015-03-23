@@ -1,0 +1,43 @@
+Our first global condition is the most general possible: simply assert that, after execution of interaction $\act$, some
+$\B_i \in \cmps{\act}$ exhibits a supercycle-violation, as given by $\viol{\B_i}{d}{t}$
+(Definition~\ref{def:supercycle.violation}). 
+
+
+\bd[$\GAO(\B, Q_0, \act)$] \label{def:global.ANDOR-cond}
+Let $s \goesto[\act] t$ be a reachable transition of $(\B, Q_0)$.
+Then, in $t$, the following holds. 
+For every component $\B_i \in \comps{\act}$, %$\B_i$ has a level-$d$ $SC$-violation for some $d$.
+the formation violation condition holds.
+Formally,\\
+\ind  $\fas \B_i \in \comps{\act}, \formViol{\B_i}{t}$.
+%\ind  $\fas \B_i \in \comps{\act}, \exs d \ge 1: \viol{\B_i}{d}{t}$.
+\ed
+We now show that $\GAO$ is supercycle-freedom preserving.
+
+
+\bt \label{thm:GAO.SC-free-preserving}
+$\GAO$ is supercycle-freedom preserving
+\et
+\prf{
+We must establish:
+for every reachable transition $s \la{\act} t$,
+$\wfg{\B}{s}$ is supercycle-free implies that $\wfg{\B}{t}$ is
+supercycle-free. Our proof is by contradiction, so we assume the existence of a reachable transition
+$s \la{\act} t$ such that $\wfg{\B}{s}$ is supercycle-free and $\wfg{\B}{t}$ contains a supercycle.
+
+By Proposition~\ref{prop:supercycle-formation}
+ there exists a component $\B_i \in \cmps{\act}$ such that $\B_i$ is in $\CC$, where 
+$\CC$ is a strongly connected supercycle that is a subgraph of $\wfg{\B}{t}$.
+
+Since $\CC$ is a strongly connected supercycle, we have,
+ by Definition~\ref{def:sConn.violation}, that $\neg \connViol{\B_i}{t}$ holds.
+
+Since $\CC$ is a supercycle, we have, by Proposition~\ref{prop:scViol-iff-notInSC}, 
+that $\neg (\exs d \ge 1: \scViol{\B_i}{d}{t})$ holds.
+
+Hence, by Definition~\ref{def:formation.violation}, $\neg \formViol{\B_i}{t}$
+But, by Definition~\ref{def:global.ANDOR-cond}, we have $\formViol{\B_i}{t}$.
+Hence we have the desired contradiction, and so the theorem holds.
+}
+
+

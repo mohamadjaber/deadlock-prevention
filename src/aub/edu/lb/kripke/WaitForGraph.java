@@ -120,6 +120,8 @@ public class WaitForGraph {
 		SubSystem subSystem = state.getSubSystem();
 		// computes interactions' nodes in the wait-for graph
 		ArrayList<BIPInteraction> leastOneReadyInteractions = new ArrayList<BIPInteraction>();
+		// if no local state readies that interaction then the interaction is a source state
+		// and then cannot belong to a supercycle. 
 		for (BIPInteraction interaction : subSystem.getInteractions()) {
 			for (LocalState ls : state.getLocalStates()) {
 				if (ls.readies(interaction)) {
@@ -324,35 +326,30 @@ public class WaitForGraph {
 			// to a marked node B, mark a
 			for (BIPInteraction interaction : interactions) {
 				if(marked.contains(interaction)) continue;
-				boolean allOutgoinMarked = true;
+				boolean allOutgoingMarked = true;
 				for (Edge waitEdge : waitEdges) {
 					if (!marked.contains(waitEdge.getComponent())) {
-						allOutgoinMarked = false;
+						allOutgoingMarked = false;
 						break;
 					}
 				}
-				if (allOutgoinMarked) {
+				if (allOutgoingMarked) {
 					marked.add(interaction);
 					changeMarking = true; 
-					break;
 				}
 			}
 			
-			// if exists component B such that some outgoing edge from B is to a marked node a
-			// mark B
+			// if exists non-marked component B such that some outgoing edge from B is to a 
+			// marked node a, mark B
 			for(Component component: components) {
 				if(marked.contains(component)) continue;
-				boolean existOutgoingMarked = false;
 				for(Edge readyEdge : readyEdges) {
 					if(marked.contains(readyEdge.getInteraction())) {
 						changeMarking = true;
 						marked.add(component);
-						existOutgoingMarked = true; 
 						break;
 					}
 				}
-				if(existOutgoingMarked) // check - to be optimized - mark all 
-					break;
 			}
 		} while(changeMarking);
 		

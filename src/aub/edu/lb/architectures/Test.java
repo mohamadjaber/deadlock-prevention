@@ -10,7 +10,7 @@ import aub.edu.lb.model.BIPAPI;
 
 public class Test {
 	public static void main(String[] args) {
-		String bipFile = "BIPExamples/elevator.bip";
+		String bipFile = "BIPExamples/elevator2.bip";
 		CompoundType ct = TransformationFunction.ParseBIPFile(bipFile);
 		BIPAPI.initialize(ct);
 
@@ -22,12 +22,15 @@ public class Test {
 		LinkedList<String> idleStateA2 = new LinkedList<String>();
 		idleStateA1.add("l0");
 		idleStateA2.add("l0");
+	//	idleStateA2.add("l1");
+	//	idleStateA2.add("l2");
+
 
 
 		
 		StrongNonInterferenceSubmitted sniFinal = new StrongNonInterferenceSubmitted(
 				BIPAPI.getComponent("c1"), 
-				BIPAPI.getComponent("c2"), 
+				BIPAPI.getComponent("c3"), 
 				idleStateA1, 
 				idleStateA2
 		);

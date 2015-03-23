@@ -1,0 +1,25 @@
+\begin{abstract}
+
+  We present a sound but incomplete criterion for checking
+  deadlock freedom of finite state systems expressed in BIP: a
+  component-based framework for the construction of complex
+  distributed systems.  Since deciding deadlock-freedom for
+  finite-state concurrent systems is PSPACE-complete, our criterion
+  gives up completeness in return for tractability of evaluation. Our
+  criterion can be evaluated by model-checking subsystems of the
+  overall large system. The size of these subsystems depends only on
+  the local topology of direct interaction between components, and
+  \emph{not} on the number of components in the overall system.
+
+  We present two experiments, in which our method compares favorably
+  with existing approaches. For example, in verifying deadlock freedom
+  of dining philosphers, our method shows linear increase in
+  computation time with the number of philosophers, whereas other
+  methods (even those that use abstraction) show super-linear
+  increase, due to state-explosion.
+
+\end{abstract}
+
+
+
+

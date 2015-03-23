@@ -1,0 +1,38 @@
+
+Our deadlock-freedom theorem require that all initial states be sueprcycle-free. 
+We assume that the number of initial states is small, so that we can check each explicitly. 
+
+
+\begin{figure}[ht]
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:compute-scViol}
+mm\= mm\= mm\= mm\= mm\=\kill
+\cInitSCFree{$Q_0$}\\
+\cmnt\ returns true iff all initial states are supercycle-free\\
+\lio{\FORALLC{s_0 \in Q_0}}
+   \lit{\mbox{compute $\wfg{\B}{s_0}$}}
+   \lit{\mbox{let $U$ be the result of removing from $\wfg{\B}{s_0}$ all nodes $v$ such that $(\ex d \ge 1: \viol{v}{d}{t})$}}
+   \litc{\IFC{\mbox{$U$ is nonempty}}\ \THEN\ \RETURNE{\fff}}{\cmnt\ $s_0$ not supercycle-free, so return false}
+\lion{\ELSE\ \RETURNE{\ttt}}
+\end{tabbing}
+\label{fig:checkInitSCFree}
+\caption{Procedure to check that all initial states are supercycle-free}
+\end{figure}
+
+
+\bp
+\cInitSCFree{$Q_0$} returns true iff all initial states are supercycle-free.
+\ep
+\prf{
+Consider the execution of \cInitSCFree{$Q_0$} for an arbitrary $s_0 \in Q_0$.
+
+Suppose that $U$ is nonempty. 
+By Proposition~\ref{prop:notInSC-implies-scViol}, $U$ is a supercycle. 
+Since $U \sub \wfg{\B}{s_0}$, we conclude that $s_0$ not supercycle-free, so false is the correct
+result in this case.
+
+Now suppose that $U$ is empty. Hence every node in $\wfg{\B}{s_0}$ has a supercycle violation, and so
+by Proposition~\ref{prop:scViol-implies-notInSC}, no node of $\wfg{\B}{s_0}$ can be in a 
+strongly-connected supercycle. Hence  $\wfg{\B}{s_0}$ does not contain a strongly-connected supercycle.
+So, by Proposition~\ref{prop:supercycle:contains-mssc}, $\wfg{\B}{s_0}$ does not contain a supercycle.
+}

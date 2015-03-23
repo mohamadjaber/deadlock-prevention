@@ -1,0 +1,182 @@
+%Let $(B, Q_0)$ be a BIP system. 
+Consider a reachable transition
+$s \la{\act} t$ of $(\B, Q_0)$. Suppose that the execution of 
+this transition creates a supercycle $\SC$, \ie $\SC \not\sub \wfg{\B}{s} \land \SC \sub
+\wfg{\B}{t}$. The only components that can change state along this
+transition are the participants of $\act$, \ie the $\B_i \in \cmps{\act}$, and so
+they are the only components that can cause a supercycle to be created
+in going from $s$ to $t$.
+There are three relevant possibilities for each $\B_i \in \cmps{\act}$:
+\bdn
+
+\item[Case 1] \label{case:finite-in}
+$\B_i$ has finite in-depth in $\wfg{\B}{t}$: then, if $\B_i \in
+\SC$, it can be removed and still leave a supercycle $\SC'$, by
+Proposition~\ref{prop:supercycle:essential-subgraph-of}. Hence 
+$\SC'$ exists in $\wfg{\B}{s}$, and so 
+$\B_i$ is not essential to the creation of a supercycle.
+
+\item[Case 2] \label{case:finite-out}
+$\B_i$ has finite out-depth in $\wfg{\B}{t}$: 
+by Proposition~\ref{prop:supercycle:no-finite-outdegree}, 
+$\B_i$ cannot be part of a supercycle, and so $\SC \sub \wfg{\B}{s}$.
+
+\item[Case 3] \label{case:infinite-both}
+$\B_i$ has infinite in-depth and infinite out-depth in
+$\wfg{\B}{t}$: in this case, $\B_i$ is possibly an essential part of
+$\SC$, \ie $\SC$ was created in going from $s$ to $t$.
+
+\edn
+We thus impose a condition which guarantees that only 
+Case~2 %~\ref{case:finite-in} 
+or Case~3 %\ref{case:finite-out}
+occur. 
+
+
+
+\bd[$\GLin(\act)$] \label{def:global:dfc}
+%Let $(B, Q_0)$ be a BIP system, with $B =\gamma(\B_1,\dots,\B_n)$, and 
+%$a$ an interaction of $(B, Q_0)$, \ie $a \in \gamma$.
+Let $s \goesto[\act] t$ be a reachable transition of BIP-system $(\B, Q_0)$.
+Then, in $t$, the following holds. 
+For every component $\B_i$ of $\cmps{\act}$:  either $\B_i$ has finite in-depth,
+or finite out-depth, in $\wfg{\B}{t}$.
+Formally,\\
+\ind  $\fa \B_i \in \cmps{a}: \widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
+\ed
+
+
+
+\bp \label{prop:indepth-finite-implies-scViol}
+Assume that node $v$ of $\wfg{\B}{t}$ has a finite in-depth of $d$ in $\wfg{\B}{t}$, \ie 
+$\widepth{\B}{v}{t} = d$. Then $\viol{v}{d}{t}$
+\ep
+%
+\prf{
+Proof is by induction on $d$.
+
+\noindent
+\ul{Base case, $d=1$.} Hence by Definitions~\ref{def:path} and \ref{def:depth},  
+$v$ has no incoming wait-for-edges in $\wfg{\B}{t}$. Hence by Definition~\ref{def:supercycle.violation},
+$\viol{v}{1}{t}$.
+
+\noindent
+\ul{Inductive step, $d > 1$.}
+By Definition~\ref{def:path} and \ref{def:depth}, all predecessors (\ie nodes $u$ such that $u \ar v \in \wfg{\B}{t}$)
+of $v$ have an in-depth of at most $d-1$. Hence, by the induction hypothesis applied to $d-1$, we obtain 
+$\viol{u}{d-1}{t}$ for all predecessors $u$ of $v$. Hence by Definition~\ref{def:supercycle.violation}, 
+Clauses~\ref{def:supercycle.violation.component.in} and \ref{def:supercycle.violation.interaction.in},
+$\viol{v}{1}{t}$.
+}
+
+
+
+
+\bp \label{prop:outdepth-finite-implies-scViol}
+Assume that node $v$ of $\wfg{\B}{t}$ has a finite out-depth of $d$ in $\wfg{\B}{t}$, \ie 
+$\wodepth{\B}{v}{t} = d$. Then $\viol{v}{d}{t}$
+\ep
+%
+\prf{
+Proof is by induction on $d$.
+
+\noindent
+\ul{Base case, $d=1$.} Hence by Definitions~\ref{def:path} and \ref{def:depth},  
+$v$ has no outgoing wait-for-edges in $\wfg{\B}{t}$. Hence by Definition~\ref{def:supercycle.violation},
+$\viol{v}{1}{t}$.
+
+\noindent
+\ul{Inductive step, $d > 1$.}
+By Definition~\ref{def:path} and \ref{def:depth}, all successors (\ie nodes $u$ such that $v \ar u \in \wfg{\B}{t}$)
+of $v$ have an in-depth of at most $d-1$. Hence, by the induction hypothesis applied to $d-1$, we obtain 
+$\viol{u}{d-1}{t}$ for all predecessors $u$ of $v$. Hence by Definition~\ref{def:supercycle.violation}, 
+Clauses~\ref{def:supercycle.violation.component.out} and \ref{def:supercycle.violation.interaction.out},
+$\viol{v}{1}{t}$.
+}
+
+
+
+
+\bl \label{lemma:glob-lin-implies-globANDOR}
+$\fa \act \in \gamma: \GLin(\B, Q_0, \act) \imp \GAO(\B, Q_0, \act)$.  
+\el
+\prf{
+Assume, for arbitrary $\act \in \gamma$, that $\GLin(\act)$ holds. That is, 
+ 
+\ind For every reachable transition $s \goesto[\act] t$ of $(\B, Q_0)$,\\
+\ind \ind  $\fas \B_i \in \cmps{\act}: \widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
+
+\noindent
+By Propositions~\ref{prop:indepth-finite-implies-scViol} and \ref{prop:outdepth-finite-implies-scViol}, 
+
+\ind For every reachable transition $s \goesto[\act] t$ of $(\B, Q_0)$,\\
+\ind \ind  $\fas \B_i \in \cmps{\act}, \ex d \ge 1: \viol{\B_i}{d}{t}$.
+
+\noindent
+Hence $\GAO(\act)$ holds.
+}
+
+
+\bt \label{thm:GLin.SC-free-preserving}
+$\GLin$ is supercycle-freedom preserving
+\et
+%
+\prf{
+Folows immediately from Lemma~\ref{lemma:glob-lin-implies-globANDOR} and Theorem~\ref{thm:GAO.SC-free-preserving}.
+}
+
+
+%Since $\GLin(\act)$ implies $\GAO(\act)$, and $(\fa \act \in \gamma: \GAO(\act))$ implies deadlock-freedom (assuming also that initial
+%state are deadlock-free), we obtain:
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Deadlock freedom using global restrictions}
+
+
+\bco[Deadlock-freedom via \GAO, \GLin] 
+\label{theorem:global.deadlock-free}
+Assume that
+\bn
+\item \label{theorem:global.deadlock-free.initial}
+      for all $s_0 \in Q_0$, $\wfg{\B}{s_0}$ is supercycle-free, and
+\item \label{theorem:global.deadlock-free.scfPres}
+      for all interactions $\act$ of $\B$ (\ie $\act \in \gamma$),  $\GAO(\act) \lor \GLin(\act)$ holds.
+\en
+Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free, and so 
+$(\B, Q_0)$ is free of local deadlock.
+\eco
+\prf{Immediate from Theorems~\ref{thm:GAO.SC-free-preserving}, \ref{thm:GLin.SC-free-preserving} and Corollary~\ref{cor:SC-free-preserving.deadlock-free}.}
+
+
+
+%% \bt[Deadlock-freedom via \GLin] 
+%% \label{theorem:global:deadlock-free}
+%% \label{theorem:global.linear.deadlock-free}
+%% %Let $(B, Q_0)$ be a BIP system, with $B = \gamma(\B_1,\dots,\B_n)$.
+%% Assume that
+%% \bn
+%% \item \label{theorem:global.linear.deadlock-free.initial} 
+%%       for all $s_0 \in Q_0$, $\wfg{\B}{s_0}$ is supercycle-free, and
+%% \item \label{theorem:global.linear.deadlock-free.globalLinear}
+%%       for all interactions $\act$ of $B$ (\ie $\act \in \gamma$), $\GLin(\act)$ holds.
+%% \en
+%% Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
+%% \et
+%% %
+%% \prf{
+%% By Assumption~(\ref{theorem:global.linear.deadlock-free.globalLinear}) and 
+%% Proposition~\ref{prop:glob-lin-implies-globANDOR}, we have 
+%% $\fas \act \in \gamma: \GAO(\act)$. By this and
+%% Assumption~(\ref{theorem:global.linear.deadlock-free.initial}), we obtain that the 
+%% assumptions of Theorem~\ref{theorem:global.ANDOR.deadlock-free} hold. Hence, by applying 
+%% Theorem~\ref{theorem:global.ANDOR.deadlock-free}, we obtain the conclusion
+
+%% for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
+
+%% and we are done.
+%% }
+
+
+

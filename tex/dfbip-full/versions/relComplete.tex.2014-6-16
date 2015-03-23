@@ -1,0 +1,255 @@
+TO DISCUSS:
+
+LDFC IMPIES LCDFC, IE IT IS STRICTLY STRONGER
+
+EXPLAIN INTUITION: CYCLE INSIDE $\dsk{a}{\l}$ CAN BE HARMLESS, BUT ITS
+EXISTENCE VIOLATES OLD LDFC CONDITION, WHICH IS NOT ``SENSITIVE'' TO
+THE FACT THAT AN INFINITE INDEGREE OR OUTDEGREE PATH CAN COME FROM
+OPUTSIDE OF $\dsk{a}{\l}$ (POTENTIALLY HARMFUL IE SUPERCYCLE, AND WE CANNOT
+TELL) OR FROM INSIDE $\dsk{a}{\l}$, IN WHICH CASE WE CAN DETERMINE IF THIS
+CYCLE CONTRIBUTES TO A SUPERCYCLE, BY CHECKING DIRECTLY
+
+
+
+==============================================================
+
+We now present a ``more complete'' condition for deadlock-freedom.
+Roughly, the idea is as follows. 
+
+The linear global condition for deadlock-freedom is that, after execution of interaction $a$, every involved component
+$B_i \in C_a$ has either finite in-depth or finite out-depth.  This implies that $B_i$ cannot lie on a
+cycle of wait-for-edges,and so cannot be an ``essential'' part of a supercycle.
+Thus, no supercycle can be cfeated by teh execution of $a$.
+We check the global condition locally by checking subsystem $\ssg{a}{\l}$ (for some $\l$) for
+the ``linear'' condition 
+$ \fa B_i \in C_a: \widepth{\dsk{a}{\l}}{B_i}{t_a} \le \l \lor \wodepth{\dsk{a}{\l}}{B_i}{t_a} \le \l$.
+That is, either the in-depth or the out-depth of every component
+$B_i \in C_a$ must be $\le \l$.
+
+ However, as we easily observe from Figure~\ref{fig:cycleOK}, it is possible to have a wait-for
+cycle without having deadlock, since a cycle does not necessarily imply a super
+cycle, and hence deadlock. 
+%
+\begin{figure}[ht]
+\begin{center}
+\scalebox{0.5}{\input{figs/cycleOK.pdf_t}}
+\caption{Example where a wait-for cycle does not imply deadlock}
+\label{fig:cycleOK}
+\end{center}
+\end{figure}
+%
+Thus, requiring this ``acyclicity'' can be a significant source of ``incompleteness'' of our
+condition. We relax the condition as follows. 
+We showed above that
+after execution of interaction $a$, the resulting supercycle $SC$, if any, must involve at least one component
+$B_i \in C_a$. So, considering \emph{any} subsystem $\ssg{a}{\l}$, for all $\l \ge 1$:
+\be
+\item either $SC$ has a wait-for path within it which ``traverses'' $\ssg{a}{\l}$ and contains some $B_i \in C_a$, or 
+\item $SC$ is wholly contained within $\ssg{a}{\l}$,
+\ee
+Our new local condition is then to find some subsystem $\ssg{a}{\l}$ in which both the above conditions are false. 
+Our check starts with $\l=1$ and keeps increasing $\l$ until it can verify the negation of both of the above conditions.
+Checking the existence of the traversing path is a striaghtforward graph reachability problem. 
+Checking the existence of a supercycle within $\ssg{a}{\l}$ is achieved by a ``marking'' algorithm, as discussed below.
+
+A node $v$ in $\dsk{a}{\l}$ %used to be $\ssg{a}{\l}$
+ is a \emph{border node} of $\dsk{a}{\l}$ iff $v$ has edge in $\sg{B}$ to some node outside
+$\dsk{a}{\l}$.
+Let $\pi$ be a wait-for path that starts at some border node in $\dsk{a}{\l}$ and ends in another border node of 
+$\dsk{a}{\l}$. Then $\pi$ \emph{traverses} $\dsk{a}{\l}$.
+
+
+
+
+\bd[$\LCDFC(a, \l)$] \label{def:lcdfc-k}
+%Let $(B, Q_0)$ be a BIP system, with $B =\gamma(B_1,\dots,B_n)$.
+%Let $a$ be an interaction of $(B, Q_0)$, \ie $a \in \gamma$.
+Let $s_a \goesto[a] t_a$ be a reachable transition of $\dsk{a}{\l}$.
+Then, in $t_a$, the following conditions both hold.
+\bn
+\item \label{def:lcdfc-k:path} There is no wait-for path that traverses $\dsk{a}{\l}$, and contains some $B_i \in C_a$.
+\item \label{def:lcdfc-k:sc}   There is no supercycle wholly contained in $\dsk{a}{\l}$.
+\en
+\ed
+
+\bl
+\label{lemma:cloc-implies-glob}
+%Let $(B, Q_0)$ be a BIP system, with $B = \gamma(B_1,\dots,B_n)$, and 
+Let $a$ be an interaction of $B$, \ie $a \in \gamma$, and assume that 
+$\LCDFC(a, \l)$ holds for some finite $\l \ge 0$.
+Let $s \la{a} t$ be a reachable transition of $(B, Q_0)$ where 
+$\wfg{B}{s}$ us supercycle-free. Then $\wfg{B}{t}$ is superctycle-free.
+\el
+%
+\prf{
+Let $B_i \in C_a$, $s_a = s \pj \dsk{a}{\l}$, $t_a = t \pj \dsk{a}{\l}$.
+Then $s_a \la{a} t_a$ is a reachable transition of $\dsk{a}{\l}$ by 
+Corollary~\ref{cor.bip.reachability}.
+
+%% By $\LCDFC(a, \l)$, 
+%% \bn
+%% \item There is no wait-for-path that traverses $\dsk{a}{\l}$, and 
+%% \item There is no supercycle wholly contained in $\dsk{a}{\l}$.
+%% \en
+
+Now suppose that $\wfg{B}{t}$ contains a supercycle $SC$. Let $SC'$ be $SC$ with all nodes of finite in-depth removed. 
+$SC'$ is a supercycle by Proposition~\ref{prop:supercycle:essential-subgraph-of}.
+
+\topcase{1}{$SC' \ints C_a = \emptyset$} Then, every edge $e$ of $SC$ is not $B_i$-incident. 
+Hence, by lemma~\ref{prop:wait-for-edge-preservation}, we conclude that $e$ is an edge in $\wfg{B}{s}$.
+So $SC \sub \wfg{B}{s}$, and hence $\wfg{B}{s}$ is not supercycle-free, contrary to assumption.
+
+
+\topcase{2}{$SC' \ints C_a \ne \emptyset$} Hence there is a $B_i \in SC' \ints C_a$ with infinite in-depth. 
+By proposition~\ref{prop:supercycle:no-finite-outdegree}, $B_i$ also has infinite out-depth. Also, the infinite in-depth
+and infinite out-depth are both due to $B_i$'s membership in $SC'$.
+By clause~\ref{def:lcdfc-k:path} of Definition~\ref{def:lcdfc-k}, there is no wait-for-path that traverses $\dsk{a}{\l}$
+and contains $B_i$. 
+
+
+%Let $SC'' = SC' \ints \dsk{a}{\l}$, \ie $SC''$ is the part of $SC'$ that lies inside $\dsk{a}{\l}$.
+%Hence $B_i$ is a node in $SC''$, and 
+
+Let $SC''$ be the strongly connected component of $SC'$ that contains $B_i$. By the above, $SC''$ must either have no
+outgoing path that leaves $\dsk{a}{\l}$, or no incoming path that enters from outside of $\dsk{a}{\l}$.
+In the first case, $SC''$ is by itself a supercycle that is wholly contained in $\dsk{a}{\l}$, which 
+violates clause~\ref{def:lcdfc-k:sc} of Definition~\ref{def:lcdfc-k}.
+In the second case, removing $SC''$ from $SC'$ leaves a supercycle which does not contain any $B_i \in C_a$, which contradicts 
+the case condition. 
+
+
+
+%% It follows that $B_i$ must lie on a wait-for-cycle $WC$ that
+%% is a subgraph of $SC$ and is also wholly contained in $\dsk{a}{\l}$. We now have two subcases.
+
+%% \scase{2.1}{$SC' \not\sub \dsk{a}{\l}$} Then $SC'$ contains a path that
+%% traverses $\dsk{a}{\l}$, in violation of clause~\ref{def:lcdfc-k:path} of Definition~\ref{def:lcdfc-k}.
+
+%% \scase{2.2}{$SC' \sub \dsk{a}{\l}$} This violates clause~\ref{def:lcdfc-k:sc} of Definition~\ref{def:lcdfc-k}.
+
+
+Hence in no case can a supercycle $SC$ exist in $\wfg{B}{t}$, and so the lemma is established.
+}
+
+
+
+\bt[Deadlock-freedom] 
+\label{theorem:relComplete:deadlock-free}
+%Let $(B, Q_0)$ be a BIP system, with $B = \gamma(B_1,\dots,B_n)$.
+If (1) for all $s_0 \in Q_0$, $\wfg{B}{s_0}$ is supercycle-free, and
+(2) for all interactions $a$ of $B$ ($a \in \gamma$), $\LCDFC(a,\l)$ holds for some $\l \ge 0$,\\
+ then for every reachable state $u$ of $(B, Q_0)$:  $\wfg{B}{u}$ is supercycle-free.
+\et
+%
+\prf{
+Let $u$ be an arbitrary reachable state. The proof is by induction on
+the length of the finite execution $\rho$ that ends in $u$.
+Assumption (1) provides the base case, for $\rho$ having length 0, and
+so $u \in Q_0$. 
+For the induction step, we establish:
+for every reachable transition $s \la{a} t$,
+$\wfg{B}{s}$ is supercycle-free implies that $\wfg{B}{t}$ is
+supercycle-free. This follows from Assumption (2) and 
+Lemma~\ref{lemma:cloc-implies-glob}.
+}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Checking \LCDFC}
+
+
+Checking clause~\ref{def:lcdfc-k:path} of Definition~\ref{def:lcdfc-k} can be done with a simple graph search. Start from
+each border node in $\dsk{a}{\l}$ and check for a wait-for-path that leads to some other border node, and that also
+contains some $B_i \in C_a$. \checkPath{$a, \l, t_a$} does this check, for a given state $t_a$ of  $\dsk{a}{\l}$.
+
+Checking clause~\ref{def:lcdfc-k:sc} of Definition~\ref{def:lcdfc-k} is by a marking algorithm. For a 
+given state $t_a$ of  $\dsk{a}{\l}$, let $W$ be the wait-for-graph of $\dsk{a}{\l}$ in isolation, \ie $W
+= \wfg{\dsk{a}{\l}}{t_a}$. Then, repeatedly mark nodes that cannot possibly be part of a supercycle in $W$. 
+That is, an interaction $a$ all of whose wait-for-edges in $W$ are to already marked component nodes, and a 
+component $B$ that has some wait-for-edge in $W$ to some marked interaction node.
+\checkSC{$a, \l, t_a$} does this check.
+
+The remaining procedures organize the needed iterations over \checkPath{$a, \l, t_a$} and \checkSC{$a, \l, t_a$}.
+
+
+\begin{figure}[ht]
+
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:check-cdf}
+mm\= mm\= mm\= \kill
+\checkLCDFC{$B, Q_0$},  where $B \df \gamma(B_1,\dots,B_n)$\\
+\lio{\FORALLC{\mbox{interactions $a \in \gamma$}}}
+   \lit{\IFC{\checkInt{B, Q_0, a} = \fff}\ \RETURNE{\fff}}
+\lio{\ENDFOR;}
+\liocn{\RETURNE{\ttt}}{//return $\ttt$ if check succeeds for all $a \in \gamma$}
+\end{tabbing}
+
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:checkcInt}
+mm\= mm\= mm\= \kill
+\checkInt{$B, Q_0, a$},  where $B \df \gamma(B_1,\dots,B_n), a \in \gamma$\\
+\lio{\mbox{//check $(\ex \l \ge 0: \LCDFC(a, \l))$}}
+\lioc{\l \gts 0;}{//start with $\l = 0$}
+\lio{\WHILEC{\ttt}}
+   \litc{\IFC{\locLCDFC{a, \l} = \ttt}\ \RETURNE{\ttt}\ \ENDIF;}{//success, so return true}
+   \litc{\IFC{\dsk{a}{\l} = \gamma(B_1,\dots,B_n)}\ \RETURNE{\fff}\ \ENDIF;}{//exhausted all subsystems, return false}
+   \litc{\l \gts \l + 1}{//increment $\l$ until success or intractable or failure}
+\lio{\ENDWHILE}
+\end{tabbing}
+
+\setcounter{lctr}{0}
+\begin{tabbing}
+\label{alg:eval-lcdfc}
+mm\= mm\= mm\= \kill
+\locLCDFC{$a, \l$}\\
+\lio{\mbox{//check $\LCDFC(a, \l)$}}
+\lio{\FORALLC{\mbox{reachable transitions $s_a \goesto[a] t_a$ of $\dsk{a}{\l}$}}}
+   \litc{\IFC{\checkPath{a, \l, t_a}  \lor \checkSC{a, \l, t_a}}\; \RETURNE{\fff}}{//check violation of Definition~\ref{def:lcdfc-k}}
+\lio{\ENDFOR;}
+\liocn{\RETURNE{\ttt}}{//return $\ttt$ if no violation found}
+\end{tabbing}
+
+\setcounter{lctr}{0}
+\begin{tabbing}
+\label{alg:check-path}
+mm\= mm\= mm\= \kill
+\checkPath{$a, \l, t_a$}\\
+\lio{\mbox{//check for existence of a traversing path in \dsk{a}{\l} in state $t_a$}}
+\lio{\mbox{//border node of \dsk{a}{\l} is a node in \dsk{a}{\l} with an edge to some node outside \dsk{a}{\l}}}
+\lio{\FORALLC{\mbox{border nodes $u$ in \dsk{a}{\l}}}}
+   \lit{\IFC{\mbox{in $\wfg{\dsk{a}{\l}}{t_a}$, there exists a path $\pi$ in \dsk{a}{\l} from $u$ to some $B_i \in C_a$ to another border node $v$}}}
+      \lih{\RETURNE{\ttt};}
+\lioc{\RETURNE{\fff}}{//return false if no traversing path found}
+\end{tabbing}
+
+
+\setcounter{lctr}{0}
+\begin{tabbing}
+\label{alg:check-sc}
+mm\= mm\= mm\= mm\= mm\=\kill
+\checkSC{$a, \l, t_a$}\\
+\lio{\mbox{//check for existence of a supercycle in \dsk{a}{\l} in state $t_a$}}
+\lioc{\mbox{let $W = \wfg{\dsk{a}{\l}}{t_a}$}}{//$W$ is wait-for-graph of \dsk{a}{\l} only, in state $t_a$}
+\lio{\mbox{mark all enabled interactions $a$}}
+\lio{\mbox{//loop invariant: marked nodes are not part of a supercycle}}
+\lio{\WHILEC{\mbox{there is a change in markings}}}
+   \lit{\IFC{\mbox{exists interaction $a \in W$ such that every outgoing edge from $a$ is to a marked node $B$}}}
+       \lih{\mbox{mark $a$;}}
+   \lit{\IFC{\mbox{exists component $B \in W$ such that some outgoing edge from $B$ is to a marked node $a$}}}
+       \lih{\mbox{mark $B$}}
+\lio{\ENDWHILE;}
+\lioc{\IFC{\mbox{not all nodes are marked}}}{//unmarked nodes constitute a supercycle}
+   \litc{\RETURNE{\ttt}}{//so return true if unmarked nodes exist}
+\lio{\ELSE}
+   \litc{\RETURNE{\fff}}{//and false if not}
+\end{tabbing}
+
+
+\caption{Pseudocode for checking \LCDFC.}
+\label{fig:implementation-checkLCDFC}
+\end{figure}
+

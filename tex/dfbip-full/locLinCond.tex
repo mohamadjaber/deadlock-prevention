@@ -1,0 +1,219 @@
+We now formulate a local version of $\GLin$.
+Observe that if
+$\widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$,
+then there is some finite $\l$ such that 
+$\widepth{\B}{\B_i}{t} = \l \lor \wodepth{\B}{\B_i}{t} = \l$.
+%containing $\B_i$ and all nodes(components and interactions) have distance from $\B_i$ of up to $\l+1$.
+Then $\widepth{\B}{\B_i}{t} = \l \lor \wodepth{\B}{\B_i}{t} = \l$ can be verified in 
+the wait-for-graph of 
+$\ssg{i}{\l+1}$, since we verify either that all wait-for-paths ending in $\B_i$
+have length $\le \l$, or that 
+all wait-for-paths starting in $\B_i$ 
+have length $\le \l$.
+These conditions can be checked in $\ssg{i}{\l+1}$, since $\ssg{i}{\l+1}$
+contains every node in a
+wait-for-path of length $\l+1$ or less and which starts or ends in $\B_i$.
+%
+Since $\ssg{i}{\l+1} \sub \ssg{\act}{\l+2}$ for $\B_i \in \cmps{\act}$, we use 
+$\ssg{\act}{\l+2}$ instead of the set of subsystems 
+$\set{\ssg{i}{\l+1} : \B_i \in \cmps{\act}}$. 
+%% DISCUSS tradeoff: one larger $\ssg{a}{\l+2}$ instead of several smaller 
+%$\ssg{i}{\l+1}?
+%We leave analysis of the tradeoff between using one larger system
+%($\ssg{a}{\l+2}$) versus several smaller ones ($\ssg{i}{\l+1}$) to another paper.
+
+
+
+
+\bd[$\LLin(\B, Q_0, \act, \l)$] \label{def:ldfc-k}
+%Let $(B, Q_0)$ be a BIP system, with $B =\gamma(\B_1,\dots,\B_n)$.
+%Let $a$ be an interaction of $(B, Q_0)$, \ie $a \in \gamma$.
+Let $\l \ge 2$ and $s_\act \goesto[\act] t_\act$ be a reachable transition of $\dsk{\act}{\l}$.
+Then, in $t_\act$, the following holds. 
+For every component $\B_i$ of $\cmps{\act}$:  
+either $\B_i$ has in-depth at most $\l$, or out-depth at most $\l$, in $\wfg{\dsk{\act}{\l}}{t_\act}$. 
+Formally,\\
+\ind  $\fa \B_i \in \cmps{\act}: 
+\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} \le \l-2 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} \le \l-2$.
+\ed
+
+
+To infer deadlock-freedom in $(\B, Q_0)$ by checking $\LLin(\B, Q_0, a, \l)$,
+% which is a condition on the behavior of the subsystem $\ds{a}$,
+ we show that wait-for behavior in $\B$ ``projects down''
+to any subcomponent $\B'$, and that wait-for behavior in $\B'$ ``projects up'' to $\B$.
+
+% Let $e$ be a wait-for-edge with both endpoints in $B'$. Then if $e$ is
+% present in the wait-for-graph of $B$ for state $s$, then $e$ is also present in the wait-for-graph
+% $B'$ for $s \pj B'$ ($e$ projects down), and vice-versa ($e$ projects up).
+
+%Thus $\wfg{B'}{s \pj B'}$ is a ``projection'' of $\wfg{\B}{s}$ onto $B'$.
+
+
+\vspace{0.5ex}
+
+Since wait-for-edges project up and down, it follows that wait-for-paths
+project up and down, provided that the subsystem contains the entire wait-for-path.
+
+\bp[In-projection, Out-projection] \label{prop:in-out-projection}
+%Let $(B, Q_0)$ be a BIP system, 
+Let $\l \ge 1$, let $\B_i$ be an atomic component of $\B$, and let 
+$(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$ which is based on a superset of $\ssg{i}{\l}$.
+Let $s$ be a state of $(B, Q_0)$, and $s' = s \pj B'$. Then
+(1) $\widepth{\B}{\B_i}{s} \le \l-1$ iff $\widepth{\B'}{\B_i}{s'} \le \l-1$, and
+(2) $\wodepth{\B}{\B_i}{s} \le \l-1$ iff $\wodepth{\B'}{\B_i}{s'} \le \l-1$.
+\ep
+\prfs{Follows from Defintion~\ref{def:depth},
+Proposition~\ref{prop:edge-projection}, and the observation that $\wfg{\B'}{s'}$
+contains all wait-for-paths of length $\le \l$ that start or end in $\B_i$.}
+%
+\prf{
+We establish clause (1). The proof of clause (2) is analogous, except we replace paths ending in
+$\B_i$ by paths starting from $\B_i$.
+The proof of clause (1) is by double implication.
+
+
+$\widepth{\B}{\B_i}{s} \le \l-1$ implies $\widepth{\B'}{\B_i}{s'} \le \l-1$:
+Let $\pi$ be an arbitrary wait-for-path in $\wfg{\B'}{s'}$ ending in $\B_i$. 
+Since $(\B', Q'_0)$ is a subsystem of $(\B, Q_0)$, 
+by Definition~\ref{def:static:wait-for-graph} and $s' = s \pj B'$, 
+$\wfg{\B'}{s'}$ is a subgraph of $\wfg{\B}{s}$.
+Hence $\pi$ is a wait-for-path in $\wfg{\B}{s}$.
+By $\widepth{\B}{\B_i}{s} \le \l-1$, we have $|\pi| \le \l-1$. 
+Hence $\widepth{\B'}{\B_i}{s'} \le \l-1$ since $\pi$ was arbitrarily chosen.
+
+
+$\widepth{\B}{\B_i}{s} \le \l-1$ follows from $\widepth{\B'}{\B_i}{s'} \le \l-1$:
+Let $\pi$ be an arbitrary wait-for-path ending in $\B_i$. 
+Suppose that $|\pi| > \l-1$.
+Since $(\B', Q'_0)$ is a subsystem of $(\B, Q_0)$, 
+by Definition~\ref{def:static:wait-for-graph} and $s' = s \pj \B'$, 
+$\wfg{\B'}{s'}$ is a subgraph of $\wfg{\B}{s}$. Hence every edge $e$ in $\pi$ that is within distance
+$\l$ from $\B_i$ is also en edge in $\wfg{\B'}{s'}$, since 
+$(\B', Q'_0)$ is based on a superset of $\ssg{i}{\l}$.
+Hence 
+$\widepth{\B}{\B_i}{s} > \l-1$ implies $\widepth{\B'}{\B_i}{s'} > \l-1$.
+The contrapositive is our desired result.
+}
+
+
+
+\vspace{0.5ex}
+
+\noindent
+We now show that $\LLin(\B, Q_0, \act, \l)$ implies $\GLin(\B, Q_0, \act)$, which in turn implies deadlock-freedom.  
+
+\bl
+\label{lemma:loc-implies-glob}
+\label{lemma:locLinear-implies-globlinear}
+%Let $(B, Q_0)$ be a BIP system, with $B = \gamma(\B_1,\dots,\B_n)$, and 
+Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
+If $\LLin(\B, Q_0, \act, \l)$ holds for some finite $\l \ge 2$, then $\GLin(\B, Q_0, \act)$ holds.
+\el
+%
+%% \prfs{
+%% Let $s \la{\act} t$ be a reachable transition of $(B, Q_0)$ and let 
+%% $s_\act = s \pj \dsk{\act}{\l}$, $t_\act = t \pj \dsk{\act}{\l}$.
+%% Then $s_\act \la{\act} t_\act$ is a reachable transition of $\dsk{\act}{\l}$ by 
+%% Corollary~\ref{cor.bip.reachability}.
+%% By $\LLin(\B, Q_0, \act, \l)$,
+%% $\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} \le \l \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} \le \l$.
+%% Hence by Proposition~\ref{prop:in-out-projection},
+%% $\widepth{\B}{\B_i}{t} \le \l \lor \wodepth{\B}{\B_i}{t} \le \l$.
+%% So
+%% $\widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
+%% Hence $\GLin(\B, Q_0, \act)$ holds.}
+%
+\prf{
+Let $s \la{\act} t$ be a reachable transition of $(\B, Q_0)$ and let 
+$\B_i \in \cmps{\act}$, 
+$s_\act = s \pj \dsk{\act}{\l}$, $t_\act = t \pj \dsk{\act}{\l}$.
+Then $s_\act \la{\act} t_\act$ is a reachable transition of $\dsk{\act}{\l}$ by 
+Corollary~\ref{cor.bip.reachability}.
+By $\LLin(\B, Q_0, \act, \l)$, 
+$\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} \le \l-2 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} \le \l-2$.
+Hence by Proposition~\ref{prop:in-out-projection},
+$\widepth{\B}{\B_i}{t} \le \l-2 \lor \wodepth{\B}{\B_i}{t} \le \l-2$.
+So
+$\widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
+Hence $\GLin(\B, Q_0, \act)$.
+}
+
+
+\bt \label{thm:LLin.SC-free-preserving}
+$\LLin$ is supercycle-freedom preserving
+\et
+\prf{
+Follows immediately from Lemma~\ref{lemma:locLinear-implies-globlinear} and Theorem~\ref{thm:GLin.SC-free-preserving}.
+}
+
+
+
+
+%% \bt[Deadlock-freedom via \LLin] 
+%% \label{theorem:local:deadlock-free}
+%% \label{theorem:local.linear.deadlock-free}
+%% %Let $(B, Q_0)$ be a BIP system, with $B = \gamma(\B_1,\dots,\B_n)$.
+%% Assume that
+%% \bn
+%% \item \label{theorem:local.linear.deadlock-free.initial} 
+%%       for all $s_0 \in Q_0$, $\wfg{\B}{s_0}$ is supercycle-free, and
+%% \item \label{theorem:local.linear.deadlock-free.localLinear}
+%%       for all interactions $a$ of $B$ ($a \in \gamma$), $\LDFC(a,\l)$ holds for some $\l \ge 0$.
+%% \en 
+%% Then for every reachable state $u$ of $(B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
+%% \et
+%% %
+%% \prfs{
+%% Immediate from Lemma~\ref{lemma:loc-implies-glob} and
+%% Theorem~\ref{theorem:global:deadlock-free}. }
+%% %
+%% \prf{
+%% Let $a$ be an arbitrary interaction in $\gamma$.
+%% By $(\ex \l: \LLin(a,\l))$ and Lemma~\ref{lemma:locLinear-implies-globlinear}, we have $\GLin(a)$.
+%% By Theorem~\ref{theorem:global.linear.deadlock-free},
+%% for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
+%% }
+
+
+
+
+%% \paragraph{Complexity of evaluating $\LDFC(a, \l)$.}
+%% Using explicit state enumeration, $\LDFC(a, \l)$ can be evaluated in
+%% time $O(\SUM_{a \in \gamma} |\dsk{a}{\l}|)$, where $|\dsk{a}{\l}|$ denotes the
+%% size of the transition system of $\dsk{a}{\l}$.
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Deadlock freedom using local abd global restrictions}
+
+
+\bt[Deadlock-freedom via \LAO, \LLin] 
+\label{theorem:local.deadlock-free}
+Assume that
+\bn
+\item \label{theorem:local.deadlock-free.initial}
+      for all $s_0 \in Q_0$, $\wfg{\B}{s_0}$ is supercycle-free, and
+\item \label{theorem:local.deadlock-free.scfPres}
+      for all interactions $\act$ of $\B$ (\ie $\act \in \gamma$), one of
+      the following holds:
+      \bn
+      \item $\GAO(\B,Q_0,\act)$
+      \item $\GLin(\B,Q_0,\act)$
+      \item $\ex \l \ge 2: \LAO(\B,Q_0,\act,\l)$ 
+      \item $\ex \l \ge 2: \LLin(\B,Q_0,\act,\l)$ 
+      \en
+\en
+Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free, and so 
+$(\B, Q_0)$ is free of local deadlock.
+\et
+\prf{Immediate from
+Theorems~\ref{thm:GAO.SC-free-preserving}, \ref{thm:GLin.SC-free-preserving}, \ref{thm:LAO.SC-free-preserving}, \ref{thm:LLin.SC-free-preserving}
+and Corollary~\ref{cor:SC-free-preserving.deadlock-free}.}
+

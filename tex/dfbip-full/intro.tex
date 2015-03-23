@@ -1,0 +1,33 @@
+
+Deadlock freedom is a crucial property of concurrent and
+distributed systems. With increasing system complexity,
+the challenge of assuring deadlock freedom and other correctness
+properties becomes even greater.
+In contrast to the alternatives of (1) deadlock detection and recovery,
+and (2) deadlock avoidance, we advocate deadlock prevention:
+design the system so that deadlocks do not occur.
+%during the normal functioning of the system.
+
+Deciding deadlock freedom
+of finite-state concurrent programs is PSPACE-complete in general
+\cite[chapter 19]{papadimitriou1994computational}. To achieve
+tractability, we can either make our deadlock freedom check
+incomplete (sufficient but not necessary), or we 
+can restrict the systems that we
+check to special cases.  We choose the first option: a system
+meeting our condition is free of both local and global
+deadlocks, while a
+system which fails to meet our condition may or may not be
+deadlock free.
+
+We generalize previous works \cite{Att99a,AC05,AE98} by removing
+the requirement that interaction between processes be expressed pairwise, 
+and also by applying to BIP~\cite{bip06}, a framework from which efficient
+distributed code can be generated. In contrast, the model of concurrency
+in \cite{Att99a,AC05,AE98} requires shared memory
+read-modify-write operations with a large grain of atomicity.
+%
+The full paper, including proofs for all theorems, is
+available on-line, as is our implementation of the method.
+% is available at \url{http://www.cs.aub.edu.lb/pa07/files/pubs.html}.
+

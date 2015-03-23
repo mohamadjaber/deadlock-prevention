@@ -1,0 +1,362 @@
+ 
+\begin{figure}[ht]
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:check-scViol}
+mm\= mm\= mm\= mm\= mm\=\kill
+$\lviol{v}{d}{t}{a}{\l}$\\
+\lio{\IFC{\mbox{$v$ is an interior node of \dsk{a}{\l}}}}
+   \litc{\RETURNE{\ilviol{v}{d}{t}{a}{\l}}}{use function for interior nodes}
+\lioc{\ELSE}{$v$ is a border node}
+   \litc{\RETURNE{\blviol{v}{d}{t}{a}{\l}}}{use function for border nodes}
+\lion{\FI}
+\end{tabbing}
+\vspace{-3ex}
+
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:check-scViol}
+mm\= mm\= mm\= mm\= mm\=\kill
+$\ilviol{v}{d}{t}{a}{\l}$\\
+//Precondition: $v$ is a not border node of $\dsk{a}{\l}$\\
+\lio{\IFC{d = 1}}
+   \litc{\IFC{(\neg \ex u : u \ar v \not\in \wfg{\B}{t})}\ \RETURNE{\ttt}\ \FI}{$v$ has no incoming wait-for-edges}
+   \litc{\IFC{(\neg \ex u : v \ar u \not\in \wfg{\B}{t})}\ \RETURNE{\ttt}\ \FI}{$v$ has no outgoing wait-for-edges}
+   \lit{\RETURNE{\fff}}
+\lio{\FI}
+
+\lio{\IFC{\mbox{$v$ is a component $\B_i$}}}
+   \lit{\IFC{(\ex \act : \B_i \ar \act \in \wfg{\B}{t} \land \lviol{\act}{d-1}{t}{a}{\l})} \ \RETURNE{\ttt}\ \FI}
+   \lit{\IFC{(\fa \act : \act \ar \B_i \in \wfg{\B}{t} \imp \lviol{\act}{d-1}{t}{a}{\l})} \ \RETURNE{\ttt}\ \FI}
+   \lit{\RETURNE{\fff}}
+\lio{\FI}
+
+
+\lio{\IFC{\mbox{$v$ is an interaction $\act$}}}
+   \lit{\IFC{(\fa \B_i : \act \ar \B_i \in \wfg{\B}{t} \imp \lviol{\B_i}{d-1}{t}{a}{\l})} \ \RETURNE{\ttt}\ \FI}
+   \lit{\IFC{(\fa \B_i : \B_i \ar \act \in \wfg{\B}{t} \imp \lviol{\B_i}{d-1}{t}{a}{\l})} \ \RETURNE{\ttt}\ \FI}
+   \lit{\RETURNE{\fff}}
+\lion{\FI}
+\end{tabbing}
+\vspace{-5ex}
+\caption{Formal definition of $\ilviol{v}{d}{t}{a}{\l}$}
+
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:check-scViol}
+mm\= mm\= mm\= mm\= mm\=\kill
+$\blviol{v}{d}{t}{a}{\l}$\\
+//Precondition: $v$ is a border node of $\dsk{a}{\l}$\\
+\lio{\IFC{\mbox{$v$ is an interaction $\act$}}\ \RETURNE{\fff} \ \FI}
+
+\lio{\IFC{\mbox{$v$ is a component $\B_i$ and $d > 1$}}}
+   \lit{\IFC{(\ex \act : \B_i \ar \act \in \wfg{\B}{t} \land \lviol{\act}{d-1}{t}{a}{\l})} \ \RETURNE{\ttt}}
+   \lit{\ELSE\ \RETURNE{\fff}}
+   \lit{\FI}
+\lion{\FI}
+%% \lio{\IFC{d = 1}}
+%%    \litc{\IFC{(\neg \ex u : u \ar v \not\in \wfg{\B}{t})}\ \RETURNE{\ttt}\ \FI}{$v$ has no incoming wait-for-edges}
+%%    \litc{\IFC{(\neg \ex u : v \ar u \not\in \wfg{\B}{t})}\ \RETURNE{\ttt}\ \FI}{$v$ has no outgoing wait-for-edges}
+%%    \lit{\RETURNE{\fff}}
+%% \lio{\FI}
+\end{tabbing}
+\vspace{-5ex}
+\caption{Formal definition of $\lviol{v}{d}{t}{a}{\l}$}
+\label{fig:scViolateLoc}
+\end{figure}
+
+
+
+
+
+\clearpage
+
+
+
+
+We now seek a local condition, which we evaluate in $\dsk{a}{\l}$, and which implies \GAO.
+To achieve a conservative approximation, we make the ``pessimistic'' assumption that the violation status of border
+nodes of $\dsk{a}{\l}$ cannot be known, since it depends on nodes outside of $\dsk{a}{\l}$.
+Now, if an internal node $v$ of $\dsk{a}{\l}$ can be marked with a level $d$ $SC$-violation, by applying 
+Definition~\ref{def:supercycle-violation} only within $\dsk{a}{\l}$, and with the border nodes makrked non-violating,
+then it is also the case, as we show below, that $v$ has a level $d$ $SC$-violation overall.
+
+
+
+
+We define the predicate $\lviol{v}{d}{t}{a}{\l}$ to hold iff node $v$ in $\wfg{B}{t}$ has a level-$d$ supercycle-violation
+\emph{that can be confirmed within $\dsk{a}{\l}$}.
+
+
+\bd[Local supercycle violation, $\lviol{v}{d}{t}{a}{\l}$]
+\label{def:supercycle.violation.local}
+We define  $\lviol{v}{d}{t}{a}{\l}$ by induction on $d$, as follows.
+
+\noindent
+\ul{Base case, $d=1$.} $\lviol{v}{1}{t}{a}{\l} = \true$  iff $v$ is an interior node of $\dsk{a}{\l}$ that has either
+no incoming wait-for-edges or $v$ has no outgoing wait-for-edges. A border node cannot be verified to have a level-1
+supercycle-violation, since it may wait-for-edge to/from nodes outside of $\dsk{a}{\l}$.
+
+\noindent
+\ul{Inductive step, $d > 1$.} $\lviol{v}{1}{t}{a}{\l} = \true$ iff any of the following cases hold. Otherwise 
+$\lviol{v}{1}{t}{a}{\l} = \false$.
+
+% A node $v$ in $\wfg{B}{t}$ has a level-$d$ supercycle-violation iff 
+%$v$ has a level-$d$ out-violation or $v$ has a level-$d$ in-violation.
+%We now define these by cases, depending on whether $v$ is a component or an interaction. 
+
+\be
+
+\item \ul{$v$ is a component $B$ and a border node of $\dsk{a}{\l}$}
+   \be
+
+   \item there exists interaction $\act$ such that $B_i \ar \act \in \wfg{\dsk{a}{\l}}{t}$ and $\lviol{\act}{d-1}{t}{a}{\l} = \true$,
+         \ie $\B_i$ enables an interaction $\act$ which has a level-$(d-1)$ supercycle-violation in $\dsk{a}{\l}$. 
+
+   \ee
+Since this conditions requires only some interaction $\act$, rather than all, it can be verified within $\dsk{a}{\l}$ if
+a suitable interaction $\act$ within $\dsk{a}{\l}$ exists.
+
+
+
+\item \ul{$v$ is a component $B$ and an internal node of $\dsk{a}{\l}$, and either }
+   \be
+
+   \item there exists interaction $\act$ such that $B_i \ar \act \in \wfg{\dsk{a}{\l}}{t}$ and $\lviol{\act}{d-1}{t}{a}{\l} = \true$,
+         \ie $\B_i$ enables an interaction $\act$ which has a level-$(d-1)$ supercycle-violation in $\dsk{a}{\l}$, or
+
+   \item for all interactions $\act$ such that $\act \ar B_i \in \wfg{\dsk{a}{\l}}{t}$, $\lviol{\act}{d-1}{t}{a}{\l} = \true$,
+         \ie all interactions $\act$ that wait for $\B_i$ have a level-$(d-1)$ supercycle-violation in $\dsk{a}{\l}$.
+
+   \ee
+
+
+\item \ul{$v$ is an interaction $\act$ and an internal node of $\dsk{a}{\l}$, and either}
+   \be
+
+   \item for all components $\B_i$ such that $\act \ar \B_i \in \wfg{\dsk{a}{\l}}{t}$, $\lviol{\B_i}{d-1}{t}{a}{\l} = \true$,
+         \ie all components $\B_i$ that $\act$ waits for have a level-$(d-1)$ supercycle-violation in $\dsk{a}{\l}$,
+
+   \item for all components $\B_i$ such that $\B_i \ar \act \in \wfg{\dsk{a}{\l}}{t}$, $\lviol{\B_i}{d-1}{t}{a}{\l} = \true$,
+         \ie all  components $\B_i$ that enable $\act$ have a level-$(d-1)$ supercycle-violation in $\dsk{a}{\l}$.
+
+   \ee
+
+\ee
+Note that if $v$ is an interaction and a border node, then $\lviol{v}{d}{t}{a}{\l}$ is false,for all $d$.   This is
+because $v$ may have both incoming and outgoing wiat-for-edges from.to nodes outside of $\dsk{a}{\l}$, and these edges
+may cause $v$ to be in a strongly connected supercycle.
+
+Figure~\ref{fig:scViolateLoc} gives a formal definition of $\lviol{v}{d}{t}{a}{\l}$. Border and interior nodes are
+handled by separate functions $\blviol{v}{d}{t}{a}{\l}, \ilviol{v}{d}{t}{a}{\l}$, respectively, and the base case $d=1$
+is split across these. Note that $\blviol{v}{d}{t}{a}{\l}$ always returns $\false$ for $d=1$.
+
+\ed
+
+
+
+
+\bd[$\LAO(a, \l)$] \label{def:lao}
+Let $s_a \goesto[a] t_a$ be a reachable transition of $\dsk{a}{\l}$.
+Then, in $t_a$, the following holds. 
+For every component $\B_i$ of $\cmps{a}$:  
+$\B_i$ has a supercycle-violation that can be confirmed within $\dsk{a}{\l}$.
+Formally,\\
+\ind  $\fa \B_i \in \cmps{a}, \ex d \ge 1: \lviol{\B_i}{d}{t}{a}{\l}$.
+\ed
+
+We showed previously that $\GAO$ impleis deadlock-freedom, and so it remains to establish that $\LAO$ implies $\GAO$. 
+
+
+\bp
+$\fa d : \lviol{v}{d}{t}{a}{\l} \imp \viol{v}{d}{t}$
+\ep
+\prf{
+Proof is by induction on $d$. 
+
+\noindent
+\ul{Base case, $d=1$.} Assume $\lviol{v}{1}{t}{a}{\l}$ for some node $v$. Then, by 
+Definition~\ref{def:supercycle.violation.local}, $v$ cannot be a border node of $\dsk{a}{\l}$.
+Hence $v$ is an interior node of $\dsk{a}{\l}$, and either has no incoming wait-for-edges or no outgoing 
+wait-for-edges. Therefore, in $\wfg{\B}{t}$, it is still the case that $v$ either has no incoming wait-for-edges or no outgoing 
+wait-for-edges. Hence $\viol{v}{1}{t}$ holds.
+
+
+\noindent
+\ul{Inductive step, $d > 1$.}
+Assume $\lviol{v}{d}{t}{a}{\l}$ for some node $v$ and some $d > 1$. 
+We proceed by cases on Definition~\ref{def:supercycle.violation.local}.
+
+\be
+
+\item \ul{$v$ is a component $B$ and a border node of $\dsk{a}{\l}$}
+
+Hence there exists interaction $\act$ such that $B_i \ar \act \in \wfg{\dsk{a}{\l}}{t}$ and $\lviol{\act}{d-1}{t}{a}{\l}
+= \true$. By the induction hypothesis applied to $\lviol{\act}{d-1}{t}{a}{\l}$, we have $\viol{\act}{d-1}{t}$. Hence 
+Since $\wfg{\dsk{a}{\l}}{t} \sub \wfg{\B}{t}$ by construction, we have 
+$B_i \ar \act \in \wfg{\B}{t}$ and $\viol{\act}{d-1}{t}$.
+Hence by Definition~\ref{def:supercycle-violation}, Clause~\ref{def:supercycle.violation.component.out}, 
+we have $\viol{v}{d}{t}$.
+
+
+\item \ul{$v$ is a component $B$ and an internal node of $\dsk{a}{\l}$, and either }
+   \be
+
+   \item there exists interaction $\act$ such that $B_i \ar \act \in \wfg{\dsk{a}{\l}}{t}$ and $\lviol{\act}{d-1}{t}{a}{\l} = \true$,
+         \ie $\B_i$ enables an interaction $\act$ which has a level-$(d-1)$ supercycle-violation in $\dsk{a}{\l}$, or
+
+   \item for all interactions $\act$ such that $\act \ar B_i \in \wfg{\dsk{a}{\l}}{t}$, $\lviol{\act}{d-1}{t}{a}{\l} = \true$,
+         \ie all interactions $\act$ that wait for $\B_i$ have a level-$(d-1)$ supercycle-violation in $\dsk{a}{\l}$.
+
+   \ee
+
+
+\item \ul{$v$ is an interaction $\act$ and an internal node of $\dsk{a}{\l}$, and either}
+   \be
+
+   \item for all components $\B_i$ such that $\act \ar \B_i \in \wfg{\dsk{a}{\l}}{t}$, $\lviol{\B_i}{d-1}{t}{a}{\l} = \true$,
+         \ie all components $\B_i$ that $\act$ waits for have a level-$(d-1)$ supercycle-violation in $\dsk{a}{\l}$,
+
+   \item for all components $\B_i$ such that $\B_i \ar \act \in \wfg{\dsk{a}{\l}}{t}$, $\lviol{\B_i}{d-1}{t}{a}{\l} = \true$,
+         \ie all  components $\B_i$ that enable $\act$ have a level-$(d-1)$ supercycle-violation in $\dsk{a}{\l}$.
+
+   \ee
+
+\ee
+Note that if $v$ is an interaction and a border node, then $\lviol{v}{d}{t}{a}{\l}$ is false,for all $d$.   This is
+because $v$ may have both incoming and outgoing wiat-for-edges from.to nodes outside of $\dsk{a}{\l}$, and these edges
+may cause $v$ to be in a strongly connected supercycle.
+
+Figure~\ref{fig:scViolateLoc} gives a formal definition of $\lviol{v}{d}{t}{a}{\l}$. Border and interior nodes are
+handled by separate functions $\blviol{v}{d}{t}{a}{\l}, \ilviol{v}{d}{t}{a}{\l}$, respectively, and the base case $d=1$
+is split across these. Note that $\blviol{v}{d}{t}{a}{\l}$ always returns $\false$ for $d=1$.
+
+}
+
+
+
+\bd[$\LAO(a, \l)$] \label{def:lao}
+Let $s_a \goesto[a] t_a$ be a reachable transition of $\dsk{a}{\l}$.
+Then, in $t_a$, the following holds. 
+For every component $\B_i$ of $\cmps{a}$:  
+$\B_i$ has a supercycle-violation that can be confirmed within $\dsk{a}{\l}$.
+Formally,\\
+\ind  $\fa \B_i \in \cmps{a}, \ex d \ge 1: \lviol{\B_i}{d}{t}{a}{\l}$.
+\ed
+
+We showed previously that $\GAO$ impleis deadlock-freedom, and so it remains to establish that $\LAO$ implies $\GAO$. 
+
+
+\bp
+$\fa d : \lviol{v}{d}{t}{a}{\l} \imp \viol{v}{d}{t}$
+\ep
+\prf{
+Proof is by induction on $d$. 
+
+\noindent
+\ul{Base case, $d=1$.} Assume $\lviol{v}{1}{t}{a}{\l}$ for some node $v$. Then, by 
+Definition~\ref{def:supercycle.violation.local}, $v$ cannot be a border node of $\dsk{a}{\l}$.
+Hence $v$ is an interior node of $\dsk{a}{\l}$, and either has no incoming wait-for-edges or no outgoing 
+wait-for-edges. Therefore, in $\wfg{\B}{t}$, it is still the case that $v$ either has no incoming wait-for-edges or no outgoing 
+wait-for-edges. Hence $\viol{v}{1}{t}$ holds.
+
+
+\noindent
+\ul{Inductive step, $d > 1$.}
+Assume $\lviol{v}{d}{t}{a}{\l}$ for some node $v$ and some $d > 1$. 
+We proceed by cases on Definition~\ref{def:supercycle.violation.local}.
+
+\be
+
+\item \ul{$v$ is a component $B$ and a border node of $\dsk{a}{\l}$}
+
+Hence there exists interaction $\act$ such that $B_i \ar \act \in \wfg{\dsk{a}{\l}}{t}$ and $\lviol{\act}{d-1}{t}{a}{\l}
+= \true$. By the induction hypothesis applied to $\lviol{\act}{d-1}{t}{a}{\l}$, we have $\viol{\act}{d-1}{t}$. Hence 
+Since $\wfg{\dsk{a}{\l}}{t} \sub \wfg{\B}{t}$ by construction, we have 
+$B_i \ar \act \in \wfg{\B}{t}$ and $\viol{\act}{d-1}{t}$.
+Hence by Definition~\ref{def:supercycle-violation}, Clause~\ref{def:supercycle.violation.component.out}, 
+we have $\viol{v}{d}{t}$.
+
+
+\item \ul{$v$ is a component $B$ and an internal node of $\dsk{a}{\l}$}
+We have two subcases.
+   \be
+
+   \item there exists interaction $\act$ such that $B_i \ar \act \in \wfg{\dsk{a}{\l}}{t}$ and $\lviol{\act}{d-1}{t}{a}{\l} = \true$.
+
+Hence there exists interaction $\act$ such that $B_i \ar \act \in \wfg{\dsk{a}{\l}}{t}$ and $\lviol{\act}{d-1}{t}{a}{\l}
+= \true$. By the induction hypothesis applied to $\lviol{\act}{d-1}{t}{a}{\l}$, we have $\viol{\act}{d-1}{t}$. Hence 
+Since $\wfg{\dsk{a}{\l}}{t} \sub \wfg{\B}{t}$ by construction, we have 
+$B_i \ar \act \in \wfg{\B}{t}$ and $\viol{\act}{d-1}{t}$.
+Hence by Definition~\ref{def:supercycle-violation}, Clause~\ref{def:supercycle.violation.component.out}, 
+we have $\viol{v}{d}{t}$.
+
+
+   \item for all interactions $\act$ such that $\act \ar B_i \in \wfg{\dsk{a}{\l}}{t}$, $\lviol{\act}{d-1}{t}{a}{\l} = \true$.
+
+Hence for all interactions $\act$ such that $\act \ar \B_i \in \wfg{\dsk{a}{\l}}{t}$, we have $\lviol{\act}{d-1}{t}{a}{\l}$.
+By the induction hypothesis applied to $\lviol{\act}{d-1}{t}{a}{\l}$, we have 
+for all interactions $\act$ such that $\act \ar \B_i \in \wfg{\dsk{a}{\l}}{t}: \viol{\act}{d-1}{t}$.
+
+Now $\wfg{\dsk{a}{\l}}{t} \sub \wfg{\B}{t}$ by construction. Since $\B_i$ is an internal node of $\dsk{a}{\l}$, 
+all edges $\act \ar \B_i \in \wfg{\B}{t}$ are also edges in $\dsk{a}{\l}$. Hence, from the above, we have
+for all $\act \ar B_i \in \wfg{\B}{t} : \viol{\act}{d-1}{t}$.
+Hence by Definition~\ref{def:supercycle-violation}, Clause~\ref{def:supercycle.violation.component.in}, 
+we have $\viol{v}{d}{t}$.
+
+   \ee
+
+
+\item \ul{$v$ is an interaction $\act$ and an internal node of $\dsk{a}{\l}$.}
+
+We have two subcases.
+   \be
+
+   \item for all components $\B_i$ such that $\act \ar \B_i \in \wfg{\dsk{a}{\l}}{t}$, $\lviol{\B_i}{d-1}{t}{a}{\l} = \true$.
+
+By the induction hypothesis applied to $\lviol{\B_i}{d-1}{t}{a}{\l}$, we have $\viol{\B_i}{d-1}{t}$. 
+Now $\wfg{\dsk{a}{\l}}{t} \sub \wfg{\B}{t}$ by construction.
+Since $\act$ is an internal node of $\dsk{a}{\l}$,
+all edges $\act \ar \B_i \in \wfg{\B}{t}$ are also edges in $\dsk{a}{\l}$.
+Hence, for all components $\B_i$ such that $\act \ar \B_i \in \wfg{\B}{t}: \viol{\B_i}{d-1}{t}$.
+By Definition~\ref{def:supercycle-violation}, Clause~\ref{def:supercycle.violation.interaction.out}, 
+$\viol{\B_i}{d-1}{t}$.
+
+   \item for all components $\B_i$ such that $\B_i \ar \act \in \wfg{\dsk{a}{\l}}{t}$, $\lviol{\B_i}{d-1}{t}{a}{\l} = \true$.
+
+By the induction hypothesis applied to $\lviol{\B_i}{d-1}{t}{a}{\l}$, we have $\viol{\B_i}{d-1}{t}$. 
+Now $\wfg{\dsk{a}{\l}}{t} \sub \wfg{\B}{t}$ by construction.
+Since $\act$ is an internal node of $\dsk{a}{\l}$,
+all edges $\B_i \ar \act \in \wfg{\B}{t}$ are also edges in $\dsk{a}{\l}$.
+Hence, for all components $\B_i$ such that $\B_i \ar \act \in \wfg{\B}{t}: \viol{\B_i}{d-1}{t}$.
+By Definition~\ref{def:supercycle-violation}, Clause~\ref{def:supercycle.violation.interaction.in}, 
+$\viol{\B_i}{d-1}{t}$.
+
+   \ee
+
+\ee
+}
+
+
+
+
+\bl \label{lemma:loc.ANDOR.implies.glob.AND-OR}
+$\LAO(a, \l)$ implies $\GAO$
+\el
+
+
+
+\bt[Deadlock-freedom using $\LAO(a, \l)$]
+\label{theorem:local.ANDOR.deadlock-free}
+Assume that 
+\bn
+\item for all $s_0 \in Q_0$, $\wfg{B}{s_0}$ is supercycle-free, and
+\item for all interactions $a$ of $B$ ($a \in \gamma$), $\LAO(a,\l)$ holds for some $\l \ge 0$.
+\en
+Then for every reachable state $u$ of $(B, Q_0)$:  $\wfg{B}{u}$ is supercycle-free.
+\et
+%
+\prf{
+Let $a$ be an arbitrary interaction in $\gamma$.
+By $(\ex \l: \LAO(a,\l))$ and Lemma~\ref{lemma:loc.ANDOR.implies.glob.AND-OR}, we have $\GAO(a)$.
+By Theorem~\ref{theorem:global.ANDOR.deadlock-free},
+for every reachable state $u$ of $(B, Q_0)$:  $\wfg{B}{u}$ is supercycle-free.
+}
+

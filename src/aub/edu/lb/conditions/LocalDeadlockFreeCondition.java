@@ -15,6 +15,7 @@ import aub.edu.lb.kripke.WaitForGraph;
 import aub.edu.lb.logging.LogFormatter;
 import aub.edu.lb.model.BIPAPI;
 import aub.edu.lb.model.BIPInteraction;
+import aub.edu.lb.model.SubSystem;
 import aub.edu.lb.model.SubSystemDepth;
 
 public class LocalDeadlockFreeCondition {
@@ -47,13 +48,11 @@ public class LocalDeadlockFreeCondition {
 		Configuration.startTime = System.currentTimeMillis();
 
 		Kripke kripke = new Kripke(subSystem);
+
 		for(KripkeState state : kripke.getStates()) {
-			// if(state.getTransitions().size() == 0) return false; // VERIFY
 			for(Transition transition: state.getTransitions()) {
-				
 				if(transition.getLabel().equals(interaction)) {
 					WaitForGraph wfg = new WaitForGraph(transition.getEndState().getState());
-					System.out.println(wfg);
 					if(!wfg.checkNoInNoOut(interaction.getComponents(), subSystem.getLength() + 1)) {
 						return false;
 					}	
@@ -88,9 +87,15 @@ public class LocalDeadlockFreeCondition {
 	 * @return
 	 */
 	public boolean check() {
+		if(initialSuperCycle()) {
+			return false;
+		}
+		
 		for(BIPInteraction interaction: BIPAPI.getInteractions()) {
 			log.info("\nInteraction: " + interaction);
 
+		
+			
 			subSystem = new SubSystemDepth(interaction);
 			
 			log.info(" - Length = "+ subSystem.getLength() + "\n");
@@ -103,6 +108,12 @@ public class LocalDeadlockFreeCondition {
 			}
 		}
 		return true;
+	}
+	
+	public boolean initialSuperCycle() {
+		SubSystem system = new SubSystem(BIPAPI.getComponents(), BIPAPI.getInteractions());
+		WaitForGraph wfg = new WaitForGraph(system.getInitialState());
+		return wfg.superCycle();
 	}
 	
 	public String getName() {

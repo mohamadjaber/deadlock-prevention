@@ -1,0 +1,181 @@
+\message{ !name(dfBIP.tex)}\documentclass[11pt]{article}
+\usepackage{authblk}
+
+\input{a4}
+\input{macros.full.tex}
+
+\input{macros.common.tex}    % macros common to both llncs and full paper styles
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\message{ !name(dfBIP.tex) !offset(-3) }
+
+
+\title{An Abstract Framework for Deadlock Prevention in BIP\thanks{The research leading to these results has received funding from the 
+European Community's Seventh Framework Programme [FP7/2007-2013] under 
+grant agreement no. 288175 (CERTAINTY) and no 257414 (ASCENS).}
+}
+
+
+\author{Paul C Attie}
+\affil{Department of Computer Science, American University of Beirut, Beirut, Lebanon}
+
+\author{Saddek Bensalem}
+\affil{UJF-Grenoble 1 / CNRS VERIMAG UMR 5104, Grenoble, F-38041, France}
+
+\author{Marius Bozga}
+\affil{UJF-Grenoble 1 / CNRS VERIMAG UMR 5104, Grenoble, F-38041, France}
+
+\author{Mohamad Jaber}
+\affil{Department of Computer Science, American University of Beirut, Beirut, Lebanon}
+
+\author{Joseph Sifakis}
+\affil{Rigorous System Design Laboratory, EPFL, Lausanne,  Switzerland}
+
+\author{Fadi A Zaraket}
+\affil{Department of Electrical and Computer Engineering, American University of Beirut, Beirut, Lebanon}
+
+
+%\date{19 February, 2013}
+
+\maketitle
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+\label{s:intro}
+\input{intro}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{BIP --- Behavior Interaction Priority}
+\label{s:bip}
+\input{bip}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Characterizing Deadlock-freedom}
+%\label{s:deadlock}
+\label{s:characterize}
+\input{characterize}
+
+
+%\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Supercycle Formation and its Consequences}
+\label{s:scFormation}
+\input{scFormation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Global Conditions for Deadlock Freedom}
+\label{s:global}
+
+   \label{s:global.preamble}
+   \input{globPreamble}
+
+   \subsection{A Global AND-OR Condition for Deadlock Freedom}
+   \label{s:global.ANDOR}
+   \input{globANDORCond}
+
+   \subsection{A Global Linear Condition for Deadlock Freedom}
+   \label{s:globCondition}
+   \label{s:global.Linear}
+   \input{globLinCond}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Local Conditions for Deadlock Freedom}
+\label{s:local}
+
+   \label{s:local.preamble}
+   \input{locPreamble}
+
+   \subsection{Projection onto Subsystems}
+   \label{s:projection}
+   \input{projection}
+
+   \clearpage
+   \subsection{A Local AND-OR Condition for Deadlock Freedom}
+   \label{s:ANDORcond}
+   \input{locANDORCond}
+
+   \subsection{A Local Linear Condition for Deadlock Freedom}
+   \label{s:condition}
+   \input{locLinCond}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Implementation and Experiments}
+\label{s:impl}
+
+   \subsection{Checking that initial states are supercycle-free}
+   \label{s:initSCFree}
+   \input{initSCFree}
+
+   \subsection{Implementation and Experimentation for the AND-OR Condition}
+   \label{s:implANDOR}
+   \input{implANDOR}
+
+   \clearpage
+   \subsection{Implementation and Experimentation for the Linear Condition}
+   \label{s:implLin}
+   \input{implLin}
+
+
+
+%% \clearpage
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% \section{A Condition for Deadlock Freedom in Infinite-state Systems}
+%% \label{s:infinite}
+%% \input{infinite}
+
+
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion, Related Work, and Further Work}
+\label{s:discussion}
+\input{discussion}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%% BIBLIOGRAPHY %%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{plain}
+\bibliography{biblio}
+
+
+%%% alternative biblio
+%\bibliographystyle{alpha}
+%\bibliography{Bibfiles/ABBREV,Bibfiles/DIST,Bibfiles/IOAUT,Bibfiles/MODEL,Bibfiles/SYNTH,Bibfiles/LOGIC,Bibfiles/MOBILE}
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\message{ !name(dfBIP.tex) !offset(-181) }
