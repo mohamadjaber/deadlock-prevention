@@ -39,9 +39,6 @@ public class LocalCompleteDeadlockFreeCondition extends
 				// sa -- a --> ta
 				if (transition.getLabel().equals(interaction)) {
 					WaitForGraph wfg = new WaitForGraph(transition.getEndState().getState());
-				//	if(interaction.toString().equals("cash1_atm1_notEnough")) {
-				//		System.out.println(wfg.getInteractions());
-				//	}
 					if (checkPath(wfg, interaction) || checkSC(wfg)) {
 						return false;
 					}
