@@ -12,65 +12,70 @@ import aub.edu.lb.model.BIPAPI;
 import aub.edu.lb.model.BIPInteraction;
 import aub.edu.lb.model.SubSystem;
 
-public class KripkeAbstractArchitecture  {
+public class KripkeAbstractArchitecture {
 
-	private Component architecture; 
+	private Component architecture;
 	private Kripke kripkeWithoutTransArch;
 	private Kripke kripkeGlobal;
 
-	
 	/**
 	 * 
 	 * @param subSystem
-	 * @param architecture is the component denoting the architecture. 
+	 * @param architecture
+	 *            is the component denoting the architecture.
 	 */
-	public KripkeAbstractArchitecture(SubSystem subSystem, Component architecture) {
+	public KripkeAbstractArchitecture(SubSystem subSystem,
+			Component architecture) {
 		kripkeGlobal = new Kripke(subSystem);
 		kripkeWithoutTransArch = new Kripke(kripkeGlobal);
-		this.architecture = architecture; 
+		this.architecture = architecture;
 	}
-	
-	public KripkeAbstractArchitecture(SubSystem subSystem, String architectureName) {
+
+	public KripkeAbstractArchitecture(SubSystem subSystem,
+			String architectureName) {
 		this(subSystem, BIPAPI.getComponent(architectureName));
 	}
 
 	public void removeTransitionsInvolvingArchitecture() {
-		for(KripkeState state: kripkeWithoutTransArch.getStates()) {
-		    Collection<Transition> transitionsToRemove = new LinkedList<Transition>();
-			for(Transition transition: state.getTransitions()) {
-				if(isArchitectureInvolved(transition))
+		for (KripkeState state : kripkeWithoutTransArch.getStates()) {
+			Collection<Transition> transitionsToRemove = new LinkedList<Transition>();
+			for (Transition transition : state.getTransitions()) {
+				if (isArchitectureInvolved(transition))
 					transitionsToRemove.add(transition);
-			}			
+			}
 			state.getTransitions().removeAll(transitionsToRemove);
 		}
 	}
-	
+
 	public void removeIdleStates(List<String> idleStates) {
-	    Collection<KripkeState> statesToRemove = new LinkedList<KripkeState>();
-		for(KripkeState state: kripkeWithoutTransArch.getStates()) {
-			String archStateProjection = state.getState().getLocalState(architecture).getState().getName();
-			if(idleStates.contains(archStateProjection)) statesToRemove.add(state);
+		Collection<KripkeState> statesToRemove = new LinkedList<KripkeState>();
+		for (KripkeState state : kripkeWithoutTransArch.getStates()) {
+			String archStateProjection = state.getState()
+					.getLocalState(architecture).getState().getName();
+			if (idleStates.contains(archStateProjection))
+				statesToRemove.add(state);
 		}
-		kripkeWithoutTransArch.getStates().removeAll(statesToRemove);	
+		kripkeWithoutTransArch.getStates().removeAll(statesToRemove);
 	}
-	
+
 	private boolean isArchitectureInvolved(Transition t) {
 		BIPInteraction label = t.getLabel();
-		for(Component component: label.getComponents()) {
-			if(component.equals(architecture))
+		for (Component component : label.getComponents()) {
+			if (component.equals(architecture))
 				return true;
 		}
 		return false;
 	}
 
 	public Kripke getKripkeGlobal() {
-		return kripkeGlobal; 
+		return kripkeGlobal;
 	}
-	
+
 	public Kripke getKripkeWithoutTransArch() {
-		return kripkeWithoutTransArch; 
+		return kripkeWithoutTransArch;
 	}
+
 	public Component getArchitecture() {
-		return architecture; 
+		return architecture;
 	}
 }

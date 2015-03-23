@@ -25,7 +25,7 @@ public class WaitForGraph {
 		components = new ArrayList<Component>();
 		interactions = new ArrayList<BIPInteraction>();
 	}
-	
+
 	public WaitForGraph(GlobalState state) {
 		this.state = state;
 		buildWaitForGraph();
@@ -79,7 +79,8 @@ public class WaitForGraph {
 		return existPath(node1, node2, visitedNodes);
 	}
 
-	private boolean existPath(Object node1, Object node2, Set<Object> visitedNodes) {
+	private boolean existPath(Object node1, Object node2,
+			Set<Object> visitedNodes) {
 		Set<Object> succNodes = succ(node1);
 		if (succNodes.contains(node2))
 			return true;
@@ -120,8 +121,9 @@ public class WaitForGraph {
 		SubSystem subSystem = state.getSubSystem();
 		// computes interactions' nodes in the wait-for graph
 		ArrayList<BIPInteraction> leastOneReadyInteractions = new ArrayList<BIPInteraction>();
-		// if no local state readies that interaction then the interaction is a source state
-		// and then cannot belong to a supercycle. 
+		// if no local state readies that interaction then the interaction is a
+		// source state
+		// and then cannot belong to a supercycle.
 		for (BIPInteraction interaction : subSystem.getInteractions()) {
 			for (LocalState ls : state.getLocalStates()) {
 				if (ls.readies(interaction)) {
@@ -306,11 +308,11 @@ public class WaitForGraph {
 
 			for (Edge waitEdge : waitEdges) {
 				if (waitEdge.getInteraction().equals(interaction)) {
-					enabled = false; 
+					enabled = false;
 					break;
 				}
 			}
-			if(enabled)
+			if (enabled)
 				enabledInteractions.add(interaction);
 		}
 		return enabledInteractions;
@@ -318,14 +320,15 @@ public class WaitForGraph {
 
 	public boolean superCycle() {
 		Set<Object> marked = new HashSet<Object>(enabledInteractions());
-		
+
 		boolean changeMarking;
 		do {
 			changeMarking = false;
 			// if exists interaction a such that every outgoing edge from a is
 			// to a marked node B, mark a
 			for (BIPInteraction interaction : interactions) {
-				if(marked.contains(interaction)) continue;
+				if (marked.contains(interaction))
+					continue;
 				boolean allOutgoingMarked = true;
 				for (Edge waitEdge : waitEdges) {
 					if (!marked.contains(waitEdge.getComponent())) {
@@ -335,26 +338,28 @@ public class WaitForGraph {
 				}
 				if (allOutgoingMarked) {
 					marked.add(interaction);
-					changeMarking = true; 
+					changeMarking = true;
 				}
 			}
-			
-			// if exists non-marked component B such that some outgoing edge from B is to a 
+
+			// if exists non-marked component B such that some outgoing edge
+			// from B is to a
 			// marked node a, mark B
-			for(Component component: components) {
-				if(marked.contains(component)) continue;
-				for(Edge readyEdge : readyEdges) {
-					if(marked.contains(readyEdge.getInteraction())) {
+			for (Component component : components) {
+				if (marked.contains(component))
+					continue;
+				for (Edge readyEdge : readyEdges) {
+					if (marked.contains(readyEdge.getInteraction())) {
 						changeMarking = true;
 						marked.add(component);
 						break;
 					}
 				}
 			}
-		} while(changeMarking);
-		
-		return !(marked.containsAll(interactions) && 
-				marked.containsAll(components));
+		} while (changeMarking);
+
+		return !(marked.containsAll(interactions) && marked
+				.containsAll(components));
 	}
 
 	public String toString() {
