@@ -1,21 +1,41 @@
 
 
-\bd[Structure Graph $\sg{\B}$, $\ssg{i}{\l}$, $\ssg{\act}{\l}$] \label{def:structure-graph} The structure
+% \bd[Structure Graph $\sg{\B}$, $\ssg{i}{\l}$, $\ssg{\act}{\l}$] \label{def:structure-graph} The structure
+% graph $\sg{\B}$ of composite component $B = \gamma(\B_1,\dots,\B_n)$ is a
+% bipartite graph whose nodes are the $\B_1, \ldots, \B_n$ and all the
+% $\act \in \gamma$.  There is an edge between $\B_i$ and
+% interaction $\act$ iff $\B_i$ participates in $\act$, \ie $\B_i \in \cmps{\act}$.  Define the
+% \emph{distance} between two nodes to be the number of edges in a shortest path
+% between them.  Let $\ssg{i}{\l}$ ($\ssg{\act}{\l}$ respectively) be the subgraph
+% of $\sg{\B}$ that contains $\B_i$ ($\act$ respectively) and all nodes of $\sg{\B}$
+% that have a distance to $\B_i$ ($\act$ respectively) less than or equal to $\l$.
+% %Let $\ssg{a}{k}$ be the union of $\ssg{i}{k}$ for all $\B_i \in \cmps{\act}$. 
+% \ed
+
+
+
+
+
+
+
+
+\bd[Structure Graph $\sg{\B}$, $\ssg{\act}{\l}$] \label{def:structure-graph} The structure
 graph $\sg{\B}$ of composite component $B = \gamma(\B_1,\dots,\B_n)$ is a
 bipartite graph whose nodes are the $\B_1, \ldots, \B_n$ and all the
 $\act \in \gamma$.  There is an edge between $\B_i$ and
 interaction $\act$ iff $\B_i$ participates in $\act$, \ie $\B_i \in \cmps{\act}$.  Define the
 \emph{distance} between two nodes to be the number of edges in a shortest path
-between them.  Let $\ssg{i}{\l}$ ($\ssg{\act}{\l}$ respectively) be the subgraph
-of $\sg{\B}$ that contains $\B_i$ ($\act$ respectively) and all nodes of $\sg{\B}$
-that have a distance to $\B_i$ ($\act$ respectively) less than or equal to $\l$.
-%Let $\ssg{a}{k}$ be the union of $\ssg{i}{k}$ for all $\B_i \in \cmps{\act}$. 
+between them.  Let $\ssg{\act}{\l}$ be the subgraph
+of $\sg{\B}$ that contains $\act$ and all nodes of $\sg{\B}$
+that have a distance to $\act$ less than or equal to $\l$.
 \ed
+
 
 
 \bd[Deadlock-checking subsystem, $\dsk{\act}{\l}$] \label{def:dsk}
 Define $\dsk{\act}{\l}$, the \emph{deadlock-checking subsystem for interaction $\act$ and
-depth $\l$}, to be the subsystem of $(\B, Q_0)$ based on $\ssg{\act}{\l}$.  % PREVIOUSLY: $\ssg{\act}{\l+2}$.
+depth $\l$}, to be the subsystem of $(\B, Q_0)$ based on the set of
+components in $\ssg{\act}{2\l}$.  % PREVIOUSLY: $\ssg{\act}{\l+2}$.
 \ed
 
 \bd[Border node, interior node of $\dsk{\act}{\l}$]  \label{def:dsk.border-and internal}
@@ -23,6 +43,11 @@ A node $v$ of $\dsk{\act}{\l}$ is a \emph{border-node} iff it has an
 edge in $\sg{\B}$ to a node outside of $\dsk{\act}{\l}$.
 If node $v$ of $\dsk{\act}{\l}$ is not a border node, then it is an \emph{internal node}.
 \ed
+Note that all border nodes of  $\dsk{\act}{\l}$ are interactions,
+since $2\l$is even. Hence all component nodes of $\dsk{\act}{\l}$ are
+interior nodes.
+% TBD: EXPLAIN WHY....
+
 
 
 \bp[Wait-for-edge projection] \label{prop:edge-projection}

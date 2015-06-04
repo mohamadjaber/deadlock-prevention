@@ -80,7 +80,7 @@ compute level-$d$ local supercycle violation of node $v$ in state $t_\act$ of $\
 \begin{tabbing}\label{alg:check.LAO}
 aa\= aa\= aa\= \kill
 \checkLAO{$\B, Q_0$},  where $\B \df \gamma(\B_1,\dots,\B_n)$\\
-\cmnt\ returns $\ttt$ iff $(\fa \act \in \gamma, \ex \l \ge 2: \LAO(\act, \l))$\\
+\cmnt\ returns $\ttt$ iff $(\fa \act \in \gamma, \ex \l > 0: \LAO(\act, \l))$\\
 \lio{\FORALLC{\mbox{interactions $\act \in \gamma$}}}
    \lit{\IFC{\checkLAOInt{\B, Q_0, \act} = \fff}\ \RETURNE{\fff}}
 \lio{\ENDFOR;}
@@ -91,7 +91,7 @@ aa\= aa\= aa\= \kill
 \begin{tabbing}\label{alg:check.LAO.Int}
 aa\= aa\= aa\= \kill
 \checkLAOInt{$\B, Q_0, \act$},  where $\B \df \gamma(\B_1,\dots,\B_n), \act \in \gamma$\\
-\cmnt\ returns $\ttt$ iff $(\ex \l \ge 2: \LAO(B, Q_0, \act, \l))$\\
+\cmnt\ returns $\ttt$ iff $(\ex \l > 0: \LAO(B, Q_0, \act, \l))$\\
 \lioc{\l \gts 2;}{\cmnt\ start with $\l = 2$}
 \lio{\WHILEC{\ttt}}
    \litc{\IFC{\checkLAOIntDist{\act, \l} = \ttt}\ \RETURNE{\ttt}\ \ENDIF;}{\cmnt\ success, so return true}
@@ -141,8 +141,8 @@ aa\= aa\= aa\= aa\= aa\=\kill
 %\cmnt\ Postcondition: $\fas v \in \set{\B_1,\ldots,\B_n} \un \gamma, d' = 1,\ldots,dd: \VV{\act}{\l}{t_\act}{v}{d'} = \lviol{v}{d'}{t_\act}{\act}{\l}$\\
 \lio{\cLScV{\dsk{\act}{\l},t_\act}}
 \lio{\mbox{remove all nodes with local supercycle violation}}
-\lio{\mbox{compute strongly connected components of remaining wait-for graph}}
-\lio{\FORALLC{\mbox{strongly connected components $C$}}}
+\lio{\mbox{compute maximal strongly connected components of remaining wait-for graph}}
+\lio{\FORALLC{\mbox{maximal strongly connected components $C$}}}
    \lit{\mbox{\IF\ $C$ contains a strongly connected supercycle which contains $B_i$ as a node, \THEN\ \RETURNE{\fff}}}
 \>\{ Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.loc:scc} holds here \}\\
 

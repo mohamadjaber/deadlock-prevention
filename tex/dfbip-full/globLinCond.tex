@@ -49,25 +49,31 @@ Formally,\\
 
 \bp \label{prop:indepth-finite-implies-scViol}
 Assume that node $v$ of $\wfg{\B}{t}$ has a finite in-depth of $d$ in $\wfg{\B}{t}$, \ie 
-$\widepth{\B}{v}{t} = d$. Then $\viol{v}{d}{t}$
+$\widepth{\B}{v}{t} = d$. Then $\connViol{v}{t}$.
 \ep
 %
 \prf{
-Proof is by induction on $d$.
-
-\noindent
-\ul{Base case, $d=1$.} Hence by Definitions~\ref{def:path} and \ref{def:depth},  
-$v$ has no incoming wait-for-edges in $\wfg{\B}{t}$. Hence by Definition~\ref{def:supercycle.violation},
-$\viol{v}{1}{t}$.
-
-\noindent
-\ul{Inductive step, $d > 1$.}
-By Definition~\ref{def:path} and \ref{def:depth}, all predecessors (\ie nodes $u$ such that $u \ar v \in \wfg{\B}{t}$)
-of $v$ have an in-depth of at most $d-1$. Hence, by the induction hypothesis applied to $d-1$, we obtain 
-$\viol{u}{d-1}{t}$ for all predecessors $u$ of $v$. Hence by Definition~\ref{def:supercycle.violation}, 
-Clauses~\ref{def:supercycle.violation.component.in} and \ref{def:supercycle.violation.interaction.in},
-$\viol{v}{1}{t}$.
+A node with finite in-depth cannot be in a wait-for-cycle, and
+therefore cannot be in a strongly connected supercycle.
 }
+
+
+% \prf{
+% Proof is by induction on $d$.
+
+% \noindent
+% \ul{Base case, $d=1$.} Hence by Definitions~\ref{def:path} and \ref{def:depth},  
+% $v$ has no incoming wait-for-edges in $\wfg{\B}{t}$. Hence by Definition~\ref{def:supercycle.violation},
+% $\viol{v}{1}{t}$.
+
+% \noindent
+% \ul{Inductive step, $d > 1$.}
+% By Definition~\ref{def:path} and \ref{def:depth}, all predecessors (\ie nodes $u$ such that $u \ar v \in \wfg{\B}{t}$)
+% of $v$ have an in-depth of at most $d-1$. Hence, by the induction hypothesis applied to $d-1$, we obtain 
+% $\viol{u}{d-1}{t}$ for all predecessors $u$ of $v$. Hence by Definition~\ref{def:supercycle.violation}, 
+% Clauses~\ref{def:supercycle.violation.component.in} and \ref{def:supercycle.violation.interaction.in},
+% $\viol{v}{1}{t}$.
+% }
 
 
 
@@ -110,7 +116,12 @@ Assume, for arbitrary $\act \in \gamma$, that $\GLin(\act)$ holds. That is,
 By Propositions~\ref{prop:indepth-finite-implies-scViol} and \ref{prop:outdepth-finite-implies-scViol}, 
 
 \ind For every reachable transition $s \goesto[\act] t$ of $(\B, Q_0)$,\\
-\ind \ind  $\fas \B_i \in \cmps{\act}, \ex d \ge 1: \viol{\B_i}{d}{t}$.
+\ind \ind  $\fas \B_i \in \cmps{\act}, \ex d \ge 1: \viol{\B_i}{d}{t} \lor \connViol{v}{t}$.
+
+\noindent
+Hence by Definition~\ref{def:formation.violation}, \\
+\ind For every reachable transition $s \goesto[\act] t$ of $(\B, Q_0)$,\\
+\ind \ind  $\fas \B_i \in \cmps{\act}, \ex d \ge 1: \formViol{v}{t}$
 
 \noindent
 Hence $\GAO(\act)$ holds.

@@ -44,7 +44,7 @@ It does not matter whether $\B_i$ is border or interior.
 Note that if $v$ is an interaction $\actp$ and a border node, then
 $\lviol{\actp}{d}{t_\act}{\act}{\l}$ is false, for all $d$.  This is because $\actp$ has some
 component that is outside $\dsk{\act}{\l}$, and so this component cannot be checked.  A component
-cannot have a level-1 sc-violation (regardless of whether it is border or interior) since it must
+cannot have a level-1 sc-violation since it must
 have at least one outgoing wait-for edge at all times.
 %
 Figure~\ref{fig:scViolateLoc} gives a formal definition of $\lviol{v}{d}{t_\act}{\act}{\l}$.
@@ -103,7 +103,8 @@ Proof is by induction on $d$.
 \noindent
 \ul{Base case, $d=1$.} Assume $\lviol{v}{1}{t_\act}{\act}{\l}$ for some node $v$. Then, by 
 Figure~\ref{fig:scViolateLoc}, 
-$v$ is an interior node and an interaction $\actp$ of $\dsk{\act}{\l}$, andhas no outgoing 
+$v$ is an interior node and an interaction $\actp$ of
+$\dsk{\act}{\l}$, and has no outgoing 
 wait-for-edges. Therefore, in $\wfg{\B}{t}$, it is still the case that $v$ has no outgoing 
 wait-for-edges. Hence $\viol{v}{1}{t}$ holds.
 
@@ -171,7 +172,7 @@ either
 
      or
 
-    \item \label{def:sConn.violation.loc:wait-for-in} every wait-for path $\pi$ from a border node
+    \item \label{def:sConn.violation.loc:wait-for-in} every wait-for path $\pi'$ from a border node
       of $\dsk{a}{\l}$ to $v$ contains at least one node with a local supercycle violation
 
     \en
@@ -185,7 +186,7 @@ either
 \label{prop:locConnViol-implies-ConnViol}
  \label{prop:locConnViol-implies-connViol}
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
-For all interactions $\act \in \gamma$, and $\l \ge 2$, let $t_\act = t \pj \dsk{\act}{\l}$.
+For all interactions $\act \in \gamma$, and $\l > 0$, let $t_\act = t \pj \dsk{\act}{\l}$.
 Then\\
 \ind $\locConnViol{v}{t_\act}{\act}{\l} \imp \connViol{v}{t}$.
 \ep
@@ -251,7 +252,7 @@ Then $\locFormViol{v}{t_\act}{\act}{\l}  \df  (\exs d \ge 1: \locScViol{v}{d}{t_
 \bp \label{prop:locFromViol-implies-formViol}
 \label{prop:locformviol-implies-formviol}
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
-For all interactions $\act \in \gamma$, and $\l \ge 2$, let $t_\act = t \pj \dsk{\act}{\l}$.
+For all interactions $\act \in \gamma$, and $\l > 0$, let $t_\act = t \pj \dsk{\act}{\l}$.
 Then\\
 %\ind $\fa d \ge 1: $\locFormViol{v}{t_\act}{\act}{\l}\locFormViol{v}{d}{t_\act}{\act}{\l} \imp \formViol{v}{d}{t}$.
 \ind $ \locFormViol{v}{t_\act}{\act}{\l} \imp \formViol{v}{t}$.
@@ -275,7 +276,7 @@ Hence we coonclude that $\formViol{v}{t}$ holds.
 \subsubsection{Local AND-OR Condition}
 
 \bd[$\LAO(\B, Q_0, \act, \l)$] \label{def:lao}
-Let $\l \ge 2$, and let $s_\act \goesto[\act] t_\act$ be an arbitrary reachable transition of $\dsk{\act}{\l}$.
+Let $\l > 0$, and let $s_\act \goesto[\act] t_\act$ be an arbitrary reachable transition of $\dsk{\act}{\l}$.
 Then, in $t_\act$, the following holds. 
 For every component $\B_i$ of $\cmps{\act}$:  
 $\B_i$ has a supercycle formation violation that can be confirmed within $\dsk{\act}{\l}$.
@@ -290,20 +291,20 @@ We showed previously that $\GAO$ implies deadlock-freedom, and so it remains to 
 
 \bl \label{lemma:loc.ANDOR.implies.glob.AND-OR}
 Let $\act \in \gamma$ be an interaction of BIP-system $(\B, Q_0)$. Then\\
-\ind $(\ex \l \ge 2: \LAO(\B, Q_0, \act, \l))$ implies $\GAO(\B, Q_0, \act)$
+\ind $(\ex \l > 0: \LAO(\B, Q_0, \act, \l))$ implies $\GAO(\B, Q_0, \act)$
 \el
 %
 %\prf{Immediate from Proposition~\ref{prop:locformviol-implies-formviol} and Definitions~\ref{def:global.ANDOR-cond}, \ref{def:lao}.}
 
 \bpr
-Assume $\LAO(\act, \l)$ for some $\l \ge 2$. 
+Assume $\LAO(\act, \l)$ for some $\l > 0$. 
 %
 Let $s \goesto[\act] t$ be an arbitrary reachable transition of BIP-system $(\B, Q_0)$, and let 
 $s_\act \goesto[\act] t_\act$ be the projection of $s \goesto[\act] t$ onto $\dsk{\act}{\l}$.
 By Corollary~\ref{cor:bip.reachability}, $s_\act \goesto[\act] t_\act$ is a reachable transition of $\dsk{\act}{\l}$.
 
 \noindent
-By Definition~\ref{def:lao}, we have for some $\l \ge 1$:\\
+By Definition~\ref{def:lao}, we have for some $\l > 0$:\\
 \ind for every reachable transition $s_\act \goesto[\act] t_\act$ of $\dsk{\act}{\l}$:\\
 \ind \ind $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{t_\act}{\act}{\l}$.
 %\ind \ind  $\fa \B_i \in \cmps{\act}, \exs d \ge 1: \lviol{\B_i}{d}{t_\act}{\act}{\l}$. 

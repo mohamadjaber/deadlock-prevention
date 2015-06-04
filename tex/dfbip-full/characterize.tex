@@ -140,6 +140,8 @@ that is, $\act \in \SC$ implies $\ex \B_j : \act \ar \B_j \in \wfg{\B}{s} \land 
 \end{nlst1}
 \ed
 where $\act \in SC$ means that $\act$ is a node in $\SC$, etc. 
+Also, write $SC \sub \wfg{\B}{s}$ when $\SC$ is a subgraph of $\wfg{\B}{s}$.
+
 
 \bd[Supercycle-free]
 \label{def:supercycle-free}
@@ -189,7 +191,7 @@ supercycle in Figure~\ref{fig:cycleOK}.
 
 The existence of a supercycle is sufficient and necessary for the occurrence of
 a deadlock, and so checking for supercycles gives a sound and complete check for
-deadlocks.  Write $SC \sub \wfg{\B}{s}$ when $\SC$ is a subgraph of $\wfg{\B}{s}$.
+deadlocks.  
 %
 Proposition~\ref{prop:static:supercycle-is-sufficient} states that the
 existence of a supercycle implies a local deadlock: all components in
@@ -314,7 +316,7 @@ Likewise define the out-depth of $v$ in $G$, notated as
 $\odepth{G}{v}$, as follows:
 \be
 \item if there exists a path $\pi$ in $G$ that contains a cycle and starts in $v$, \ie $|\pi| = \omega
-  \land \last{\pi} = v$, then $\odepth{G}{v} = \omega$,
+  \land \first{\pi} = v$, then $\odepth{G}{v} = \omega$,
 
 \item otherwise, let $\pi$ be a longest (simple) path starting in $v$. Then $\odepth{G}{v} = |\pi|$.
 \ee
@@ -326,7 +328,32 @@ We use $\widepth{\B}{v}{s}$ for $\idepth{\wfg{\B}{s}}{v}$, and also
 $\wodepth{\B}{v}{s}$ for $\odepth{\wfg{\B}{s}}{v}$.
 
 
-\bp \label{prop:supercycle:no-finite-outdegree} A supercycle $SC$
+\bp \label{prop:supercycle:finite-indepth-not-essential} Let $\SC$ be
+a supercycle and let $\SC'$ result from removing all nodes in $\SC$ with
+finite in-depth. Then $\SC'$ is also a supercycle.
+\ep
+\prf{
+Proof is by induction on the in-depth $i$ of nodes in $\SC$.
+
+Base case: in-depth = 0. Let $\SC'$ be the result of removing all nodes of in-depth 0 from $SC$. Since no node waits
+for a node of in-depth 0, it follows that a node of in-depth 0 does not contribute to the satisfaction of
+Definition~\ref{def:supercycle}, and hance $\SC'$ is still a supercycle.
+
+Inductive step: in-depth = $i$: let $\SC"$ be the result of removing all nodes of in-depth $i-1$ from $SC$.
+By the induction hypothesis, $\SC"$ is a supercycle. Now let $\SC'$ be the result of 
+removing, from $\SC"$, all nodes that have in-depth $i$ in $SC$.
+Now all nodes of in-depth $i$ in $\SC$ have an in-depth of 0 in
+$\SC"$. Hence removing all such nodes from $\SC"$ results, by the same argument as for the base case, 
+in a supercyle $\SC'$.
+
+
+
+}
+
+
+
+\bp \label{prop:supercycle:no-finite-outdegree}
+\label{prop:supercycle:no-finite-outdepth} A supercycle $SC$
 contains no nodes with finite out-depth.
 \ep
 %
@@ -414,36 +441,41 @@ by Proposition~\ref{prop:supercycle:contains-cycle}, $\SC' \neq
 \emptyset$. Thus $\SC'$ satisfies clause (1) of the supercycle
 definition~(\ref{def:supercycle}).
 %
-Let $v$ be an arbitrary vertex of $\SC'$.
-Thus $v \in \SC$ and $\idepth{\SC}{v} = \omega$ by definition of
-$SC'$. Let $w$ be an arbitrary successor of $v$ in $\SC$. $\idepth{\SC}{w}
-= \omega$ by Definition~\ref{def:depth}. Hence $w \in \SC'$.
-Furthermore, $w$ is a successor of $v$ in $\SC'$, by definition of $\SC'$.
-%
-Thus every vertex $v$ of $\SC'$
-is also a vertex of $\SC$, and the successors of $v$ in $\SC'$ are
+Let $v$ be an arbitrary vertex of $\SC'$.  Thus $v \in \SC$ and $\idepth{\SC}{v} = \omega$ by definition of $SC'$. Let
+$w$ be an arbitrary successor of $v$ in $\SC$. $\idepth{\SC}{w} = \omega$ by Definition~\ref{def:depth}. Hence
+$w \in \SC'$, by definition of $SC'$.  Furthermore, $w$ is a successor of $v$ in $\SC'$, since $SC'$ consists of
+\emph{all} nodes of $SC$ with infinite in-depth. Hence the successors of $v$ in $\SC'$ are
 the same as the successors of $v$ in $\SC$
 %
-Now since $\SC$ is a supercycle, every vertex $v$ in $\SC$ has enough successors
-in $\SC$ to satisfy  clauses (2) and (3) of the supercycle
-definition~(\ref{def:supercycle}). It follows that
-every vertex $v$ in $\SC'$ has enough successors
-in $\SC'$ to satisfy  clauses (2) and (3) of the supercycle
-definition~(\ref{def:supercycle}).
-}
+%Thus every vertex $v$ of $\SC'$ is also a vertex of $\SC$, and 
+%
+Now since $\SC$ is a supercycle, every vertex $v$ in $\SC$ has enough successors in $\SC$ to satisfy clauses (2) and (3)
+of the supercycle definition~(\ref{def:supercycle}). It follows that every vertex $v$ in $\SC'$ has enough successors in
+$\SC'$ to satisfy clauses (2) and (3) of the supercycle definition~(\ref{def:supercycle}).  }
 
 
 \bp \label{prop:supercycle:contains-mssc}
-Every supercycle $\SC$ contains a maximal strongly connected component
-that is itself a supercycle. 
+Every supercycle $\SC$ contains a maximal strongly connected component $\CC$
+such that (1) $\CC$ is itself a supercycle, and (2) there is no wait-for-edge from a node in $\CC$ to a node outside of $\CC$.
 \ep
 %
 \prf{
 $\SC$ is a directed graph, and so consider the decomposition of $\SC$
 into its maximal strongly connected components (MSCC). Let $\overline{\SC}$ be the graph resulting
-from replacing each MSCC by a single node. By its construction,  $\overline{\SC}$ is acyclc, and so contains at least one
-node $v$ with no outgoing edges. Let $\CC$ be the MSCC corresponding to $v$. It follows that no node in $\CC$ has an edge
-going to a node outside of $\CC$. Hence, by Definition~\ref{def:supercycle}, $\CC$ is itself a supercycle.
+from replacing each MSCC by a single node. By its construction,  $\overline{\SC}$ is acyclic, and so contains at least one
+node $x$ with no outgoing edges. Let $\CC$ be the MSCC corresponding to $x$. It follows that $\CC$ is nonempty, and
+hence $\CC$ satisfies clause (1) of the supercycle definition~(\ref{def:supercycle}).
+It also follows from the construction of $\CC$ that no node in $\CC$ has a wait-for-edge going to a node outside of
+$\CC$, and so Clause (2) of the Proposition is established.
+
+Let $v$ be an arbitrary node in $\CC$. Since $\CC \sub \SC$, $v$ is a node of $\SC$. Let $w$ be an arbitrary successor of
+$v$ in $\SC$. Since no node in $\CC$ has an edge going to a node outside of $\CC$, it follows that $w$ is a node of $\CC$.
+Hence $v$ has the same successors in $\CC$ as in $\SC$. 
+Now since $\SC$ is a supercycle, every vertex $v$ in $\SC$ has enough successors in $\SC$ to satisfy clauses (2) and (3)
+of the supercycle definition~(\ref{def:supercycle}). It follows that every vertex $v$ in $\CC$ has enough successors in
+$\CC$ to satisfy clauses (2) and (3) of the supercycle definition~(\ref{def:supercycle}).  
+
+Hence, by Definition~\ref{def:supercycle}, $\CC$ is itself a supercycle, and so Clause (1) of the Proposition is established.
 }
 
 Note also that by Proposition~\ref{prop:supercycle:contains-twoNodes}, $\CC$ contains at least two nodes. Hence $\CC$ is
@@ -457,7 +489,7 @@ not a trivial strongly connected component.
 
 Define $\scyc{\B}{s}{\B_i}$, $\scyc{\B}{s}{\act}$ to mean that $\B_i$,
 $\act$, respectively, are nodes of a supercycle of $\wfg{\B}{s}$.
-If a component or action is not a node of a supercylcle, then we say that it has an 
+If a component or interaction is not a node of a supercylcle, then we say that it has an 
 \emph{SC-violation}.
 
 Definition~\ref{def:supercycle}, the definition of a supercycle, imposes certain contraints on membership of
@@ -482,14 +514,14 @@ Formally, if $\act \ar \B_i \in \wfg{\B}{s}$ then $\scyc{\B}{s}{\B_i} \imp \scyc
 From Clauses 1 and 2, we conclude that $\B_i$ has an SC-violation if 
 $\ex \act: \B_i \ar \act \in \wfg{\B}{s} \lor \act \ar \B_i \in \wfg{\B}{s}$ and $\act$ has an SC-violation.
 
-In some, but not all, cases, we gain some information by considering all the actions (components) that a component
+In some, but not all, cases, we gain some information by considering all the interactions (components) that a component
 (action) waits for:
 
 \bn
 
 %\item If, for an interaction $\act$, all components $\B_i$ such that $\act \ar \B_i \in \wfg{\B}{t}$ have a supercycle 
 %  violation, then all such components $\B_i$ cannot be part of a supercycle, and therefore neither can $\act$, 
-\item For a given action $\act$, let $\B_i,\ldots,B_j$ be all the components $B$ such that $\act \ar
+\item For a given interaction $\act$, let $\B_i,\ldots,B_j$ be all the components $B$ such that $\act \ar
   B \in \wfg{\B}{s}$.  Then 
  $\scyc{\B}{s}{\act} \imp (\ex B \in \B_i,\ldots,B_j: \scyc{\B}{s}{\B_i})$, by 
   Definition~\ref{def:supercycle}, Clause~\ref{def:supercycle.action-blocked}.
@@ -498,17 +530,17 @@ In some, but not all, cases, we gain some information by considering all the act
   \imp \neg \scyc{\B}{s}{\act}$.  Thus, if no component that $\act$ waits for is in a supercycle,
   then $\act$ cannot be in a supercycle.
 
-\item For a given action $\act$, let $\B_i,\ldots,B_j$ be all the components $B$ such that $B \ar \act \in \wfg{\B}{s}$.
+\item For a given interaction $\act$, let $\B_i,\ldots,B_j$ be all the components $B$ such that $B \ar \act \in \wfg{\B}{s}$.
 Then $\neg \scyc{\B}{s}{\act} \imp (\fa B \in \B_i,\ldots,B_j: \neg \scyc{\B}{s}{\B_i})$.
 So $\act$ has an SC-violation implies that $\fa B \in \B_i,\ldots,B_j:$ $B$ has an SC-violation.
 This can be seen as a repetitive application of Clause 1 of the previous list, and so it provides no new information.
 
-\item For a given component $\B_i$, let $\act_1,\ldots, \act_m$ be all the actions $\act$ such that $\B_i \ar \act \in \wfg{\B}{s}$.
+\item For a given component $\B_i$, let $\act_1,\ldots, \act_m$ be all the interactions $\act$ such that $\B_i \ar \act \in \wfg{\B}{s}$.
 Then $\neg \scyc{\B}{s}{\B_i} \imp (\ex \act \in \act_1,\ldots,\act_m: \neg \scyc{\B}{s}{\act})$.
 The $\B_i$ has an SC-violation implies that some $\act$ has an SC-violation. This is not useful, since it does not
 determine the particular $\act$ with the violation. Hence this observation will not play a role in our future development.
 
-\item For a given component $\B_i$, let $\act_1,\ldots, \act_m$ be all the actions $\act$ such that $\act \ar \B_i \in \wfg{\B}{s}$.
+\item For a given component $\B_i$, let $\act_1,\ldots, \act_m$ be all the interactions $\act$ such that $\act \ar \B_i \in \wfg{\B}{s}$.
 Then $\scyc{\B}{s}{\B_i} \imp (\fa \act \in \act_1,\ldots,\act_m: \scyc{\B}{s}{\act})$.
 Hence $(\ex \act \in \act_1,\ldots,\act_m: \neg \scyc{\B}{s}{\act}) \imp \neg \scyc{\B}{s}{\B_i}$.
 Thus $\B_i$ has an SC-violation if some $\act$ that waits for $\B_i$ has an SC-violation.
@@ -534,7 +566,7 @@ $(\ex \act: \act \ar \B_i \in \wfg{\B}{s}: \neg \scyc{\B}{s}{\act}) \imp \neg \s
 %\item $(\ex \act: \B_i \ar \act \in \wfg{\B}{s} \lor \act \ar \B_i \in \wfg{\B}{s}: \neg \scyc{\B}{s}{\act}) \imp \neg \scyc{\B}{s}{\B_i}$
 
 \item \label{prop:sc-membership:act-out}
-For a given action $\act$, let $\B_i,\ldots,B_j$ be all the components $B$ such that $\act \ar B \in \wfg{\B}{s}$.
+For a given interaction $\act$, let $\B_i,\ldots,B_j$ be all the components $B$ such that $\act \ar B \in \wfg{\B}{s}$.
 Then $(\fa B \in \B_i,\ldots,B_j: \neg \scyc{\B}{s}{\B_i}) \imp \neg \scyc{\B}{s}{\act}$.
 \en
 
