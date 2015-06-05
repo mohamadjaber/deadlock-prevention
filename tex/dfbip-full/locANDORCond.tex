@@ -68,6 +68,7 @@ $\lviol{v}{d}{t_\act}{\act}{\l}$\\
                     \lihc{\RETURNE{\ttt}}{\cmnt no outgoing wait-for-edges}
        \lit{\ELSE\ \RETURNE{\fff}}
        \lit{\FI}
+\lio{\FI}
 
 \cmnt\ here $d > 1$\\
 
@@ -79,8 +80,8 @@ $\lviol{v}{d}{t_\act}{\act}{\l}$\\
             (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : \lviol{\actp}{d-1}{t_\act}{\act}{\l})}}
       \lit{\RETURNE{\ttt}}
 
-
 \lio{\ELSE\ \RETURNE{\fff}}
+\lio{\FI}
 \end{tabbing}
 \caption{Formal definition of $\lviol{v}{d}{t_\act}{\act}{\l}$.}
 \label{fig:scViolateLoc}

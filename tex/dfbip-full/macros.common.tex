@@ -521,7 +521,7 @@
 %\newcommand{\pseudocode}[1]{\mbox{${\bf #1}$}\xspace}
 
 \newcommand{\IFC}[1]{\pseudocode{if}\ (\ensuremath{#1})}
-\newcommand{\ELSFC}[1]{\pseudocode{else if}\ (\ensuremath{#1})}
+\newcommand{\ELSFC}[1]{\pseudocode{else\ if}\ (\ensuremath{#1})}
 \newcommand{\WHILEC}[1]{\pseudocode{while}\ (\ensuremath{#1})}
 %\newcommand{\FORALLC}[1]{\pseudocode{forall}\ (\ensuremath{#1})}
 \newcommand{\FORALLC}[1]{\pseudocode{forall}\ #1}
@@ -529,12 +529,11 @@
 \newcommand{\CONTINUE}{\pseudocodensp{continue}}
 \newcommand{\BREAK}{\pseudocodensp{break}}
 
-\newcommand{\ENDWHILE}{\pseudocode{endwhile}}
-\newcommand{\ENDFOR}{\pseudocode{endfor}}
 
 
 \newcommand{\IF}{\pseudocode{if}}
 \newcommand{\WHILE}{\pseudocode{while}}
+\newcommand{\REPEAT}{\pseudocode{repeat}}
 \newcommand{\FOR}{\pseudocode{for}}
 \newcommand{\FI}{\pseudocode{fi}}
 \newcommand{\THEN}{\pseudocode{then}}
@@ -543,6 +542,12 @@
 \newcommand{\ENDIF}{\pseudocode{endif}}
 \newcommand{\DO}{\pseudocode{do}}
 \newcommand{\OD}{\pseudocode{od}}
+
+\newcommand{\ENDWHILE}{\pseudocode{endwhile}}
+\newcommand{\ENDREPEAT}{\pseudocode{endrepeat}}
+\newcommand{\ENDFOR}{\pseudocode{endfor}}
+
+
 
 \newcommand{\BEGIN}{\pseudocode{begin}}
 \newcommand{\END}{\pseudocode{end}}

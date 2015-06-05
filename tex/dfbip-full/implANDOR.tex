@@ -7,8 +7,8 @@ Figure~\ref{fig:computeSCViolateLoc} presents the pseudocode for
 computing supercycle violations based on $\dsk{\act}{\l}$.
 
 \checkLAO{$\B, Q_0$} verifies $\LAO$ by iterating over all $\act \in \gamma$. 
-\checkLAOInt{$\B, Q_0, \act$} checks $(\ex \l \ge 2: \LAO(B, Q_0, \act, \l))$, \ie if $\LAO$ for $\act$ can be verified
-in some  $\dsk{\act}{\l}$. We start with $\l=2$ since $\dsk{\act}{2}$ is the smallest system, in which a
+\checkLAOInt{$\B, Q_0, \act$} checks $(\ex \l > 0: \LAO(B, Q_0, \act, \l))$, \ie if $\LAO$ for $\act$ can be verified
+in some  $\dsk{\act}{\l}$. We start with $\l=1$ since $\dsk{\act}{1}$ is the smallest system, in which a
 supercycle-violation can be confirmed. 
 \checkLAOIntDist{$\B, Q_0, \act, \l$} checks $\LAO(B, Q_0, \act, \l)$ for a particular $\l$. 
 
@@ -47,8 +47,8 @@ $\lviol{v}{d}{t_\act}{\act}{\l}$.
 {\scriptsize
 \begin{tabular}{|l|l|}
 \hline
-\checkLAO{$\B, Q_0$} & true iff $(\fa \act \in \gamma, \ex \l \ge 2: \LAO(B, Q_0, \act, \l))$\\
-\checkLAOInt{$\B, Q_0, \act$} & true iff $(\ex \l \ge 2: \LAO(B, Q_0, \act, \l))$\\
+\checkLAO{$\B, Q_0$} & true iff $(\fa \act \in \gamma, \ex \l > 0: \LAO(B, Q_0, \act, \l))$\\
+\checkLAOInt{$\B, Q_0, \act$} & true iff $(\ex \l > 0: \LAO(B, Q_0, \act, \l))$\\
 \checkLAOIntDist{$\B, Q_0, \act, \l$} &  true iff $\LAO(\B, Q_0, \act, \l)$\\
 
 \cLFV{$B_i, \dsk{\act}{\l},t_\act$} & true iff $B_i$ has local sc-formation violation in state $t_\act$ of 
@@ -82,7 +82,7 @@ aa\= aa\= aa\= \kill
 \checkLAO{$\B, Q_0$},  where $\B \df \gamma(\B_1,\dots,\B_n)$\\
 \cmnt\ returns $\ttt$ iff $(\fa \act \in \gamma, \ex \l > 0: \LAO(\act, \l))$\\
 \lio{\FORALLC{\mbox{interactions $\act \in \gamma$}}}
-   \lit{\IFC{\checkLAOInt{\B, Q_0, \act} = \fff}\ \RETURNE{\fff}}
+   \lit{\IFC{\checkLAOInt{\B, Q_0, \act} = \fff}\ \RETURNE{\fff}\ \FI}
 \lio{\ENDFOR;}
 \liocn{\RETURNE{\ttt}}{\cmnt\ return $\ttt$ if check succeeds for all $a \in \gamma$}
 \end{tabbing}
@@ -92,10 +92,10 @@ aa\= aa\= aa\= \kill
 aa\= aa\= aa\= \kill
 \checkLAOInt{$\B, Q_0, \act$},  where $\B \df \gamma(\B_1,\dots,\B_n), \act \in \gamma$\\
 \cmnt\ returns $\ttt$ iff $(\ex \l > 0: \LAO(B, Q_0, \act, \l))$\\
-\lioc{\l \gts 2;}{\cmnt\ start with $\l = 2$}
+\lioc{\l \gts 1;}{\cmnt\ start with $\l = 1$}
 \lio{\WHILEC{\ttt}}
-   \litc{\IFC{\checkLAOIntDist{\act, \l} = \ttt}\ \RETURNE{\ttt}\ \ENDIF;}{\cmnt\ success, so return true}
-   \litc{\IFC{\dsk{\act}{\l} = \gamma(\B_1,\dots,\B_n)}\ \RETURNE{\fff}\ \ENDIF;}{\cmnt\ exhausted all subsystems, return false}
+   \litc{\IFC{\checkLAOIntDist{\act, \l} = \ttt}\ \RETURNE{\ttt}\ \FI;}{\cmnt\ success, so return true}
+   \litc{\IFC{\dsk{\act}{\l} = \gamma(\B_1,\dots,\B_n)}\ \RETURNE{\fff}\ \FI;}{\cmnt\ exhausted all subsystems, return false}
    \litc{\l \gts \l + 1}{\cmnt\ increment $\l$ until success or intractable or failure}
 \lion{\ENDWHILE}
 \end{tabbing}
@@ -124,10 +124,10 @@ aa\= aa\= aa\= aa\= aa\=\kill
 \cLFV{$B_i, \dsk{\act}{\l},t_\act$}\\
 \cmnt returns true iff $\locFormViol{B_i}{t_\act}{\act}{\l}$ holds (Definition~\ref{def:locFormation.violation})\\
 \cmnt \ie $B_i$ has a local supercycle formation violation in state $t_\act$ of subsystem $\dsk{\act}{\l}$\\
-\lio{\mbox{repeat until one of the following returns true, or run out of resources}}
+\lio{\REPEAT \mbox{ until one of the following returns true, or run out of resources}}
    \lit{\mbox{\cLScVDN{$\dsk{\act}{\l}, t_\act, d,B_i$} for increasing $d$}}
     \lit{\mbox{\cLconnScV{$B_i,\dsk{\act}{\l},t_\act$}}}
-\lion{\mbox{end repeat}}
+\lion{\ENDREPEAT}
 \end{tabbing}
 
 
@@ -143,14 +143,14 @@ aa\= aa\= aa\= aa\= aa\=\kill
 \lio{\mbox{remove all nodes with local supercycle violation}}
 \lio{\mbox{compute maximal strongly connected components of remaining wait-for graph}}
 \lio{\FORALLC{\mbox{maximal strongly connected components $C$}}}
-   \lit{\mbox{\IF\ $C$ contains a strongly connected supercycle which contains $B_i$ as a node, \THEN\ \RETURNE{\fff}}}
+   \lit{\mbox{\IF\ $C$ contains a strongly connected supercycle which contains $B_i$ as a node, \THEN\ \RETURNE{\fff} \FI}}
 \>\{ Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.loc:scc} holds here \}\\
 
 \lio{\FORALLC{\mbox{wait-for paths $\pi$ from $B_i$ to the border of  $\dsk{\act}{\l}$}}}
-   \litc{\IF\ \mbox{some node of $\pi$ has a local supercycle violation}\ \THEN\ \RETURNE{\ttt}}{\cmnt Clause~\ref{def:sConn.violation.loc:wait-for-out} holds}
+   \litc{\IF\ \mbox{some node of $\pi$ has a local supercycle violation}\ \THEN\ \RETURNE{\ttt}\ \FI}{\cmnt Clause~\ref{def:sConn.violation.loc:wait-for-out} holds}
 
 \lio{\FORALLC{\mbox{wait-for paths $\pi'$ from the border of $\dsk{\act}{\l}$ to $B_i$}}}
-   \litc{\IF\ \mbox{some node of $\pi'$ has a local supercycle violation}\ \THEN\ \RETURNE{\ttt}}{\cmnt Clause~\ref{def:sConn.violation.loc:wait-for-in} holds}
+   \litc{\IF\ \mbox{some node of $\pi'$ has a local supercycle violation}\ \THEN\ \RETURNE{\ttt}\ \FI}{\cmnt Clause~\ref{def:sConn.violation.loc:wait-for-in} holds}
 
 \liocn{\RETURNE{\fff}}{\cmnt  Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.border} does not hold}
 \end{tabbing}
@@ -214,6 +214,7 @@ aa\= aa\= aa\= aa\= aa\=\kill
 \lio{dd \gts \mbox{length of the longest simple path in structure graph of \dsk{\act}{\l}}}
 \lio{\FORALLC{d \gts 1\ to\ dd}}
    \lit{\cLScVD{\dsk{\act}{\l},t_\act,d}}
+\lio{\ENDFOR}
 \end{tabbing}
 
 \setcounter{lctr}{0}
@@ -227,6 +228,7 @@ aa\= aa\= aa\= \kill
 \cmnt \ie compute next level of violations\\
 \lio{\FORALLC{v \in \set{B_1,\ldots,B_n} \un \gamma}}
    \lit{\cLScVDN{\dsk{\act}{\l},t_\act,d,v}}
+\lio{\ENDFOR}
 \end{tabbing}
 
 
@@ -248,6 +250,8 @@ aaa\= aa\= aa\= aa\= aa\= \kill
                      \lihc{\VV{\act}{\l}{t_\act}{v}{1} \gts \ttt}{\cmnt no outgoing wait-for-edges}   % \lihc{\RETURNE{\ttt}}{\cmnt no outgoing wait-for-edges}
        \lit{\ELSE\ \VV{\act}{\l}{t_\act}{v}{1} \gts \fff}            %\RETURNE{\fff}}
        \lit{\FI}
+\lio{\FI}
+
 
 \cmnt\ here $d > 1$\\
 
@@ -266,7 +270,7 @@ aaa\= aa\= aa\= aa\= aa\= \kill
 %\lio{\ELSE\ \RETURNE{\fff}}
 \lio{\ELSE\ \VV{\act}{\l}{t_\act}{v}{d} \gts \fff}
 
-
+\lio{\FI}
 \end{tabbing}
 \vspace{-3ex}
 

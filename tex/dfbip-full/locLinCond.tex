@@ -31,13 +31,13 @@ $\widepth{\B}{\B_i}{t} = \l \lor \wodepth{\B}{\B_i}{t} = \l$.
 \bd[$\LLin(\B, Q_0, \act, \l)$] \label{def:ldfc-k}
 %Let $(B, Q_0)$ be a BIP system, with $B =\gamma(\B_1,\dots,\B_n)$.
 %Let $a$ be an interaction of $(B, Q_0)$, \ie $a \in \gamma$.
-Let $\l \ge 2$ and $s_\act \goesto[\act] t_\act$ be a reachable transition of $\dsk{\act}{\l}$.
+Let $\l > 0$ and $s_\act \goesto[\act] t_\act$ be a reachable transition of $\dsk{\act}{\l}$.
 Then, in $t_\act$, the following holds. 
 For every component $\B_i$ of $\cmps{\act}$:  
-either $\B_i$ has in-depth at most $\l$, or out-depth at most $\l$, in $\wfg{\dsk{\act}{\l}}{t_\act}$. 
+either $\B_i$ has in-depth less than $2\l - 1$, or out-depth less than $2\l - 1$, in $\wfg{\dsk{\act}{\l}}{t_\act}$. 
 Formally,\\
 \ind  $\fa \B_i \in \cmps{\act}: 
-\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} \le \l-2 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} \le \l-2$.
+\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1$.
 \ed
 
 
@@ -60,11 +60,11 @@ project up and down, provided that the subsystem contains the entire wait-for-pa
 
 \bp[In-projection, Out-projection] \label{prop:in-out-projection}
 %Let $(B, Q_0)$ be a BIP system, 
-Let $\l \ge 1$, let $\B_i$ be an atomic component of $\B$, and let 
-$(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$ which is based on a superset of $\ssg{i}{\l}$.
+Let $\l > 0$, let $\B_i$ be an atomic component of $\B$, and let 
+$(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$ which is based on a superset of $\ssg{a}{\l}$.
 Let $s$ be a state of $(B, Q_0)$, and $s' = s \pj B'$. Then
-(1) $\widepth{\B}{\B_i}{s} \le \l-1$ iff $\widepth{\B'}{\B_i}{s'} \le \l-1$, and
-(2) $\wodepth{\B}{\B_i}{s} \le \l-1$ iff $\wodepth{\B'}{\B_i}{s'} \le \l-1$.
+(1) $\widepth{\B}{\B_i}{s} < 2\l-1$ iff $\widepth{\B'}{\B_i}{s'} < 2\l-1$, and
+(2) $\wodepth{\B}{\B_i}{s} < 2\l-1$ iff $\wodepth{\B'}{\B_i}{s'} < 2\l-1$.
 \ep
 \prfs{Follows from Defintion~\ref{def:depth},
 Proposition~\ref{prop:edge-projection}, and the observation that $\wfg{\B'}{s'}$
@@ -76,26 +76,29 @@ $\B_i$ by paths starting from $\B_i$.
 The proof of clause (1) is by double implication.
 
 
-$\widepth{\B}{\B_i}{s} \le \l-1$ implies $\widepth{\B'}{\B_i}{s'} \le \l-1$:
-Let $\pi$ be an arbitrary wait-for-path in $\wfg{\B'}{s'}$ ending in $\B_i$. 
-Since $(\B', Q'_0)$ is a subsystem of $(\B, Q_0)$, 
-by Definition~\ref{def:static:wait-for-graph} and $s' = s \pj B'$, 
+$\widepth{\B}{\B_i}{s} < 2\l-1$ implies $\widepth{\B'}{\B_i}{s'} < 2\l-1$:
+Let $\pi$ be an arbitrary wait-for-path in $\wfg{\B'}{s'}$ that ends in $\B_i$. 
+%
+Since $(\B', Q'_0)$ is a subsystem of $(\B, Q_0)$, by Definition~\ref{def:static:wait-for-graph} and $s' = s \pj B'$,
 $\wfg{\B'}{s'}$ is a subgraph of $\wfg{\B}{s}$.
+%
 Hence $\pi$ is a wait-for-path in $\wfg{\B}{s}$.
-By $\widepth{\B}{\B_i}{s} \le \l-1$, we have $|\pi| \le \l-1$. 
-Hence $\widepth{\B'}{\B_i}{s'} \le \l-1$ since $\pi$ was arbitrarily chosen.
+By $\widepth{\B}{\B_i}{s} < 2\l-1$, we have $|\pi| < 2\l-1$. 
+Hence $\widepth{\B'}{\B_i}{s'} < 2\l-1$ since $\pi$ was arbitrarily chosen.
 
 
-$\widepth{\B}{\B_i}{s} \le \l-1$ follows from $\widepth{\B'}{\B_i}{s'} \le \l-1$:
-Let $\pi$ be an arbitrary wait-for-path ending in $\B_i$. 
-Suppose that $|\pi| > \l-1$.
-Since $(\B', Q'_0)$ is a subsystem of $(\B, Q_0)$, 
-by Definition~\ref{def:static:wait-for-graph} and $s' = s \pj \B'$, 
-$\wfg{\B'}{s'}$ is a subgraph of $\wfg{\B}{s}$. Hence every edge $e$ in $\pi$ that is within distance
-$\l$ from $\B_i$ is also en edge in $\wfg{\B'}{s'}$, since 
-$(\B', Q'_0)$ is based on a superset of $\ssg{i}{\l}$.
+$\widepth{\B}{\B_i}{s} < 2\l-1$ follows from $\widepth{\B'}{\B_i}{s'} < 2\l-1$:
+Let $\pi$ be an arbitrary wait-for-path in $\wfg{\B}{s}$ that ends in $\B_i$. 
+Suppose that $|\pi| \ge 2\l-1$. Hence $\pi$ has a suffix $\rho$ of length $2\l-1$
+%
+Since $(\B', Q'_0)$ is a subsystem of $(\B, Q_0)$, by Definition~\ref{def:static:wait-for-graph} and $s' = s \pj \B'$,
+$\wfg{\B'}{s'}$ is a subgraph of $\wfg{\B}{s}$.
+%
+Since $(\B', Q'_0)$ is based on a superset of $\ssg{a}{\l}$, and since the distance from $\B_i$ to the border of 
+$\ssg{a}{\l}$ is $2\l-1$, we conclude that $\rho$ is a wait-for-path in $\wfg{\B'}{s'}$.
+%
 Hence 
-$\widepth{\B}{\B_i}{s} > \l-1$ implies $\widepth{\B'}{\B_i}{s'} > \l-1$.
+$\widepth{\B}{\B_i}{s} \ge 2\l-1$ implies $\widepth{\B'}{\B_i}{s'} \ge 2\l-1$.
 The contrapositive is our desired result.
 }
 
@@ -111,7 +114,7 @@ We now show that $\LLin(\B, Q_0, \act, \l)$ implies $\GLin(\B, Q_0, \act)$, whic
 \label{lemma:locLinear-implies-globlinear}
 %Let $(B, Q_0)$ be a BIP system, with $B = \gamma(\B_1,\dots,\B_n)$, and 
 Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
-If $\LLin(\B, Q_0, \act, \l)$ holds for some finite $\l \ge 2$, then $\GLin(\B, Q_0, \act)$ holds.
+If $\LLin(\B, Q_0, \act, \l)$ holds for some finite $\l > 0$, then $\GLin(\B, Q_0, \act)$ holds.
 \el
 %
 %% \prfs{
@@ -129,14 +132,12 @@ If $\LLin(\B, Q_0, \act, \l)$ holds for some finite $\l \ge 2$, then $\GLin(\B, 
 %
 \prf{
 Let $s \la{\act} t$ be a reachable transition of $(\B, Q_0)$ and let 
-$\B_i \in \cmps{\act}$, 
-$s_\act = s \pj \dsk{\act}{\l}$, $t_\act = t \pj \dsk{\act}{\l}$.
-Then $s_\act \la{\act} t_\act$ is a reachable transition of $\dsk{\act}{\l}$ by 
-Corollary~\ref{cor.bip.reachability}.
+$\B_i \in \cmps{\act}$, $s_\act = s \pj \dsk{\act}{\l}$, $t_\act = t \pj \dsk{\act}{\l}$.
+Then $s_\act \la{\act} t_\act$ is a reachable transition of $\dsk{\act}{\l}$ by Corollary~\ref{cor.bip.reachability}.
 By $\LLin(\B, Q_0, \act, \l)$, 
-$\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} \le \l-2 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} \le \l-2$.
+$\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1$.
 Hence by Proposition~\ref{prop:in-out-projection},
-$\widepth{\B}{\B_i}{t} \le \l-2 \lor \wodepth{\B}{\B_i}{t} \le \l-2$.
+$\widepth{\B}{\B_i}{t} < 2\l-1 \lor \wodepth{\B}{\B_i}{t} < 2\l-1$.
 So
 $\widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
 Hence $\GLin(\B, Q_0, \act)$.
