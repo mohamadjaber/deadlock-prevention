@@ -62,9 +62,13 @@ $p_i \in P_i$ for all $i \in I$, where $I \subseteq \set{1..n}$.
 \ed
 
 \noindent
-Execution of an interaction $\act$ involves all the components which have
+Execution of an interaction
+$\act = \{p_i\}_{i \in I}$
+involves all the components which have
 ports in $\act$.  
-
+We denote by $\cmps{\act}$ the
+set of atomic components participating in $\act$, formally:
+$\cmps{\act} = \{\B_i \st p_i \in \act\}$. 
 
 
 \begin{figure}[t]
@@ -114,9 +118,9 @@ corresponding atomic component $\B_i$ can execute a transition labeled with
 $p_i$; the states of components that do not participate in the interaction stay
 unchanged. 
 %
-Given an interaction $\act = \{p_i\}_{i \in I}$, we denote by $\cmps{\act}$ the
-set of atomic components participating in $\act$, formally:
-$\cmps{\act} = \{\B_i \st p_i \in \act\}$. 
+%Given an interaction $\act = \{p_i\}_{i \in I}$, we denote by $\cmps{\act}$ the
+%set of atomic components participating in $\act$, formally:
+%$\cmps{\act} = \{\B_i \st p_i \in \act\}$. 
 %Given a component $\B_i$, we denote by $A_i$ the
 %interactions that $\B_i$ participates in, formally: $A_i = \set{a \st P_i \ints a \ne \emptyset}$.
 Figure \ref{fig:diningbip} shows a composite component consisting of
