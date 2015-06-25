@@ -244,7 +244,7 @@ enabled interaction, it follows that $\act_i$ is not enabled in $\B'$, and
 therefore has a wait-for-edge to some atomic component $\B_j$ in
 $\B'$. Let $SC$ be the subgraph of $\wfg{\B}{s}$ induced by:
 \bn
-\item the atomic components of $\B_i$ of $\B'$, 
+\item the atomic components of $\B'$, 
 \item the interactions $\act$ that each atomic component $\B_i$ enables,
      and the edges $\B_i \ar \act$, and
 \item  the edges $\act \ar \B_j$ from each interaction to some atomic
@@ -260,7 +260,7 @@ supercycles in $\wfg{\B}{s}$ means there is no locally deadlocked subsystem.
 
 
 
-\bco[Supercycle-free implies free of locak deadlock]
+\bco[Supercycle-free implies free of local deadlock]
 \label{cor:static:dead-free}
 %Let $(B,Q_0)$ be a BIP system, with $B = \gamma(\B_1,\dots,\B_n)$. 
 If, for every reachable state $s$ of $(\B,Q_0)$, $\wfg{\B}{s}$ is supercycle-free, then
