@@ -4,7 +4,7 @@ created, some component $\B_i$ that participates in the interaction $\act$ whose
 of a strongly connected component $\CC$ of $\SC$, and moreover $\CC$ is itself a supercycle in its own right. In a sense,
 $CC$ is the ``essential'' part of $\SC$.
 
-Our fundamental condition for the prevention of supercyles then, is to require
+Our fundamental condition for the prevention of supercycles then, is to require
 that, for every reachable transition  $s \goesto[\act] t$ resulting from execution of $\act$, 
 that every component $\B_i$ of $\act$
 must exhibit a supercycle-violation (Definition~\ref{def:supercycle.violation}) in global state $t$, \ie the state resulting
@@ -18,29 +18,29 @@ So, by requiring (1) that all initial states are supercycle-free, and
 (2) that $\GAO(\act)$ holds for all interactions $\act \in \gamma$, we
 obtain, by straightforward induction on length of executions, that every reachable state is supercycle-free.
 
-It also follows that any condition which implies $\GAO(\act)$ is also suffuicient to guarantee  supercycle-freedom, and
+It also follows that any condition which implies $\GAO(\act)$ is also sufficient to guarantee  supercycle-freedom, and
 hence deadlock-freedom. We exploit this in two ways:
 \bn
 
 \item To provide a ``linear'' condition, $\GLin$, that is easier to evaluate than $\GAO$, since it requires only the
-evaluation of lengths if wait-for-paths, \ie it does not have the ``alternating'' character of $\GAO$. 
+evaluation of lengths of wait-for-paths, \ie it does not have the ``alternating'' character of $\GAO$. 
 
-\item To provide ``local variants of $\GAO$ and $\GLin$,  which can often be
+\item To provide ``local variants'' of $\GAO$ and $\GLin$,  which can often be
 evaluated in small subsystems of $(\B, Q_0)$, thereby avoiding state-explosion. The local conditions imply the
 corresponding global ones, \ie they are sufficient but not necessary for deadlock-freedom.
 
 \en
 
 Since we will present several conditions for supercycle-freedom, we now present an abstract definition of the essential
-properties that all such conditions must have. First, we define a condition for the prevention of supercyles as a 
-``behavioral restriction condition''. Moreover, since implication of $\GAO(\act)$ can eb on a ``per interaction'' basis,
-with diffrent conditions being aplied to different interactions, we have:
+properties that all such conditions must have. First, we define a condition for the prevention of supercycles as a 
+``behavioral restriction condition''. Moreover, since implication of $\GAO(\act)$ can be on a ``per interaction'' basis,
+with different conditions being applied to different interactions, we have:
 
 
 \bd
 A behavioral restriction condition $\BC$ is a predicate $\BC: (\B, Q_0, \act) \to \set{\ttt, \fff}$. 
 \ed
-$\BC$ is a predicate on the effecst of a particular interaction $\act$ within a given system $(\B, Q_0)$.
+$\BC$ is a predicate on the effects of a particular interaction $\act$ within a given system $(\B, Q_0)$.
 
 \bd[Supercycle-freedom preserving] \label{def:SC-free-preserving}
 A behavioral restriction condition $\BC$ is supercycle-freedom preserving iff, for every system 
