@@ -1,5 +1,6 @@
 package aub.edu.lb.kripke;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -20,6 +21,7 @@ public class Kripke {
 	// DFS
 	private Stack<KripkeState> stack = new Stack<KripkeState>();
 	protected HashSet<KripkeState> stateSpace = new HashSet<KripkeState>();
+	protected List<Transition> transitions = new LinkedList<Transition>();
 
 	/**
 	 * 
@@ -33,6 +35,15 @@ public class Kripke {
 		stack.push(kripkeStateInitial);
 		stateSpace.add(kripkeStateInitial);
 		DFS();
+		computeTransitions();
+	}
+	
+	private void computeTransitions() {
+		for(KripkeState state : getStates()) {
+			for(Transition transition: state.getTransitions()) {
+				transitions.add(transition);
+			}
+		}
 	}
 
 	public Kripke(Kripke kripke) {
@@ -125,6 +136,11 @@ public class Kripke {
 	public HashSet<KripkeState> getStates() {
 		return stateSpace;
 	}
+	
+	public List<Transition> getTransitions() {
+		return transitions;
+	}
+
 
 	public KripkeState getInitialState() {
 		return kripkeStateInitial;

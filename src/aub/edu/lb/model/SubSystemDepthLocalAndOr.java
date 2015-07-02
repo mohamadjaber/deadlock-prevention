@@ -2,6 +2,8 @@ package aub.edu.lb.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import ujf.verimag.bip.Core.Interactions.Component;
@@ -10,30 +12,28 @@ import ujf.verimag.bip.Core.Interactions.Component;
  * 
  * @author Mohamad Jaber OVERVIEW: this class constructs a subsystem with a
  *         specific depth given an interaction. Initially, we construct the
- *         system of depth 0. The set of components connected to the interaction
+ *         system of depth 1. The set of components connected to the interaction
  *         are stored in the components variable
  */
 
-public class SubSystemDepth extends SubSystem {
+public class SubSystemDepthLocalAndOr extends SubSystem {
 
 	private int length;
 	private BIPInteraction interaction;
 
 	private ArrayList<BIPInteraction> boundInteractions;
-	private ArrayList<Component> boundComponents;
 
 	/**
-	 * We start by length = 0. That is, for an interaction a we take the
-	 * components of a and their interactions. a -> B -> a' (length = 0). a -> B
-	 * -> a' -> B' (length = 1). and so on. See paper - FORTE 2013 - for more information.
-	 * D(a,l) = G(a, l+2)
+	 * We start by length = 1. That is, for an interaction a we take the
+	 * components of a and their interactions. a -> B -> a' (length = 1). a -> B
+	 * -> a' -> B'->a'' (length = 2). and so on. See paper - Journal - for more information.
+	 * D(a,l) = G(a, 2*l)
 	 * @param interaction
 	 */
-	public SubSystemDepth(BIPInteraction interaction) {
+	public SubSystemDepthLocalAndOr(BIPInteraction interaction) {
 		super(interaction.getComponents(), getInteractions(interaction));
-		length = 0;
+		length = 1;
 		boundInteractions = new ArrayList<BIPInteraction>(interactions);
-		boundComponents = new ArrayList<Component>();
 	}
 
 	/**
@@ -59,8 +59,8 @@ public class SubSystemDepth extends SubSystem {
 		return interactionsSub;
 	}
 
-	public boolean increase() {
-		return (length % 2 == 0) ? increaseEven() : increaseOdd();
+	public boolean increase() {		
+		return increaseInteractions(increaseComponents());
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class SubSystemDepth extends SubSystem {
 	 * 
 	 * @return
 	 */
-	private boolean increaseOdd() {
+	private boolean increaseInteractions(List<Component> boundComponents) {
 		boolean isIncreased = false;
 		boundInteractions.clear();
 		for (BIPInteraction inter : BIPAPI.getInteractions()) {
@@ -82,7 +82,7 @@ public class SubSystemDepth extends SubSystem {
 				}
 			}
 		}
-		length++;
+		if(isIncreased) length++;
 		return isIncreased;
 	}
 
@@ -91,20 +91,17 @@ public class SubSystemDepth extends SubSystem {
 	 * 
 	 * @return
 	 */
-	private boolean increaseEven() {
-		boolean isIncreased = false;
-		boundComponents.clear();
+	private List<Component> increaseComponents() {
+		List<Component> boundComponents = new ArrayList<Component>();
 		for (BIPInteraction inter : boundInteractions) {
 			for (Component comp : inter.getComponents()) {
 				if (!components.contains(comp)) {
 					addComponent(comp);
 					boundComponents.add(comp);
-					isIncreased = true;
 				}
 			}
 		}
-		length++;
-		return isIncreased;
+		return boundComponents;
 	}
 
 	/**
@@ -115,7 +112,7 @@ public class SubSystemDepth extends SubSystem {
 	 * that component is not in the subsystem. Clearly that if the interaction 
 	 * is not in boundInteractions, then it is not border node. 
 	 */
-	private boolean isBorderInteraction(BIPInteraction interaction) {
+	public boolean isBorderInteraction(BIPInteraction interaction) {
 		if (boundInteractions.contains(interaction)) {
 			for (Component comp : interaction.getComponents()) {
 				if (!components.contains(comp)) {
@@ -125,36 +122,9 @@ public class SubSystemDepth extends SubSystem {
 		}
 		return false;
 	}
-	
-	private boolean isBorderComponent(Component component) {
-		if (boundComponents.contains(component)) {
-			for (BIPInteraction inter : BIPAPI.getInteractions()) {
-				if (inter.getComponents().contains(component) && !interactions.contains(inter)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-	
-	public Set<Object> borders() {
-		Set<Object> borders = new HashSet<Object>();
-		borders.addAll(bordersInteraction());
-		borders.addAll(bordersComponent());
-		return borders;
-	}
-	
-	private Set<Component> bordersComponent() {
-		Set<Component> borderComponents = new HashSet<Component>();
-		for(Component comp: components) {
-			if(isBorderComponent(comp))
-				borderComponents.add(comp);	
-		}
-		return borderComponents;
-	}
-	
-	private Set<BIPInteraction> bordersInteraction() {
-		Set<BIPInteraction> borderInteractions = new HashSet<BIPInteraction>();
+		
+	public List<BIPInteraction> bordersInteraction() {
+		List<BIPInteraction> borderInteractions = new LinkedList<BIPInteraction>();
 		for(BIPInteraction interaction: interactions) {
 			if(isBorderInteraction(interaction))
 				borderInteractions.add(interaction);	

@@ -3,7 +3,9 @@ package aub.edu.lb.kripke;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
+
 import aub.edu.lb.model.BIPAPI;
 import aub.edu.lb.model.BIPInteraction;
 import aub.edu.lb.model.GlobalState;
@@ -360,6 +362,24 @@ public class WaitForGraph {
 
 		return !(marked.containsAll(interactions) && marked
 				.containsAll(components));
+	}
+	
+	
+	public boolean hasOutgoing(BIPInteraction interaction) {
+		for(Edge e: waitEdges) {
+			if(e.getInteraction().equals(interaction))
+				return true;
+		}
+		return false;
+	}
+	
+	public List<Component> outgoing(BIPInteraction interaction) {
+		List<Component> components = new LinkedList<Component>();
+		for(Edge e: waitEdges) {
+			if(e.getInteraction().equals(interaction))
+				components.add(e.getComponent());
+		}
+		return components; 
 	}
 
 	public String toString() {
