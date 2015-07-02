@@ -62,9 +62,13 @@ $p_i \in P_i$ for all $i \in I$, where $I \subseteq \set{1..n}$.
 \ed
 
 \noindent
-Execution of an interaction $\act$ involves all the components which have
+Execution of an interaction
+$\act = \{p_i\}_{i \in I}$
+involves all the components which have
 ports in $\act$.  
-
+We denote by $\cmps{\act}$ the
+set of atomic components participating in $\act$, formally:
+$\cmps{\act} = \{\B_i \st p_i \in \act\}$. 
 
 
 \begin{figure}[t]
@@ -114,9 +118,9 @@ corresponding atomic component $\B_i$ can execute a transition labeled with
 $p_i$; the states of components that do not participate in the interaction stay
 unchanged. 
 %
-Given an interaction $\act = \{p_i\}_{i \in I}$, we denote by $\cmps{\act}$ the
-set of atomic components participating in $\act$, formally:
-$\cmps{\act} = \{\B_i \st p_i \in \act\}$. 
+%Given an interaction $\act = \{p_i\}_{i \in I}$, we denote by $\cmps{\act}$ the
+%set of atomic components participating in $\act$, formally:
+%$\cmps{\act} = \{\B_i \st p_i \in \act\}$. 
 %Given a component $\B_i$, we denote by $A_i$ the
 %interactions that $\B_i$ participates in, formally: $A_i = \set{a \st P_i \ints a \ne \emptyset}$.
 Figure \ref{fig:diningbip} shows a composite component consisting of
@@ -127,16 +131,15 @@ $\Rel = \set{\release, \free_l, \free_r}$ in which the philosopher releases the 
 
 
 
-\bd[Interaction enablement]\label{def.bip.enablement} An atomic
-component $\B_i = (Q_i,P_i,\goesto_i)$ enables a port $p_i \in P_i$ in state $s_i$ iff $s_i \goesto[p_i]_i$.
-$\B_i$ enables interaction $\act$ in 
-state $s_i$ iff $s_i \goesto[p_i]_i$, where $p_i = P_i \ints a$ is the port of $\B_i$ involved in $\act$.
+\bd[Interaction enablement]\label{def.bip.enablement} 
+An atomic component $\B_i = (Q_i,P_i,\goesto_i)$ enables a port $p_i \in P_i$ in state $s_i$ iff $s_i \goesto[p_i]_i$.
+$\B_i$ enables interaction $\act$ in state $s_i$ iff $s_i \goesto[p_i]_i$, where $\set{p_i} = P_i \ints a$ is the port of $\B_i$ involved in $\act$.
 That is, $\B_i$ enables $\act$ in state $s_i$ iff $\B_i$ enables port $\act \ints P_i$ in state $s_i$. 
 
-Let $\gd{p_i}{i}$ denote the enablement condition for port $p_i$ in component $\B_i$, that is, $\gd{a}{p_i}$ holds iff
-the current state of $\B_i$ is an $s_i$ such that $s_i \goesto[p_i]_i$.
+Let $\gd{p_i}{i}$ denote the enablement condition for port $p_i$ in component $\B_i$, that is, $\gd{p_i}{i}$ holds iff
+$s_i$ is the current state of $\B_i$ and $s_i \goesto[p_i]_i$.
 Let $\gd{a}{i}$ denote the enablement condition for interaction $\act$ in
-component $\B_i$, that is,  $\gd{a}{i} = \gd{p_i}{i}$ where $p_i = a \ints P_i$.  
+component $\B_i$, that is,  $\gd{a}{i} = \gd{p_i}{i}$ where $\set{p_i} = a \ints P_i$.  
 %$\gd{a}{i}$ holds iff the current state of $\B_i$ is an $s_i$ such that $s_i \goesto[p_i]_i$.
 
 Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component, and let $s =
@@ -151,12 +154,13 @@ $a$ is one of the possible transitions that can be taken from $s$.
 
 To avoid pathological cases of deadlock due solely to a single component refusing to enable any interaction at all, 
 we assume that every component always enables at least one interaction.
+Structurally, this means that there is no local state zero transitions, and every port labeling a transition is 
+part of at least one interaction. 
 
 \bd[Local Enablement Assumption] \label{def.bip.local-enablement}
-For every component  $\B_i = (Q_i,P_i,\goesto_i)$, the followingholds. In every $s_i \in Q_i$, $\B_i$ enables some
+For every component  $\B_i = (Q_i,P_i,\goesto_i)$, the following holds. In every $s_i \in Q_i$, $\B_i$ enables some
 interaction $\act$.
 \ed
-
 
 
 
