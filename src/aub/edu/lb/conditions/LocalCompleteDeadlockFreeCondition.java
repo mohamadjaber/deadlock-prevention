@@ -1,7 +1,7 @@
 package aub.edu.lb.conditions;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 import ujf.verimag.bip.Core.Interactions.Component;
 import aub.edu.lb.configuration.Configuration;
@@ -60,13 +60,11 @@ public class LocalCompleteDeadlockFreeCondition extends
 	 * @return
 	 */
 	protected boolean checkPath(WaitForGraph wfg, BIPInteraction interaction) {
-		Set<Object> borders = subSystem.borders();
+		List<BIPInteraction> borders = subSystem.bordersInteraction();
 		ArrayList<Component> components = interaction.getComponents();
 
-		for (Object node : borders) {
-			// Initially, a component could not be a border
-			// as we consider G_a^{l+2}, so all interactions of C_a are
-			// included.
+		for (BIPInteraction node : borders) {
+			// D(a,l) = G(a, 2*l), i.e. a component cannot be a border node. 
 			for (Component component : components) {
 				if (wfg.existPath(node, component)) {
 					for (Object node1 : borders) {

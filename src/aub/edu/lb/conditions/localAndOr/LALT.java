@@ -17,11 +17,11 @@ import aub.edu.lb.logging.LogFormatter;
 import aub.edu.lb.model.BIPAPI;
 import aub.edu.lb.model.BIPInteraction;
 import aub.edu.lb.model.SubSystem;
-import aub.edu.lb.model.SubSystemDepthLocalAndOr;
+import aub.edu.lb.model.SubSystemDepth;
 
 public class LALT {
 	private static Logger log = Logger.getLogger(LocalCompleteDeadlockFreeCondition.class.getName());
-	protected SubSystemDepthLocalAndOr subSystem; 
+	protected SubSystemDepth subSystem; 
 
 	static {
 		LogManager.getLogManager().reset();
@@ -53,7 +53,7 @@ public class LALT {
 	private boolean laltInteraction(BIPInteraction interaction) {
 		while(true) {
 			// initially, length, i.e. l, is equal to 1
-			subSystem = new SubSystemDepthLocalAndOr(interaction);
+			subSystem = new SubSystemDepth(interaction);
 			if(laltInteractionDistance(interaction)) return true;
 			if(!subSystem.increase()) return false;
 			log.info("Increasing -> Length = " + subSystem.getLength() + "\n");

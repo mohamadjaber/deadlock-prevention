@@ -1,34 +1,42 @@
 package aub.edu.lb.conditions.localAndOr;
 
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import ujf.verimag.bip.Core.Interactions.Component;
 import aub.edu.lb.kripke.WaitForGraph;
 import aub.edu.lb.model.BIPInteraction;
-import aub.edu.lb.model.SubSystemDepthLocalAndOr;
+import aub.edu.lb.model.SubSystemDepth;
 
 public class LocalScViolation {
 	
 	private Component component; 
 	private WaitForGraph wfg;
-	private SubSystemDepthLocalAndOr subSystem; 
+	private SubSystemDepth subSystem; 
  
 	
-	private Map<Component, Integer> scViolationsComponents;
-	private Map<BIPInteraction, Integer> scViolationsInteractions;
+	private Set<Component> scViolationsComponents;
+	private Set<BIPInteraction> scViolationsInteractions;
+	
+	private Set<Component> scFormationComponents;
+	private Set<BIPInteraction> scFormationInteractions;
 	
 	List<BIPInteraction> bordersInteraction;
 
 	
-	public LocalScViolation(Component component, WaitForGraph wfg, SubSystemDepthLocalAndOr subSystem) {
+	public LocalScViolation(Component component, WaitForGraph wfg, SubSystemDepth subSystem) {
 		this.component = component; 
 		this.wfg = wfg; 
+		
 		this.subSystem = subSystem; 
 		
-		scViolationsComponents = new HashMap<Component,Integer>();
-		scViolationsInteractions = new HashMap<BIPInteraction, Integer>();
+		scViolationsComponents = new HashSet<Component>();
+		scViolationsInteractions = new HashSet<BIPInteraction>();
+		
+		scFormationComponents = new HashSet<Component>(subSystem.getComponents());
+		scFormationInteractions = new HashSet<BIPInteraction>(subSystem.getInteractions());
+		
 		bordersInteraction = subSystem.bordersInteraction();
 		computeScViolations();
 	}
@@ -36,44 +44,52 @@ public class LocalScViolation {
 
 	private void computeScViolations() {
 		int dd = longestSimplePathOverApproximation();
-		for(int i = 1; i <= dd; i++) {
-			computeScViolations(i);
+		
+		computeBottomScViolations();
+		
+		for(int i = 2; i <= dd; i++) {
+			updateScViolations();
 		}
 	}
 	
 	
-	
-	private void computeScViolations(int d) {
-		if(d == 1) {
-			for(BIPInteraction interaction: wfg.getInteractions()) {
-				if(isInteriorInteraction(interaction) && !wfg.hasOutgoing(interaction)) {
-					scViolationsInteractions.put(interaction, 1);
-				}
+	private void computeBottomScViolations() {
+		for(BIPInteraction interaction : scFormationInteractions) {
+			if(isInteriorInteraction(interaction) && !wfg.hasOutgoing(interaction)) {
+				scViolationsInteractions.add(interaction);
+				scFormationInteractions.remove(interaction);
 			}
-		}
-		else {
-			
-			for(BIPInteraction interaction:wfg.getInteractions()) {
-				if(isInteriorInteraction(interaction) && scViolateInteraction(interaction, d)) {
-					scViolationsInteractions.put(interaction, d);
-				}
-			}
-			
-			for(Component component: wfg.getComponents()) {
-				
-			}
-			
-			
 		}
 	}
 	
-	private boolean scViolateInteraction(BIPInteraction interaction, int d) {
+	private void updateScViolations() {
+		for(BIPInteraction interaction : scFormationInteractions) {
+			if(isInteriorInteraction(interaction) && scViolateInteraction(interaction)) {
+				scViolationsInteractions.add(interaction);
+				scFormationInteractions.remove(interaction);
+			}
+		}
+		
+		for(Component component : scFormationComponents) {
+			if(scViolateComponent(component)) {
+				scViolationsComponents.add(component);
+				scFormationComponents.remove(component);
+			}
+		}	
+	}
+	
+	private boolean scViolateInteraction(BIPInteraction interaction) {
 		for(Component component: wfg.outgoing(interaction)) {
-			if(!scViolationsComponents.containsKey(component) ||
-					scViolationsComponents.get(component) >= d)  
-				return false;
+			if(!scViolationsComponents.contains(component))	return false;
 		}
 		return true; 
+	}
+	
+	private boolean scViolateComponent(Component component) {
+		for(BIPInteraction interaction : wfg.outgoing(component)) {
+			if(scViolationsInteractions.contains(interaction))	return true;
+		}
+		return false; 
 	}
 	
 	private boolean isInteriorInteraction(BIPInteraction interaction) {
@@ -85,5 +101,13 @@ public class LocalScViolation {
 		return wfg.getComponents().size() + wfg.getInteractions().size() - 1;
 	}
 
+	
+	public boolean islocalScViolation() {
+		return scViolationsComponents.contains(component);
+	}
+	
+	public SubSystemDepth getSubSystem() {
+		return subSystem;
+	}
 
 }

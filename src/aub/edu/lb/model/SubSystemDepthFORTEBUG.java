@@ -2,8 +2,6 @@ package aub.edu.lb.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import ujf.verimag.bip.Core.Interactions.Component;
@@ -12,28 +10,43 @@ import ujf.verimag.bip.Core.Interactions.Component;
  * 
  * @author Mohamad Jaber OVERVIEW: this class constructs a subsystem with a
  *         specific depth given an interaction. Initially, we construct the
- *         system of depth 1. The set of components connected to the interaction
+ *         system of depth 0. The set of components connected to the interaction
  *         are stored in the components variable
  */
 
-public class SubSystemDepthLocalAndOr extends SubSystem {
+public class SubSystemDepthFORTEBUG extends SubSystem {
 
 	private int length;
 	private BIPInteraction interaction;
 
 	private ArrayList<BIPInteraction> boundInteractions;
+	private ArrayList<Component> boundComponents;
 
 	/**
-	 * We start by length = 1. That is, for an interaction a we take the
-	 * components of a and their interactions. a -> B -> a' (length = 1). a -> B
-	 * -> a' -> B'->a'' (length = 2). and so on. See paper - Journal - for more information.
-	 * D(a,l) = G(a, 2*l)
+	 * We start by length = 0. That is, for an interaction a we take the
+	 * components of a and their interactions. a -> B -> a' (length = 0). a -> B
+	 * -> a' -> B' (length = 1). and so on. See paper - FORTE 2013 - for more information.
+	 * D(a,l) = G(a, l+2)
+	 * 
+	 * BUG ---
+	 * D(a,l) must be equal to G(a, 2*l) as the Journal version. 
+	 * We must include all the interactions of a given component 
+	 * in the subsystem so that we obtain trace projection property valid: 
+	 * s - a - > t reachable in the global system then
+	 * s | D^a_l - a | D^a_l -> t | D^a_l is reachable in the subsystem. 
+	 * Assuming that we have a component l->p->l'->p1 and p is connected to 
+	 * a singleton interaction; p' is synchronized with other component B'.p1
+	 * if B' has a branching: p1 and p1' where p1 has a path to deadlock and not p1'
+	 * if we do not include the singleton interaction of B we may say the system is deadlock free
+	 * but it is not; this is due s - a - > t is reachable but its projection is not reachable... 
+	 * 
 	 * @param interaction
 	 */
-	public SubSystemDepthLocalAndOr(BIPInteraction interaction) {
+	public SubSystemDepthFORTEBUG(BIPInteraction interaction) {
 		super(interaction.getComponents(), getInteractions(interaction));
-		length = 1;
+		length = 0;
 		boundInteractions = new ArrayList<BIPInteraction>(interactions);
+		boundComponents = new ArrayList<Component>();
 	}
 
 	/**
@@ -59,8 +72,8 @@ public class SubSystemDepthLocalAndOr extends SubSystem {
 		return interactionsSub;
 	}
 
-	public boolean increase() {		
-		return increaseInteractions(increaseComponents());
+	public boolean increase() {
+		return (length % 2 == 0) ? increaseEven() : increaseOdd();
 	}
 
 	/**
@@ -68,7 +81,7 @@ public class SubSystemDepthLocalAndOr extends SubSystem {
 	 * 
 	 * @return
 	 */
-	private boolean increaseInteractions(List<Component> boundComponents) {
+	private boolean increaseOdd() {
 		boolean isIncreased = false;
 		boundInteractions.clear();
 		for (BIPInteraction inter : BIPAPI.getInteractions()) {
@@ -82,7 +95,7 @@ public class SubSystemDepthLocalAndOr extends SubSystem {
 				}
 			}
 		}
-		if(isIncreased) length++;
+		length++;
 		return isIncreased;
 	}
 
@@ -91,17 +104,20 @@ public class SubSystemDepthLocalAndOr extends SubSystem {
 	 * 
 	 * @return
 	 */
-	private List<Component> increaseComponents() {
-		List<Component> boundComponents = new ArrayList<Component>();
+	private boolean increaseEven() {
+		boolean isIncreased = false;
+		boundComponents.clear();
 		for (BIPInteraction inter : boundInteractions) {
 			for (Component comp : inter.getComponents()) {
 				if (!components.contains(comp)) {
 					addComponent(comp);
 					boundComponents.add(comp);
+					isIncreased = true;
 				}
 			}
 		}
-		return boundComponents;
+		length++;
+		return isIncreased;
 	}
 
 	/**
@@ -112,7 +128,7 @@ public class SubSystemDepthLocalAndOr extends SubSystem {
 	 * that component is not in the subsystem. Clearly that if the interaction 
 	 * is not in boundInteractions, then it is not border node. 
 	 */
-	public boolean isBorderInteraction(BIPInteraction interaction) {
+	private boolean isBorderInteraction(BIPInteraction interaction) {
 		if (boundInteractions.contains(interaction)) {
 			for (Component comp : interaction.getComponents()) {
 				if (!components.contains(comp)) {
@@ -122,9 +138,36 @@ public class SubSystemDepthLocalAndOr extends SubSystem {
 		}
 		return false;
 	}
-		
-	public List<BIPInteraction> bordersInteraction() {
-		List<BIPInteraction> borderInteractions = new LinkedList<BIPInteraction>();
+	
+	private boolean isBorderComponent(Component component) {
+		if (boundComponents.contains(component)) {
+			for (BIPInteraction inter : BIPAPI.getInteractions()) {
+				if (inter.getComponents().contains(component) && !interactions.contains(inter)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	public Set<Object> borders() {
+		Set<Object> borders = new HashSet<Object>();
+		borders.addAll(bordersInteraction());
+		borders.addAll(bordersComponent());
+		return borders;
+	}
+	
+	private Set<Component> bordersComponent() {
+		Set<Component> borderComponents = new HashSet<Component>();
+		for(Component comp: components) {
+			if(isBorderComponent(comp))
+				borderComponents.add(comp);	
+		}
+		return borderComponents;
+	}
+	
+	private Set<BIPInteraction> bordersInteraction() {
+		Set<BIPInteraction> borderInteractions = new HashSet<BIPInteraction>();
 		for(BIPInteraction interaction: interactions) {
 			if(isBorderInteraction(interaction))
 				borderInteractions.add(interaction);	

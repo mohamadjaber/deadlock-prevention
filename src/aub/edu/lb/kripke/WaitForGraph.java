@@ -27,6 +27,34 @@ public class WaitForGraph {
 		components = new ArrayList<Component>();
 		interactions = new ArrayList<BIPInteraction>();
 	}
+	
+	/**
+	 * Create a wfg C which is subgraph of the given wfg C'
+	 * by keeping only components and interactions given as parameters
+	 * and the edges connecting them.
+	 * 
+	 * @param wfg
+	 * @param subComponents
+	 * @param subInteractions
+	 */
+	public WaitForGraph(WaitForGraph wfg, List<Component> subComponents, 
+			List<BIPInteraction> subInteractions) {
+		components = new ArrayList<>(subComponents);
+		interactions = new ArrayList<>(subInteractions);
+		
+		for(Edge e: wfg.waitEdges) {
+			if(subComponents.contains(e.getComponent()) && subInteractions.contains(e.getInteraction()))
+					waitEdges.add(e);
+		}
+		
+		for(Edge e: wfg.readyEdges) {
+			if(subComponents.contains(e.getComponent()) && subInteractions.contains(e.getInteraction()))
+					readyEdges.add(e);
+		}
+		
+		this.state = wfg.state; 
+	}
+	
 
 	public WaitForGraph(GlobalState state) {
 		this.state = state;
@@ -380,6 +408,15 @@ public class WaitForGraph {
 				components.add(e.getComponent());
 		}
 		return components; 
+	}
+	
+	public List<BIPInteraction> outgoing(Component component) {
+		List<BIPInteraction> interactions = new LinkedList<BIPInteraction>();
+		for(Edge e: readyEdges) {
+			if(e.getComponent().equals(component))
+				interactions.add(e.getInteraction());
+		}
+		return interactions; 
 	}
 
 	public String toString() {

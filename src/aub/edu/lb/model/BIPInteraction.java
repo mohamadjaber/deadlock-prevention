@@ -2,7 +2,6 @@ package aub.edu.lb.model;
 
 import java.util.ArrayList;
 
-
 import ujf.verimag.bip.Core.Behaviors.Port;
 import ujf.verimag.bip.Core.Interactions.Component;
 import ujf.verimag.bip.Core.Interactions.Connector;
@@ -74,23 +73,20 @@ public class BIPInteraction {
 	  */
 	 @Override
 	 public boolean equals(Object obj) {
-		if(obj instanceof GlobalState) {
+		if(obj instanceof BIPInteraction) {
 			BIPInteraction interaction = (BIPInteraction) obj;
-			if(interaction.size() != size)
-				return false;
-			else {
-				for(Component component: interaction.components) {
-					if(!components.contains(component) || 
-							(components.contains(component) && 
-									!interaction.getPort(component).equals(getPort(component)))) {
-						return false;
-					}
-				}
-				return true;
-			}
+			return interaction.connector.getName().equals(connector.getName());
 		}
-		return super.equals(obj);
+		return false;
 	 }
+	 
+	 /**
+	  * @Override
+	  */
+	 public int hashCode(){
+		 return connector.getName().hashCode();
+	 }
+	 
 	 
 	 
 	 public String toString() {
