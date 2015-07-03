@@ -37,8 +37,8 @@ public class WaitForGraph {
 	 * @param subComponents
 	 * @param subInteractions
 	 */
-	public WaitForGraph(WaitForGraph wfg, List<Component> subComponents, 
-			List<BIPInteraction> subInteractions) {
+	public WaitForGraph(WaitForGraph wfg, Set<Component> subComponents, 
+			Set<BIPInteraction> subInteractions) {
 		components = new ArrayList<>(subComponents);
 		interactions = new ArrayList<>(subInteractions);
 		

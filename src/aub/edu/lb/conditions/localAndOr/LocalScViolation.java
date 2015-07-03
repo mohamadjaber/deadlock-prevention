@@ -11,18 +11,18 @@ import aub.edu.lb.model.SubSystemDepth;
 
 public class LocalScViolation {
 	
-	private Component component; 
-	private WaitForGraph wfg;
-	private SubSystemDepth subSystem; 
+	protected Component component; 
+	protected WaitForGraph wfg;
+	protected SubSystemDepth subSystem; 
  
 	
-	private Set<Component> scViolationsComponents;
-	private Set<BIPInteraction> scViolationsInteractions;
+	protected Set<Component> scViolationsComponents;
+	protected Set<BIPInteraction> scViolationsInteractions;
 	
-	private Set<Component> scFormationComponents;
-	private Set<BIPInteraction> scFormationInteractions;
+	protected Set<Component> scFormationComponents;
+	protected Set<BIPInteraction> scFormationInteractions;
 	
-	List<BIPInteraction> bordersInteraction;
+	protected List<BIPInteraction> bordersInteraction;
 
 	
 	public LocalScViolation(Component component, WaitForGraph wfg, SubSystemDepth subSystem) {

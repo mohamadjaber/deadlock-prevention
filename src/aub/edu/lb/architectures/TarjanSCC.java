@@ -10,9 +10,6 @@ public class TarjanSCC {
 	boolean[] used;
 	List<Integer> stack;
 	List<List<Integer>> components;
-
-	
-	
 	
 	public List<List<Integer>> scc(List<Integer>[] graph) {
 		int n = graph.length;
