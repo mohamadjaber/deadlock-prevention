@@ -42,14 +42,9 @@ public class LocalScViolation {
 	}
 
 
-	private void computeScViolations() {
-		int dd = longestSimplePathOverApproximation();
-		
+	private void computeScViolations() {		
 		computeBottomScViolations();
-		
-		for(int i = 2; i <= dd; i++) {
-			updateScViolations();
-		}
+		while(updateScViolations());
 	}
 	
 	
@@ -62,11 +57,13 @@ public class LocalScViolation {
 		}
 	}
 	
-	private void updateScViolations() {
+	private boolean updateScViolations() {
+		boolean marking = false; 
 		for(BIPInteraction interaction : scFormationInteractions) {
 			if(isInteriorInteraction(interaction) && scViolateInteraction(interaction)) {
 				scViolationsInteractions.add(interaction);
 				scFormationInteractions.remove(interaction);
+				marking = true; 
 			}
 		}
 		
@@ -74,8 +71,10 @@ public class LocalScViolation {
 			if(scViolateComponent(component)) {
 				scViolationsComponents.add(component);
 				scFormationComponents.remove(component);
+				marking = true; 
 			}
 		}	
+		return marking; 
 	}
 	
 	private boolean scViolateInteraction(BIPInteraction interaction) {
@@ -95,12 +94,6 @@ public class LocalScViolation {
 	private boolean isInteriorInteraction(BIPInteraction interaction) {
 		return !bordersInteraction.contains(interaction);
 	}
-
-
-	private int longestSimplePathOverApproximation() {
-		return wfg.getComponents().size() + wfg.getInteractions().size() - 1;
-	}
-
 	
 	public boolean islocalScViolation() {
 		return scViolationsComponents.contains(component);

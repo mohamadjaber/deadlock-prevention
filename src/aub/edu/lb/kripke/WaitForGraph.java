@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 import aub.edu.lb.model.BIPAPI;
@@ -308,6 +309,65 @@ public class WaitForGraph {
 	private boolean inPathDepthL(Object node, int length) {
 		return inPathDepth(node, 0, length);
 	}
+	
+	public Set<Object> bfs(Object node) {
+		Set<Object> visited = new HashSet<Object>();
+		Queue<Object> queue = new LinkedList<Object>();
+		visited.add(node);
+		queue.add(node);
+		
+		while(!queue.isEmpty()) {
+			Object currentNode = queue.remove();
+			if(currentNode instanceof Component) {
+				Component component = (Component) currentNode;
+				for(BIPInteraction interaction: outgoing(component)) {
+					if(!visited.contains(interaction)) {
+						visited.add(interaction);
+						queue.add(interaction);
+					}
+				}
+			} else { // BIPInteraction
+				BIPInteraction interaction = (BIPInteraction) currentNode;
+				for(Component component: outgoing(interaction)) {
+					if(!visited.contains(component)) {
+						visited.add(component);
+						queue.add(component);
+					}
+				}
+			}
+		}
+		return visited;
+	}
+	
+	
+	public Set<Object> inverseBfs(Object node) {
+		Set<Object> visited = new HashSet<Object>();
+		Queue<Object> queue = new LinkedList<Object>();
+		visited.add(node);
+		queue.add(node);
+		
+		while(!queue.isEmpty()) {
+			Object currentNode = queue.remove();
+			if(currentNode instanceof Component) {
+				Component component = (Component) currentNode;
+				for(BIPInteraction interaction: incoming(component)) {
+					if(!visited.contains(interaction)) {
+						visited.add(interaction);
+						queue.add(interaction);
+					}
+				}
+			} else { // BIPInteraction
+				BIPInteraction interaction = (BIPInteraction) currentNode;
+				for(Component component: incoming(interaction)) {
+					if(!visited.contains(component)) {
+						visited.add(component);
+						queue.add(component);
+					}
+				}
+			}
+		}
+		return visited;
+	}
 
 	/**
 	 * 
@@ -401,6 +461,7 @@ public class WaitForGraph {
 		return false;
 	}
 	
+	
 	public List<Component> outgoing(BIPInteraction interaction) {
 		List<Component> components = new LinkedList<Component>();
 		for(Edge e: waitEdges) {
@@ -418,6 +479,25 @@ public class WaitForGraph {
 		}
 		return interactions; 
 	}
+	
+	public List<BIPInteraction> incoming(Component component) {
+		List<BIPInteraction> interactions = new LinkedList<BIPInteraction>();
+		for(Edge e: waitEdges) {
+			if(e.getComponent().equals(component))
+				interactions.add(e.getInteraction());
+		}
+		return interactions; 
+	}
+	
+	public List<Component> incoming(BIPInteraction interaction) {
+		List<Component> components = new LinkedList<Component>();
+		for(Edge e: readyEdges) {
+			if(e.getInteraction().equals(interaction))
+				components.add(e.getComponent());
+		}
+		return components; 
+	}
+	
 
 	public String toString() {
 		String wfgName = "WFG:\nState: " + state + "\n";

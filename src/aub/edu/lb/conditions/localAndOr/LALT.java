@@ -76,8 +76,11 @@ public class LALT {
 
 	private boolean LocalFormViolation(Component component, Kripke kripke, KripkeState state) {
 		WaitForGraph wfg = new WaitForGraph(state.getState());
-
-		return false;
+		LocalScViolation localScViolation = new LocalScViolation(component, wfg, subSystem);
+		if(localScViolation.islocalScViolation()) return true;
+		
+		LocalSconnViolation localSconnViolation = new LocalSconnViolation(localScViolation);
+		return localSconnViolation.isLocalSconnViolation();
 	}
 
 	public boolean initialSuperCycle() {
