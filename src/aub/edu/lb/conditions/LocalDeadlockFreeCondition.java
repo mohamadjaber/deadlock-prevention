@@ -33,8 +33,7 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 	public LocalDeadlockFreeCondition(String fileName, boolean debug) {
 		CompoundType ct = TransformationFunction.ParseBIPFile(fileName);
 		BIPAPI.initialize(ct);
-		if(!debug) 
-			log.setLevel(Level.OFF);
+		if(!debug) log.setLevel(Level.OFF);
 	}
 	
 	/**
@@ -87,12 +86,8 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 			subSystem = new SubSystemDepth(interaction);
 			log.info(" - Length = "+ subSystem.getLength() + "\n");
 			
-			if(!checkLocalLDFC(interaction)) {
-				return false;
-			}
-			else {
-				log.info(getName() + "(a,"+subSystem.getLength() +") = true\n");
-			}
+			if(!checkLocalLDFC(interaction)) return false;
+			else log.info(getName() + "(" + interaction + ","+subSystem.getLength() +") = true\n");
 		}
 		return true;
 	}

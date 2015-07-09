@@ -1,41 +1,26 @@
 package aub.edu.lb.tests;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.FileNotFoundException;
 
-import aub.edu.lb.bip.examples.GasStation;
-import aub.edu.lb.conditions.CheckableCondition;
+import org.junit.Test;
+
 import aub.edu.lb.conditions.LocalCompleteDeadlockFreeCondition;
 import aub.edu.lb.conditions.LocalDeadlockFreeCondition;
 import aub.edu.lb.conditions.localAndOr.LALT;
-import aub.edu.lb.configuration.Configuration;
 
 public class Test3 {
-	public static void main(String[] args) throws FileNotFoundException {
-		
-		GasStation gs = new GasStation();
-		gs.generateGasStation(9);
-		
+	@Test
+	public void testDeadlock() throws FileNotFoundException {
 		String bipFile = "BIPExamples/dealocked_system1.bip"; 
 		boolean debug = false; 
-		
 		LALT lalt = new LALT(bipFile, debug);
 		LocalCompleteDeadlockFreeCondition localComplete = new LocalCompleteDeadlockFreeCondition(bipFile, debug);
 		LocalDeadlockFreeCondition llin = new LocalDeadlockFreeCondition(bipFile, debug);
-
-		check(lalt);
-		check(localComplete);
-		check(llin);
 		
+		assertEquals("", lalt.check(), false);	
+		assertEquals("", localComplete.check(), false);	
+		assertEquals("", llin.check(), false);			
 	}
-	
-	public static void check(CheckableCondition condition) {
-		long startTime, stopTime;
-		startTime = System.currentTimeMillis();
-		System.out.println(condition.check());
-		stopTime = System.currentTimeMillis();
-		System.out.println(stopTime-startTime);
-		
-		System.out.println(Configuration.totalTime);
-	}
-	
 }

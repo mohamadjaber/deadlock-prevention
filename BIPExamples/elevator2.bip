@@ -1,0 +1,185 @@
+model elevator
+
+connector type Sync1(Port p1)
+  define [p1]
+  on p1 provided true up {} down {}
+end
+
+connector type Sync2(Port p1, Port p2)
+  define [p1 p2]
+  on p1 p2 provided true up {} down {}
+end
+
+connector type Sync3(Port p1, Port p2, Port p3)
+  define [p1 p2 p3]
+  on p1 p2 p3 provided true up {} down {}
+end
+
+connector type Sync4(Port p1, Port p2, Port p3, Port p4)
+  define [p1 p2 p3 p4]
+  on p1 p2 p3 p4 provided true up {} down {}
+end
+
+connector type Sync5(Port p1, Port p2, Port p3, Port p4, Port p5)
+  define [p1 p2 p3 p4 p5]
+  on p1 p2 p3 p4 p5 provided true up {} down {}
+end
+
+connector type Sync6(Port p1, Port p2, Port p3, Port p4, Port p5, Port p6)
+  define [p1 p2 p3 p4 p5 p6]
+  on p1 p2 p3 p4 p5 p6 provided true up {} down {}
+end
+
+atomic type ElevatorEngine
+   export port Port stop
+   export port Port goup
+   export port Port godown
+ 
+  place l0, l1, l2
+  initial to l0 do {}
+  
+  on stop from l0 to l0 
+  on goup from l0 to l1
+  on goup from l1 to l2
+  on stop from l2 to l2
+  on godown from l2 to l1
+  on stop from l1 to l1
+  on godown from l1 to l0 
+end
+
+atomic type ElevatorDoor
+   export port Port open
+   export port Port close
+   export port Port t
+
+  place l0, l1
+  initial to l0 do {}
+
+  on open from l0 to l1
+  on close from l1 to l0
+  on t from l1 to l1
+end
+
+atomic type CallerSystem
+   export port Port inputstop
+   export port Port inputcall
+   export port Port floorcall
+   export port Port floorstop
+
+  place l0, l1, l2
+  initial to l0 do {}
+  
+  on inputcall from l0 to l1
+  on inputcall from l2 to l1
+  on floorstop from l2 to l0
+  on floorcall from l0 to l2
+  on inputstop from l1 to l0
+end
+
+
+
+
+atomic type ControllerC1
+   export port Port stop
+   export port Port move
+   export port Port close
+   export port Port open
+
+  place l0, l1, l2
+  initial to l0 do {}
+  
+  on move from l0 to l1
+  on open from l0 to l2
+  on move from l1 to l1
+  on stop from l1 to l0
+  on close from l2 to l0
+end
+
+atomic type ControllerC2
+   export port Port move 
+   export port Port door
+   export port Port elevator
+
+  place l0, l1
+  initial to l0 do {}
+  
+  on move from l0 to l0
+  on door from l0 to l1
+  on elevator from l1 to l0
+end
+
+atomic type ControllerC4
+   export port Port free 
+   export port Port request
+   export port Port finish
+
+  place l0, l1
+  initial to l0 do {}
+  
+  on free from l0 to l0
+  on request from l0 to l1
+  on finish from l1 to l0
+end
+
+
+atomic type ControllerC3
+   export port Port notfull
+   export port Port add
+   export port Port sub
+
+  place l0, l1, l2
+  initial to l0 do {}
+  
+  on add from l0 to l1
+  on add from l1 to l2
+  on sub from l2 to l1
+  on sub from l1 to l0
+  on notfull from l1 to l1
+  on notfull from l0 to l0  
+end
+compound type ArchitectureControllerC1C3
+ component ElevatorEngine ee
+ component ElevatorDoor ed
+
+ component CallerSystem cs0
+ component CallerSystem cs1
+ component CallerSystem cs2
+
+ component ControllerC1 c1
+ component ControllerC3 c3
+
+
+
+ connector Sync2 conn1(ed.open, c1.open)
+ connector Sync2 conn2(ed.close, c1.close)
+
+ connector Sync1 conn3(cs0.floorcall)
+ connector Sync1 conn4(cs1.floorcall)
+ connector Sync1 conn5(cs2.floorcall)
+ 
+ connector Sync1 conn6(cs0.inputcall)
+ connector Sync1 conn7(cs1.inputcall)
+ connector Sync1 conn8(cs2.inputcall)
+
+
+ connector Sync4 conn9(ee.stop, c1.stop,  c3.notfull, cs0.floorstop)
+ connector Sync4 conn10(ee.stop, c1.stop,  c3.notfull, cs1.floorstop)
+ connector Sync4 conn11(ee.stop, c1.stop,  c3.notfull, cs2.floorstop)
+
+ connector Sync3 conn12(ee.stop, c1.stop, cs0.inputstop)
+ connector Sync3 conn13(ee.stop, c1.stop, cs1.inputstop)
+ connector Sync3 conn14(ee.stop, c1.stop, cs2.inputstop)
+ 
+ connector Sync2 conn15(ee.goup, c1.move)
+  
+ connector Sync2 conn16(ee.godown, c1.move)
+
+ connector Sync2 conn17(c3.add, ed.t)
+ connector Sync2 conn18(c3.sub, ed.t)
+
+
+end
+
+component ArchitectureControllerC1C3 top
+
+end

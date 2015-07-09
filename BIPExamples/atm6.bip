@@ -1,0 +1,290 @@
+model ATMSYSTEM
+atomic type BankValidation
+	export port Port validate
+	export port Port authorized
+	export port Port nonauthorized
+	place l0, l1
+	initial to l0
+		on validate from l0 to l1
+		on nonauthorized from l1 to l0
+		on authorized from l1 to l0
+end
+
+atomic type BankVeto
+	export port Port veto
+	export port Port fiat
+	export port Port transaction
+	place l0, l1
+	initial to l0
+		on transaction from l0 to l1
+		on veto from l1 to l0
+		on fiat from l1 to l0
+end
+
+atomic type ATMCashManager
+	export port Port enough
+	export port Port checkCash
+	export port Port notEnough
+	place l0, l1
+	initial to l0
+		on checkCash from l0 to l1
+		on enough from l1 to l0
+		on notEnough from l1 to l0
+end
+
+atomic type User
+	export port Port insert
+	export port Port enter
+	export port Port invalid
+	export port Port validated
+	export port Port amount
+	export port Port cancel
+	export port Port accept
+	export port Port success
+	export port Port fail
+	export port Port eject
+	export port Port withdraw
+	export port Port notAllowed
+	place l0, l1, l2, l3, l4, l5, l6, l7
+	initial to l0
+		on insert from l0 to l1
+		on enter from l1 to l2
+		on validated from l2 to l3
+		on invalid from l2 to l5
+		on amount from l3 to l4
+		on cancel from l4 to l5
+		on accept from l4 to l6
+		on eject from l5 to l0
+		on fail from l6 to l5
+		on notAllowed from l4 to l5
+		on success from l6 to l7
+		on withdraw from l7 to l5
+end
+
+atomic type ATM
+	export port Port insert
+	export port Port enter
+	export port Port validate
+	export port Port authorized
+	export port Port nonauthorized
+	export port Port invalid
+	export port Port validated
+	export port Port amount
+	export port Port cancel
+	export port Port accept
+	export port Port transaction
+	export port Port veto
+	export port Port fiat
+	export port Port fail
+	export port Port eject
+	export port Port success
+	export port Port withdraw
+	export port Port checkCash
+	export port Port enough
+	export port Port notEnough
+	export port Port notAllowed
+	place l0, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14, l15, l16
+	initial to l0
+		on insert from l0 to l1
+		on enter from l1 to l2 
+		on validate from l2 to l3 
+		on authorized from l3 to l4
+		on nonauthorized from l3 to l5
+		on invalid from l5 to l6
+		on eject from l6 to l0
+		on validated from l4 to l7
+		on amount from l7 to l8 
+		on accept from l8 to l14 
+		on cancel from l8 to l6 
+		on checkCash from l14 to l15
+		on notEnough from l15 to l16
+		on notAllowed from l16 to l6
+		on enough from l15 to l9
+		on transaction from l9 to l10
+		on fiat from l10 to l11
+		on veto from l10 to l13
+		on fail from l13 to l6
+		on success from l11 to l12
+		on withdraw from l12 to l6
+end
+
+atomic type WrongATM
+	export port Port insert
+	export port Port enter
+	export port Port validate
+	export port Port authorized
+	export port Port nonauthorized
+	export port Port invalid
+	export port Port validated
+	export port Port amount
+	export port Port cancel
+	export port Port accept
+	export port Port transaction
+	export port Port veto
+	export port Port fiat
+	export port Port fail
+	export port Port eject
+	export port Port success
+	export port Port withdraw
+	place l0, l1, l2, l3, l4, l5, l6, l7, l8, l9, l10, l11, l12, l13, l14
+	initial to l0
+		on insert from l0 to l1
+		on enter from l1 to l2
+		on validate from l2 to l3
+		on validate from l2 to l6
+		on authorized from l3 to l4
+		on nonauthorized from l3 to l5
+		on invalid from l5 to l13
+		on eject from l6 to l0
+		on validated from l4 to l7
+		on amount from l7 to l8
+		on accept from l8 to l9
+		on cancel from l8 to l6
+		on transaction from l9 to l10
+		on veto from l10 to l13
+		on fiat from l10 to l11
+		on fail from l13 to l6
+		on success from l11 to l12
+		on withdraw from l12 to l6
+end
+
+connector type rendezvous2(Port p1, Port p2)
+	define [ p1 p2 ]
+end
+
+connector type single(Port p1)
+	define [ p1 ]
+end
+
+compound type AtmSystemType
+
+
+	component BankVeto veto
+	component BankValidation valid
+
+	component User user_0
+	component ATM atm_0
+	component ATMCashManager cash_0
+	component User user_1
+	component ATM atm_1
+	component ATMCashManager cash_1
+	component User user_2
+	component ATM atm_2
+	component ATMCashManager cash_2
+	component User user_3
+	component ATM atm_3
+	component ATMCashManager cash_3
+	component User user_4
+	component ATM atm_4
+	component ATMCashManager cash_4
+
+	connector rendezvous2 u_0_atm0_insert (user_0.insert, atm_0.insert)
+	connector rendezvous2 u0_atm0_enter (user_0.enter, atm_0.enter)
+	connector rendezvous2 u0_atm0_invalid (user_0.invalid, atm_0.invalid)
+	connector rendezvous2 u0_atm0_validated (user_0.validated, atm_0.validated)
+	connector rendezvous2 u0_atm0_amount (user_0.amount, atm_0.amount)
+	connector rendezvous2 u0_atm0_accept (user_0.accept, atm_0.accept)
+	connector rendezvous2 u0_atm0_cancel (user_0.cancel, atm_0.cancel)
+	connector rendezvous2 u0_atm0_notAllowed (user_0.notAllowed, atm_0.notAllowed)
+	connector rendezvous2 u0_atm0_eject (user_0.eject, atm_0.eject)
+	connector rendezvous2 u0_atm0_fail (user_0.fail, atm_0.fail)
+	connector rendezvous2 u0_atm0_success (user_0.success, atm_0.success)
+	connector rendezvous2 u0_atm0_withdraw (user_0.withdraw, atm_0.withdraw)
+	connector rendezvous2 cash0_atm0_checkCash (cash_0.checkCash, atm_0.checkCash)
+	connector rendezvous2 cash0_atm0_enough (cash_0.enough, atm_0.enough)
+	connector rendezvous2 cash0_atm0_notEnough (cash_0.notEnough, atm_0.notEnough)
+	connector rendezvous2 bank_atm0_validate (valid.validate, atm_0.validate)
+	connector rendezvous2 bank_atm0_authorized (valid.authorized, atm_0.authorized)
+	connector rendezvous2 bank_atm0_nonauthorized (valid.nonauthorized, atm_0.nonauthorized)
+	connector rendezvous2 veto_atm0_transaction (veto.transaction, atm_0.transaction)
+	connector rendezvous2 veto_atm0_veto (veto.veto, atm_0.veto)
+	connector rendezvous2 veto_atm0_fiat (veto.fiat, atm_0.fiat)
+	connector rendezvous2 u_1_atm1_insert (user_1.insert, atm_1.insert)
+	connector rendezvous2 u1_atm1_enter (user_1.enter, atm_1.enter)
+	connector rendezvous2 u1_atm1_invalid (user_1.invalid, atm_1.invalid)
+	connector rendezvous2 u1_atm1_validated (user_1.validated, atm_1.validated)
+	connector rendezvous2 u1_atm1_amount (user_1.amount, atm_1.amount)
+	connector rendezvous2 u1_atm1_accept (user_1.accept, atm_1.accept)
+	connector rendezvous2 u1_atm1_cancel (user_1.cancel, atm_1.cancel)
+	connector rendezvous2 u1_atm1_notAllowed (user_1.notAllowed, atm_1.notAllowed)
+	connector rendezvous2 u1_atm1_eject (user_1.eject, atm_1.eject)
+	connector rendezvous2 u1_atm1_fail (user_1.fail, atm_1.fail)
+	connector rendezvous2 u1_atm1_success (user_1.success, atm_1.success)
+	connector rendezvous2 u1_atm1_withdraw (user_1.withdraw, atm_1.withdraw)
+	connector rendezvous2 cash1_atm1_checkCash (cash_1.checkCash, atm_1.checkCash)
+	connector rendezvous2 cash1_atm1_enough (cash_1.enough, atm_1.enough)
+	connector rendezvous2 cash1_atm1_notEnough (cash_1.notEnough, atm_1.notEnough)
+	connector rendezvous2 bank_atm1_validate (valid.validate, atm_1.validate)
+	connector rendezvous2 bank_atm1_authorized (valid.authorized, atm_1.authorized)
+	connector rendezvous2 bank_atm1_nonauthorized (valid.nonauthorized, atm_1.nonauthorized)
+	connector rendezvous2 veto_atm1_transaction (veto.transaction, atm_1.transaction)
+	connector rendezvous2 veto_atm1_veto (veto.veto, atm_1.veto)
+	connector rendezvous2 veto_atm1_fiat (veto.fiat, atm_1.fiat)
+	connector rendezvous2 u_2_atm2_insert (user_2.insert, atm_2.insert)
+	connector rendezvous2 u2_atm2_enter (user_2.enter, atm_2.enter)
+	connector rendezvous2 u2_atm2_invalid (user_2.invalid, atm_2.invalid)
+	connector rendezvous2 u2_atm2_validated (user_2.validated, atm_2.validated)
+	connector rendezvous2 u2_atm2_amount (user_2.amount, atm_2.amount)
+	connector rendezvous2 u2_atm2_accept (user_2.accept, atm_2.accept)
+	connector rendezvous2 u2_atm2_cancel (user_2.cancel, atm_2.cancel)
+	connector rendezvous2 u2_atm2_notAllowed (user_2.notAllowed, atm_2.notAllowed)
+	connector rendezvous2 u2_atm2_eject (user_2.eject, atm_2.eject)
+	connector rendezvous2 u2_atm2_fail (user_2.fail, atm_2.fail)
+	connector rendezvous2 u2_atm2_success (user_2.success, atm_2.success)
+	connector rendezvous2 u2_atm2_withdraw (user_2.withdraw, atm_2.withdraw)
+	connector rendezvous2 cash2_atm2_checkCash (cash_2.checkCash, atm_2.checkCash)
+	connector rendezvous2 cash2_atm2_enough (cash_2.enough, atm_2.enough)
+	connector rendezvous2 cash2_atm2_notEnough (cash_2.notEnough, atm_2.notEnough)
+	connector rendezvous2 bank_atm2_validate (valid.validate, atm_2.validate)
+	connector rendezvous2 bank_atm2_authorized (valid.authorized, atm_2.authorized)
+	connector rendezvous2 bank_atm2_nonauthorized (valid.nonauthorized, atm_2.nonauthorized)
+	connector rendezvous2 veto_atm2_transaction (veto.transaction, atm_2.transaction)
+	connector rendezvous2 veto_atm2_veto (veto.veto, atm_2.veto)
+	connector rendezvous2 veto_atm2_fiat (veto.fiat, atm_2.fiat)
+	connector rendezvous2 u_3_atm3_insert (user_3.insert, atm_3.insert)
+	connector rendezvous2 u3_atm3_enter (user_3.enter, atm_3.enter)
+	connector rendezvous2 u3_atm3_invalid (user_3.invalid, atm_3.invalid)
+	connector rendezvous2 u3_atm3_validated (user_3.validated, atm_3.validated)
+	connector rendezvous2 u3_atm3_amount (user_3.amount, atm_3.amount)
+	connector rendezvous2 u3_atm3_accept (user_3.accept, atm_3.accept)
+	connector rendezvous2 u3_atm3_cancel (user_3.cancel, atm_3.cancel)
+	connector rendezvous2 u3_atm3_notAllowed (user_3.notAllowed, atm_3.notAllowed)
+	connector rendezvous2 u3_atm3_eject (user_3.eject, atm_3.eject)
+	connector rendezvous2 u3_atm3_fail (user_3.fail, atm_3.fail)
+	connector rendezvous2 u3_atm3_success (user_3.success, atm_3.success)
+	connector rendezvous2 u3_atm3_withdraw (user_3.withdraw, atm_3.withdraw)
+	connector rendezvous2 cash3_atm3_checkCash (cash_3.checkCash, atm_3.checkCash)
+	connector rendezvous2 cash3_atm3_enough (cash_3.enough, atm_3.enough)
+	connector rendezvous2 cash3_atm3_notEnough (cash_3.notEnough, atm_3.notEnough)
+	connector rendezvous2 bank_atm3_validate (valid.validate, atm_3.validate)
+	connector rendezvous2 bank_atm3_authorized (valid.authorized, atm_3.authorized)
+	connector rendezvous2 bank_atm3_nonauthorized (valid.nonauthorized, atm_3.nonauthorized)
+	connector rendezvous2 veto_atm3_transaction (veto.transaction, atm_3.transaction)
+	connector rendezvous2 veto_atm3_veto (veto.veto, atm_3.veto)
+	connector rendezvous2 veto_atm3_fiat (veto.fiat, atm_3.fiat)
+	connector rendezvous2 u_4_atm4_insert (user_4.insert, atm_4.insert)
+	connector rendezvous2 u4_atm4_enter (user_4.enter, atm_4.enter)
+	connector rendezvous2 u4_atm4_invalid (user_4.invalid, atm_4.invalid)
+	connector rendezvous2 u4_atm4_validated (user_4.validated, atm_4.validated)
+	connector rendezvous2 u4_atm4_amount (user_4.amount, atm_4.amount)
+	connector rendezvous2 u4_atm4_accept (user_4.accept, atm_4.accept)
+	connector rendezvous2 u4_atm4_cancel (user_4.cancel, atm_4.cancel)
+	connector rendezvous2 u4_atm4_notAllowed (user_4.notAllowed, atm_4.notAllowed)
+	connector rendezvous2 u4_atm4_eject (user_4.eject, atm_4.eject)
+	connector rendezvous2 u4_atm4_fail (user_4.fail, atm_4.fail)
+	connector rendezvous2 u4_atm4_success (user_4.success, atm_4.success)
+	connector rendezvous2 u4_atm4_withdraw (user_4.withdraw, atm_4.withdraw)
+	connector rendezvous2 cash4_atm4_checkCash (cash_4.checkCash, atm_4.checkCash)
+	connector rendezvous2 cash4_atm4_enough (cash_4.enough, atm_4.enough)
+	connector rendezvous2 cash4_atm4_notEnough (cash_4.notEnough, atm_4.notEnough)
+	connector rendezvous2 bank_atm4_validate (valid.validate, atm_4.validate)
+	connector rendezvous2 bank_atm4_authorized (valid.authorized, atm_4.authorized)
+	connector rendezvous2 bank_atm4_nonauthorized (valid.nonauthorized, atm_4.nonauthorized)
+	connector rendezvous2 veto_atm4_transaction (veto.transaction, atm_4.transaction)
+	connector rendezvous2 veto_atm4_veto (veto.veto, atm_4.veto)
+	connector rendezvous2 veto_atm4_fiat (veto.fiat, atm_4.fiat)
+end
+
+component AtmSystemType atm
+
+end

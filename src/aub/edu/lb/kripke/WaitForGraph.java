@@ -142,20 +142,20 @@ public class WaitForGraph {
 		}
 		return succNodes;
 	}
-
+	
 	/**
 	 * 
 	 * @param state
 	 * @return
+	 * @deprecated
 	 */
-	private void buildWaitForGraph() {
-
+	@SuppressWarnings("unused")
+	private void buildWaitForGraphTMP() {
 		SubSystem subSystem = state.getSubSystem();
 		// computes interactions' nodes in the wait-for graph
 		ArrayList<BIPInteraction> leastOneReadyInteractions = new ArrayList<BIPInteraction>();
 		// if no local state readies that interaction then the interaction is a
-		// source state
-		// and then cannot belong to a supercycle.
+		// source state; and then cannot belong to a super-cycle.
 		for (BIPInteraction interaction : subSystem.getInteractions()) {
 			for (LocalState ls : state.getLocalStates()) {
 				if (ls.readies(interaction)) {
@@ -163,7 +163,6 @@ public class WaitForGraph {
 					break;
 				}
 			}
-
 		}
 
 		// creates wait-for graph's edges
@@ -182,6 +181,30 @@ public class WaitForGraph {
 						addWaitEdge(new Edge(localState.getComponent(),
 								interaction));
 				}
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * @param state
+	 * @return
+	 */
+	private void buildWaitForGraph() {
+		SubSystem subSystem = state.getSubSystem();
+		// creates wait-for graph's edges
+		components = subSystem.getComponents();
+		interactions = subSystem.getInteractions();
+
+		// creates edges
+		for (LocalState localState : state.getLocalStates()) {
+			for (BIPInteraction interaction : interactions) {
+				if (localState.readies(interaction)) {
+					addReadyEdge(new Edge(localState.getComponent(),
+							interaction));
+				} 
+				else if(interaction.getComponents().contains(localState.getComponent()))
+					addWaitEdge(new Edge(localState.getComponent(), interaction));
 			}
 		}
 	}

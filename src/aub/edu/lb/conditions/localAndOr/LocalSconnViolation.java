@@ -1,6 +1,7 @@
 package aub.edu.lb.conditions.localAndOr;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class LocalSconnViolation {
 	
 	public LocalSconnViolation(LocalScViolation localScViolation) {
 		this.localScViolation = localScViolation;
-		// remove all nodes with no super-cycle violation
+		// keep all nodes with NO super-cycle violation
 		subWFGWithoutViolationNodes = removeNodesLocalScViolation();
 	}
 	
@@ -46,7 +47,6 @@ public class LocalSconnViolation {
 		Set<Component> nonMarkedComponents = new HashSet<Component>(subWFGWithoutViolationNodes.getComponents());
 		Set<BIPInteraction> nonMarkedInteractions = new HashSet<BIPInteraction>(subWFGWithoutViolationNodes.getInteractions());
 		
-		
 		for(List<Integer> strongConnectedPart: stronglyConnectedParts) {
 			int idComponent = wfgMatrix.getStateId(localScViolation.component);
 			if(strongConnectedPart.contains(idComponent)) {
@@ -60,23 +60,25 @@ public class LocalSconnViolation {
 				// Repeat until no marking:
 				do {
 					marking = false;
-					
 					// for all non marked components B check if:
 					// exist a such that B -> a and ( a not in C Or a is marked) THEN mark B
-					for(Component component: nonMarkedComponents) {
+					List<Component> currentmMarkedComponents = new LinkedList<Component>();
+					for(Component component:  nonMarkedComponents) {
 						for(BIPInteraction interaction: subWFGWithoutViolationNodes.outgoing(component)) {
 							if(markedInteractions.contains(interaction) || 
 									!strongConnectedPart.contains(wfgMatrix.getStateId(interaction))) {
 								// mark component
 								markedComponents.add(component);
-								nonMarkedComponents.remove(component);
+								currentmMarkedComponents.add(component);
 								marking = true;
 							}
 						}
 					}
+					nonMarkedComponents.removeAll(currentmMarkedComponents);
 					
 					// for all non marked interactions a check if:
 					// all B where a -> B we have: B not in C or B is marked THEN mark a
+					List<BIPInteraction> currentMarkedInteractions = new LinkedList<BIPInteraction>();
 					for(BIPInteraction interaction: nonMarkedInteractions) {
 						boolean allOutgoingMarkedOrOutside = true;
 						for(Component component: subWFGWithoutViolationNodes.outgoing(interaction)) {
@@ -88,14 +90,15 @@ public class LocalSconnViolation {
 						// mark interaction
 						if(allOutgoingMarkedOrOutside) {
 							markedInteractions.add(interaction);
-							nonMarkedInteractions.remove(interaction);
+							currentMarkedInteractions.add(interaction);
 						}
 					}
+					nonMarkedInteractions.removeAll(currentMarkedInteractions);
 				} while(marking);
 				
 			}
 		}
-		return nonMarkedComponents.contains(localScViolation.component);
+		return markedComponents.contains(localScViolation.component);
 	}
 	
 	/**
@@ -142,7 +145,7 @@ public class LocalSconnViolation {
 				localScViolation.scFormationInteractions);
 	}
 	
-	public boolean isLocalSconnViolation() {
+	public boolean isLocalSconnViolation() {		
 		return isSSCInSubWFGWithNoViolation() && 
 				(isWaitForPathsToBorderLocalScViolation() || isWaitForPathsFromBorder());
 	}
