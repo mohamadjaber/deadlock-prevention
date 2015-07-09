@@ -32,6 +32,7 @@ public class SubSystemDepth extends SubSystem {
 	 */
 	public SubSystemDepth(BIPInteraction interaction) {
 		super(interaction.getComponents(), getInteractions(interaction));
+		this.interaction = interaction;
 		length = 1;
 		boundInteractions = new ArrayList<BIPInteraction>(interactions);
 	}

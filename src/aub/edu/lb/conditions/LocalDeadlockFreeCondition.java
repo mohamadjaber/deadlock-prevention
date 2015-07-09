@@ -18,7 +18,7 @@ import aub.edu.lb.model.BIPInteraction;
 import aub.edu.lb.model.SubSystem;
 import aub.edu.lb.model.SubSystemDepth;
 
-public class LocalDeadlockFreeCondition {
+public class LocalDeadlockFreeCondition implements CheckableCondition {
 	
 	protected SubSystemDepth subSystem; 
 	private static Logger log = Logger.getLogger(LocalCompleteDeadlockFreeCondition.class.getName());
@@ -67,18 +67,9 @@ public class LocalDeadlockFreeCondition {
 	
 	protected boolean checkLocalLDFC(BIPInteraction interaction) {
 		while(true) {
-			if(localLDFC(interaction)) {
-				return true;
-			}
-			else {
-				boolean isIncreased = subSystem.increase();
-				if(isIncreased) {
-					log.info("Increasing -> Length = " + subSystem.getLength() + "\n");
-				}
-				else  {
-					return false;
-				}
-			}
+			if(localLDFC(interaction)) 	return true;
+			if(!subSystem.increase()) return false;
+			log.info("Increasing -> Length = " + subSystem.getLength() + "\n");
 		}
 	}
 
@@ -93,11 +84,7 @@ public class LocalDeadlockFreeCondition {
 		
 		for(BIPInteraction interaction: BIPAPI.getInteractions()) {
 			log.info("\nInteraction: " + interaction);
-
-		
-			
 			subSystem = new SubSystemDepth(interaction);
-			
 			log.info(" - Length = "+ subSystem.getLength() + "\n");
 			
 			if(!checkLocalLDFC(interaction)) {
@@ -117,7 +104,7 @@ public class LocalDeadlockFreeCondition {
 	}
 	
 	public String getName() {
-		return "locLDFC";
+		return "LLIN";
 	}
 	
 }

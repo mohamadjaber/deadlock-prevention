@@ -8,7 +8,9 @@ import java.util.logging.Logger;
 import ujf.verimag.bip.Core.Interactions.Component;
 import ujf.verimag.bip.Core.Interactions.CompoundType;
 import BIPTransformation.TransformationFunction;
+import aub.edu.lb.conditions.CheckableCondition;
 import aub.edu.lb.conditions.LocalCompleteDeadlockFreeCondition;
+import aub.edu.lb.configuration.Configuration;
 import aub.edu.lb.kripke.Kripke;
 import aub.edu.lb.kripke.KripkeState;
 import aub.edu.lb.kripke.Transition;
@@ -19,7 +21,7 @@ import aub.edu.lb.model.BIPInteraction;
 import aub.edu.lb.model.SubSystem;
 import aub.edu.lb.model.SubSystemDepth;
 
-public class LALT {
+public class LALT implements CheckableCondition {
 	private static Logger log = Logger.getLogger(LocalCompleteDeadlockFreeCondition.class.getName());
 	protected SubSystemDepth subSystem; 
 
@@ -42,10 +44,14 @@ public class LALT {
 		
 		for(BIPInteraction interaction: BIPAPI.getInteractions()) {
 			log.info("\nInteraction: " + interaction);
-			
+			subSystem = new SubSystemDepth(interaction);
+			log.info(" - Length = "+ subSystem.getLength() + "\n");
+
 			if(!laltInteraction(interaction)) return false;
+			else {
+				log.info(getName() + "(a,"+subSystem.getLength() +") = true\n");
+			}
 		}
-	
 		return true;
 	}
 	
@@ -53,32 +59,40 @@ public class LALT {
 	private boolean laltInteraction(BIPInteraction interaction) {
 		while(true) {
 			// initially, length, i.e. l, is equal to 1
-			subSystem = new SubSystemDepth(interaction);
 			if(laltInteractionDistance(interaction)) return true;
 			if(!subSystem.increase()) return false;
 			log.info("Increasing -> Length = " + subSystem.getLength() + "\n");
 		}
 	}
 	
-	
+	/*
+	 * Check here with dealocked_system.bip example
+	 * did not even check the condition and return true
+	 */
 	private boolean laltInteractionDistance(BIPInteraction interaction) {
+		// Debug
+		Configuration.startTime = System.currentTimeMillis();
+
 		Kripke kripke = new Kripke(subSystem);
 		
 		for(Transition transition: kripke.getTransitions()) {
 			if(transition.getLabel().equals(interaction)) {
 				for(Component component: interaction.getComponents()) {
-					if(!LocalFormViolation(component, kripke, transition.getEndState())) return false;
+					if(!localFormViolation(component, kripke, transition.getEndState())) return false;
 				}
 			}
 		}
+		// Debug
+		Configuration.stopTime = System.currentTimeMillis();
+		Configuration.totalTime += (Configuration.stopTime - Configuration.startTime);
+		
 		return true;
 	}
 
-	private boolean LocalFormViolation(Component component, Kripke kripke, KripkeState state) {
+	private boolean localFormViolation(Component component, Kripke kripke, KripkeState state) {
 		WaitForGraph wfg = new WaitForGraph(state.getState());
 		LocalScViolation localScViolation = new LocalScViolation(component, wfg, subSystem);
 		if(localScViolation.islocalScViolation()) return true;
-		
 		LocalSconnViolation localSconnViolation = new LocalSconnViolation(localScViolation);
 		return localSconnViolation.isLocalSconnViolation();
 	}
@@ -87,6 +101,10 @@ public class LALT {
 		SubSystem system = new SubSystem(BIPAPI.getComponents(), BIPAPI.getInteractions());
 		WaitForGraph wfg = new WaitForGraph(system.getInitialState());
 		return wfg.superCycle();
+	}
+	
+	public String getName() {
+		return "LALT";
 	}
 	
 }

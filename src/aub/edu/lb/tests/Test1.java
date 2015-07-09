@@ -22,7 +22,6 @@ public class Test1 {
 		stopTime = System.currentTimeMillis();
 		System.out.println(stopTime-startTime);
 		System.out.println(Configuration.totalTime);
-
 	}
 	
 

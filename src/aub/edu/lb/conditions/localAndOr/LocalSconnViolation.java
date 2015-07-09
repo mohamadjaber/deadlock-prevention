@@ -12,8 +12,12 @@ import aub.edu.lb.model.BIPInteraction;
 public class LocalSconnViolation {
 	private LocalScViolation localScViolation; 
 	
+	private WaitForGraph subWFGWithoutViolationNodes;
+	
 	public LocalSconnViolation(LocalScViolation localScViolation) {
-		this.localScViolation = localScViolation;		
+		this.localScViolation = localScViolation;
+		// remove all nodes with no super-cycle violation
+		subWFGWithoutViolationNodes = removeNodesLocalScViolation();
 	}
 	
 	/**
@@ -34,8 +38,6 @@ public class LocalSconnViolation {
 	 * @return
 	 */
 	private boolean isSSCInSubWFGWithNoViolation() {
-		// remove all nodes with no super-cycle violation
-		WaitForGraph subWFGWithoutViolationNodes = removeNodesLocalScViolation();
 		WFGMatrix wfgMatrix = new WFGMatrix(subWFGWithoutViolationNodes);
 		List<List<Integer>> stronglyConnectedParts = new TarjanSCC().scc(wfgMatrix.getGraph());
 		
@@ -100,56 +102,38 @@ public class LocalSconnViolation {
 	 * for all wait for paths pi: from Bi to a border node v 
 	 * 		if pi contains a node with local super-cycle violation return true
 	 * return false;
-	 * 
-	 * This can be computed as follows: 
-	 * 		1. compute reachable nodes from Bi; reachable(Bi) = BFS(Bi) or DFS(Bi)
-	 *      2. for each border interaction node v
-	 * 			2.1. compute reachable nodes from v to Bi in the transpose graph; reachableT(v) 
-	 *      	2.2 if all the nodes in reachable(Bi) intersects reachableT(v) do not have local sc violation 
-	 *      		return false; 
-	 *      return true; 
+	 * WL = graph obtained by removing all nodes with no super-cycle violation (WL = subWFGWithoutViolationNodes)
+	 * For all border nodes v:
+	 *   if v is reachable from Bi then there exists a path from Bi to v with all nodes have no super-cycle violation
+	 *   in that case return false; 
+	 * return true;
 	 */
 	private boolean isWaitForPathsToBorderLocalScViolation() {
-		Set<Object> reachableFromComp = localScViolation.wfg.bfs(localScViolation.component);
 		for(BIPInteraction interaction: localScViolation.bordersInteraction) {
-			Set<Object> backwardReachableBorder = localScViolation.wfg.inverseBfs(interaction);
-			backwardReachableBorder.retainAll(reachableFromComp);
-			for(Object node: backwardReachableBorder) {
-				if(localScViolation.scViolationsComponents.contains(node) || 
-						localScViolation.scViolationsInteractions.contains(node))
-					return true;
-			}
+			if(subWFGWithoutViolationNodes.existPath(localScViolation.component, interaction))
+				return false;
 		}
-		return false; 
+		return true; 
 	}
 	
 	
 
 	/**
-	 * for all wait for paths pi a border node to Bi 
+	 * for all wait for paths, pi, from border node to Bi 
 	 * 		if pi contains a node with local super-cycle violation return true
 	 * return false;
-	 * 
-	 * This can be computed as follows: 
-	 * 		1. compute backward reachable nodes from Bi; reachableT(Bi)
-	 *      2. for each border interaction node v
-	 * 			2.1. compute reachable nodes from v to Bi; reachable(v) 
-	 *      	2.2 if all the nodes in reachableT(Bi) intersects reachable(v) do not have local sc violation 
-	 *      		return false; 
-	 *      return true; 
+	 * WL = graph obtained by removing all nodes with no super-cycle violation (WL = subWFGWithoutViolationNodes)
+	 * For all border nodes v:
+	 *   if Bi is reachable from v then there exists a path from v to Bi with all nodes have no super-cycle violation
+	 *   in that case return false; 
+	 * return true;
 	 */
 	private boolean isWaitForPathsFromBorder() {
-		Set<Object> backwardReachableFromComp = localScViolation.wfg.inverseBfs(localScViolation.component);
 		for(BIPInteraction interaction: localScViolation.bordersInteraction) {
-			Set<Object> reachableBorder = localScViolation.wfg.bfs(interaction);
-			reachableBorder.retainAll(backwardReachableFromComp);
-			for(Object node: reachableBorder) {
-				if(localScViolation.scViolationsComponents.contains(node) || 
-						localScViolation.scViolationsInteractions.contains(node))
-					return true;
-			}
+			if(subWFGWithoutViolationNodes.existPath(interaction, localScViolation.component))
+				return false;
 		}
-		return false; 
+		return true; 
 	}
 	
 	private WaitForGraph removeNodesLocalScViolation() {

@@ -13,9 +13,7 @@ public class BIPInteraction {
 	private ArrayList<String> ports;
 	private int size;
 	private Connector connector; 
-	public BIPInteraction() {
-	}
-	
+
 	/**
 	 * 
 	 * @param c

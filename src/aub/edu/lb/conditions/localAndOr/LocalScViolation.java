@@ -1,6 +1,7 @@
 package aub.edu.lb.conditions.localAndOr;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -49,28 +50,37 @@ public class LocalScViolation {
 	
 	
 	private void computeBottomScViolations() {
-		for(BIPInteraction interaction : scFormationInteractions) {
+		Iterator<BIPInteraction> it = scFormationInteractions.iterator();
+		while(it.hasNext()) {
+			BIPInteraction interaction = it.next();
 			if(isInteriorInteraction(interaction) && !wfg.hasOutgoing(interaction)) {
 				scViolationsInteractions.add(interaction);
-				scFormationInteractions.remove(interaction);
+				it.remove();
 			}
 		}
 	}
 	
 	private boolean updateScViolations() {
 		boolean marking = false; 
-		for(BIPInteraction interaction : scFormationInteractions) {
+		
+		Iterator<BIPInteraction> iteratorInteraction = scFormationInteractions.iterator();
+
+		while(iteratorInteraction.hasNext()) {
+			BIPInteraction interaction = iteratorInteraction.next();
 			if(isInteriorInteraction(interaction) && scViolateInteraction(interaction)) {
 				scViolationsInteractions.add(interaction);
-				scFormationInteractions.remove(interaction);
+				iteratorInteraction.remove();
 				marking = true; 
 			}
 		}
 		
-		for(Component component : scFormationComponents) {
+		Iterator<Component> iteratorComponent = scFormationComponents.iterator();
+
+		while(iteratorComponent.hasNext()) {
+			Component component = iteratorComponent.next();
 			if(scViolateComponent(component)) {
 				scViolationsComponents.add(component);
-				scFormationComponents.remove(component);
+				iteratorComponent.remove();
 				marking = true; 
 			}
 		}	

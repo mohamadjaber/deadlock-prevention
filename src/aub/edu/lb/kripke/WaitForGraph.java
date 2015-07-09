@@ -1,6 +1,7 @@
 package aub.edu.lb.kripke;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -78,7 +79,7 @@ public class WaitForGraph {
 		return interactions;
 	}
 
-	// not used
+	 @Deprecated
 	public Set<Set<Object>> paths(Object node1, Object node2) {
 		Set<Set<Object>> paths = new HashSet<Set<Object>>();
 		Set<Object> visitedNodes = new HashSet<Object>();
@@ -86,8 +87,8 @@ public class WaitForGraph {
 		return paths;
 	}
 
-	// not used
-	private void paths(Object node1, Object node2, Set<Object> visitedNodes,
+	 @Deprecated
+	 private void paths(Object node1, Object node2, Set<Object> visitedNodes,
 			Set<Object> path, // current partial path
 			Set<Set<Object>> paths) { // current paths
 
@@ -318,21 +319,11 @@ public class WaitForGraph {
 		
 		while(!queue.isEmpty()) {
 			Object currentNode = queue.remove();
-			if(currentNode instanceof Component) {
-				Component component = (Component) currentNode;
-				for(BIPInteraction interaction: outgoing(component)) {
-					if(!visited.contains(interaction)) {
-						visited.add(interaction);
-						queue.add(interaction);
-					}
-				}
-			} else { // BIPInteraction
-				BIPInteraction interaction = (BIPInteraction) currentNode;
-				for(Component component: outgoing(interaction)) {
-					if(!visited.contains(component)) {
-						visited.add(component);
-						queue.add(component);
-					}
+			
+			for(Object nextNode: outgoing(currentNode)) {
+				if(!visited.contains(nextNode)) {
+					visited.add(nextNode);
+					queue.add(nextNode);
 				}
 			}
 		}
@@ -348,23 +339,13 @@ public class WaitForGraph {
 		
 		while(!queue.isEmpty()) {
 			Object currentNode = queue.remove();
-			if(currentNode instanceof Component) {
-				Component component = (Component) currentNode;
-				for(BIPInteraction interaction: incoming(component)) {
-					if(!visited.contains(interaction)) {
-						visited.add(interaction);
-						queue.add(interaction);
+
+				for(Object nextNode: incoming(currentNode)) {
+					if(!visited.contains(nextNode)) {
+						visited.add(nextNode);
+						queue.add(nextNode);
 					}
 				}
-			} else { // BIPInteraction
-				BIPInteraction interaction = (BIPInteraction) currentNode;
-				for(Component component: incoming(interaction)) {
-					if(!visited.contains(component)) {
-						visited.add(component);
-						queue.add(component);
-					}
-				}
-			}
 		}
 		return visited;
 	}
@@ -462,6 +443,28 @@ public class WaitForGraph {
 	}
 	
 	
+	public List<?> outgoing(Object o) {
+		if(o instanceof Component) {
+			Component c = (Component) o;
+			return outgoing(c);
+		}
+		else { // BIPInteraction
+			BIPInteraction interaction = (BIPInteraction) o;
+			return outgoing(interaction);
+		}
+	}
+	
+	public List<?> incoming(Object o) {
+		if(o instanceof Component) {
+			Component c = (Component) o;
+			return incoming(c);
+		}
+		else { // BIPInteraction
+			BIPInteraction interaction = (BIPInteraction) o;
+			return incoming(interaction);
+		}
+	}
+	
 	public List<Component> outgoing(BIPInteraction interaction) {
 		List<Component> components = new LinkedList<Component>();
 		for(Edge e: waitEdges) {
@@ -524,6 +527,31 @@ public class WaitForGraph {
 		wfgName += "] \n";
 
 		return wfgName;
+	}
+	
+	
+	public List<ArrayList<Object>> findAllPaths(Object from, Object to) {
+		List<Object> visited = new ArrayList<Object>();
+		List<ArrayList<Object>> paths = new ArrayList<ArrayList<Object>>();
+		findAllPaths(visited, paths,  from,  to);
+		return paths;
+	}
+	
+	private void findAllPaths(List<Object> visited, List<ArrayList<Object>> paths, Object from, Object to) {
+		if (from.equals(to)) {
+			paths.add(new ArrayList<Object>(Arrays.asList(visited.toArray())));
+			return;
+		} else {
+			List<?> nodes =  outgoing(from);
+			
+			for (Object node : nodes) {
+				if (visited.contains(node)) continue;
+				List<Object> temp = new ArrayList<Object>();
+				temp.addAll(visited);
+				temp.add(node);
+				findAllPaths(temp, paths, node, to);
+			}
+		}
 	}
 
 }
