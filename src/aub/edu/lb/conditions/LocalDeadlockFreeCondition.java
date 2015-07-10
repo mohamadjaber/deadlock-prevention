@@ -52,7 +52,7 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 			for(Transition transition: state.getTransitions()) {
 				if(transition.getLabel().equals(interaction)) {
 					WaitForGraph wfg = new WaitForGraph(transition.getEndState().getState());
-					if(!wfg.checkNoInNoOut(interaction.getComponents(), subSystem.getLength() + 1)) {
+					if(!wfg.checkNoInNoOut(interaction.getComponents(), subSystem.getLength())) {
 						return false;
 					}	
 				}

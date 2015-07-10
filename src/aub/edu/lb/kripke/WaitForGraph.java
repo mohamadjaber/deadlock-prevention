@@ -219,27 +219,20 @@ public class WaitForGraph {
 	 */
 	private boolean inPathDepth(Object node, int length, int bound) {
 		// stop condition
-		if (length == bound)
-			return true;
+		if (length == bound) return true;
 
 		if (node instanceof Component) {
 			length++;
 			boolean inPath = false;
-			for (Edge edge : waitEdges) {
-				if (edge.getComponent().equals((Component) node)) {
-					inPath = inPath
-							|| inPathDepth(edge.getInteraction(), length, bound);
-				}
+			for(BIPInteraction interaction: incoming((Component) node)) {
+				inPath = inPath || inPathDepth(interaction, length, bound);
 			}
 			return inPath;
 		} else { // node is an instance of BIPInteraction
 			boolean inPath = false;
 			length++;
-			for (Edge edge : readyEdges) {
-				if (edge.getInteraction().equals((BIPInteraction) node)) {
-					inPath = inPath
-							|| inPathDepth(edge.getComponent(), length, bound);
-				}
+			for(Component component: incoming((BIPInteraction) node)) {
+				inPath = inPath || inPathDepth(component, length, bound);
 			}
 			return inPath;
 		}
@@ -250,7 +243,7 @@ public class WaitForGraph {
 	 * @param node
 	 *            is a component or an interaction
 	 * @param length
-	 * @return true if there exists a out path of length bound, false otherwise.
+	 * @return true if there exists a out path of up to length bound, false otherwise.
 	 *         When we rich the bound we check: 1. if it is an interaction and
 	 *         all its participants are in the sub-system and readies the
 	 *         interaction. 2. if if is a component and all the interactions
@@ -261,7 +254,7 @@ public class WaitForGraph {
 	 */
 	private boolean outPathDepth(Object node, int length, int bound) {
 		// stop condition
-		// We reach the bound length of the subsystem
+		// Reach the bound length of the subsystem
 		if (length == bound) {
 			return checkOutBoundOptimization(node);
 		}
@@ -269,22 +262,15 @@ public class WaitForGraph {
 		if (node instanceof Component) {
 			length++;
 			boolean outPath = false;
-			for (Edge edge : readyEdges) {
-				if (edge.getComponent().equals((Component) node)) {
-					outPath = outPath
-							|| outPathDepth(edge.getInteraction(), length,
-									bound);
-				}
+			for(BIPInteraction interaction: outgoing((Component) node)) {
+				outPath = outPath || outPathDepth(interaction, length, bound);
 			}
 			return outPath;
 		} else { // node is an instance of BIPInteraction
 			boolean outPath = false;
 			length++;
-			for (Edge edge : waitEdges) {
-				if (edge.getInteraction().equals((BIPInteraction) node)) {
-					outPath = outPath
-							|| outPathDepth(edge.getComponent(), length, bound);
-				}
+			for(Component component: outgoing((BIPInteraction) node)) {
+				outPath = outPath || outPathDepth(component, length, bound);
 			}
 			return outPath;
 		}
@@ -377,19 +363,20 @@ public class WaitForGraph {
 	 * 
 	 * @param components
 	 * @param length
-	 * @return For a given l we check if there exist out path and in path of
-	 *         length = l + 1. The condition is satisfied if for all
+	 * @return For a given l (D(a, l) = G(a, 2l)) 
+	 *		   we check if there exist out path and in path of
+	 *         length 2l; 
+	 *         The condition is satisfied if for all
 	 *         participants of the interaction (e.g., components)
-	 *         inDepth(component) <= l or outDepth(component) <= l For this, we
-	 *         check: inDepth(component) == l + 1 and outDepth(component) == l +
-	 *         1 If this condition is not satisfied we can say that: either 1.
-	 *         component has in-depth at most l, 2. or out-depth at most l The
-	 *         actual value of length is equal l + 1.
+	 *         inDepth(component) < 2l or outDepth(component) < 2l.
+	 *         For this, outPathDepthL and inPathDepthL return true 
+	 *         when we reach a path of length 2l. 
 	 */
 	public boolean checkNoInNoOut(ArrayList<Component> components, int length) {
+		int lengthG = 2 * length;
 		for (Component component : components) {
-			if (outPathDepthL(component, length)
-					&& inPathDepthL(component, length))
+			if (outPathDepthL(component, lengthG)
+					&& inPathDepthL(component, lengthG))
 				return false;
 		}
 		return true;
