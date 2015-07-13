@@ -1,0 +1,216 @@
+model arbiter
+
+header 
+{#
+   #define max_request  100
+   #define nb_arbiter 3
+   int getMaxRequest() {return max_request; }
+   int getNbArbiter() {return nb_arbiter; }
+   typedef char* String;
+   int globalcounter = 0;
+#}
+
+
+
+connector type Sync2(Port p1, Port p2)
+  define p1 p2		
+end
+
+connector type Sync4(Port p1, Port p2, Port p3, Port p4)
+  define p1 p2 p3 p4	
+end
+
+
+atomic type ArbiterBase(String _name)
+  extern data int globalcounter
+  data int localcounter = 1  
+
+  export port Port request
+  export port Port accept
+  export port Port release
+  export port Port grant
+
+  place q0
+  place q1
+  place q2
+
+  initial to q0 do {}
+    on accept from q0 to q0 provided true do 
+	{ 
+		printf("Arbiter (%s) accept at q0\n", _name); 
+	}
+    on accept from q1 to q1 provided true do
+	{ 
+		printf("Arbiter (%s) accept at q1\n", _name); 
+	}
+    on request from q0 to q1 provided true do 
+	{ 
+		printf("Arbiter (%s) receive request\n", _name); 
+	}
+    on grant from q1 to q2 provided (globalcounter < getMaxRequest()) do 
+	{ 
+		printf("Arbiter (%s) send grant (nb : %d)\n", _name, localcounter); 
+		localcounter = localcounter + 1; 
+		globalcounter = globalcounter + 1; 
+	}
+    on release from q2 to q0 provided true do 
+	{ 
+		printf("Arbiter (%s) receive release\n", _name); 
+	}
+
+end
+
+
+atomic type ArbiterPriority(String _name, int prio)
+  extern data int globalcounter
+  data int localcounter = 1  
+  export data int myprio = prio
+  export port Port request
+  export port Port accept
+  export port Port release
+  export port Port grant
+
+  place q0
+  place q1
+  place q2
+
+  initial to q0 do {}
+    on accept from q0 to q0 provided true do 
+	{ 
+		printf("Arbiter (%s) accept at q0\n", _name); 
+		myprio = (myprio + 1) % getNbArbiter();
+	}
+    on accept from q1 to q1 provided true do
+	{ 
+		printf("Arbiter (%s) accept at q1\n", _name); 
+		myprio = (myprio + 1) % getNbArbiter();
+	}
+    on request from q0 to q1 provided true do 
+	{ 
+		printf("Arbiter (%s) receive request\n", _name); 
+	}
+    on grant from q1 to q2 provided (globalcounter < getMaxRequest()) do 
+	{ 
+		printf("Arbiter (%s) send grant (nb : %d)\n", _name, localcounter); 
+		localcounter = localcounter + 1; 
+		globalcounter = globalcounter + 1; 
+		myprio = (myprio + 1) % getNbArbiter();
+	}
+    on release from q2 to q0 provided true do 
+	{ 
+		printf("Arbiter (%s) receive release\n", _name); 
+	}
+
+end
+
+atomic type Processor(String _name)
+  export port Port request
+  export port Port release
+  export port Port grant
+
+  place q0
+  place q1
+  place q2
+
+
+  initial to q0 do {}
+    on request from q0 to q1 provided true do 
+	{ 
+		printf("Processor %s send request\n", _name); 
+	}
+    on grant from q1 to q2 provided true do 
+	{ 
+		printf("Processor %s receive grant\n", _name); 
+	}
+    on release from q2 to q0 provided true do 
+	{ 
+		printf("Processor %s send release\n", _name); 
+	}
+end
+
+compound type ModelFair
+ component ArbiterBase A1("arbiter1")
+ component ArbiterBase A2("arbiter2")
+ component ArbiterBase A3("arbiter3")
+
+ component Processor P1("processor1")
+ component Processor P2("processor2")
+ component Processor P3("processor3")
+ 
+ connector Sync2 req1(P1.request, A1.request)
+ connector Sync2 req2(P2.request, A2.request)
+ connector Sync2 req3(P3.request, A3.request)
+
+ connector Sync4 grant1(A1.grant, A2.accept, A3.accept, P1.grant)
+ connector Sync4 grant2(A1.accept, A2.grant, A3.accept, P2.grant)
+ connector Sync4 grant3(A1.accept, A2.accept, A3.grant, P3.grant)
+
+ connector Sync2 rel1(P1.release, A1.release)
+ connector Sync2 rel2(P2.release, A2.release)
+ connector Sync2 rel3(P3.release, A3.release)
+end
+
+
+compound type ModelFixedPriority
+ component ArbiterBase A1("arbiter1")
+ component ArbiterBase A2("arbiter2")
+ component ArbiterBase A3("arbiter3")
+
+ component Processor P1("processor1")
+ component Processor P2("processor2")
+ component Processor P3("processor3")
+ 
+ connector Sync2 req1(P1.request, A1.request)
+ connector Sync2 req2(P2.request, A2.request)
+ connector Sync2 req3(P3.request, A3.request)
+
+ connector Sync4 grant1(A1.grant, A2.accept, A3.accept, P1.grant)
+ connector Sync4 grant2(A1.accept, A2.grant, A3.accept, P2.grant)
+ connector Sync4 grant3(A1.accept, A2.accept, A3.grant, P3.grant)
+
+ connector Sync2 rel1(P1.release, A1.release)
+ connector Sync2 rel2(P2.release, A2.release)
+ connector Sync2 rel3(P3.release, A3.release)
+
+ priority priority1 grant2 < grant1
+ priority priority1 grant3 < grant2
+ priority priority1 grant3 < grant1
+end
+
+
+
+compound type ModelRotatingPriority
+ component ArbiterPriority A1("arbiter1",0)
+ component ArbiterPriority A2("arbiter2",1)
+ component ArbiterPriority A3("arbiter3",2)
+
+ component Processor P1("processor1")
+ component Processor P2("processor2")
+ component Processor P3("processor3")
+ 
+ connector Sync2 req1(P1.request, A1.request)
+ connector Sync2 req2(P2.request, A2.request)
+ connector Sync2 req3(P3.request, A3.request)
+
+ connector Sync4 grant1(A1.grant, A2.accept, A3.accept, P1.grant)
+ connector Sync4 grant2(A1.accept, A2.grant, A3.accept, P2.grant)
+ connector Sync4 grant3(A1.accept, A2.accept, A3.grant, P3.grant)
+
+ connector Sync2 rel1(P1.release, A1.release)
+ connector Sync2 rel2(P2.release, A2.release)
+ connector Sync2 rel3(P3.release, A3.release)
+
+ priority priority1 grant2 < grant1 provided A1.myprio == 0
+ priority priority2 grant3 < grant1 provided A1.myprio == 0
+
+ priority priority3 grant1 < grant2 provided A2.myprio == 0
+ priority priority4 grant3 < grant2 provided A2.myprio == 0
+
+ priority priority5 grant1 < grant3 provided A3.myprio == 0
+ priority priority6 grant2 < grant3 provided A3.myprio == 0
+end
+
+component ModelRotatingPriority m
+end
+
+    

@@ -408,7 +408,14 @@ public class WaitForGraph {
 	 *         participants of the interaction (e.g., components)
 	 *         inDepth(component) < 2l - 1 or outDepth(component) < 2l - 1.
 	 *         For this, outPathDepthL and inPathDepthL return true 
-	 *         when we reach a path of length 2l. 
+	 *         when we reach a path of length 2l - 1.
+	 *         
+	 *          < 2l - 1 and not 2l because G(a,2l) starts with interaction 
+	 *          a along with all of its participants (components to be checked)
+	 *          From a component, if it has a outgoing or incoming path  of 
+	 *          length 2l - 1 to a border node, then if from a there is an outgoing 
+	 *        	edge to B, you reach the border from a.  
+	 *          For more information see LLIN section. 
 	 */
 	public boolean checkNoInNoOut(ArrayList<Component> components, int length) {
 		int lengthG = 2 * length - 1;

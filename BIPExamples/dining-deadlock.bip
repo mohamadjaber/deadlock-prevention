@@ -1,0 +1,93 @@
+model philosopher
+
+header{#
+  #include<cstdio>
+#}
+
+port type ePort
+
+atomic type Philosopher(int n)
+  data int id
+
+  export port ePort take_left()
+  export port ePort take_right()
+  export port ePort release()
+
+  place s0, s1, s2
+
+  initial to s0 do {
+    id = n;
+  }
+
+  on take_left from s0 to s1 provided true do {
+    printf("Philosopher %d took left fork\n", id);
+    
+  }
+
+  on take_right from s1 to s2 provided true do {
+    printf("Philosopher %d took right fork\n", id);
+    
+  }
+
+  on release from s2 to s0 provided true do {
+    printf("Philosopher %d has released both forks\n", id);
+    
+  }
+end
+
+atomic type Fork(int n)
+  data int id
+
+  export port ePort take
+  export port ePort leave
+
+  place available, unavailable
+
+  initial to available do id = n;
+
+  on take from available to unavailable provided true do {
+    printf("Fork %d is unavailable\n", id);
+    
+  }
+
+  on leave from unavailable to available provided true do {
+    printf("Fork %d is available\n", id);
+    
+  }
+
+end
+
+
+connector type RendezVous2(ePort f, ePort p)
+ define [f p]
+end
+
+connector type RendezVous3(ePort f_0, ePort f_1, ePort p)
+ define [f_0 f_1 p]
+end
+
+connector type Singleton(ePort p)
+ define [p]
+end
+
+compound type DiningTable
+  component Philosopher p_0(0)
+  component Philosopher p_1(1)
+  component Philosopher p_2(2)
+  component Fork f_0(0)
+  component Fork f_1(1)
+  component Fork f_2(2)
+  connector RendezVous2 con_0(f_2.take, p_0.take_left)
+  connector RendezVous2 con_1(f_0.take, p_0.take_right)
+  connector RendezVous2 con_2(f_0.take, p_1.take_left)
+  connector RendezVous2 con_3(f_1.take, p_1.take_right)
+  connector RendezVous2 con_4(f_1.take, p_2.take_left)
+  connector RendezVous2 con_5(f_2.take, p_2.take_right)
+  connector RendezVous3 con_6(f_2.leave, f_0.leave, p_0.release)
+  connector RendezVous3 con_7(f_0.leave, f_1.leave, p_1.release)
+  connector RendezVous3 con_8(f_1.leave, f_2.leave, p_2.release)
+end
+
+component DiningTable dt
+
+end
