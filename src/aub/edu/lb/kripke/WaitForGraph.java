@@ -28,7 +28,7 @@ public class WaitForGraph {
 	private List<Edge> readyEdges = new LinkedList<Edge>();
 	
 	
-	// start used for optimization
+	// used for optimization
 	private Map<Component, List<BIPInteraction>> outgoingComponents;
 	private Map<BIPInteraction, List<Component>> outgoingInteractions;
 	private Map<Component, List<BIPInteraction>> incomingComponents;
