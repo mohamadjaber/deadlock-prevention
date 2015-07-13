@@ -406,7 +406,7 @@ public class WaitForGraph {
 	 *         length 2l; 
 	 *         The condition is satisfied if for all
 	 *         participants of the interaction (e.g., components)
-	 *         inDepth(component) < 2l or outDepth(component) < 2l.
+	 *         inDepth(component) < 2l - 1 or outDepth(component) < 2l - 1.
 	 *         For this, outPathDepthL and inPathDepthL return true 
 	 *         when we reach a path of length 2l. 
 	 */
