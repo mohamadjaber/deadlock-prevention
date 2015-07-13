@@ -2,9 +2,11 @@ package aub.edu.lb.kripke;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 
@@ -22,12 +24,35 @@ public class WaitForGraph {
 
 	private GlobalState state;
 
-	private LinkedList<Edge> waitEdges = new LinkedList<Edge>();
-	private LinkedList<Edge> readyEdges = new LinkedList<Edge>();
+	private List<Edge> waitEdges = new LinkedList<Edge>();
+	private List<Edge> readyEdges = new LinkedList<Edge>();
+	
+	
+	// start used for optimization
+	private Map<Component, List<BIPInteraction>> outgoingComponents;
+	private Map<BIPInteraction, List<Component>> outgoingInteractions;
+	private Map<Component, List<BIPInteraction>> incomingComponents;
+	private Map<BIPInteraction, List<Component>> incomingInteractions;
 
+	private void initializeOutgoingIncoming() {
+		outgoingComponents = new HashMap<Component, List<BIPInteraction>>();
+		outgoingInteractions = new HashMap<BIPInteraction, List<Component>>();
+		incomingComponents = new HashMap<Component, List<BIPInteraction>>();
+		incomingInteractions = new HashMap<BIPInteraction, List<Component>>();
+		for(Component comp: components) {
+			outgoingComponents.put(comp, new LinkedList<BIPInteraction>());
+			incomingComponents.put(comp, new LinkedList<BIPInteraction>());
+		}
+		for(BIPInteraction interaction: interactions) {
+			outgoingInteractions.put(interaction, new LinkedList<Component>());
+			incomingInteractions.put(interaction, new LinkedList<Component>());
+		}
+	}
+	
 	public WaitForGraph() {
 		components = new ArrayList<Component>();
 		interactions = new ArrayList<BIPInteraction>();
+		initializeOutgoingIncoming();
 	}
 	
 	/**
@@ -43,32 +68,50 @@ public class WaitForGraph {
 			Set<BIPInteraction> subInteractions) {
 		components = new ArrayList<>(subComponents);
 		interactions = new ArrayList<>(subInteractions);
+		initializeOutgoingIncoming();
 		
 		for(Edge e: wfg.waitEdges) {
 			if(subComponents.contains(e.getComponent()) && subInteractions.contains(e.getInteraction()))
-					waitEdges.add(e);
+					addWaitEdge(e);
 		}
 		
 		for(Edge e: wfg.readyEdges) {
 			if(subComponents.contains(e.getComponent()) && subInteractions.contains(e.getInteraction()))
-					readyEdges.add(e);
+					addReadyEdge(e);
 		}
-		
 		this.state = wfg.state; 
 	}
 	
 
 	public WaitForGraph(GlobalState state) {
 		this.state = state;
+		SubSystem subSystem = state.getSubSystem();
+		components = subSystem.getComponents();
+		interactions = subSystem.getInteractions();
+		initializeOutgoingIncoming();
 		buildWaitForGraph();
 	}
 
 	public void addWaitEdge(Edge e) {
 		waitEdges.add(e);
+		
+		// a -> c
+		BIPInteraction a = e.getInteraction();
+		Component c = e.getComponent();
+		
+		outgoingInteractions.get(a).add(c);
+		incomingComponents.get(c).add(a);	
 	}
 
 	public void addReadyEdge(Edge e) {
 		readyEdges.add(e);
+		
+		// c -> a
+		BIPInteraction a = e.getInteraction();
+		Component c = e.getComponent();
+
+		outgoingComponents.get(c).add(a);
+		incomingInteractions.get(a).add(c);
 	}
 
 	public ArrayList<Component> getComponents() {
@@ -191,12 +234,7 @@ public class WaitForGraph {
 	 * @return
 	 */
 	private void buildWaitForGraph() {
-		SubSystem subSystem = state.getSubSystem();
 		// creates wait-for graph's edges
-		components = subSystem.getComponents();
-		interactions = subSystem.getInteractions();
-
-		// creates edges
 		for (LocalState localState : state.getLocalStates()) {
 			for (BIPInteraction interaction : interactions) {
 				if (localState.readies(interaction)) {
@@ -373,7 +411,7 @@ public class WaitForGraph {
 	 *         when we reach a path of length 2l. 
 	 */
 	public boolean checkNoInNoOut(ArrayList<Component> components, int length) {
-		int lengthG = 2 * length;
+		int lengthG = 2 * length - 1;
 		for (Component component : components) {
 			if (outPathDepthL(component, lengthG)
 					&& inPathDepthL(component, lengthG))
@@ -445,70 +483,33 @@ public class WaitForGraph {
 	
 	
 	public boolean hasOutgoing(BIPInteraction interaction) {
-		for(Edge e: waitEdges) {
-			if(e.getInteraction().equals(interaction))
-				return true;
-		}
-		return false;
+		return outgoingInteractions.containsKey(interaction) &&
+				outgoingInteractions.get(interaction).size() > 0;
 	}
 	
 	
 	public List<?> outgoing(Object o) {
-		if(o instanceof Component) {
-			Component c = (Component) o;
-			return outgoing(c);
-		}
-		else { // BIPInteraction
-			BIPInteraction interaction = (BIPInteraction) o;
-			return outgoing(interaction);
-		}
+		return outgoing(o);
 	}
 	
 	public List<?> incoming(Object o) {
-		if(o instanceof Component) {
-			Component c = (Component) o;
-			return incoming(c);
-		}
-		else { // BIPInteraction
-			BIPInteraction interaction = (BIPInteraction) o;
-			return incoming(interaction);
-		}
+		return incoming(o);
 	}
 	
 	public List<Component> outgoing(BIPInteraction interaction) {
-		List<Component> components = new LinkedList<Component>();
-		for(Edge e: waitEdges) {
-			if(e.getInteraction().equals(interaction))
-				components.add(e.getComponent());
-		}
-		return components; 
+		return outgoingInteractions.get(interaction);
 	}
 	
 	public List<BIPInteraction> outgoing(Component component) {
-		List<BIPInteraction> interactions = new LinkedList<BIPInteraction>();
-		for(Edge e: readyEdges) {
-			if(e.getComponent().equals(component))
-				interactions.add(e.getInteraction());
-		}
-		return interactions; 
+		return outgoingComponents.get(component);
 	}
 	
 	public List<BIPInteraction> incoming(Component component) {
-		List<BIPInteraction> interactions = new LinkedList<BIPInteraction>();
-		for(Edge e: waitEdges) {
-			if(e.getComponent().equals(component))
-				interactions.add(e.getInteraction());
-		}
-		return interactions; 
+		return incomingComponents.get(component);
 	}
 	
 	public List<Component> incoming(BIPInteraction interaction) {
-		List<Component> components = new LinkedList<Component>();
-		for(Edge e: readyEdges) {
-			if(e.getInteraction().equals(interaction))
-				components.add(e.getComponent());
-		}
-		return components; 
+		return incomingInteractions.get(interaction);
 	}
 	
 
