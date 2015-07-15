@@ -1,0 +1,207 @@
+model vs
+
+header{#
+  #include<cstdio>
+#}
+
+port type ePort
+
+atomic type Capture
+	export port ePort capture()
+	export port ePort send()
+
+	place s0, s1
+	initial to s0 do {}
+	
+	on capture from s0 to s1 provided true do {}
+	on send from s1 to s0 provided true do {}
+end
+
+atomic type Buffer
+	export port ePort receive()
+	export port ePort reset0()
+	export port ePort compute()
+
+	place s0, s1
+	initial to s0 do {}
+	
+	on receive from s0 to s1 provided true do {}
+	on reset0 from s1 to s0 provided true do {}
+	on compute from s1 to s1 provided true do {}
+	on compute from s0 to s0 provided true do {}
+end
+
+atomic type Edge
+	export port ePort get()
+	export port ePort analyze()
+	export port ePort ready()
+	export port ePort fusion()
+	export port ePort differential()
+	export port ePort reset0()
+
+	place s0, s1, s2, s3, s4
+
+	initial to s0 do {}
+
+	on get from s0 to s1 provided true do {}
+	on analyze from s1 to s2 provided true do {}
+	on ready from s2 to s3 provided true do {}
+	on fusion from s3 to s4 provided true do {}
+	on differential from s3 to s4 provided true do {}
+	on reset0 from s4 to s0 provided true do {}
+end
+
+atomic type Segmenter 
+	export port ePort getImage()
+	export port ePort getEdge()
+	export port ePort analyze()
+	export port ePort ready()
+	export port ePort fusion()
+	export port ePort differential()
+	export port ePort reset0()
+
+	place s0, s01, s02, s1, s2, s3, s4
+
+	initial to s0 do {}
+
+	on getImage from s0 to s01 provided true do {}
+	on getEdge from s0 to s02 provided true do {}
+	on getEdge from s01 to s1 provided true do {}
+	on getImage from s02 to s1 provided true do {}
+	on analyze from s1 to s2 provided true do {}
+	on ready from s2 to s3 provided true do {}
+	on fusion from s3 to s4 provided true do {}
+	on differential from s3 to s4 provided true do {}
+	on reset0 from s4 to s0 provided true do {}
+end
+
+atomic type EdgeFusion
+	export port ePort fusion()
+	export port ePort differential()
+	export port ePort identification()
+	export port ePort reset0()
+	
+	place s0, s1, s2
+	
+	initial to s0 do {}
+	
+	on fusion from s0 to s1 provided true do {}
+	on differential from s1 to s1 provided true do {}
+	on identification from s1 to s2 provided true do {}
+	on identification from s2 to s2 provided true do {}
+	on reset0 from s2 to s0 provided true do {}
+end
+
+atomic type SegmentFusion
+	export port ePort fusion()
+	export port ePort differential()
+	export port ePort identification()
+	export port ePort reset0()
+	
+	place s0, s1, s2
+	
+	initial to s0 do {}
+	
+	on fusion from s0 to s1 provided true do {}
+	on differential from s1 to s1 provided true do {}
+	on identification from s1 to s2 provided true do {}
+	on reset0 from s2 to s0 provided true do {}
+end
+
+atomic type Identifier
+	export port ePort edge()
+	export port ePort segment()
+	export port ePort label()
+	export port ePort reset0()
+
+	place s0, s01, s02, s1, s2
+	
+	initial to s0 do {}
+	
+	on edge from s0 to s01 provided true do {}
+	on segment from s0 to s02 provided true do {}
+	on edge from s02 to s1 provided true do {}
+	on segment from s01 to s1 provided true do {}
+	on label from s1 to s2 provided true do {}
+	on reset0 from s2 to s0 provided true do {}
+end
+
+
+connector type RendezVous2(ePort p1, ePort p2)
+	define [p1 p2]
+end
+
+connector type RendezVous1(ePort p)
+	define [p]
+end
+
+compound type VideoS
+	component Capture c
+	component Buffer b
+	component Edge e1
+	component Edge e2
+
+	component Segmenter s1
+	component Segmenter s2
+
+	component EdgeFusion ef
+	component SegmentFusion sf
+
+	component Identifier id
+
+	connector RendezVous1 con_0(c.capture)
+  	connector RendezVous2 con_1(c.send, b.receive)
+  	connector RendezVous1 con_2(b.reset0)
+
+  	connector RendezVous2 con_3(b.compute, e1.get)
+  	connector RendezVous2 con_4(b.compute, e2.get)
+  	connector RendezVous2 con_5(b.compute, s1.getImage)
+  	connector RendezVous2 con_6(b.compute, s2.getImage)
+
+	connector RendezVous1 con_7(e1.analyze)
+	connector RendezVous1 con_8(e2.analyze)
+
+	connector RendezVous1 con_9(e1.ready)
+	connector RendezVous1 con_10(e2.ready)
+
+  	connector RendezVous2 con_11(e1.fusion, ef.fusion)
+  	connector RendezVous2 con_12(e2.fusion, ef.fusion)
+
+  	connector RendezVous2 con_13(e1.differential, ef.differential)
+  	connector RendezVous2 con_14(e2.differential, ef.differential)
+
+	connector RendezVous1 con_15(e1.reset0)
+	connector RendezVous1 con_16(e2.reset0)
+	
+	connector RendezVous1 con_17(ef.reset0)
+
+  	connector RendezVous2 con_18(ef.identification, id.edge)
+  	connector RendezVous2 con_19(ef.identification, s1.getEdge)
+  	connector RendezVous2 con_20(ef.identification, s2.getEdge)
+
+
+	connector RendezVous1 con_21(s1.analyze)
+	connector RendezVous1 con_22(s2.analyze)
+
+	connector RendezVous1 con_23(s1.ready)
+	connector RendezVous1 con_24(s2.ready)
+
+  	connector RendezVous2 con_25(s1.fusion, sf.fusion)
+  	connector RendezVous2 con_26(s2.fusion, sf.fusion)
+
+  	connector RendezVous2 con_27(s1.differential, sf.differential)
+  	connector RendezVous2 con_28(s2.differential, sf.differential)
+
+	connector RendezVous1 con_29(s1.reset0)
+	connector RendezVous1 con_30(s2.reset0)
+
+  	connector RendezVous2 con_31(sf.identification, id.segment)
+  	connector RendezVous1 con_32(sf.reset0)
+  	connector RendezVous1 con_33(id.label)
+
+  	connector RendezVous1 con_34(id.reset0)
+end
+
+component VideoS vs
+
+end
