@@ -1,0 +1,1 @@
+java -jar -Xmx2048m -Xss512m deadlockFree.jar -condition=LALT -debug ../BIPExamples/videosurveillance.bip

@@ -8,27 +8,47 @@ port type ePort
 
 atomic type Capture
 	export port ePort capture()
-	export port ePort send()
 
-	place s0, s1
-	initial to s0 do {}
+	export port ePort send0()
+	export port ePort send1()
+	export port ePort send2()
+	export port ePort send3()
 	
-	on capture from s0 to s1 provided true do {}
-	on send from s1 to s0 provided true do {}
+
+	export port ePort move1()
+	export port ePort move2()
+	export port ePort move3()
+
+	place sInit, s0, s1, s2, s3
+	initial to sInit do {}
+	
+	on capture from sInit to s0 provided true do {}
+	on send0 from s0 to sInit provided true do {}
+	on send1 from s1 to sInit provided true do {}
+	on send2 from s2 to sInit provided true do {}
+	on send3 from s3 to sInit provided true do {}
+	
+	on move1 from s0 to s1 provided true do {}
+	on move2 from s1 to s2 provided true do {}
+	on move3 from s2 to s3 provided true do {}
 end
 
 atomic type Buffer
 	export port ePort receive()
+	export port ePort send()
+	export port ePort move()
 	export port ePort reset0()
 	export port ePort compute()
 
 	place s0, s1
 	initial to s0 do {}
 	
+	on send from s1 to s0 provided true do {}
 	on receive from s0 to s1 provided true do {}
 	on reset0 from s1 to s0 provided true do {}
 	on compute from s1 to s1 provided true do {}
 	on compute from s0 to s0 provided true do {}
+	on move from s1 to s1 provided true do {}
 end
 
 atomic type Edge
@@ -137,6 +157,11 @@ end
 
 compound type VideoS
 	component Capture c
+	
+	component Buffer b0
+	component Buffer b1
+	component Buffer b2
+
 	component Buffer b
 	component Edge e1
 	component Edge e2
@@ -150,7 +175,7 @@ compound type VideoS
 	component Identifier id
 
 	connector RendezVous1 con_0(c.capture)
-  	connector RendezVous2 con_1(c.send, b.receive)
+//  	connector RendezVous2 con_1(c.send, b.receive)
   	connector RendezVous1 con_2(b.reset0)
 
   	connector RendezVous2 con_3(b.compute, e1.get)
@@ -173,11 +198,10 @@ compound type VideoS
 	connector RendezVous1 con_15(e1.reset0)
 	connector RendezVous1 con_16(e2.reset0)
 	
-  	connector RendezVous2 con_18(ef.identification, id.edge)
 
 	connector RendezVous1 con_17(ef.reset0)
 
-  	//connector RendezVous2 con_18(ef.identification, id.edge)
+  	connector RendezVous2 con_18(ef.identification, id.edge)
   	connector RendezVous2 con_19(ef.identification, s1.getEdge)
   	connector RendezVous2 con_20(ef.identification, s2.getEdge)
 
@@ -202,6 +226,27 @@ compound type VideoS
   	connector RendezVous1 con_33(id.label)
 
   	connector RendezVous1 con_34(id.reset0)
+
+	// connector buffers
+
+  	connector RendezVous2 con_35(c.send0, b0.receive)
+  	connector RendezVous2 con_36(c.send1, b1.receive)
+  	connector RendezVous2 con_37(c.send2, b2.receive)
+  	connector RendezVous2 con_38(c.send3, b.receive)
+
+
+  	connector RendezVous2 con_39(b0.send, b1.receive)
+  	connector RendezVous2 con_40(b1.send, b2.receive)
+  	connector RendezVous2 con_41(b2.send, b.receive)
+
+
+  	connector RendezVous2 con_43(c.move1, b1.move)
+  	connector RendezVous2 con_44(c.move2, b2.move)
+  	connector RendezVous2 con_45(c.move3, b.move)
+
+	connector RendezVous1 con_46(b0.reset0)
+	connector RendezVous1 con_47(b1.reset0)
+	connector RendezVous1 con_48(b2.reset0)
 end
 
 component VideoS vs
