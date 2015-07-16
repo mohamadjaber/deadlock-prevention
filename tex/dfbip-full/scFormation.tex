@@ -134,9 +134,9 @@ We define the predicate $\viol{v}{d}{t}$ by induction on $d$, as follows. We ind
 justification for each clause of the definition.
 
 \noindent
-\ul{Base case, $d=1$.} $\viol{v}{1}{t}$ iff $v$ has no outgoing wait-for-edges, otherwise $\neg \viol{v}{1}{t}$.
-
-Justification: If $v$ has no outgoing wait-for-edges, then it cannot be in a supercycle.  Note that $v$ must be an
+\ul{Base case, $d=1$.} $\viol{v}{1}{t}$ iff $v$ is an interaction $\act$ and it has no outgoing wait-for-edges, otherwise $\neg \viol{v}{1}{t}$.
+%
+Justification: if $v$ has no outgoing wait-for-edges, then it cannot be in a supercycle.  Note that $v$ must be an
 interaction in this case, since a component must have at least one outgoing wait-for edge at all times.
 
 \noindent
@@ -145,23 +145,21 @@ interaction in this case, since a component must have at least one outgoing wait
 \bn
 
 \item  \label{def:supercycle.violation.component.out}
-$v$ is a component $\B_i$ and there exists interaction $\act$ such that $\B_i \ar \act \in \wfg{\B}{t}$ and $(\ex d' < d: \viol{\act}{d'}{t})$.
+$v$ is a component $\B_i$ and there exists interaction $\act$ such that $\B_i \ar \act \in \wfg{\B}{t}$ and $(\ex d' : 1 \le d' < d: \viol{\act}{d'}{t})$.
 That is, $\B_i$ enables an interaction $\act$ which has a level-$d'$ supercycle-violation, for some $d' < d$.
 Justification is Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:comp-out}.
 
 
 \item \label{def:supercycle.violation.interaction.out}
-$v$ is an interaction $\act$ and for all components $\B_i$ such that $\act \ar \B_i \in \wfg{\B}{t}$, we have $(\ex d' < d: \viol{\B_i}{d'}{t})$.
-That is, each component $\B_i$ that $\act$ waits for has a level-$d'$ supercycle-violation, for some $d'$.
+$v$ is an interaction $\act$ and for all components $\B_i$ such that $\act \ar \B_i \in \wfg{\B}{t}$, we have $(\ex d' : 1 \le d' < d: \viol{\B_i}{d'}{t})$.
+That is, each component $\B_i$ that $\act$ waits for has a level-$d'$ supercycle-violation, for some $d' < d$.
 Justification is Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:act-out}.
 
 \en
-
+%
 Figure~\ref{fig:scViolate} gives a formal, recursive definition of $\viol{v}{d}{t}$. 
 The notation $v = \B_i$ means that $v$ is some component $\B_i$. Likewise, 
-$v$ is an interaction $\act$ means that $v$ is some interaction $\act$.
-
-
+$v = \act$ means that $v$ is some interaction $\act$.
 \ed
 
 
@@ -170,16 +168,12 @@ $v$ is an interaction $\act$ means that $v$ is some interaction $\act$.
 
 \setcounter{lctr}{-1}
 \begin{tabbing}\label{alg:check-scViol}
-aa\= mm\= mm\= mm\= mm\=\kill
+aa\= aa\= aa\= \kill
 $\viol{v}{d}{t}$\\
-\lioc{\IFC{d = 1 \land \neg \ex u : v \ar u \in \wfg{\B}{t}}\ \RETURNE{\ttt}\ \FI}{\cmnt base case for true}
-
-\lio{\IFC{\mbox{$v = \B_i$} \land (\ex \act : \B_i \ar \act \in \wfg{\B}{t} : (\ex d' < d : \viol{\act}{d'}{t}))} \ \RETURNE{\ttt}\ \FI}
-
-\lio{\IFC{\mbox{$v = \act$} \land (\fa \B_i : \act \ar \B_i \in \wfg{\B}{t} : (\ex d' < d : \viol{\B_i}{d'}{t}))} \  \RETURNE{\ttt}\ \FI}
-
-\lioc{\RETURNE{\fff}}{\cmnt no case for true value, so value is false}
-
+\lioc{\IFC{d = 1 \land v = \act \land \neg (\ex \B_i : \act \ar \B_i \in \wfg{\B}{t})}\ \RETURNE{\ttt}\ \FI}{\cmnt base case for \ttt\ result}
+\lio{\IFC{v = \B_i \land (\ex \act : \B_i \ar \act \in \wfg{\B}{t} : (\ex d' : 1 \le d' < d : \viol{\act}{d'}{t}))} \ \RETURNE{\ttt}\ \FI}
+\lio{\IFC{v = \act \land (\fa \B_i : \act \ar \B_i \in \wfg{\B}{t} : (\ex d' : 1 \le d' < d : \viol{\B_i}{d'}{t}))} \  \RETURNE{\ttt}\ \FI}
+\lioc{\RETURNE{\fff}}{\cmnt no case for \ttt\ result, so result is \fff}
 \end{tabbing}
 \vspace{-6ex}
 \caption{Formal definition of $\viol{v}{d}{t}$}
