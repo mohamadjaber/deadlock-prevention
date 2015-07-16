@@ -46,7 +46,7 @@ contains a supercycle.  Then, in $\wfg{\B}{t}$, there exists a $\CC$ such that
 \item $\CC$ is a subgraph of $\wfg{\B}{t}$
 \item $\CC$ is strongly connected
 \item $\CC$ is a supercycle
-\item  there is no wait-for-edge from a node in $\CC$ to a node outside of $\CC$.
+\item there is no wait-for-edge from a node in $\CC$ to a node outside of $\CC$.
 \item there exists a component $\B_i \in \cmps{\act}$ such that $\B_i$ is in $\CC$
 \en
 \ep
@@ -129,89 +129,95 @@ formalize the notion of \emph{level-$d$ supercycle violation} as the predicate $
 \bd[Supercycle violation, $\scViol{v}{d}{t}$]
 \label{def:supercycle-violation}
 \label{def:supercycle.violation}
+Let $t$ be a state of $(\B, Q_0)$, $v$ be a node of $\wfg{\B}{t}$, and $d$ an integer $\ge 1$.
 We define the predicate $\viol{v}{d}{t}$ by induction on $d$, as follows. We indicate the
 justification for each clause of the definition.
 
 \noindent
-\ul{Base case, $d=1$.} $\viol{v}{1}{t} = \true$ iff $v$ has no outgoing wait-for-edges, otherwise $\viol{v}{1}{t} = \false$.
+\ul{Base case, $d=1$.} $\viol{v}{1}{t}$ iff $v$ has no outgoing wait-for-edges, otherwise $\neg \viol{v}{1}{t}$.
 
 Justification: If $v$ has no outgoing wait-for-edges, then it cannot be in a supercycle.  Note that $v$ must be an
 interaction in this case, since a component must have at least one outgoing wait-for edge at all times.
 
 \noindent
-\ul{Inductive step, $d > 1$.}  $\viol{v}{d}{t} = \true$ iff any of the following cases hold. Otherwise 
-$\viol{v}{d}{t} = \false$.
+\ul{Inductive step, $d > 1$.}  $\viol{v}{d}{t}$ iff any of the following cases hold. Otherwise $\neg \viol{v}{d}{t}$.
 
 \bn
 
-%\item $v$ is a component $\B_i$ and at least one of these two clauses holds:
-\item $v$ is a component $\B_i$ and %at least one of these two clauses holds:
-   \bn
+\item  \label{def:supercycle.violation.component.out}
+$v$ is a component $\B_i$ and there exists interaction $\act$ such that $\B_i \ar \act \in \wfg{\B}{t}$ and $(\ex d' < d: \viol{\act}{d'}{t})$.
+That is, $\B_i$ enables an interaction $\act$ which has a level-$d'$ supercycle-violation, for some $d' < d$.
+Justification is Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:comp-out}.
 
-   \item \label{def:supercycle.violation.component.out}
-         There exists interaction $\act$ such that $\B_i \ar \act \in \wfg{\B}{t}$ and $\viol{\act}{d-1}{t} = \true$,
-         \ie $\B_i$ enables an interaction $\act$ which has a level-$(d-1)$ supercycle-violation.
-    Justification is Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:comp-out}.
 
-   % \item \label{def:supercycle.violation.component.in}
-   %       There exists an interaction $\act$ such that $\act \ar \B_i \in \wfg{\B}{t}$, $\viol{\act}{d-1}{t} = \true$,
-   %       \ie some interaction $\act$ that waits for $\B_i$ has a level-$(d-1)$ supercycle-violation. 
-   %  Justification is Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:comp-in}.
-
- \en
-
-\item $v$ is an interaction $\act$ and
-   \bn
-
-   \item \label{def:supercycle.violation.interaction.out}
-         For all components $\B_i$ such that $\act \ar \B_i \in \wfg{\B}{t}$, $\viol{\B_i}{d-1}{t} = \true$,
-         \ie all components $\B_i$ that $\act$ waits for have a level-$(d-1)$ supercycle-violation.
-    Justification is Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:act-out}.
-
-%    \item \label{def:supercycle.violation.interaction.in}
-%          For all components $\B_i$ such that $\B_i \ar \act \in \wfg{\B}{t}$, $\viol{\B_i}{d-1}{t} = \true$,
-%          \ie all  components $\B_i$ that enable $\act$ have a level-$(d-1)$ supercycle-violation.
-% The justfication here is that $\act$ cannot be a node of a \emph{strongly-connected} supercycle.
-
-   \en
+\item \label{def:supercycle.violation.interaction.out}
+$v$ is an interaction $\act$ and for all components $\B_i$ such that $\act \ar \B_i \in \wfg{\B}{t}$, we have $(\ex d' < d: \viol{\B_i}{d'}{t})$.
+That is, each component $\B_i$ that $\act$ waits for has a level-$d'$ supercycle-violation, for some $d'$.
+Justification is Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:act-out}.
 
 \en
 
-Figure~\ref{fig:scViolate} gives a formal definition of $\viol{v}{d}{t}$.
+Figure~\ref{fig:scViolate} gives a formal, recursive definition of $\viol{v}{d}{t}$. 
+The notation $v = \B_i$ means that $v$ is some component $\B_i$. Likewise, 
+$v$ is an interaction $\act$ means that $v$ is some interaction $\act$.
+
+
 \ed
+
 
 
 \begin{figure}[ht]
 
-\setcounter{lctr}{0}
+\setcounter{lctr}{-1}
 \begin{tabbing}\label{alg:check-scViol}
-mm\= mm\= mm\= mm\= mm\=\kill
+aa\= mm\= mm\= mm\= mm\=\kill
 $\viol{v}{d}{t}$\\
-\lio{\IFC{d = 1}}
-   \litc{\IFC{\neg \ex u : v \ar u \in \wfg{\B}{t}}\ \RETURNE{\ttt}}{\cmnt $v$ has no outgoing wait-for-edges}
-   \litc{\ELSE\ \RETURNE{\fff}}{\cmnt $v$ has some outgoing wait-for-edge}
-   \lit{\FI}
-\lio{\FI}
+\lioc{\IFC{d = 1 \land \neg \ex u : v \ar u \in \wfg{\B}{t}}\ \RETURNE{\ttt}\ \FI}{\cmnt base case for true}
 
-\lio{\cmnt \mbox{now } d > 1}
+\lio{\IFC{\mbox{$v = \B_i$} \land (\ex \act : \B_i \ar \act \in \wfg{\B}{t} : (\ex d' < d : \viol{\act}{d'}{t}))} \ \RETURNE{\ttt}\ \FI}
 
-\lio{\IFC{\mbox{$v$ is a component $\B_i$}}}
-   \litc{\IFC{\ex \act : \B_i \ar \act \in \wfg{\B}{t} :
-       \viol{\act}{d-1}{t}} \ \RETURNE{\ttt}}{\cmnt component violations}
-   \lit{\ELSE\ \RETURNE{\fff}}
-   \lit{\FI}
-\lio{\FI}
+\lio{\IFC{\mbox{$v = \act$} \land (\fa \B_i : \act \ar \B_i \in \wfg{\B}{t} : (\ex d' < d : \viol{\B_i}{d'}{t}))} \  \RETURNE{\ttt}\ \FI}
 
-\lio{\IFC{\mbox{$v$ is an interaction $\act$}}}
-   \litc{\IFC{\fa \B_i : \act \ar \B_i \in \wfg{\B}{t} : \viol{\B_i}{d-1}{t}} \ \RETURNE{\ttt}}{\cmnt interaction violations}
-   \lit{\ELSE\ \RETURNE{\fff}}
-   \lit{\FI}
-\lio{\FI}
+\lioc{\RETURNE{\fff}}{\cmnt no case for true value, so value is false}
+
 \end{tabbing}
-\vspace{-4ex}
+\vspace{-6ex}
 \caption{Formal definition of $\viol{v}{d}{t}$}
 \label{fig:scViolate}
 \end{figure}
+
+
+
+
+
+% \begin{figure}[ht]
+
+% \setcounter{lctr}{0}
+% \begin{tabbing}\label{alg:check-scViol}
+% mm\= mm\= mm\= mm\= mm\=\kill
+% $\viol{v}{d}{t}$\\
+% \lioc{\IFC{d = 1}}{base case}
+%    \litc{\IFC{\neg \ex u : v \ar u \in \wfg{\B}{t}}\ \RETURNE{\ttt}}{\cmnt $v$ has no outgoing wait-for-edges}
+%    \litc{\ELSE\ \RETURNE{\fff}}{\cmnt $v$ has some outgoing wait-for-edge}
+%    \lit{\FI}
+% \lio{\FI}
+
+% \lio{\cmnt \mbox{now $d > 1$, \ie inductive step}}
+
+% \lioc{\IFC{\mbox{$v$ is a component $\B_i$}}}{\cmnt component case of inductive step}
+%    \lit{\IFC{\ex \act : \B_i \ar \act \in \wfg{\B}{t} : (\ex d' < d : \viol{\act}{d'}{t})}        \  \RETURNE{\ttt}}
+%    \lit{\ELSE\ \RETURNE{\fff}}
+%    \lit{\FI}
+% \lioc{\ELSE \;\;\cmnt \mbox{$v$ is an interaction $\act$}}{\cmnt interaction case of inductive step}
+%    \lit{\IFC{\fa \B_i : \act \ar \B_i \in \wfg{\B}{t} : (\ex d' < d : \viol{\B_i}{d'}{t})} \ \RETURNE{\ttt}}
+%    \lit{\ELSE\ \RETURNE{\fff}}
+%    \lit{\FI}
+% \lio{\FI}
+% \end{tabbing}
+% \vspace{-6ex}
+% \caption{Formal definition of $\viol{v}{d}{t}$}
+% \label{fig:scViolate}
+% \end{figure}
 
 
 In the sequel, we say sc-violation rather than ``supercycle violation.''  The crucial result is
