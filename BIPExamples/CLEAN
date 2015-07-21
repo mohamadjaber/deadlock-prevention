@@ -1,0 +1,3 @@
+rm -rf *.timod *.bip.x *.bip.o *.bip.C *.bip.h *.bip.mk *.model
+cd ..
+rm -rf *.timod *.bip.x *.bip.o *.bip.C *.bip.h *.bip.mk *.model

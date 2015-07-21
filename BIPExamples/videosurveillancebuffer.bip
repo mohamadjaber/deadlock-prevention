@@ -108,8 +108,8 @@ atomic type EdgeFusion
 	on fusion from s0 to s1 provided true do {}
 	on differential from s1 to s1 provided true do {}
 	on identification from s1 to s2 provided true do {}
-//	on identification from s2 to s2 provided true do {}
-	on identification from s2 to s0 provided true do {}
+	on identification from s2 to s2 provided true do {}
+	on reset0 from s2 to s0 provided true do {}
 end
 
 atomic type SegmentFusion
@@ -124,8 +124,8 @@ atomic type SegmentFusion
 	
 	on fusion from s0 to s1 provided true do {}
 	on differential from s1 to s1 provided true do {}
-	on identification from s1 to s0 provided true do {} // s2 -> s0
-	on reset0 from s2 to s0 provided true do {} // s2 is unreachable
+	on identification from s1 to s2 provided true do {} 
+	on reset0 from s2 to s0 provided true do {} 
 end
 
 atomic type Identifier
@@ -175,7 +175,6 @@ compound type VideoS
 	component Identifier id
 
 	connector RendezVous1 con_0(c.capture)
-//  	connector RendezVous2 con_1(c.send, b.receive)
   	connector RendezVous1 con_2(b.reset0)
 
   	connector RendezVous2 con_3(b.compute, e1.get)
