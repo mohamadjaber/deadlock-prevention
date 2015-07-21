@@ -1,17 +1,24 @@
 
 We now seek a local condition, which we evaluate in $\dsk{\act}{\l}$, and which implies \GAO.
-To achieve a conservative approximation, we make the ``pessimistic'' assumption that the violation status of border
+We define local versions of both $\scViol{v}{d}{t}$ and $\connViol{v}{t}$.
+
+To achieve a local and conservative approximation of $\scViol{v}{d}{t}$, we make the ``pessimistic'' assumption that the violation status of border
 nodes of $\dsk{\act}{\l}$ cannot be known, since it depends on nodes outside of $\dsk{\act}{\l}$.
 Now, if an internal node $v$ of $\dsk{\act}{\l}$ can be marked with a level $d$ sc-violation, by applying 
 Definition~\ref{def:supercycle-violation} only within
 $\dsk{\act}{\l}$, and with the border nodes marked as non-violating,
 then it is also the case, as we show below, that $v$ has a level $d$ sc-violation overall.
 
-We define the predicate $\lviol{v}{d}{t}{\act}{\l}$ to hold iff node $v$ in $\wfg{B}{t}$ has a level-$d$ supercycle-violation
-\emph{that can be confirmed within $\dsk{\act}{\l}$}.
+To achieve a local and conservative approximation of
+$\connViol{v}{t}$, we project onto a subsystem.
+
+
 
 
 \subsubsection{Local supercycle violation condition}
+
+We define the predicate $\lviol{v}{d}{t}{\act}{\l}$ to hold iff node $v$ in $\wfg{B}{t}$ has a level-$d$ supercycle-violation
+\emph{that can be confirmed within $\dsk{\act}{\l}$}.
 
 \bd[Local supercycle violation, $\locScViol{v}{d}{t_\act}{\act}{\l}$]
 \label{def:supercycle.violation.local}
