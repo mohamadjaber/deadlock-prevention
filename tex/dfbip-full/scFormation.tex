@@ -156,11 +156,14 @@ That is, each component $\B_i$ that $\act$ waits for has a level-$d'$ supercycle
 Justification is Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:act-out}.
 
 \en
+\ed
 %
 Figure~\ref{fig:scViolate} gives a formal, recursive definition of $\viol{v}{d}{t}$. 
 The notation $v = \B_i$ means that $v$ is some component $\B_i$. Likewise, 
 $v = \act$ means that $v$ is some interaction $\act$.
-\ed
+Line 0 corresponds to the base case, line 1 corresponds to item 1 of the inductive case, and line 2 corresponds to item 2 of the inductive case.
+Line 3 handles all cases that do not return true.
+
 
 
 
