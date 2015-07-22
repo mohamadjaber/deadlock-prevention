@@ -22,23 +22,24 @@ We define the predicate $\lviol{v}{d}{t}{\act}{\l}$ to hold iff node $v$ in $\wf
 
 \bd[Local supercycle violation, $\locScViol{v}{d}{t_\act}{\act}{\l}$]
 \label{def:supercycle.violation.local}
+Let $t_\act$ be a state of $\dsk{\act}{\l}$ and $v$ be a node of $\dsk{\act}{\l}$.
 We define $\lviol{v}{d}{t_\act}{\act}{\l}$ by induction on $d$, as follows.
 
 \noindent
 \ul{Base case, $d=1$.} $\lviol{v}{1}{t_\act}{\act}{\l}$  iff
 $v$ is an interaction $\actp$ and 
-$\actp$ is an interior node of $\dsk{\act}{\l}$ that has no outgoing wait-for edges.
+$\actp$ is an interior node of $\dsk{\act}{\l}$ that has no outgoing wait-for edges in $\wfg{\dsk{\act}{\l}}{t_\act}$.
 Otherwise $\neg \lviol{v}{1}{t_\act}{\act}{\l}$. 
 
 \noindent
-\ul{Inductive step, $d > 1$.} $\lviol{v}{1}{t_\act}{\act}{\l}$ iff either of the following two cases hold. Otherwise $\neg \lviol{v}{1}{t_\act}{\act}{\l}$.
+\ul{Inductive step, $d > 1$.} $\lviol{v}{d}{t_\act}{\act}{\l}$ iff either of the following two cases hold. Otherwise $\neg \lviol{v}{d}{t_\act}{\act}{\l}$.
 
 \bn
 
 \item \ul{$v$ is a component $\B_i$} and there exists an interaction $\actp$ such that $B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act}$ and 
     $(\ex d': 1 \le d' < d : \lviol{\actp}{d'}{t_\act}{\act}{\l})$.
     That is, $\B_i$ enables an interaction $\actp$ which has a level-$d'$ supercycle-violation in $\dsk{\act}{\l}$, for some $d' < d$. 
-    It does not matter whether $\B_i$ is border or interior.
+%    It does not matter whether $\B_i$ is border or interior. COMPONENTS ARE ALWAYS INTERIOR NOW
 
 
 \item \ul{$v$ is an interaction $\actp$ and an internal node of $\dsk{\act}{\l}$} and
@@ -123,7 +124,7 @@ We show that a local supercycle-violation is a sufficient condition for deadlock
 \label{prop:locScViol-implies-scViol}
  \label{prop:lviol-implies-viol}
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
-For all interactions $\act \in \gamma$, and $\l \ge 2$, let $t_\act = t \pj \dsk{\act}{\l}$.
+For all interactions $\act \in \gamma$, and $\l \ge 1$, let $t_\act = t \pj \dsk{\act}{\l}$.
 Then\\
 \ind $\fa d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l} \imp \scViol{v}{d}{t}$.
 \ep
@@ -179,7 +180,7 @@ similar to the previous case.
 \label{def:sConn.violation.loc}
 
 Let $L$ be the nodes of $\wfg{\dsk{a}{\l}}{t_\act}$ that have no local
-supercycle violation, \ie $L = \set{v \stt v \in \dsk{a}{\l} \land \neg (\ex d: \locScViol{v}{d}{t_\act}{\act}{\l}) }$.
+supercycle violation, \ie $L = \set{v \stt v \in \dsk{a}{\l} \land \neg (\ex d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l}) }$.
 Let $v$ be an arbitrary node in $L$. 
 Let $WL = \wfg{\dsk{a}{\l}}{t_\act} \pj L$, \ie $WL$ is the subgraph of $\wfg{\dsk{a}{\l}}{t_\act}$ consisting of the
 nodes in $L$, and the edges between those nodes that are also edges in $\wfg{\dsk{a}{\l}}{t_\act}$.
@@ -188,7 +189,7 @@ Then, $\locConnViol{v}{t_\act}{\act}{\l}$ holds iff:
 \bn
 
 \item \label{def:sConn.violation.loc:scc}
-there does not exist a strongly connected supercycle $SSC$ such that $v \in SSC$ and $SSC \sub WL$, and
+there does not exist a nontrivial strongly connected supercycle $SSC$ such that $v \in SSC$ and $SSC \sub WL$, and
 
 %\item \label{def:sConn.violation.loc:wait-for-out} every wait-for path $\pi$ from $v$ to a border node
 %  of $\dsk{a}{\l}$ contains at least one node with a local supercycle violation
@@ -311,7 +312,7 @@ Then, in $t_\act$, the following holds.
 For every component $\B_i$ of $\cmps{\act}$:  
 $\B_i$ has a supercycle formation violation that can be confirmed within $\dsk{\act}{\l}$.
 Formally,\\
-\ind  $\fa \B_i \in \cmps{\act}, \ex d \ge 1: \locFormViol{\B_i}{t_\act}{\act}{\l}$.
+\ind  $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{t_\act}{\act}{\l}$.
 \ed
 
 We showed previously that $\GAO$ implies deadlock-freedom, and so it remains to establish that $\LAO$ implies $\GAO$. 
@@ -327,7 +328,7 @@ Let $\act \in \gamma$ be an interaction of BIP-system $(\B, Q_0)$. Then\\
 %\prf{Immediate from Proposition~\ref{prop:locformviol-implies-formviol} and Definitions~\ref{def:global.ANDOR-cond}, \ref{def:lao}.}
 
 \bpr
-Assume $\LAO(\act, \l)$ for some $\l > 0$. 
+Assume $\LAO(\B, Q_0, \act, \l)$ for some $\l > 0$. 
 %
 Let $s \goesto[\act] t$ be an arbitrary reachable transition of BIP-system $(\B, Q_0)$, and let 
 $s_\act \goesto[\act] t_\act$ be the projection of $s \goesto[\act] t$ onto $\dsk{\act}{\l}$.
