@@ -1,0 +1,74 @@
+model arbiter
+
+connector type Sync2(Port p1, Port p2)
+  define p1 p2		
+end
+
+connector type Sync4(Port p1, Port p2, Port p3, Port p4)
+  define p1 p2 p3 p4	
+end
+
+
+atomic type ArbiterBase
+  export port Port request
+  export port Port accept
+  export port Port release
+  export port Port grant
+
+  place q0
+  place q1
+  place q2
+
+  initial to q0 do {}
+    on accept from q0 to q0 provided true do {} 
+    on accept from q1 to q1 provided true do {}
+    on request from q0 to q1 provided true do {} 
+    on grant from q1 to q2 provided true do {} 
+    on release from q2 to q0 provided true do {} 
+end
+
+
+
+atomic type Processor
+  export port Port request
+  export port Port release
+  export port Port grant
+
+  place q0
+  place q1
+  place q2
+
+
+  initial to q0 do {}
+    on request from q0 to q1 provided true do {} 
+    on grant from q1 to q2 provided true do {} 
+    on release from q2 to q0 provided true do {} 
+end
+
+compound type ModelFair
+ component ArbiterBase A1
+ component ArbiterBase A2
+ component ArbiterBase A3
+
+ component Processor P1
+ component Processor P2
+ component Processor P3
+ 
+ connector Sync2 req1(P1.request, A1.request)
+ connector Sync2 req2(P2.request, A2.request)
+ connector Sync2 req3(P3.request, A3.request)
+
+ connector Sync4 grant1(A1.grant, A2.accept, A3.accept, P1.grant)
+ connector Sync4 grant2(A1.accept, A2.grant, A3.accept, P2.grant)
+ connector Sync4 grant3(A1.accept, A2.accept, A3.grant, P3.grant)
+
+ connector Sync2 rel1(P1.release, A1.release)
+ connector Sync2 rel2(P2.release, A2.release)
+ connector Sync2 rel3(P3.release, A3.release)
+end
+
+
+component ModelFair m
+end
+
+    
