@@ -119,7 +119,7 @@ $\lviol{v}{d}{t_\act}{\act}{\l}$\\
 % \end{figure}
 
 
-We show that a local supercycle-violation is a sufficient condition for deadlock-freedom, by showing that it implies (global) supercycle-violation.
+We now show that a local supercycle-violation implies (global) supercycle-violation.
 \bp
 \label{prop:locScViol-implies-scViol}
  \label{prop:lviol-implies-viol}
@@ -145,14 +145,14 @@ wait-for-edges. Hence $\viol{v}{1}{t}$ holds.
 Assume $\lviol{v}{d}{t_\act}{\act}{\l}$ for some node $v$ and some $d > 1$. 
 We proceed by cases on Figure~\ref{fig:scViolateLoc}.
 
-\be
+\bn
 
 \item \ul{$v$ is an interior interaction $\actp$ and 
-$(\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} : \lviol{\B_i}{d-1}{t_\act}{\act}{\l})$}.
+$(\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} : (\ex d' : 1 \le d' < d : \lviol{\B_i}{d'}{t_\act}{\act}{\l}))$.
 
-By the induction hypothesis applied to $\lviol{\B_i}{d-1}{t_\act}{\act}{\l}$, we have $\viol{\B_i}{d-1}{t}$. 
+By the induction hypothesis applied to $\lviol{\B_i}{d'}{t_\act}{\act}{\l}$, we have $\viol{\B_i}{d'}{t}$.
 Since $\wfg{\dsk{\act}{\l}}{t_\act} \sub \wfg{\B}{t}$ by construction, we have 
-$\actp \ar B_i \in \wfg{\B}{t}$ and $\viol{\B_i}{d-1}{t}$.
+$\actp \ar B_i \in \wfg{\B}{t}$ and $\viol{\B_i}{d'}{t}$.
 Hence by Definition~\ref{def:supercycle-violation}, Clause~\ref{def:supercycle.violation.component.out}, 
 we have $\viol{v}{d}{t}$.
 
@@ -162,7 +162,7 @@ we have $\viol{v}{d}{t}$.
 
 similar to the previous case.
 
-\ee
+\en
 }
 
 
