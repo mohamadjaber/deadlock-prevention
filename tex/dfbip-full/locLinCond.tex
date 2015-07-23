@@ -77,24 +77,16 @@ The proof of clause (1) is by double implication.
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-$\widepth{\B}{\B_i}{s} < 2\l-1$ implies $\widepth{\B'}{\B_i}{s'} < 2\l-1$:
-
-Assume $\widepth{\B'}{\B_i}{s'} < 2\l-1$. Let $\pi$ be an arbitrary wait-for path 
-that ends in $\B_i$. Since $(\B', Q'_0)$ is based on a superset of $\ssg{a}{2\l}$, and since the distance from $\B_i$ to the border of 
-$\ssg{a}{\l}$ is $2\l-1$, it follows that $B_i$ cannot start in a border node of $\wfg{\B'}{s'}$. 
+%%%%%%%%%%%%%%%%%%%%%%%%
+\ul{$\widepth{\B}{\B_i}{s} < 2\l-1$ implies $\widepth{\B'}{\B_i}{s'} < 2\l-1$}:
+%
+Assume $\widepth{\B}{\B_i}{s} < 2\l-1$.
+Let $\pi$ be an arbitrary wait-for path in $\wfg{\B'}{s'}$ that ends in $\B_i$. 
 %
 Since $(\B', Q'_0)$ is a subsystem of $(\B, Q_0)$, by Definition~\ref{def:static:wait-for-graph} and $s' = s \pj B'$,
 $\wfg{\B'}{s'}$ is a subgraph of $\wfg{\B}{s}$.
 %
-Suppose $\wfg{\B}{s}$ contains a wait-for path $\rho$ of length $> 2\l -1$ that ends in $\B_i$.
-If $\rho$ occurs wholly within $\wfg{\B'}{s'}$, then this contradicts 
-
-Let $\pi$ be an arbitrary wait-for path in $\wfg{\B'}{s'}$ that ends in $\B_i$. 
-%
-
-%
-Hence $\pi$ is a wait-for path in $\wfg{\B}{s}$.
+Hence $\pi$ is a wait-for-path in $\wfg{\B}{s}$.
 By $\widepth{\B}{\B_i}{s} < 2\l-1$, we have $|\pi| < 2\l-1$. 
 Hence $\widepth{\B'}{\B_i}{s'} < 2\l-1$ since $\pi$ was arbitrarily chosen.
 
@@ -102,27 +94,18 @@ Hence $\widepth{\B'}{\B_i}{s'} < 2\l-1$ since $\pi$ was arbitrarily chosen.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-$\widepth{\B}{\B_i}{s} < 2\l-1$ follows from $\widepth{\B'}{\B_i}{s'} < 2\l-1$:
-
-Let $\pi$ be an arbitrary wait-for path in $\wfg{\B'}{s'}$ that ends in $\B_i$. 
-Since $\widepth{\B'}{\B_i}{s'} < 2\l-1$, $\pi$ cannot contain aborder node of $\B'$. 
-Suppose $\neg \widepth{\B}{\B_i}{s} < 2\l-1$. Let $\rho$ be such a path. THen a suffix of $\rho$ is a baoth ending in $\B_i$ that contain a border
-node, or a path of length $\ge 2l-1$ wholly contained in $\B'$. Both cases contradict the assumption.
-
-\vspace{0.5in}
-
-Suppose that $|\pi| \ge 2\l-1$. Hence $\pi$ has a suffix $\rho$ of length $2\l-1$.
+\ul{$\widepth{\B'}{\B_i}{s'} < 2\l-1$ implies $\widepth{\B}{\B_i}{s} < 2\l-1$}:
 %
-Since $(\B', Q'_0)$ is a subsystem of $(\B, Q_0)$, by Definition~\ref{def:static:wait-for-graph} and $s' = s \pj \B'$,
-$\wfg{\B'}{s'}$ is a subgraph of $\wfg{\B}{s}$.
+Assume $\widepth{\B}{\B_i}{s} \ge 2\l-1$. Then there exists a wait-for path $\pi$ in $\wfg{\B}{s}$ such that 
+$|\pi| \ge 2\l-1$. Let $\rho$ be the prefix of $\pi$ with length $2\l-1$. 
 %
 Since $(\B', Q'_0)$ is based on a superset of $\ssg{a}{2\l}$, and since the distance from $\B_i$ to the border of 
-$\ssg{a}{\l}$ is $2\l-1$, we conclude that $\rho$ is a wait-for-path
-that is contained in $\wfg{\B'}{s'}$.
+$\ssg{a}{2\l}$ is $2\l-1$, we conclude that $\rho$ is a wait-for path
+that is wholly contained in $\wfg{\B'}{s'}$. Hence we have $\widepth{\B'}{\B_i}{s'} \ge 2\l-1$.
 %
-Hence 
+We have thus established 
 $\widepth{\B}{\B_i}{s} \ge 2\l-1$ implies $\widepth{\B'}{\B_i}{s'} \ge 2\l-1$.
-The contrapositive is our desired result.
+The contrapositive is the desired result.
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
