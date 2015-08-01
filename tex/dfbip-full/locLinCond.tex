@@ -121,6 +121,7 @@ We now show that $\LLin(\B, Q_0, \act, \l)$ implies $\GLin(\B, Q_0, \act)$, whic
 \bl
 \label{lemma:loc-implies-glob}
 \label{lemma:locLinear-implies-globlinear}
+\label{LLinGLin}
 %Let $(B, Q_0)$ be a BIP system, with $B = \gamma(\B_1,\dots,\B_n)$, and 
 Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
 If $\LLin(\B, Q_0, \act, \l)$ holds for some finite $\l > 0$, then $\GLin(\B, Q_0, \act)$ holds.
@@ -187,6 +188,7 @@ Hence, by Definition~\ref{def:supercycle.violation.local},  $\locScViol{v}{d+1}{
 \bl
 %\label{lemma:loc-implies-glob}
 \label{lemma:locLinear-implies-locANDOR}
+\label{LLinLAO}
 Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
 Then $\LLin(\B, Q_0, \act, \l)$ implies $\LAO(\B, Q_0, \act, \l)$.
 \el
@@ -215,6 +217,15 @@ Hence, by Definition~\ref{def:lao}, we conclude $\LAO(\B, Q_0, \act, \l)$.
 
 
 
+Figure~\ref{fig:implications} gives the implication relations between our four deadlock-freedom conditions.
+Each implication arrow is labeled by the Lemma that provides the corresponding result.
+\begin{figure}[ht]
+\begin{center}
+\scalebox{0.8}{\input{figs/implications.pdf_t}}
+\caption{Implication relations between deadlock-freedom conditions}
+\label{fig:implications}
+\end{center}
+\end{figure}
 
 
 
