@@ -106,13 +106,13 @@ condition is satisfied or not. In principle, we could check directly
 whether $\wfg{\B}{t}$ contains a supercycle, for each reachable state
 $t$. However, this approach is subject to state-explosion, and so is usually unlikely to be viable in practice.
 Instead, we formulate global conditions for supercycle-freedom, and then ``project'' these
-conditions onto small subsystems, to obtain local versions of these conditions that are efficiently checkable.
+conditions onto small subsystems, to obtain local versions of these
+conditions that are (1) efficiently checkable, and (2) imply the global versions.
 
 For transition $s \goesto[\act] t$, we determine for every component $\B_i \in \cmps{\act}$ whether
 it is possible for $\B_i$ to be a node in a supercycle in $\wfg{\B}{t}$. 
- If not, then we say that $\B_i$ satisfies the \emph{supercycle
-  violation} condition, and we formalize this condition below.
-
+If not, then we say that $\B_i$ satisfies the \emph{supercycle violation} condition, and we formalize this condition below.
+%
 There are two ways for $\B_i$ to not be a node in a strongly-connected supercycle:
 \bn
 \item \textit{no supercycle membership}: $\B_i$ is not a node of any supercycle, \ie $\neg \scyc{\B}{s}{\B_i}$.
@@ -241,7 +241,8 @@ that, if $v$ has a level-$d$ sc-violation, for some $d \ge 1$, then $v$ cannot b
 supercycle.
 
 
-\bp \label{prop:supercycle-violation} \label{prop:scViol-implies-notInSC}
+\bp[Soundness of supercycle violation \wrt supercycle non-membership]
+ \label{prop:supercycle-violation} \label{prop:scViol-implies-notInSC}
 If $(\ex d \ge 1: \viol{v}{d}{t})$ then $v$ is not a node of a supercycle in $\wfg{\B}{t}$.
 \ep
 \prf{
@@ -284,7 +285,8 @@ $\act$ cannot be in a supercycle.
 %for all $d \ge 1$, then $v$ is a node of a supercycle.
 
 
-\bp \label{prop:notInSC-implies-scViol}
+\bp[Completeness of supercycle violation \wrt supercycle non-membership]
+ \label{prop:notInSC-implies-scViol}
 If $(\fas d \ge 1: \neg \viol{v}{d}{t})$ then $v$ is a node of a supercycle in $\wfg{\B}{t}$.
 \ep
 %
