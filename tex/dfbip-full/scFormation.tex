@@ -7,14 +7,15 @@
 \subsection{The supercycle formation condition}
 
 \noindent
-To proceed, we show that wait-for-edges not involving some interaction
+To proceed, we show that wait-for edges not involving some interaction
 $\act$ and its participants $\B_i \in \cmps{\act}$ are unaffected by the execution
 of $\act$.  Say that edge $e$ in a wait-for-graph
 is \emph{$\B_i$-incident} iff $\B_i$ is one of the endpoints of $e$.
 
 
-\bp[Wait-for-edge preservation] \label{prop:wait-for-edge-preservation}
-Let $s \la{\act} t$ be a transition of composite component $B = \gamma(\B_1,\dots,\B_n)$, and let $e$ be a wait-for edge
+\bp[Wait-for edge preservation] \label{prop:wait-for-edge-preservation}
+Let $s \la{\act} t$ be a transition of composite component $B =
+\gamma(\B_1,\dots,\B_n)$, and let $e$ be a wait-for edge in $\wfg{\B}{s}$
 that is not $\B_i$-incident, for every $\B_i \in \cmps{\act}$. Then $e \in
 \wfg{\B}{s}$ iff $e \in \wfg{\B}{t}$. 
 \ep
@@ -46,7 +47,7 @@ contains a supercycle.  Then, in $\wfg{\B}{t}$, there exists a $\CC$ such that
 \item $\CC$ is a subgraph of $\wfg{\B}{t}$
 \item $\CC$ is strongly connected
 \item $\CC$ is a supercycle
-\item there is no wait-for-edge from a node in $\CC$ to a node outside of $\CC$.
+\item  in $\wfg{\B}{t}$, there is no wait-for edge from a node in $\CC$ to a node outside of $\CC$.
 \item there exists a component $\B_i \in \cmps{\act}$ such that $\B_i$ is in $\CC$
 \en
 \ep
@@ -61,16 +62,34 @@ This establishes Clauses~1--4.
 Now suppose $\B_i \not\in \CC$ for every $\B_i \in \cmps{\act}$. Then, no edge in $\CC$ is $\B_i$-incident. 
 Hence, by Proposition~\ref{prop:wait-for-edge-preservation}, every edge in $\CC$ is an edge in 
 $\wfg{\B}{s}$. Hence $\CC$ is a subgraph of $\wfg{\B}{s}$. 
-%
-Now in $\wfg{\B}{s}$, let $e$ by an arbitrary wait-for-edge from a node in $\CC$ to a node outside of $\CC$. $e$
-cannot be present in $\wfg{\B}{t}$, by Clause~4. Hence $e$ is $\B_i$-incident, for some $\B_i \in \cmps{\act}$, by
-Proposition~\ref{prop:wait-for-edge-preservation}.  Since $\B_i \not\in \CC$, $e$ must end in $\B_i$.
-Let $v$ by an arbitrary node in $\CC$. If $v$ is a component, all its wait-for-edges must end in an interaction that is
-in $\CC$, by the above, since an edge starting in a component must end in an interaction. 
-If $v$ is an interaction, it must also have a wait-for-edge $e'$ to some component $\B_j \in \CC$, since $CC$ is
-a supercycle in $\wfg{\B}{t}$, and $CC$ contains no  $\B_i \in \cmps{\act}$.
+
+
+%Choose an arbitrary  $\B_i \in \cmps{\act}$.
+
+% Case 1: there is no edge in $\wfg{\B}{s}$ from a node in $\CC$ to a node outside of $\CC$.
+
+% Case 2: there exists some edge in $\wfg{\B}{s}$ from a node in $\CC$ to a node outside of $\CC$.
+
+% Let $e$ be an arbitrary edge  from a node in $\CC$ to a node outside of $\CC$.
+% $e$ cannot be present in $\wfg{\B}{t}$, by Clause~4. Hence $e$ is $\B_i$-incident, for some $\B_i \in \cmps{\act}$, by
+% Proposition~\ref{prop:wait-for-edge-preservation}.  
+% %
+% Since $e$ starts in $\CC$ and $\B_i \not\in \CC$ for all $\B_i \in \cmps{\act}$, $e$ cannot start in $\B_i$, and so $e$ must end in $\B_i$.
+% In summary, $e$ starts in some node in $\CC$ and ends in some $\B_i \in \cmps{\act}$.
+
+
+
+Let $v$ be an arbitrary node in $\CC$. Suppose $v$ is a component $\B_j$. 
+By assumption, $\B_j \not\in \cmps{\act}$, and so $s \pj \B_j = t \pj \B_j$ by 
+Definition~\ref{def.bip.composition}. Hence $\B_j$ enables the same set of interactions in state $s$ as in state $t$.
+in $\wfg{\B}{t}$, all of $\B_j$'s wait-for-edges must end in an interaction that is
+in $\CC$, since $\CC$ is a  a supercycle in $\wfg{\B}{t}$. Hence the same holds in $\wfg{\B}{s}$.
+
+If $v$ is an interaction, it must also have a wait-for-edge $e'$ to some component $\B_j \in \CC$, since $\CC$ is
+a supercycle in $\wfg{\B}{t}$. 
+
 Hence $v$ has enough successors in $\CC$ to satisfy the supercycle definition (Def.~\ref{def:supercycle}), 
-%
+
 Hence $\CC$ by itself is a supercycle in $\wfg{\B}{s}$,
 which contradicts the assumption that 
 $\wfg{\B}{s}$ is supercycle-free. Hence, $\B_i \in \CC$ for some $\B_i \in \cmps{\act}$, and so Clause~5 is established.
@@ -87,13 +106,13 @@ condition is satisfied or not. In principle, we could check directly
 whether $\wfg{\B}{t}$ contains a supercycle, for each reachable state
 $t$. However, this approach is subject to state-explosion, and so is usually unlikely to be viable in practice.
 Instead, we formulate global conditions for supercycle-freedom, and then ``project'' these
-conditions onto small subsystems, to obtain local versions of these conditions that are efficiently checkable.
+conditions onto small subsystems, to obtain local versions of these
+conditions that are (1) efficiently checkable, and (2) imply the global versions.
 
 For transition $s \goesto[\act] t$, we determine for every component $\B_i \in \cmps{\act}$ whether
 it is possible for $\B_i$ to be a node in a supercycle in $\wfg{\B}{t}$. 
- If not, then we say that $\B_i$ satisfies the \emph{supercycle
-  violation} condition, and we formalize this condition below.
-
+If not, then we say that $\B_i$ satisfies the \emph{supercycle violation} condition, and we formalize this condition below.
+%
 There are two ways for $\B_i$ to not be a node in a strongly-connected supercycle:
 \bn
 \item \textit{no supercycle membership}: $\B_i$ is not a node of any supercycle, \ie $\neg \scyc{\B}{s}{\B_i}$.
@@ -156,11 +175,14 @@ That is, each component $\B_i$ that $\act$ waits for has a level-$d'$ supercycle
 Justification is Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:act-out}.
 
 \en
+\ed
 %
 Figure~\ref{fig:scViolate} gives a formal, recursive definition of $\viol{v}{d}{t}$. 
 The notation $v = \B_i$ means that $v$ is some component $\B_i$. Likewise, 
 $v = \act$ means that $v$ is some interaction $\act$.
-\ed
+Line 0 corresponds to the base case, line 1 corresponds to item 1 of the inductive case, and line 2 corresponds to item 2 of the inductive case.
+Line 3 handles all cases that do not return true.
+
 
 
 
@@ -219,7 +241,8 @@ that, if $v$ has a level-$d$ sc-violation, for some $d \ge 1$, then $v$ cannot b
 supercycle.
 
 
-\bp \label{prop:supercycle-violation} \label{prop:scViol-implies-notInSC}
+\bp[Soundness of supercycle violation \wrt supercycle non-membership]
+ \label{prop:supercycle-violation} \label{prop:scViol-implies-notInSC}
 If $(\ex d \ge 1: \viol{v}{d}{t})$ then $v$ is not a node of a supercycle in $\wfg{\B}{t}$.
 \ep
 \prf{
@@ -262,7 +285,8 @@ $\act$ cannot be in a supercycle.
 %for all $d \ge 1$, then $v$ is a node of a supercycle.
 
 
-\bp \label{prop:notInSC-implies-scViol}
+\bp[Completeness of supercycle violation \wrt supercycle non-membership]
+ \label{prop:notInSC-implies-scViol}
 If $(\fas d \ge 1: \neg \viol{v}{d}{t})$ then $v$ is a node of a supercycle in $\wfg{\B}{t}$.
 \ep
 %

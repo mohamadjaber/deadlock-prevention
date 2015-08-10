@@ -22,86 +22,109 @@ We define the predicate $\lviol{v}{d}{t}{\act}{\l}$ to hold iff node $v$ in $\wf
 
 \bd[Local supercycle violation, $\locScViol{v}{d}{t_\act}{\act}{\l}$]
 \label{def:supercycle.violation.local}
+Let $t_\act$ be a state of $\dsk{\act}{\l}$ and $v$ be a node of $\dsk{\act}{\l}$.
 We define $\lviol{v}{d}{t_\act}{\act}{\l}$ by induction on $d$, as follows.
 
 \noindent
-\ul{Base case, $d=1$.} $\lviol{v}{1}{t_\act}{\act}{\l} = \true$  iff
+\ul{Base case, $d=1$.} $\lviol{v}{1}{t_\act}{\act}{\l}$  iff
 $v$ is an interaction $\actp$ and 
-$\actp$ is an interior node of $\dsk{\act}{\l}$ that has no outgoing wait-for edges.
-
+$\actp$ is an interior node of $\dsk{\act}{\l}$ that has no outgoing wait-for edges in $\wfg{\dsk{\act}{\l}}{t_\act}$.
+Otherwise $\neg \lviol{v}{1}{t_\act}{\act}{\l}$. 
 
 \noindent
-\ul{Inductive step, $d > 1$.} $\lviol{v}{1}{t_\act}{\act}{\l} = \true$ iff any of the following cases hold. Otherwise 
-$\lviol{v}{1}{t_\act}{\act}{\l} = \false$.
+\ul{Inductive step, $d > 1$.} $\lviol{v}{d}{t_\act}{\act}{\l}$ iff either of the following two cases hold. Otherwise $\neg \lviol{v}{d}{t_\act}{\act}{\l}$.
 
-\be
+\bn
 
-\item \ul{$v$ is a component $\B_i$} such that there exists interaction $\actp$ such that $B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act}$ and $\lviol{\actp}{d-1}{t_\act}{\act}{\l} = \true$,
-         \ie $\B_i$ enables an interaction $\actp$ which has a level-$(d-1)$ supercycle-violation in $\dsk{\act}{\l}$. 
-It does not matter whether $\B_i$ is border or interior.
+\item \ul{$v$ is a component $\B_i$} and there exists an interaction $\actp$ such that $B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act}$ and 
+    $(\ex d': 1 \le d' < d : \lviol{\actp}{d'}{t_\act}{\act}{\l})$.
+    That is, $\B_i$ enables an interaction $\actp$ which has a level-$d'$ supercycle-violation in $\dsk{\act}{\l}$, for some $d' < d$. 
+%    It does not matter whether $\B_i$ is border or interior. COMPONENTS ARE ALWAYS INTERIOR NOW
 
 
-\item \ul{$v$ is an interaction $\actp$ and an internal node of $\dsk{\act}{\l}$} such that
-   for all components $\B_i$ such that $\actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act}$, $\lviol{\B_i}{d-1}{t_\act}{\act}{\l} = \true$,
-         \ie all components $\B_i$ that $\actp$ waits for have a level-$(d-1)$ supercycle-violation in $\dsk{\act}{\l}$,
+\item \ul{$v$ is an interaction $\actp$ and an internal node of $\dsk{\act}{\l}$} and
+    for all components $\B_i$ such that $\actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act}$, we have 
+    $(\ex d' : 1 \le d' < d : \lviol{\B_i}{d'}{t_\act}{\act}{\l})$.
+    That is, each component $\B_i$ that $\actp$ waits for has a level-$d'$ supercycle-violation in $\dsk{\act}{\l}$, for some $d' < d$
 
-\ee
+\en
 \ed
 %
 Note that if $v$ is an interaction $\actp$ and a border node, then
 $\lviol{\actp}{d}{t_\act}{\act}{\l}$ is false, for all $d$.  This is because $\actp$ has some
 component that is outside $\dsk{\act}{\l}$, and so this component cannot be checked.  A component
-cannot have a level-1 sc-violation since it must
+cannot have a level-1 supercycle-violation since it must
 have at least one outgoing wait-for edge at all times.
 %
-Figure~\ref{fig:scViolateLoc} gives a formal definition of $\lviol{v}{d}{t_\act}{\act}{\l}$.
-% Border and interior nodes are handled by separate functions $\blviol{v}{d}{t_\act}{\act}{\l},
-%\ilviol{v}{d}{t_\act}{\act}{\l}$, respectively, and the base case $d=1$ is split across these. Note
-%that $\blviol{v}{d}{t_\act}{\act}{\l}$ always returns $\false$ for $d=1$.  \ed
+Figure~\ref{fig:scViolateLoc} gives a formal, recursive definition of $\lviol{v}{d}{t_\act}{\act}{\l}$.
+The notation $v = \B_i$ means that $v$ is some component $\B_i$. Likewise, 
+$v = \actp$ means that $v$ is some interaction $\act$, and 
+``$v = \actp$ is interior'' means that  $v$ is an interaction $\act$ and also an internal node.
+Line 0 corresponds to the base case, line 1 corresponds to item 1 of the inductive case, and line 2 corresponds to item 2 of the inductive case.
+Line 3 handles all cases that do not return true.
 
-
-
- 
 \begin{figure}[ht]
-\setcounter{lctr}{0}
+\setcounter{lctr}{-1}
 \begin{tabbing}
-mm\= mm\= mm\= mm\= mm\=\kill
+aa\= aa\= aa\= mm\= mm\=\kill
 $\lviol{v}{d}{t_\act}{\act}{\l}$\\
 \cmnt\ Precondition: $v$ is a node of $\dsk{\act}{\l}$ and $d \ge 1$\\
-
-\lio{\IFC{d = 1}}
-       \lit{\IFC{\mbox{$v$ is an interior interaction $\actp$ and }
-              \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act})}}
-                    \lihc{\RETURNE{\ttt}}{\cmnt no outgoing wait-for-edges}
-       \lit{\ELSE\ \RETURNE{\fff}}
-       \lit{\FI}
-\lio{\FI}
-
-\cmnt\ here $d > 1$\\
-
-\lio{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
-                 (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} : \lviol{\B_i}{d-1}{t_\act}{\act}{\l})}}
-        \lit{\RETURNE{\ttt}}
-
-\lio{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
-            (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : \lviol{\actp}{d-1}{t_\act}{\act}{\l})}}
-      \lit{\RETURNE{\ttt}}
-
-\lio{\ELSE\ \RETURNE{\fff}}
-\lio{\FI}
+\lio{\IFC{d = 1 \land \mbox{$v = \actp$ is interior} \land \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act})}  \ \RETURNE{\ttt};}
+%\cmnt\ here $d > 1$\\
+\lio{\IFC{\mbox{$v = \actp $ is interior} \land (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} : (\ex d' : 1 \le d' < d : \lviol{\B_i}{d'}{t_\act}{\act}{\l}))}}
+    \>\>{\RETURNE{\ttt};}\\ 
+\lio{\IFC{\mbox{$v = \B_i$} \land (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : (\ex d' : 1 \le d' < d :\lviol{\actp}{d'}{t_\act}{\act}{\l}))}  \ \RETURNE{\ttt};}
+\lio{\RETURNE{\fff}}
 \end{tabbing}
+\vspace{-6ex}
 \caption{Formal definition of $\lviol{v}{d}{t_\act}{\act}{\l}$.}
 \label{fig:scViolateLoc}
-%\label{alg:check-scViol}
 \end{figure}
 
 
 
+
+
+% \begin{figure}[ht]
+% \setcounter{lctr}{0}
+% \begin{tabbing}
+% mm\= mm\= mm\= mm\= mm\=\kill
+% $\lviol{v}{d}{t_\act}{\act}{\l}$\\
+% \cmnt\ Precondition: $v$ is a node of $\dsk{\act}{\l}$ and $d \ge 1$\\
+
+% \lio{\IFC{d = 1}}
+%        \lit{\IFC{\mbox{$v$ is an interior interaction $\actp$ and }
+%               \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act})}}
+%                     \lihc{\RETURNE{\ttt}}{\cmnt no outgoing wait-for-edges}
+%        \lit{\ELSE\ \RETURNE{\fff}}
+%        \lit{\FI}
+% \lio{\FI}
+
+% \cmnt\ here $d > 1$\\
+
+% \lio{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
+%                  (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} : \lviol{\B_i}{d-1}{t_\act}{\act}{\l})}}
+%         \lit{\RETURNE{\ttt}}
+
+% \lio{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
+%             (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : \lviol{\actp}{d-1}{t_\act}{\act}{\l})}}
+%       \lit{\RETURNE{\ttt}}
+
+% \lio{\ELSE\ \RETURNE{\fff}}
+% \lio{\FI}
+% \end{tabbing}
+% \caption{Formal definition of $\lviol{v}{d}{t_\act}{\act}{\l}$.}
+% \label{fig:scViolateLoc}
+% %\label{alg:check-scViol}
+% \end{figure}
+
+
+We now show that a local supercycle-violation implies (global) supercycle-violation.
 \bp
 \label{prop:locScViol-implies-scViol}
  \label{prop:lviol-implies-viol}
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
-For all interactions $\act \in \gamma$, and $\l \ge 2$, let $t_\act = t \pj \dsk{\act}{\l}$.
+For all interactions $\act \in \gamma$, and $\l \ge 1$, let $t_\act = t \pj \dsk{\act}{\l}$.
 Then\\
 \ind $\fa d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l} \imp \scViol{v}{d}{t}$.
 \ep
@@ -113,8 +136,8 @@ Proof is by induction on $d$.
 Figure~\ref{fig:scViolateLoc}, 
 $v$ is an interior node and an interaction $\actp$ of
 $\dsk{\act}{\l}$, and has no outgoing 
-wait-for-edges. Therefore, in $\wfg{\B}{t}$, it is still the case that $v$ has no outgoing 
-wait-for-edges. Hence $\viol{v}{1}{t}$ holds.
+wait-for edges. Therefore, in $\wfg{\B}{t}$, it is still the case that $v$ has no outgoing 
+wait-for edges. Hence $\viol{v}{1}{t}$ holds.
 
 
 \noindent
@@ -122,24 +145,29 @@ wait-for-edges. Hence $\viol{v}{1}{t}$ holds.
 Assume $\lviol{v}{d}{t_\act}{\act}{\l}$ for some node $v$ and some $d > 1$. 
 We proceed by cases on Figure~\ref{fig:scViolateLoc}.
 
-\be
+\bn
 
-\item \ul{$v$ is an interior interaction $\actp$ and 
-$(\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} : \lviol{\B_i}{d-1}{t_\act}{\act}{\l})$}.
+\item \ul{$v$ is an interior interaction $\actp$ and} \\
+\ul{$(\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} : (\ex d' : 1 \le d' < d : \lviol{\B_i}{d'}{t_\act}{\act}{\l}))$}.
 
-By the induction hypothesis applied to $\lviol{\B_i}{d-1}{t_\act}{\act}{\l}$, we have $\viol{\B_i}{d-1}{t}$. 
+Choose an arbitrary $\B_i$ such that $\actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act}$.
+By the induction hypothesis applied to $\lviol{\B_i}{d'}{t_\act}{\act}{\l}$, we have $\viol{\B_i}{d'}{t}$ for some $d' < d$.
 Since $\wfg{\dsk{\act}{\l}}{t_\act} \sub \wfg{\B}{t}$ by construction, we have 
-$\actp \ar B_i \in \wfg{\B}{t}$ and $\viol{\B_i}{d-1}{t}$.
+$\actp \ar B_i \in \wfg{\B}{t}$ and $\viol{\B_i}{d'}{t}$.
 Hence by Definition~\ref{def:supercycle-violation}, Clause~\ref{def:supercycle.violation.component.out}, 
 we have $\viol{v}{d}{t}$.
 
 
-\item \ul{$v$ is a component $\B_i$ and
-   $(\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : \lviol{\actp}{d-1}{t_\act}{\act}{\l})$.}
+\item \ul{$v$ is a component $\B_i$ and}\\
+\ul{$(\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : (\ex d' : 1 \le d' < d :\lviol{\actp}{d'}{t_\act}{\act}{\l}))$}.
 
-similar to the previous case.
+By the induction hypothesis applied to $\lviol{\actp}{d'}{t_\act}{\act}{\l}$, we have $\viol{\actp}{d'}{t}$ for some $d' < d$.
+Since $\wfg{\dsk{\act}{\l}}{t_\act} \sub \wfg{\B}{t}$ by construction, we have 
+$\B_i \ar \actp \in \wfg{\B}{t}$ and $\viol{\actp}{d'}{t}$.
+Hence by Definition~\ref{def:supercycle-violation}, Clause~\ref{def:supercycle.violation.component.out}, 
+we have $\viol{v}{d}{t}$.
 
-\ee
+\en
 }
 
 
@@ -153,11 +181,14 @@ similar to the previous case.
 
 \subsubsection{Local strong connectedness condition}
 
+We now present the local version of the strong connectedness violation condition, given above in Definition~\ref{def:sConn.violation}.
+
+
 \bd[Local strong connectedness violation, $\locConnViol{v}{t_\act}{\act}{\l}$]
 \label{def:sConn.violation.loc}
 
 Let $L$ be the nodes of $\wfg{\dsk{a}{\l}}{t_\act}$ that have no local
-supercycle violation, \ie $L = \set{v \stt v \in \dsk{a}{\l} \land \neg (\ex d: \locScViol{v}{d}{t_\act}{\act}{\l}) }$.
+supercycle violation, \ie $L = \set{v \stt v \in \dsk{a}{\l} \land \neg (\ex d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l}) }$.
 Let $v$ be an arbitrary node in $L$. 
 Let $WL = \wfg{\dsk{a}{\l}}{t_\act} \pj L$, \ie $WL$ is the subgraph of $\wfg{\dsk{a}{\l}}{t_\act}$ consisting of the
 nodes in $L$, and the edges between those nodes that are also edges in $\wfg{\dsk{a}{\l}}{t_\act}$.
@@ -166,7 +197,7 @@ Then, $\locConnViol{v}{t_\act}{\act}{\l}$ holds iff:
 \bn
 
 \item \label{def:sConn.violation.loc:scc}
-there does not exist a strongly connected supercycle $SSC$ such that $v \in SSC$ and $SSC \sub WL$, and
+there does not exist a nontrivial strongly connected supercycle $SSC$ such that $v \in SSC$ and $SSC \sub WL$, and
 
 %\item \label{def:sConn.violation.loc:wait-for-out} every wait-for path $\pi$ from $v$ to a border node
 %  of $\dsk{a}{\l}$ contains at least one node with a local supercycle violation
@@ -189,6 +220,7 @@ either
 \ed
 
 
+We show that the local strong connectedness condition implies the global strong connectedness condition.
 
 \bp
 \label{prop:locConnViol-implies-ConnViol}
@@ -245,6 +277,15 @@ Hence the desired contradiction.
 
 \subsubsection{Local formation violation condition}
 
+
+We showed above that local supercycle violation implies global supercycle violation, and local strong connecteness violation implies global string conectedness
+violation.
+The global supercycle formation condition is the disjunction of global supercycle violation and global strong connecteness violation.
+Hence we formulate the local supercycle formation condition as the disjunction of local supercycle violation and local strong connecteness violation.
+It follows that the local supercycle formation condition implies the global supercycle formation condition.
+
+
+
 \bd[Local Formation violation, $\locFormViol{v}{t_\act}{\act}{\l}$]
 \label{def:locFormation.violation}
 Let $v$ be a node of $\dsk{\act}{\l}$.
@@ -254,7 +295,6 @@ Then $\locFormViol{v}{t_\act}{\act}{\l}  \df  (\exs d \ge 1: \locScViol{v}{d}{t_
 %$\formViol{v}{t}$ holds, then $s \goesto[\act] t$ does not introduce a supercycle, \ie if $s$ is
 %supercycle-free, then so is $t$. We establish this in the sequel.
 %
-
 
 
 \bp \label{prop:locFromViol-implies-formViol}
@@ -275,7 +315,7 @@ We proceed by cases:
 \item $\locConnViol{v}{t_\act}{\act}{\l}$: hence $\connViol{v}{t}$ by Proposition~\ref{prop:locConnViol-implies-connViol}.
 \en
 By Definition~\ref{def:formation.violation},  $\formViol{v}{t}  \df (\exs d \ge 1: \scViol{u}{d}{t}) \lor \connViol{v}{t}$.
-Hence we coonclude that $\formViol{v}{t}$ holds.
+Hence we conclude that $\formViol{v}{t}$ holds.
 \epr
 
 
@@ -283,21 +323,24 @@ Hence we coonclude that $\formViol{v}{t}$ holds.
 
 \subsubsection{Local AND-OR Condition}
 
+The actual local condition, \LAO, is given by applying the local supercycle formation condition to every reachable transition 
+of the subsystem $\dsk{\act}{\l}$ being considered, and to every component $B_i \in \cmps{\act}$.
+
 \bd[$\LAO(\B, Q_0, \act, \l)$] \label{def:lao}
 Let $\l > 0$, and let $s_\act \goesto[\act] t_\act$ be an arbitrary reachable transition of $\dsk{\act}{\l}$.
 Then, in $t_\act$, the following holds. 
 For every component $\B_i$ of $\cmps{\act}$:  
 $\B_i$ has a supercycle formation violation that can be confirmed within $\dsk{\act}{\l}$.
 Formally,\\
-\ind  $\fa \B_i \in \cmps{\act}, \ex d \ge 1: \locFormViol{\B_i}{t_\act}{\act}{\l}$.
+\ind  $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{t_\act}{\act}{\l}$.
 \ed
-
+%
 We showed previously that $\GAO$ implies deadlock-freedom, and so it remains to establish that $\LAO$ implies $\GAO$. 
 
 
 
-
 \bl \label{lemma:loc.ANDOR.implies.glob.AND-OR}
+\label{LAOGAO}
 Let $\act \in \gamma$ be an interaction of BIP-system $(\B, Q_0)$. Then\\
 \ind $(\ex \l > 0: \LAO(\B, Q_0, \act, \l))$ implies $\GAO(\B, Q_0, \act)$
 \el
@@ -305,7 +348,7 @@ Let $\act \in \gamma$ be an interaction of BIP-system $(\B, Q_0)$. Then\\
 %\prf{Immediate from Proposition~\ref{prop:locformviol-implies-formviol} and Definitions~\ref{def:global.ANDOR-cond}, \ref{def:lao}.}
 
 \bpr
-Assume $\LAO(\act, \l)$ for some $\l > 0$. 
+Assume $\LAO(\B, Q_0, \act, \l)$ for some $\l > 0$. 
 %
 Let $s \goesto[\act] t$ be an arbitrary reachable transition of BIP-system $(\B, Q_0)$, and let 
 $s_\act \goesto[\act] t_\act$ be the projection of $s \goesto[\act] t$ onto $\dsk{\act}{\l}$.

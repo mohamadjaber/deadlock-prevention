@@ -4,30 +4,29 @@ created, some component $\B_i$ that participates in the interaction $\act$ whose
 of a strongly connected component $\CC$ of $\SC$, and moreover $\CC$ is itself a supercycle in its own right. In a sense,
 $CC$ is the ``essential'' part of $\SC$.
 
-Our fundamental condition for the prevention of supercycles then, is to require
-that, for every reachable transition  $s \goesto[\act] t$ resulting from execution of $\act$, 
-that every component $\B_i$ of $\act$
-must exhibit a supercycle-violation (Definition~\ref{def:supercycle.violation}) in global state $t$, \ie the state resulting
-from the execution of $a$. For a given interaction $\act$, we denote that condition $\GAO(\act)$, and define it formally below.
+Hence, for a BIP system $(\B, Q_0)$, our fundamental condition for the prevention of supercycles is that 
+for every reachable transition  $s \goesto[\act] t$ resulting from execution of $\act$, 
+every component $\B_i$ of $\act$
+must exhibit a supercycle-violation (Definition~\ref{def:supercycle.violation}) in state $t$ (the state resulting
+from the execution of $a$). For a given BIP system $(\B, Q_0)$ and interaction $\act$, we denote that condition $\GAO(\B, Q_0, \act)$, and define it formally below.
 This condition is, in a sense, the ``most general'' condition for supercycle-freedom.
 
-If $\GAO(\act)$ holds, and global state
-$s$ is supercycle-free, and $s \goesto[\act] t$, then it follows (as
+If $\GAO(\B, Q_0, \act)$ holds, and global state $s$ is supercycle-free, and $s \goesto[\act] t$, then it follows (as
 we establish below) that global state $t$ is also supercycle-free. 
 So, by requiring (1) that all initial states are supercycle-free, and
-(2) that $\GAO(\act)$ holds for all interactions $\act \in \gamma$, we
+(2) that $\GAO(\B, Q_0, \act)$ holds for all interactions $\act \in \gamma$, we
 obtain, by straightforward induction on length of executions, that every reachable state is supercycle-free.
 
-It also follows that any condition which implies $\GAO(\act)$ is also sufficient to guarantee  supercycle-freedom, and
+It also follows that any condition which implies $\GAO(\B, Q_0, \act)$ is also sufficient to guarantee  supercycle-freedom, and
 hence deadlock-freedom. We exploit this in two ways:
 \bn
-
-\item To provide a ``linear'' condition, $\GLin$, that is easier to evaluate than $\GAO$, since it requires only the
-evaluation of lengths of wait-for-paths, \ie it does not have the ``alternating'' character of $\GAO$. 
 
 \item To provide ``local variants'' of $\GAO$ and $\GLin$,  which can often be
 evaluated in small subsystems of $(\B, Q_0)$, thereby avoiding state-explosion. The local conditions imply the
 corresponding global ones, \ie they are sufficient but not necessary for deadlock-freedom.
+
+\item To provide a ``linear'' condition, $\GLin$, that is easier to evaluate than $\GAO$, since it requires only the
+evaluation of lengths of wait-for-paths, \ie it does not have the ``alternating'' character of $\GAO$. 
 
 \en
 

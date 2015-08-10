@@ -327,26 +327,26 @@ Formally, $\odepth{G}{v} = (\MAX\ \pi : \pth{G}{\pi} \land \first{\pi} = v : |\p
 We use $\widepth{\B}{v}{s}$ for $\idepth{\wfg{\B}{s}}{v}$, and also
 $\wodepth{\B}{v}{s}$ for $\odepth{\wfg{\B}{s}}{v}$.
 
+% REDUNDANT 
+% \bp \label{prop:supercycle:finite-indepth-not-essential} Let $\SC$ be
+% a supercycle and let $\SC'$ result from removing all nodes in $\SC$ with
+% finite in-depth. Then $\SC'$ is also a supercycle.
+% \ep
+% %
+% \prf{
+% Proof is by induction on the in-depth $i$ of nodes in $\SC$.
 
-\bp \label{prop:supercycle:finite-indepth-not-essential} Let $\SC$ be
-a supercycle and let $\SC'$ result from removing all nodes in $\SC$ with
-finite in-depth. Then $\SC'$ is also a supercycle.
-\ep
-%
-\prf{
-Proof is by induction on the in-depth $i$ of nodes in $\SC$.
+% Base case: in-depth = 0. Let $\SC'$ be the result of removing all nodes of in-depth 0 from $SC$. Since no node waits
+% for a node of in-depth 0, it follows that a node of in-depth 0 does not contribute to the satisfaction of
+% Definition~\ref{def:supercycle}, and hance $\SC'$ is still a supercycle.
 
-Base case: in-depth = 0. Let $\SC'$ be the result of removing all nodes of in-depth 0 from $SC$. Since no node waits
-for a node of in-depth 0, it follows that a node of in-depth 0 does not contribute to the satisfaction of
-Definition~\ref{def:supercycle}, and hance $\SC'$ is still a supercycle.
-
-Inductive step: in-depth = $i$: let $\SC"$ be the result of removing all nodes of in-depth $i-1$ from $SC$.
-By the induction hypothesis, $\SC"$ is a supercycle. Now let $\SC'$ be the result of 
-removing, from $\SC"$, all nodes that have in-depth $i$ in $SC$.
-Now all nodes of in-depth $i$ in $\SC$ have an in-depth of 0 in
-$\SC"$. Hence removing all such nodes from $\SC"$ results, by the same argument as for the base case, 
-in a supercyle $\SC'$.
-}
+% Inductive step: in-depth = $i$: let $\SC"$ be the result of removing all nodes of in-depth $i-1$ from $SC$.
+% By the induction hypothesis, $\SC"$ is a supercycle. Now let $\SC'$ be the result of 
+% removing, from $\SC"$, all nodes that have in-depth $i$ in $SC$.
+% Now all nodes of in-depth $i$ in $\SC$ have an in-depth of 0 in
+% $\SC"$. Hence removing all such nodes from $\SC"$ results, by the same argument as for the base case, 
+% in a supercyle $\SC'$.
+% }
 
 
 

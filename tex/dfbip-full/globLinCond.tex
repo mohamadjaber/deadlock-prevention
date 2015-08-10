@@ -29,15 +29,17 @@ occur.
 
 
 
-\bd[$\GLin(\act)$] \label{def:global:dfc}
+\bd[$\GLin(B,Q_0,\act)$] \label{def:global:dfc}
 %Let $(B, Q_0)$ be a BIP system, with $B =\gamma(\B_1,\dots,\B_n)$, and 
 %$a$ an interaction of $(B, Q_0)$, \ie $a \in \gamma$.
-Let $s \goesto[\act] t$ be a reachable transition of BIP-system $(\B, Q_0)$.
-Then, in $t$, the following holds. 
-For every component $\B_i$ of $\cmps{\act}$:  either $\B_i$ has finite in-depth,
+$\GLin(B,Q_0,\act)$ holds iff, for every reachable transition $s \goesto[\act] t$ of BIP-system $(\B, Q_0)$, 
+the following holds in state $t$:\\
+  $$\fa \B_i \in \cmps{a}: \widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega.$$
+That is, for every component $\B_i$ of $\cmps{\act}$:  either $\B_i$ has finite in-depth,
 or finite out-depth, in $\wfg{\B}{t}$.
-Formally,\\
-\ind  $\fa \B_i \in \cmps{a}: \widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
+
+
+
 \ed
 
 
@@ -75,34 +77,35 @@ therefore cannot be in a strongly connected supercycle.
 
 \bp \label{prop:outdepth-finite-implies-scViol}
 Assume that node $v$ of $\wfg{\B}{t}$ has a finite out-depth of $d$ in $\wfg{\B}{t}$, \ie 
-$\wodepth{\B}{v}{t} = d$. Then $\viol{v}{d}{t}$.
+$\wodepth{\B}{v}{t} = d$. Then $\viol{v}{d+1}{t}$.
 \ep
 %
-\prf{
-Proof is by induction on $d$.
+ \prf{
+ Proof is by induction on $d$.
 
 \noindent
-\ul{Base case, $d=1$.} Hence by Definitions~\ref{def:path} and \ref{def:depth},  
+\ul{Base case, $d=0$.} Hence by $\wodepth{\B}{v}{t} = 0$ and Definitions~\ref{def:path} and \ref{def:depth},  
 $v$ has no outgoing wait-for-edges in $\wfg{\B}{t}$. Hence by Definition~\ref{def:supercycle.violation},
 $\viol{v}{1}{t}$.
 
 \noindent
-\ul{Inductive step, $d > 1$.}
+\ul{Inductive step, $d > 0$.}
 Let $u$ be an arbitrary successor of $v$, \ie a node $u$ such that $v \ar u \in \wfg{\B}{t}$.
 By Definitions~\ref{def:path} and \ref{def:depth}, $u$ has an out-depth $d'$ that is less than $d$. 
 That is, $\wodepth{\B}{u}{t} = d' < d$.
-By the induction hypothesis applied to $d'$, we obtain $\viol{u}{d'}{t}$. Hence by Definition~\ref{def:supercycle.violation}, 
-Clauses~\ref{def:supercycle.violation.component.out} and \ref{def:supercycle.violation.interaction.out}, $\viol{v}{d}{t}$.
+By the induction hypothesis applied to $d'$, we obtain $\viol{u}{d'+1}{t}$. Hence by Definition~\ref{def:supercycle.violation}, 
+Clauses~\ref{def:supercycle.violation.component.out} and \ref{def:supercycle.violation.interaction.out}, $\viol{v}{d+1}{t}$.
 }
 
 
 
 
 \bl \label{lemma:glob-lin-implies-globANDOR}
+\label{GLinGAO}
 $\fa \act \in \gamma: \GLin(\B, Q_0, \act) \imp \GAO(\B, Q_0, \act)$.  
 \el
 \prf{
-Assume, for arbitrary $\act \in \gamma$, that $\GLin(\act)$ holds. That is, 
+Assume, for arbitrary $\act \in \gamma$, that $\GLin(\B, Q_0, \act)$ holds. That is, 
  
 \ind For every reachable transition $s \goesto[\act] t$ of $(\B, Q_0)$,\\
 \ind \ind  $\fas \B_i \in \cmps{\act}: \widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
@@ -119,7 +122,7 @@ Hence by Definition~\ref{def:formation.violation}, \\
 \ind \ind  $\fas \B_i \in \cmps{\act} : \formViol{\B_i}{t}$
 
 \noindent
-Hence $\GAO(\act)$ holds.
+Hence $\GAO(\B, Q_0, \act)$ holds.
 }
 
 
@@ -148,7 +151,7 @@ Assume that
 \item \label{theorem:global.deadlock-free.initial}
       for all $s_0 \in Q_0$, $\wfg{\B}{s_0}$ is supercycle-free, and
 \item \label{theorem:global.deadlock-free.scfPres}
-      for all interactions $\act$ of $\B$ (\ie $\act \in \gamma$),  $\GAO(\act) \lor \GLin(\act)$ holds.
+      for all interactions $\act$ of $\B$ (\ie $\act \in \gamma$):  $\GAO(\B, Q_0, \act) \lor \GLin(\B, Q_0, \act)$ holds.
 \en
 Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free, and so 
 $(\B, Q_0)$ is free of local deadlock.

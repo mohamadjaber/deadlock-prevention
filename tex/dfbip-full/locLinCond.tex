@@ -29,9 +29,10 @@ $\widepth{\B}{\B_i}{t} = \l \lor \wodepth{\B}{\B_i}{t} = \l$.
 
 
 \bd[$\LLin(\B, Q_0, \act, \l)$] \label{def:ldfc-k}
+\label{def:locLinear}
 %Let $(B, Q_0)$ be a BIP system, with $B =\gamma(\B_1,\dots,\B_n)$.
 %Let $a$ be an interaction of $(B, Q_0)$, \ie $a \in \gamma$.
-Let $\l > 0$ and $s_\act \goesto[\act] t_\act$ be a reachable transition of $\dsk{\act}{\l}$.
+Let $\l > 0$ and $s_\act \goesto[\act] t_\act$ be an arbitrary reachable transition of $\dsk{\act}{\l}$.
 Then, in $t_\act$, the following holds. 
 For every component $\B_i$ of $\cmps{\act}$:  
 either $\B_i$ has in-depth less than $2\l - 1$, or out-depth less than $2\l - 1$, in $\wfg{\dsk{\act}{\l}}{t_\act}$. 
@@ -61,7 +62,7 @@ project up and down, provided that the subsystem contains the entire wait-for-pa
 \bp[In-projection, Out-projection] \label{prop:in-out-projection}
 %Let $(B, Q_0)$ be a BIP system, 
 Let $\l > 0$, let $\B_i$ be an atomic component of $\B$, and let 
-$(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$ which is based on a superset of $\ssg{a}{\l}$.
+$(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$ which is based on a superset of $\ssg{a}{2\l}$.
 Let $s$ be a state of $(B, Q_0)$, and $s' = s \pj B'$. Then
 (1) $\widepth{\B}{\B_i}{s} < 2\l-1$ iff $\widepth{\B'}{\B_i}{s'} < 2\l-1$, and
 (2) $\wodepth{\B}{\B_i}{s} < 2\l-1$ iff $\wodepth{\B'}{\B_i}{s'} < 2\l-1$.
@@ -76,8 +77,12 @@ $\B_i$ by paths starting from $\B_i$.
 The proof of clause (1) is by double implication.
 
 
-$\widepth{\B}{\B_i}{s} < 2\l-1$ implies $\widepth{\B'}{\B_i}{s'} < 2\l-1$:
-Let $\pi$ be an arbitrary wait-for-path in $\wfg{\B'}{s'}$ that ends in $\B_i$. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\ul{$\widepth{\B}{\B_i}{s} < 2\l-1$ implies $\widepth{\B'}{\B_i}{s'} < 2\l-1$}:
+%
+Assume $\widepth{\B}{\B_i}{s} < 2\l-1$.
+Let $\pi$ be an arbitrary wait-for path in $\wfg{\B'}{s'}$ that ends in $\B_i$. 
 %
 Since $(\B', Q'_0)$ is a subsystem of $(\B, Q_0)$, by Definition~\ref{def:static:wait-for-graph} and $s' = s \pj B'$,
 $\wfg{\B'}{s'}$ is a subgraph of $\wfg{\B}{s}$.
@@ -87,20 +92,24 @@ By $\widepth{\B}{\B_i}{s} < 2\l-1$, we have $|\pi| < 2\l-1$.
 Hence $\widepth{\B'}{\B_i}{s'} < 2\l-1$ since $\pi$ was arbitrarily chosen.
 
 
-$\widepth{\B}{\B_i}{s} < 2\l-1$ follows from $\widepth{\B'}{\B_i}{s'} < 2\l-1$:
-Let $\pi$ be an arbitrary wait-for-path in $\wfg{\B}{s}$ that ends in $\B_i$. 
-Suppose that $|\pi| \ge 2\l-1$. Hence $\pi$ has a suffix $\rho$ of length $2\l-1$
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ul{$\widepth{\B'}{\B_i}{s'} < 2\l-1$ implies $\widepth{\B}{\B_i}{s} < 2\l-1$}:
 %
-Since $(\B', Q'_0)$ is a subsystem of $(\B, Q_0)$, by Definition~\ref{def:static:wait-for-graph} and $s' = s \pj \B'$,
-$\wfg{\B'}{s'}$ is a subgraph of $\wfg{\B}{s}$.
+Assume $\widepth{\B}{\B_i}{s} \ge 2\l-1$. Then there exists a wait-for path $\pi$ in $\wfg{\B}{s}$ such that 
+$|\pi| \ge 2\l-1$. Let $\rho$ be the prefix of $\pi$ with length $2\l-1$. 
 %
-Since $(\B', Q'_0)$ is based on a superset of $\ssg{a}{\l}$, and since the distance from $\B_i$ to the border of 
-$\ssg{a}{\l}$ is $2\l-1$, we conclude that $\rho$ is a wait-for-path in $\wfg{\B'}{s'}$.
+Since $(\B', Q'_0)$ is based on a superset of $\ssg{a}{2\l}$, and since the distance from $\B_i$ to the border of 
+$\ssg{a}{2\l}$ is $2\l-1$, we conclude that $\rho$ is a wait-for path
+that is wholly contained in $\wfg{\B'}{s'}$. Hence we have $\widepth{\B'}{\B_i}{s'} \ge 2\l-1$.
 %
-Hence 
+We have thus established 
 $\widepth{\B}{\B_i}{s} \ge 2\l-1$ implies $\widepth{\B'}{\B_i}{s'} \ge 2\l-1$.
-The contrapositive is our desired result.
+The contrapositive is the desired result.
 }
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
@@ -112,6 +121,7 @@ We now show that $\LLin(\B, Q_0, \act, \l)$ implies $\GLin(\B, Q_0, \act)$, whic
 \bl
 \label{lemma:loc-implies-glob}
 \label{lemma:locLinear-implies-globlinear}
+\label{LLinGLin}
 %Let $(B, Q_0)$ be a BIP system, with $B = \gamma(\B_1,\dots,\B_n)$, and 
 Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
 If $\LLin(\B, Q_0, \act, \l)$ holds for some finite $\l > 0$, then $\GLin(\B, Q_0, \act)$ holds.
@@ -154,40 +164,68 @@ Follows immediately from Lemma~\ref{lemma:locLinear-implies-globlinear} and Theo
 
 
 
-%% \bt[Deadlock-freedom via \LLin] 
-%% \label{theorem:local:deadlock-free}
-%% \label{theorem:local.linear.deadlock-free}
-%% %Let $(B, Q_0)$ be a BIP system, with $B = \gamma(\B_1,\dots,\B_n)$.
-%% Assume that
-%% \bn
-%% \item \label{theorem:local.linear.deadlock-free.initial} 
-%%       for all $s_0 \in Q_0$, $\wfg{\B}{s_0}$ is supercycle-free, and
-%% \item \label{theorem:local.linear.deadlock-free.localLinear}
-%%       for all interactions $a$ of $B$ ($a \in \gamma$), $\LDFC(a,\l)$ holds for some $\l \ge 0$.
-%% \en 
-%% Then for every reachable state $u$ of $(B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
-%% \et
-%% %
-%% \prfs{
-%% Immediate from Lemma~\ref{lemma:loc-implies-glob} and
-%% Theorem~\ref{theorem:global:deadlock-free}. }
-%% %
-%% \prf{
-%% Let $a$ be an arbitrary interaction in $\gamma$.
-%% By $(\ex \l: \LLin(a,\l))$ and Lemma~\ref{lemma:locLinear-implies-globlinear}, we have $\GLin(a)$.
-%% By Theorem~\ref{theorem:global.linear.deadlock-free},
-%% for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
-%% }
-
-
-
-
 %% \paragraph{Complexity of evaluating $\LDFC(a, \l)$.}
 %% Using explicit state enumeration, $\LDFC(a, \l)$ can be evaluated in
 %% time $O(\SUM_{a \in \gamma} |\dsk{a}{\l}|)$, where $|\dsk{a}{\l}|$ denotes the
 %% size of the transition system of $\dsk{a}{\l}$.
 
+\bp[Finite out-depth implies local supercucle-violation]
+\label{prop:finOutDepth-Implies-locScViol}
+For $d < \l$: $(\wodepth{\dsk{\act}{\l}}{v}{t_\act} = d)  \imp \locScViol{v}{d+1}{t_\act}{\act}{\l}$.
+\ep
+\prf{Proof is by induction on $d$. 
 
+\ul{Base case, $d=0$.}
+Then $v$ has no outgoing wait-for edges. Hence $\locScViol{v}{1}{t_\act}{\act}{\l}$ by Definition~\ref{def:supercycle.violation.local}.
+
+\ul{Induction step, $d > 0$.}
+Assume $(\wodepth{\dsk{\act}{\l}}{v}{t_\act} = d)$. Then, every outgoing wait-for edge of $v$ is to some $v'$ such that 
+$(\wodepth{\dsk{\act}{\l}}{v'}{t_\act} = d' < d)$. By the induction hypothesis, $\locScViol{v'}{d'+1}{t_\act}{\act}{\l}$.
+Hence, by Definition~\ref{def:supercycle.violation.local},  $\locScViol{v}{d+1}{t_\act}{\act}{\l}$.
+}
+
+
+\bl
+%\label{lemma:loc-implies-glob}
+\label{lemma:locLinear-implies-locANDOR}
+\label{LLinLAO}
+Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
+Then $\LLin(\B, Q_0, \act, \l)$ implies $\LAO(\B, Q_0, \act, \l)$.
+\el
+\prf{
+Assume $\LLin(\B, Q_0, \act, \l)$. Let $s_\act \goesto[\act] t_\act$ be an arbitrary reachable transition of $\dsk{\act}{\l}$,
+and let $\B_i$ be an arbitrary component of $\cmps{\act}$.
+Then, from Definition~\ref{def:locLinear}, we have:
+  $$\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1.$$
+The proof proceeds by two cases. 
+
+\ul{ $\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1$}:
+Hence $\B_i$ cannot be in a strongly connected supercycle, because $\B_i$ would then lie on at least one wait-for cycle, and so would have infinite
+in-depth. Hence $\locConnViol{\B_i}{t_\act}{\act}{\l}$ by Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.loc:scc}.
+Hence by Definition~\ref{def:locFormation.violation}, $\locFormViol{\B_i}{t_\act}{\act}{\l}$.
+
+\ul{$\wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1$}:
+Hence $\wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} = d$ for some $d < 2\l-1$.
+By Proposition~\ref{prop:finOutDepth-Implies-locScViol}, $\locScViol{\B_i}{d+1}{t_\act}{\act}{\l}$.
+Hence by Definition~\ref{def:locFormation.violation}, $\locFormViol{\B_i}{t_\act}{\act}{\l}$.
+
+\noindent
+In both cases, we have $\locFormViol{\B_i}{t_\act}{\act}{\l}$.
+Since $\B_i$ is an arbitrarily chosen  component of $\cmps{\act}$, we have $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{t_\act}{\act}{\l}$.
+Hence, by Definition~\ref{def:lao}, we conclude $\LAO(\B, Q_0, \act, \l)$.
+}
+
+
+
+Figure~\ref{fig:implications} gives the implication relations between our four deadlock-freedom conditions.
+Each implication arrow is labeled by the Lemma that provides the corresponding result.
+\begin{figure}[ht]
+\begin{center}
+\scalebox{0.8}{\input{figs/implications.pdf_t}}
+\caption{Implication relations between deadlock-freedom conditions}
+\label{fig:implications}
+\end{center}
+\end{figure}
 
 
 

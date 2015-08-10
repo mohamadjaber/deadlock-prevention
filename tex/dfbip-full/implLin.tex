@@ -60,7 +60,7 @@ mm\= mm\= mm\= \kill
 mm\= mm\= mm\= \kill
 \checkLinIntDist{$\B, Q_0, \act, \l$}\\
 \lio{\FORALLC{\mbox{reachable transitions $s_\act \goesto[\act] t_\act$ of $\dsk{\act}{\l}$}}}
-   \lit{\IFC{\neg(\fa \B_i \in \cmps{\act}:  \widepth{\dsk{\act}{\l}}{\B_i}{t_\act} \ge 2\l - 1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} \ge 2\l -1)}}
+   \lit{\IFC{\neg(\fa \B_i \in \cmps{\act}:  \widepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l - 1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l -1)}}
   	\lihc{\RETURNE{\fff}}{\cmnt\ check Definition~\ref{def:ldfc-k}}
   \lit{\FI}
 \lio{\ENDFOR;}

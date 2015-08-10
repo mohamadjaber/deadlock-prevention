@@ -46,6 +46,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ABBREVIATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\ie}{i.e.,\xspace}
 \newcommand{\eg}{e.g.,\xspace}
+\newcommand{\wrt}{w.r.t.\xspace}
 
 %% Lists
 \newcommand{\be}{\begin{itemize}}
@@ -89,8 +90,9 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BIP SPECIFIC MACROS
 
-\newcommand{\act}{\mathsf{a}}
-\newcommand{\actp}{\mathsf{aa}}
+\newcommand{\act}{\mathsf{a}}       % general action
+\newcommand{\actp}{\mathsf{aa}}   % second action name, used in violation defs
+\newcommand{\actb}{\mathsf{b}}     % used in projection def
 %\newcommand{\a}{\mathsf{a}}
 \newcommand{\comp}{\mathsf{B}}
 %\newcommand{\B}{\mathsf{B}}
@@ -219,8 +221,8 @@
 
 \newcommand{\V}{\ensuremath{\MATHIDN{V}}}
 
-\newcommand{\bU}{\bar{U}}
-\newcommand{\bV}{\bar{V}}
+\newcommand{\bU}{\overline{U}}
+\newcommand{\bV}{\overline{V}}
 
 
 
@@ -568,6 +570,8 @@
 
 \newcommand{\as}[1]{\{#1\}}
 
+
+%% line number on left, body in math mode
 \newcommand{\li}{\addtocounter{lctr}{1}\arabic{lctr}.}
 \newcommand{\lio}[1]{\addtocounter{lctr}{1}\arabic{lctr}.\>\ensuremath{#1}\\}
 \newcommand{\lit}[1]{\addtocounter{lctr}{1}\arabic{lctr}.\>\>\ensuremath{#1}\\}
