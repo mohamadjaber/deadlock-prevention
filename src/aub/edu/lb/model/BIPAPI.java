@@ -18,7 +18,7 @@ public class BIPAPI {
 	private static ArrayList<BIPInteraction> interactions;
 	private static ArrayList<Component> components;
 
-
+	private static long numberStates = 1; 
 	
 	public static void initialize(CompoundType compoundType) {
 		BIPAPI.compoundType = compoundType;
@@ -27,10 +27,15 @@ public class BIPAPI {
 		setComponents();
 	}
 	
+	public static long getNumberStates() {
+		return numberStates; 
+	}
+	
 	private static void setComponents() {
 		components = new ArrayList<Component>(compoundType.getSubcomponent().size());
 		for(Component component: compoundType.getSubcomponent()) {
 			components.add(component);
+			numberStates *= getNumberStates(component);
 		}
 	}
 	
@@ -41,6 +46,17 @@ public class BIPAPI {
 			interactions.add(interaction);
 		}
 	}
+	
+	/**
+	 * REQUIRES: comp is a component of type atomic
+	 * @param comp 
+	 * @return
+	 */
+	public static long getNumberStates(Component comp) {
+		AtomType atomicType = (AtomType) comp.getType();
+		return ((PetriNet)atomicType.getBehavior()).getState().size();
+	}
+	
 
 	/**
 	 * 

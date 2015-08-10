@@ -44,24 +44,31 @@ public class LALT implements CheckableCondition {
 	public boolean check() {
 		if(initialSuperCycle()) return false;
 		
+		log.info("Number states of the full system: " + BIPAPI.getNumberStates() + "\n");
+		
 		for(BIPInteraction interaction: BIPAPI.getInteractions()) {
 			log.info("\nInteraction: " + interaction);
 			subSystem = new SubSystemDepth(interaction);
-			log.info(" - Length = "+ subSystem.getLength() + "\n");
-
 			if(!laltInteraction(interaction)) return false;
 			else log.info(getName() + "(" + interaction + ","+subSystem.getLength() +") = true\n");
+			log.info("-----------------------------");
 		}
 		return true;
 	}
 	
+	private void printLog() {
+		log.info("\nLength = " + subSystem.getLength() + "\n");
+		log.info("Number states of the subSystem: " + subSystem.getNumberStates() + "\n");
+		log.info(subSystem.toString() + "\n");
+		log.info("Components: " + subSystem.getComponents().size() + " out of " + BIPAPI.getComponents().size() + "\n");
+	}
 	
 	private boolean laltInteraction(BIPInteraction interaction) {
 		while(true) {
+			printLog();
 			// initially, length, i.e. l, is equal to 1
 			if(laltInteractionDistance(interaction)) return true;
 			if(!subSystem.increase()) return false;
-			log.info("Increasing -> Length = " + subSystem.getLength() + "\n");
 		}
 	}
 	

@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 
 import ujf.verimag.bip.Core.Interactions.CompoundType;
 import BIPTransformation.TransformationFunction;
-import aub.edu.lb.configuration.Configuration;
 import aub.edu.lb.kripke.Kripke;
 import aub.edu.lb.kripke.KripkeState;
 import aub.edu.lb.kripke.Transition;
@@ -43,9 +42,6 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 	 * @return
 	 */
 	protected boolean localLDFC(BIPInteraction interaction) {
-		// Debug
-		Configuration.startTime = System.currentTimeMillis();
-
 		Kripke kripke = new Kripke(subSystem);
 
 		for(KripkeState state : kripke.getStates()) {
@@ -58,17 +54,21 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 				}
 			}
 		}
-		// Debug
-		Configuration.stopTime = System.currentTimeMillis();
-		Configuration.totalTime += (Configuration.stopTime - Configuration.startTime);
 		return true; 
+	}
+	
+	private void printLog() {
+		log.info("\nLength = " + subSystem.getLength() + "\n");
+		log.info("Number states of the subSystem: " + subSystem.getNumberStates() + "\n");
+		log.info(subSystem.toString() + "\n");
+		log.info("Components: " + subSystem.getComponents().size() + " out of " + BIPAPI.getComponents().size() + "\n");
 	}
 	
 	protected boolean checkLocalLDFC(BIPInteraction interaction) {
 		while(true) {
+			printLog();
 			if(localLDFC(interaction)) 	return true;
 			if(!subSystem.increase()) return false;
-			log.info("Increasing -> Length = " + subSystem.getLength() + "\n");
 		}
 	}
 
@@ -81,11 +81,11 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 			return false;
 		}
 		
+		log.info("Number states of the full system: " + BIPAPI.getNumberStates() + "\n");
+
 		for(BIPInteraction interaction: BIPAPI.getInteractions()) {
 			log.info("\nInteraction: " + interaction);
-			subSystem = new SubSystemDepth(interaction);
-			log.info(" - Length = "+ subSystem.getLength() + "\n");
-			
+			subSystem = new SubSystemDepth(interaction);			
 			if(!checkLocalLDFC(interaction)) return false;
 			else log.info(getName() + "(" + interaction + ","+subSystem.getLength() +") = true\n");
 		}

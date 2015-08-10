@@ -1,6 +1,7 @@
 package aub.edu.lb.model;
 
 import java.util.ArrayList;
+
 import ujf.verimag.bip.Core.Interactions.Component;
 
 /**
@@ -65,6 +66,14 @@ public class SubSystem {
 		return interactions; 
 	}
 	
+	public long getNumberStates() {
+		long numberStates = 1; 		
+		for(Component comp: components) {
+			numberStates *= BIPAPI.getNumberStates(comp);
+		}
+		return numberStates;
+	}
+	
 	
 	public String toString() {
 		String componentName = "Components: [ ";
@@ -75,14 +84,14 @@ public class SubSystem {
 		
 		String initialStateName = "InitialState: " + initialState;
 		
-		String interactionName = "Interaction[s] : [";
+		String interactionName = "Interaction[s] : [ ";
 		for(BIPInteraction interaction: interactions) {
 			interactionName += interaction + " ";
 		}
 		interactionName += "]";
 		return "SubSystem:\n" + componentName + "\n" +
 				interactionName +  "\n" +
-				initialStateName + "\n--------------------------";
+				initialStateName;
 	}
 
 

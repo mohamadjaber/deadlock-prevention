@@ -61,7 +61,11 @@ public class SubSystemDepth extends SubSystem {
 	}
 
 	public boolean increase() {		
-		return increaseInteractions(increaseComponents());
+		List<Component> addedComponents = increaseComponents();
+		boolean isIncreased = increaseInteractions(addedComponents);
+		isIncreased = isIncreased || (addedComponents.size() != 0);
+		if(isIncreased) length++;
+		return isIncreased; 
 	}
 
 	/**
@@ -83,7 +87,6 @@ public class SubSystemDepth extends SubSystem {
 				}
 			}
 		}
-		if(isIncreased) length++;
 		return isIncreased;
 	}
 

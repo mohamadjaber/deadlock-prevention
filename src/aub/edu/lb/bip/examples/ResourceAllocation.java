@@ -236,10 +236,10 @@ public class ResourceAllocation {
 	
 	
 	public static void main(String[] args) throws FileNotFoundException {
-		int nbOfClients = 5; 
-		int nbOfResources = 5; 
-		int[][] resourceMapping = {{0, 1}, {0,1}, {2, 3}, {2, 3}, {4}};
-		int nbOfTokens = 4; 
+		int nbOfClients = 6; 
+		int nbOfResources = 6; 
+		int[][] resourceMapping = {{0, 1}, {0,1}, {2} , {3}, {4}, {5}};
+		int nbOfTokens = 3; 
 		String fileName = "BIPExamples/resourceAllocation_" + nbOfClients + "_" + nbOfResources + "_" + nbOfTokens + ".bip";
 		
 		bipFile = new PrintStream(new File(fileName));
