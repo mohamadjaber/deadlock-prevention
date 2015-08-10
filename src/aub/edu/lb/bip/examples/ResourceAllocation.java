@@ -75,6 +75,41 @@ public class ResourceAllocation {
 		return output;
 	}
 	
+	static String generateTokenRingConflict(boolean token) {
+		String output = "";
+		
+		if(token )
+			output += "atomic type TokenRingConflictHasToken\n";
+		else 
+			output += "atomic type TokenRingConflictNoToken\n";
+
+		output += space + "export port Port releaseTokenToken()" + "\n"; 
+		output += space + "export port Port getTokenToken()" + "\n"; 
+		output += space + "export port Port releaseTokenResource()" + "\n"; 
+		output += space + "export port Port getTokenResource()" + "\n"; 
+
+		output += space + "place lHasToken, lNoToken, lTokenWithResource, lTokenTokenWithResource\n";
+
+		if(token)
+			output += space + "initial to lHasToken do {}\n"; 
+		else
+			output += space + "initial to lNoToken do {}\n"; 
+
+		output += space + "on releaseTokenToken from lHasToken to lNoToken provided true do {}\n";
+		output += space + "on releaseTokenToken from lTokenTokenWithResource to lTokenWithResource provided true do {}\n";
+
+		output += space + "on getTokenToken from lNoToken to lHasToken provided true do {}\n"; 
+		output += space + "on getTokenToken from lTokenWithResource to lTokenTokenWithResource provided true do {}\n"; 
+
+		output += space + "on releaseTokenResource from lHasToken to lTokenWithResource provided true do {}\n"; 
+		
+		output += space + "on getTokenResource from lNoToken to lHasToken provided true do {}\n"; 
+		output += space + "on getTokenResource from lTokenWithResource to lHasToken provided true do {}\n"; 
+		
+		output += "end\n";
+		return output;
+	}
+	
 	static String generateTokenRing(boolean token) {
 		String output = "";
 		
@@ -113,6 +148,19 @@ public class ResourceAllocation {
 		return output;
 	}
 	
+	static String generateResourceConflictTokenConnections(int[][] conflictingResources) {
+		String output = "";
+		for(int i = 0; i < conflictingResources.length; i++) {
+			for(int j = 0; j < conflictingResources[i].length; j++) {
+				output += space + "connector Sync2 conn" + (connectorCounter++) + "(" +
+	 					"r" + conflictingResources[i][j] + ".rcvToken" + ", t" + i + ".releaseTokenResource" + ")\n";
+				output += space + "connector Sync2 conn" + (connectorCounter++) + "(" +
+						"r" + conflictingResources[i][j] + ".sendToken" + ", t" + i + ".getTokenResource" + ")\n";
+			}
+		}
+		return output;
+	}
+	
 	static String generateClientResourceConnections(int clientId, int[] resources) {
 		String output = "";
 
@@ -137,7 +185,7 @@ public class ResourceAllocation {
 
 		for(int i = 0; i < numberOfResources; i++) {
 			output += space + "connector Sync2 conn" + (connectorCounter++) + "(" +
- 					"t" + i + ".releaseToken" + ", t" + ((i+1) % numberOfResources) + ".getToken" + ")\n";
+ 					"t" + i + ".releaseTokenToken" + ", t" + ((i+1) % numberOfResources) + ".getTokenToken" + ")\n";
 		}
 		return output;
 	}
@@ -169,7 +217,76 @@ public class ResourceAllocation {
 	}
 	
 	
-	public static String generateResourceAllocation(int nbOfClients, int nbOfResources, int[][] resourceMapping, int availableTokens) {
+	public static String resourceAllocationConflicting(int nbOfClients, int nbOfResources, int[][] resourceMapping, 
+			int availableTokens, int[][] conflictingResources)  {
+		String output = "model resourceAllocation\n\n";
+		
+		int max = 2; 
+		// generating atomic types
+		for(int i = 0; i < nbOfClients; i++) {
+			output += generateClient(resourceMapping[i], i);
+			if(max < resourceMapping[i].length) max = resourceMapping[i].length;
+			
+		}
+		output += generateResource();
+		output += generateTokenRingConflict(true);
+		output += generateTokenRingConflict(false);
+
+		
+		// generate connector types
+		for(int i = 2; i <= max + 1; i++)
+			output += generateConnectorType(i); 
+		
+		output += "\n";
+		
+		output += "compound type ResourceAllocationTokenRing\n";
+		
+		for(int i = 0; i < nbOfClients; i++) {
+			output += space + "component Client" + i + " c" + i + "\n";
+		}
+		
+		int nbOfTokenComponents = conflictingResources.length; 
+		
+		// split tokens randomly initially 
+		boolean[] tokens = new boolean[nbOfTokenComponents];
+		int counter = 0;
+		while(counter < availableTokens) {
+			int i = (int) (Math.random() * nbOfTokenComponents); 
+			if(!tokens[i]) {
+				tokens[i] = true; 
+				counter++; 
+			}
+		}
+		
+		for(int i = 0; i < nbOfResources; i++) {
+			output += space + "component Resource" + " r" + i + "\n";
+		}
+		for(int i = 0; i < nbOfTokenComponents; i++) {
+			if(tokens[i])
+				output += space + "component TokenRingConflictHasToken" + " t" + i + "\n";
+			else 
+				output += space + "component TokenRingConflictNoToken" + " t" + i + "\n";
+		}
+		
+		
+		output += generateResourceConflictTokenConnections(conflictingResources);
+
+		
+		for(int i = 0; i < nbOfClients; i++) {
+			output += generateClientResourceConnections(i, resourceMapping[i]);
+		}
+		
+		output += generateTokenTokenConnections(nbOfTokenComponents) + "\n";
+		output += "end\n\n";
+		
+		output += "component ResourceAllocationTokenRing top\n";
+		output += "end\n\n";
+
+		return output; 
+	}
+	
+	
+	public static String resourceAllocation(int nbOfClients, int nbOfResources, int[][] resourceMapping, int availableTokens) {
 		String output = "model resourceAllocation\n\n";
 		
 		int max = 2; 
@@ -195,7 +312,6 @@ public class ResourceAllocation {
 		for(int i = 0; i < nbOfClients; i++) {
 			output += space + "component Client" + i + " c" + i + "\n";
 		}
-		
 		
 		// split tokens randomly initially 
 		boolean[] tokens = new boolean[nbOfResources];
@@ -234,16 +350,33 @@ public class ResourceAllocation {
 		return output; 
 	}
 	
-	
-	public static void main(String[] args) throws FileNotFoundException {
+	public static void generateTokenRing() throws FileNotFoundException {
 		int nbOfClients = 6; 
-		int nbOfResources = 6; 
-		int[][] resourceMapping = {{0, 1}, {0,1}, {2} , {3}, {4}, {5}};
-		int nbOfTokens = 3; 
+		int nbOfResources = 10; 
+		int[][] resourceMapping = {{0, 1}, {0,1}, {2} , {3}, {4}, {5, 6, 7, 8, 9}};
+		int nbOfTokens = 7; 
 		String fileName = "BIPExamples/resourceAllocation_" + nbOfClients + "_" + nbOfResources + "_" + nbOfTokens + ".bip";
 		
 		bipFile = new PrintStream(new File(fileName));
-		bipFile.print(generateResourceAllocation(nbOfClients, nbOfResources, resourceMapping, nbOfTokens));
+		bipFile.print(resourceAllocation(nbOfClients, nbOfResources, resourceMapping, nbOfTokens));
+	}
+	
+	public static void generateTokenRingConflict() throws FileNotFoundException {
+		int nbOfClients = 5; 
+		int nbOfResources = 5; 
+		int[][] resourceMapping = {{0, 1}, {0,1}, {2} , {3}, {4}};
+		int[][] conflictingResources = {{0, 1}, {2, 3, 4}};
+		int nbOfTokens = 2; 
+		String fileName = "BIPExamples/resourceAllocationConflict_" + nbOfClients + "_" + nbOfResources + "_" + nbOfTokens + ".bip";
+		
+		bipFile = new PrintStream(new File(fileName));
+		bipFile.print(resourceAllocationConflicting(nbOfClients, nbOfResources, resourceMapping, nbOfTokens, conflictingResources));
+	}
+
+	
+	public static void main(String[] args) throws FileNotFoundException {
+		generateTokenRing();
+		generateTokenRingConflict();
 	}
 
 }
