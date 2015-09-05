@@ -111,7 +111,7 @@ Edges from components to interactions are shown solid, and edges from interactio
 \subsection{Supercycles and deadlock-freedom}
 
 We characterize a deadlock as the existence in the wait-for-graph of a
-graph-theoretic construct that we call a {\em supercycle}:
+graph-theoretic construct that we call a {\em supercycle}.
 
 \bd[Supercycle]
 \label{def:supercycle}
@@ -170,8 +170,8 @@ and $F_0$ is in $u_l$. This state is not reachable from the initial state.
 
 
 
-Figure~\ref{fig:cycleOK} shows an ``abstract'' example, where these is
-a cycle of wait-for-edges, without there being a supercycle.This shows
+Figure~\ref{fig:cycleOK} shows an ``abstract'' example, where there is
+a cycle of wait-for-edges, without there being a supercycle. This shows
 that a cycle does not necessarily imply a supercycle, and hence
 deadlock. Adding a wait-for-edge from $d$ to $\B_1$ would create a
 supercycle in Figure~\ref{fig:cycleOK}.
@@ -274,7 +274,7 @@ a reachable state $s$ of $(\B', Q'_0)$, such that $\B'$ enables no interaction i
 By Proposition~\ref{prop:supercycle-is-necessary}, $\wfg{\B}{s}$ contains a supercycle.
 }
 
-In the sequel, we wil say ``deadlock-free'' to mean ``free of local deadlock''.
+In the sequel, we say ``deadlock-free'' to mean ``free of local deadlock''.
 
 
 
