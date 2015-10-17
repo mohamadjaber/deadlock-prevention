@@ -180,12 +180,22 @@ public class ResourceAllocation {
 		return output;
 	}
 	
-	static String generateTokenTokenConnections(int numberOfResources) {
+	static String generateTokenTokenConnectionsConflict(int numberOfResources) {
 		String output = "";
 
 		for(int i = 0; i < numberOfResources; i++) {
 			output += space + "connector Sync2 conn" + (connectorCounter++) + "(" +
  					"t" + i + ".releaseTokenToken" + ", t" + ((i+1) % numberOfResources) + ".getTokenToken" + ")\n";
+		}
+		return output;
+	}
+	
+	static String generateTokenTokenConnections(int numberOfResources) {
+		String output = "";
+
+		for(int i = 0; i < numberOfResources; i++) {
+			output += space + "connector Sync2 conn" + (connectorCounter++) + "(" +
+ 					"t" + i + ".releaseToken" + ", t" + ((i+1) % numberOfResources) + ".getToken" + ")\n";
 		}
 		return output;
 	}
@@ -276,7 +286,7 @@ public class ResourceAllocation {
 			output += generateClientResourceConnections(i, resourceMapping[i]);
 		}
 		
-		output += generateTokenTokenConnections(nbOfTokenComponents) + "\n";
+		output += generateTokenTokenConnectionsConflict(nbOfTokenComponents) + "\n";
 		output += "end\n\n";
 		
 		output += "component ResourceAllocationTokenRing top\n";
