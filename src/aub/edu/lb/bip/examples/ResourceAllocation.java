@@ -361,6 +361,17 @@ public class ResourceAllocation {
 		bipFile.print(resourceAllocation(nbOfClients, nbOfResources, resourceMapping, nbOfTokens));
 	}
 	
+	public static void generateTokenRing1() throws FileNotFoundException {
+		int nbOfClients = 2; 
+		int nbOfResources = 2; 
+		int[][] resourceMapping = {{0, 1}, {1,0}};
+		int nbOfTokens = 2; 
+		String fileName = "BIPExamples/resourceAllocation_" + nbOfClients + "_" + nbOfResources + "_" + nbOfTokens + ".bip";
+		
+		bipFile = new PrintStream(new File(fileName));
+		bipFile.print(resourceAllocation(nbOfClients, nbOfResources, resourceMapping, nbOfTokens));
+	}
+	
 	public static void generateTokenRingConflict() throws FileNotFoundException {
 		int nbOfClients = 5; 
 		int nbOfResources = 5; 
@@ -376,6 +387,7 @@ public class ResourceAllocation {
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		generateTokenRing();
+		generateTokenRing1();
 		generateTokenRingConflict();
 	}
 

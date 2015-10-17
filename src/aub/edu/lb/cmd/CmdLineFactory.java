@@ -25,7 +25,7 @@ public class CmdLineFactory {
 	
 	private static final String cmdLineDescription = "A tool for local and global deadlock-free check!";
 	
-	private static final String helpConditionType = LocalAndOrName + " (local linear check) or " + 
+	private static final String helpConditionType = LocalLinearName + " (local linear check) or " + 
 											LocalAndOrName + " (local and/or check - default)";
 	
 	private static final String helpDebugging = "Prints useful information at each iteration of checking. \n" +
