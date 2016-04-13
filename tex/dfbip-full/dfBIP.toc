@@ -1,0 +1,40 @@
+\contentsline {section}{\numberline {1}Introduction}{4}
+\contentsline {section}{\numberline {2}BIP --- Behavior Interaction Priority}{4}
+\contentsline {section}{\numberline {3}Characterizing Deadlock-freedom}{8}
+\contentsline {subsection}{\numberline {3.1}Wait-for graphs}{9}
+\contentsline {subsection}{\numberline {3.2}Supercycles and deadlock-freedom}{9}
+\contentsline {subsection}{\numberline {3.3}Structural properties of supercycles}{12}
+\contentsline {section}{\numberline {4}Supercycle Formation and its Consequences}{14}
+\contentsline {section}{\numberline {5}Supercycle Membership}{14}
+\contentsline {subsection}{\numberline {5.1}Membership constraints for supercycles}{14}
+\contentsline {subsection}{\numberline {5.2}Supercycle membership and supercycle violation}{16}
+\contentsline {subsection}{\numberline {5.3}The supercycle formation condition}{18}
+\contentsline {subsection}{\numberline {5.4}Violations of the supercycle formation condition}{19}
+\contentsline {subsection}{\numberline {5.5}Strong connectedness condition}{19}
+\contentsline {subsection}{\numberline {5.6}Supercycle formation violation condition}{19}
+\contentsline {section}{\numberline {6}Global Conditions for Deadlock Freedom}{20}
+\contentsline {subsection}{\numberline {6.1}A Global AND-OR Condition for Deadlock Freedom}{21}
+\contentsline {subsection}{\numberline {6.2}A Global Linear Condition for Deadlock Freedom}{22}
+\contentsline {subsection}{\numberline {6.3}Deadlock freedom using global restrictions}{23}
+\contentsline {section}{\numberline {7}Local Conditions for Deadlock Freedom}{24}
+\contentsline {subsection}{\numberline {7.1}Projection onto Subsystems}{24}
+\contentsline {subsection}{\numberline {7.2}A Local AND-OR Condition for Deadlock Freedom}{24}
+\contentsline {subsubsection}{\numberline {7.2.1}Local supercycle violation condition}{25}
+\contentsline {subsubsection}{\numberline {7.2.2}Local strong connectedness condition}{26}
+\contentsline {subsubsection}{\numberline {7.2.3}Local formation violation condition}{27}
+\contentsline {subsubsection}{\numberline {7.2.4}Local AND-OR Condition}{28}
+\contentsline {subsection}{\numberline {7.3}A Local Linear Condition for Deadlock Freedom}{29}
+\contentsline {subsection}{\numberline {7.4}Deadlock freedom using local and global restrictions}{31}
+\contentsline {section}{\numberline {8}Implementation and Experiments}{31}
+\contentsline {subsection}{\numberline {8.1}Checking that initial states are supercycle-free}{31}
+\contentsline {subsection}{\numberline {8.2}Implementation and Experimentation for the AND-OR Condition}{32}
+\contentsline {paragraph}{Complexity.}{32}
+\contentsline {subsubsection}{\numberline {8.2.1}Experiments}{32}
+\contentsline {subsection}{\numberline {8.3}Implementation and Experimentation for the Linear Condition}{36}
+\contentsline {paragraph}{Complexity.}{36}
+\contentsline {subsubsection}{\numberline {8.3.1}Experiment: Dining Philosophers}{37}
+\contentsline {subsubsection}{\numberline {8.3.2}Experiment: Gas Station}{37}
+\contentsline {section}{\numberline {9}Discussion, Related Work, and Further Work}{39}
+\contentsline {paragraph}{Related work.}{39}
+\contentsline {paragraph}{Discussion.}{39}
+\contentsline {paragraph}{Further work.}{40}

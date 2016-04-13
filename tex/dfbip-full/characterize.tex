@@ -3,7 +3,9 @@
 
 \bd[Global Deadlock-freedom]
 \label{def:static:deadlock-free}
-\label{def:global.deadlock-free}
+\label{def:global.deadlock-free} 
+\label{defn:static:deadlock-free}
+\label{defn:global.deadlock-free} 
 A BIP-system $(\B, Q_0)$ is \emph{free of global deadlock} iff,
 in every reachable state $s$ of $(B, Q_0)$, some interaction $\act$ is enabled.
 Formally, $\fa s \in \rstates{\B,Q_0}, \ex \act : s \enb{\act}{\B}$.
@@ -14,7 +16,8 @@ Formally, $\fa s \in \rstates{\B,Q_0}, \ex \act : s \enb{\act}{\B}$.
 
 
 \bd[Local Deadlock-freedom]
-\label{def:local.deadlock-free}
+\label{def:local.deadlock-free} 
+\label{defn:local.deadlock-free} 
 A BIP-system $(\B, Q_0)$ is \emph{free of local deadlock} iff, 
 for every subsystem $(\B', Q'_0)$ of  $(\B, Q_0)$, and every reachable state $s$ of $(\B, Q_0)$,
 $(\B', Q'_0)$ has some interaction enabled in state $s \pj \B'$.
@@ -50,7 +53,8 @@ $a$ and which do not enable it (in $s$).
 
 
 \bd[Wait-for-graph  $\wfg{\B}{s}$]
-\label{def:static:wait-for-graph}
+\label{def:static:wait-for-graph} 
+\label{defn:static:wait-for-graph} 
 Let $\B = \gamma(\B_1,\dots,\B_n)$ be a BIP composite component, and let
 $s = \tpl{s_1,\ldots,s_n}$ be an arbitrary state of $\B$.
 The {\em wait-for-graph} $\wfg{\B}{s}$ of $s$ is a directed bipartite and-or graph, where
@@ -114,7 +118,8 @@ We characterize a deadlock as the existence in the wait-for-graph of a
 graph-theoretic construct that we call a {\em supercycle}.
 
 \bd[Supercycle]
-\label{def:supercycle}
+\label{def:supercycle} 
+\label{defn:supercycle} 
 Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component and $s$ be a state of $\B$.
 A subgraph $\SC$ of $\wfg{\B}{s}$ is a supercycle in $\wfg{\B}{s}$ if and only if all of the following hold:
 \begin{nlst1}
@@ -145,6 +150,7 @@ Also, write $SC \sub \wfg{\B}{s}$ when $\SC$ is a subgraph of $\wfg{\B}{s}$.
 
 \bd[Supercycle-free]
 \label{def:supercycle-free}
+\label{defn:supercycle-free}
 $\wfg{\B}{s}$ is \emph{supercycle-free} iff 
 there does not exist a supercycle $\SC$ in $\wfg{\B}{s}$. 
 In this case, say that state $s$ is supercycle-free.
@@ -284,7 +290,7 @@ We present some structural properties of supercycles, which
 are central to our deadlock-freedom conditions.
 
 
-\bd[Path, path length] \label{def:path}
+\bd[Path, path length] \label{def:path} \label{defn:path}
 Let $G$ be a directed graph and $v$ a vertex in $G$. A path $\pi$ in $G$ is a \emph{finite} sequence
 $v_0, v_1, \ldots,v_n$ such that $(v_i, v_{i+1})$ is an edge in $G$ for all $i \in \rng{0}{n-1}$.
 Write $\pth{G}{\pi}$ iff $\pi$ is a path in $G$.
@@ -300,7 +306,7 @@ $|\pi| = \omega$ ($\omega$ for ``infinity'').
 
 \ed
 
-\bd[In-depth, Out-depth] \label{def:depth} 
+\bd[In-depth, Out-depth] \label{def:depth} \label{defn:depth} 
 Let $G$ be a directed graph and $v$ a vertex in $G$. Define the in-depth of $v$ in $G$, notated as
 $\idepth{G}{v}$, as follows:
 \be
@@ -482,111 +488,4 @@ not a trivial strongly connected component.
 
 
 
-
-\subsection{Membership constraints for supercycles}
-
-Define $\scyc{\B}{s}{\B_i}$, $\scyc{\B}{s}{\act}$ to mean that $\B_i$,
-$\act$, respectively, are nodes of a supercycle of $\wfg{\B}{s}$.
-If a component or interaction is not a node of a supercylcle, then we say that it has an 
-\emph{SC-violation}.
-
-Definition~\ref{def:supercycle}, the definition of a supercycle, imposes certain constraints on membership of
-supercycles, for a given pattern of wait-for-edges. We outline these as follows:
-\bn
-
-\item If a component $\B_i$ has an interaction $\act$ such that $\B_i \ar \act \in \wfg{\B}{t}$ and
-  $\act$ has a supercycle violation, then $\act$ cannot be part of a supercycle, and therefore
-  neither can $\B_i$, by Definition~\ref{def:supercycle},
-  Clause~\ref{def:supercycle.component-blocked}.  Formally, if $\B_i \ar \act \in \wfg{\B}{s}$ then
-  $\neg \scyc{\B}{s}{\act} \imp \neg \scyc{\B}{s}{\B_i}$.
-
-\item If a component $\B_i$ has an interaction $\act$ such that $\act \ar \B_i \in \wfg{\B}{t}$ and
-  $\act$ has a supercycle violation, then $\act$ cannot be part of a supercycle, and therefore
-  neither can $\B_i$, by Definition~\ref{def:supercycle},
-  Clause~\ref{def:supercycle.action-blocked}, since if $B_i$ were in a supercycle, then $\act$ would
-  be too.
-Formally, if $\act \ar \B_i \in \wfg{\B}{s}$ then $\scyc{\B}{s}{\B_i} \imp \scyc{\B}{s}{\act}$, and so $\neg \scyc{\B}{s}{\act} \imp \neg \scyc{\B}{s}{\B_i}$.
-
-\en
-
-From Clauses 1 and 2, we conclude that $\B_i$ has an SC-violation if 
-$\ex \act: \B_i \ar \act \in \wfg{\B}{s} \lor \act \ar \B_i \in \wfg{\B}{s}$ and $\act$ has an SC-violation.
-
-In some, but not all, cases, we gain some information by considering all the interactions (components) that a component
-(action) waits for:
-
-\bn
-
-%\item If, for an interaction $\act$, all components $\B_i$ such that $\act \ar \B_i \in \wfg{\B}{t}$ have a supercycle 
-%  violation, then all such components $\B_i$ cannot be part of a supercycle, and therefore neither can $\act$, 
-\item For a given interaction $\act$, let $\B_i,\ldots,\B_j$ be all the components $B$ such that $\act \ar
-  B \in \wfg{\B}{s}$.  Then 
- $\scyc{\B}{s}{\act} \imp (\ex B \in \B_i,\ldots,\B_j: \scyc{\B}{s}{\B_i})$, by 
-  Definition~\ref{def:supercycle}, Clause~\ref{def:supercycle.action-blocked}.
-  So $\act$ is in a supercycle implies that some $B \in \B_i,\ldots,\B_j$ is
-  in a supercycle.  Taking the contrapositive, $(\fa B \in \B_i,\ldots,\B_j: \neg \scyc{\B}{s}{\B_i})
-  \imp \neg \scyc{\B}{s}{\act}$.  Thus, if no component that $\act$ waits for is in a supercycle,
-  then $\act$ cannot be in a supercycle.
-
-\item For a given interaction $\act$, let $\B_i,\ldots,\B_j$ be all the components $B$ such that $B \ar \act \in \wfg{\B}{s}$.
-Then $\neg \scyc{\B}{s}{\act} \imp (\fa B \in \B_i,\ldots,\B_j: \neg \scyc{\B}{s}{\B_i})$.
-So $\act$ has an SC-violation implies that $\fa B \in \B_i,\ldots,\B_j:$ $B$ has an SC-violation.
-This can be seen as a repetitive application of Clause 1 of the previous list, and so it provides no new information.
-
-\item For a given component $\B_i$, let $\act_1,\ldots, \act_m$ be all the interactions $\act$ such that $\B_i \ar \act \in \wfg{\B}{s}$.
-Then $\neg \scyc{\B}{s}{\B_i} \imp (\ex \act \in \act_1,\ldots,\act_m: \neg \scyc{\B}{s}{\act})$.
-Thus $\B_i$ has an SC-violation implies that some $\act$ has an SC-violation. This is not useful, since it does not
-determine the particular $\act$ with the violation. Hence this observation will not play a role in our future development.
-
-\item For a given component $\B_i$, let $\act_1,\ldots, \act_m$ be all the interactions $\act$ such that $\act \ar \B_i \in \wfg{\B}{s}$.
-Then $\scyc{\B}{s}{\B_i} \imp (\fa \act \in \act_1,\ldots,\act_m: \scyc{\B}{s}{\act})$.
-Hence $(\ex \act \in \act_1,\ldots,\act_m: \neg \scyc{\B}{s}{\act}) \imp \neg \scyc{\B}{s}{\B_i}$.
-Thus $\B_i$ has an SC-violation if some $\act$ that waits for $\B_i$ has an SC-violation.
-This can be seen as a repetitive application of Clause 2 of the previous list, and so it provides no new information.
-
-\en
-Hence from the above 4 clauses, only clause 1 provides new information. 
-Combining clauses 1 and 2 from the first list, and clause 1 from the second list, we obtain the following. 
-
-
-\bp[Supercycle-membership constraints]
-\label{prop:sc-membership}
-$scyc$ satisfies the following constraints.
-\bn
-
-\item \label{prop:sc-membership:comp-out}
-$(\ex \act: \B_i \ar \act \in \wfg{\B}{s} : \neg \scyc{\B}{s}{\act}) \imp \neg \scyc{\B}{s}{\B_i}$
-
-\item \label{prop:sc-membership:comp-in}
-$(\ex \act: \act \ar \B_i \in \wfg{\B}{s}: \neg \scyc{\B}{s}{\act}) \imp \neg \scyc{\B}{s}{\B_i}$
-
-% both conditions in the same statement
-%\item $(\ex \act: \B_i \ar \act \in \wfg{\B}{s} \lor \act \ar \B_i \in \wfg{\B}{s}: \neg \scyc{\B}{s}{\act}) \imp \neg \scyc{\B}{s}{\B_i}$
-
-\item \label{prop:sc-membership:act-out}
-For a given interaction $\act$, let $\B_i,\ldots,\B_j$ be all the components $B$ such that $\act \ar B \in \wfg{\B}{s}$.
-Then $(\fa B \in \B_i,\ldots,\B_j: \neg \scyc{\B}{s}{\B_i}) \imp \neg \scyc{\B}{s}{\act}$.
-\en
-
-\ep
-%
-\bpr
-Immediate from the preceding observations.
-\epr
-
-%\subsection{Membership constraints for strongly-connected supercycles}
-%Define $\scscyc{\B}{s}{\B_i}$, $\scscyc{\B}{s}{\act}$ to mean that $\B_i$,
-%$\act$, respectively, are nodes of a strongly-connected supercycle of $\wfg{\B}{s}$.
-
-
-\remove{
-\bn
-
-
-%\item If, for a node $v$ (either component or interaction), all incoming wait-for-edges are from nodes with a supercycle
-%  violation, then $v$ cannot be in a \emph{strongly connected} supercycle, since all of its predecessors are not in a
-%  strongly connected supercycle. 
-
-\en 
-}
 
