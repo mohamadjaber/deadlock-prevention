@@ -123,9 +123,11 @@ graph-theoretic construct that we call a {\em supercycle}.
 Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component and $s$ be a state of $\B$.
 A subgraph $\SC$ of $\wfg{\B}{s}$ is a supercycle in $\wfg{\B}{s}$ if and only if all of the following hold:
 \begin{nlst1}
-   \item \label{def:supercycle.nonempty} $\SC$ is nonempty, \ie contains at least one node,
+   \item \label{def:supercycle.nonempty} \label{clause:supercycle.nonempty} 
+$\SC$ is nonempty, \ie contains at least one node,
 
-   \item \label{def:supercycle.component-blocked} if $\B_i$ is a node in $\SC$, then for all interactions $\act$ such that
+   \item \label{def:supercycle.component-blocked} \label{clause:supercycle.component-blocked} 
+if $\B_i$ is a node in $\SC$, then for all interactions $\act$ such that
 there is an edge in $\wfg{\B}{s}$ from $\B_i$ to $\act$:
       \begin{nlst2}
       \item $\act$ is a node in $\SC$, and 
@@ -133,7 +135,7 @@ there is an edge in $\wfg{\B}{s}$ from $\B_i$ to $\act$:
       \end{nlst2}
 that is, $\B_i \ar \act \in \wfg{\B}{s}$ implies $\B_i \ar \act \in \SC$,
 
-   \item \label{def:supercycle.action-blocked}  
+   \item \label{def:supercycle.action-blocked}  \label{clause:supercycle.action-blocked}  
 if $\act$ is a node in $\SC$, then there exists a $\B_j$ such that:
       \begin{nlst2}
       \item $\B_j$  is a node in $\SC$, and
@@ -487,5 +489,14 @@ not a trivial strongly connected component.
 
 
 
+\bp \label{prop:supercycle:union}
+Let $\SC, \SC'$ be supercycles in $\wfg{B}{s}$. Then $\SC \un \SC'$ is
+a supercycle in $\wfg{B}{s}$.
+\ep
+%
+\prf{Striaghtforward, since each node in 
+$\SC \un \SC'$ has enough successors that it waits for to satisfy 
+ \defn{supercycle}.
+}
 
 

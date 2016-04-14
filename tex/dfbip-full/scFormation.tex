@@ -3,100 +3,123 @@
 \subsection{Supercycle Membership} 
 
 
-\bd[Supercycle membership, $\scyc{\B}{s}{\B_i}$]
+\bd[Supercycle membership, $\scyc{\B}{s}{v}$]
 \label{defn:supercycle.membership}
-Define $\scyc{\B}{s}{\B_i}$, $\scyc{\B}{s}{\act}$ to mean that $\B_i$,
-$\act$, respectively, are nodes of a supercycle of $\wfg{\B}{s}$.
+Let $v$ be a node of $\wfg{\B}{s}$. Then
+$\scyc{\B}{s}{v}$ holds iff there exists a supercycle $SC \sub
+\wfg{\B}{s}$ such that $v \in SC$. 
+%Define $\scyc{\B}{s}{\B_i}$, $\scyc{\B}{s}{\act}$ to mean that $\B_i$,
+%$\act$, respectively, are nodes of a supercycle of $\wfg{\B}{s}$.
 \ed
 
 If a component or interaction is not a node of a supercycle, then we say that it has a
 \emph{SC-violation}, \ie a supercycle-violation.
 %
-The definition of a supercycle (\defn{supercycle})
-imposes certain constraints on supercycle membership of neighboring
-nodes in the wait-for-graph, as follows:
 
-\bn
-
-\item If a component $\B_i$ has an interaction $\act$ such that $\B_i \ar \act \in \wfg{\B}{t}$ and
-  $\act$ has a supercycle violation, then $\act$ cannot be part of a supercycle, and therefore
-  neither can $\B_i$, by Definition~\ref{def:supercycle},
-  Clause~\ref{def:supercycle.component-blocked}.  Formally, if $\B_i \ar \act \in \wfg{\B}{s}$ then
-  $\neg \scyc{\B}{s}{\act} \imp \neg \scyc{\B}{s}{\B_i}$.
-
-\item If a component $\B_i$ has an interaction $\act$ such that $\act \ar \B_i \in \wfg{\B}{t}$ and
-  $\act$ has a supercycle violation, then $\act$ cannot be part of a supercycle, and therefore
-  neither can $\B_i$, by Definition~\ref{def:supercycle},
-  Clause~\ref{def:supercycle.action-blocked}, since if $B_i$ were in a supercycle, then $\act$ would
-  be too.
-Formally, if $\act \ar \B_i \in \wfg{\B}{s}$ then $\scyc{\B}{s}{\B_i} \imp \scyc{\B}{s}{\act}$, and so $\neg \scyc{\B}{s}{\act} \imp \neg \scyc{\B}{s}{\B_i}$.
-
-\en
-
-From Clauses 1 and 2, we conclude that $\B_i$ has an SC-violation if 
-$\ex \act: \B_i \ar \act \in \wfg{\B}{s} \lor \act \ar \B_i \in \wfg{\B}{s}$ and $\act$ has an SC-violation.
-
-In some, but not all, cases, we gain some information by considering all the interactions (components) that a component
-(action) waits for:
-
-\bn
-
-%\item If, for an interaction $\act$, all components $\B_i$ such that $\act \ar \B_i \in \wfg{\B}{t}$ have a supercycle 
-%  violation, then all such components $\B_i$ cannot be part of a supercycle, and therefore neither can $\act$, 
-\item For a given interaction $\act$, let $\B_i,\ldots,\B_j$ be all the components $B$ such that $\act \ar
-  B \in \wfg{\B}{s}$.  Then 
- $\scyc{\B}{s}{\act} \imp (\ex B \in \B_i,\ldots,\B_j: \scyc{\B}{s}{\B_i})$, by 
-  Definition~\ref{def:supercycle}, Clause~\ref{def:supercycle.action-blocked}.
-  So $\act$ is in a supercycle implies that some $B \in \B_i,\ldots,\B_j$ is
-  in a supercycle.  Taking the contrapositive, $(\fa B \in \B_i,\ldots,\B_j: \neg \scyc{\B}{s}{\B_i})
-  \imp \neg \scyc{\B}{s}{\act}$.  Thus, if no component that $\act$ waits for is in a supercycle,
-  then $\act$ cannot be in a supercycle.
-
-\item For a given interaction $\act$, let $\B_i,\ldots,\B_j$ be all the components $B$ such that $B \ar \act \in \wfg{\B}{s}$.
-Then $\neg \scyc{\B}{s}{\act} \imp (\fa B \in \B_i,\ldots,\B_j: \neg \scyc{\B}{s}{\B_i})$.
-So $\act$ has an SC-violation implies that $\fa B \in \B_i,\ldots,\B_j:$ $B$ has an SC-violation.
-This can be seen as a repetitive application of Clause 1 of the previous list, and so it provides no new information.
-
-\item For a given component $\B_i$, let $\act_1,\ldots, \act_m$ be all the interactions $\act$ such that $\B_i \ar \act \in \wfg{\B}{s}$.
-Then $\neg \scyc{\B}{s}{\B_i} \imp (\ex \act \in \act_1,\ldots,\act_m: \neg \scyc{\B}{s}{\act})$.
-Thus $\B_i$ has an SC-violation implies that some $\act$ has an SC-violation. This is not useful, since it does not
-determine the particular $\act$ with the violation. Hence this observation will not play a role in our future development.
-
-\item For a given component $\B_i$, let $\act_1,\ldots, \act_m$ be all the interactions $\act$ such that $\act \ar \B_i \in \wfg{\B}{s}$.
-Then $\scyc{\B}{s}{\B_i} \imp (\fa \act \in \act_1,\ldots,\act_m: \scyc{\B}{s}{\act})$.
-Hence $(\ex \act \in \act_1,\ldots,\act_m: \neg \scyc{\B}{s}{\act}) \imp \neg \scyc{\B}{s}{\B_i}$.
-Thus $\B_i$ has an SC-violation if some $\act$ that waits for $\B_i$ has an SC-violation.
-This can be seen as a repetitive application of Clause 2 of the previous list, and so it provides no new information.
-
-\en
-Hence from the above 4 clauses, only clause 1 provides new information. 
-Combining clauses 1 and 2 from the first list, and clause 1 from the second list, we obtain the following. 
-
+Define
+$\preds{\B}{s}{v} = \set{w \stt w \ar v \in \wfg{\B}{s}}$ and 
+$\succs{\B}{s}{v} = \set{w \stt v \ar w \in \wfg{\B}{s}}$.
+The definition of a supercycle (\defn{supercycle}) 
+imposes certain constraints on supercycle membership of a node \wrt its predecessors and successors
+in the wait-for-graph, as follows:
 
 \bp[Supercycle-membership constraints]
 \label{prop:sc-membership}
-$scyc$ satisfies the following constraints.
+Let $\act, \B_i$ be nodes of $\wfg{\B}{s}$. Then
 \bn
 
+\item \label{prop:sc-membership:act-out}
+$\scyc{\B}{s}{\act} \ifof (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
+
+\item \label{prop:sc-membership:act-in}
+$\scyc{\B}{s}{\act} \folf (\ex \B_i \in \preds{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
+
 \item \label{prop:sc-membership:comp-out}
-$(\ex \act: \B_i \ar \act \in \wfg{\B}{s} : \neg \scyc{\B}{s}{\act}) \imp \neg \scyc{\B}{s}{\B_i}$
+$\scyc{\B}{s}{\B_i} \ifof (\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
 
 \item \label{prop:sc-membership:comp-in}
-$(\ex \act: \act \ar \B_i \in \wfg{\B}{s}: \neg \scyc{\B}{s}{\act}) \imp \neg \scyc{\B}{s}{\B_i}$
+$\scyc{\B}{s}{\B_i} \imp (\fa \act \in \preds{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
 
-% both conditions in the same statement
-%\item $(\ex \act: \B_i \ar \act \in \wfg{\B}{s} \lor \act \ar \B_i \in \wfg{\B}{s}: \neg \scyc{\B}{s}{\act}) \imp \neg \scyc{\B}{s}{\B_i}$
-
-\item \label{prop:sc-membership:act-out}
-For a given interaction $\act$, let $\B_i,\ldots,\B_j$ be all the components $B$ such that $\act \ar B \in \wfg{\B}{s}$.
-Then $(\fa B \in \B_i,\ldots,\B_j: \neg \scyc{\B}{s}{\B_i}) \imp \neg \scyc{\B}{s}{\act}$.
 \en
 
 \ep
 %
 \bpr
-Immediate from the preceding observations.
+We deal with each clause in turn.
+
+
+%%%%%%%%%%%%%%
+Proof of Clause~\ref{prop:sc-membership:act-out}.
+%
+Assume $\scyc{\B}{s}{\act}$, and let $\SC \sub \wfg{B}{s}$ be the supercycle containing $\act$.  By
+\defn{supercycle}, \clause{supercycle.action-blocked}, there exists a
+$\B_i \in \succs{\B}{s}{\act}$ such that $\B_i \in \SC$.  Hence $\scyc{\B}{s}{\B_i}$.
+We conclude
+$\scyc{\B}{s}{\act} \imp (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
+%
+Now assume $(\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$, and let 
+$\SC \sub \wfg{B}{s}$ be the supercycle containing some $\B_i \in \succs{\B}{s}{\act}$. 
+Let $\SC'$ be $\SC$ with $\act \ar \B_i$ added. Then $\SC'$ is a supercycle by 
+\defn{supercycle}, and also $\SC' \sub \wfg{B}{s}$. Hence $\scyc{\B}{s}{\act}$.
+We conclude 
+$\scyc{\B}{s}{\act} \folf (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+Proof of Clause~\ref{prop:sc-membership:act-in}.  
+%
+Assume $\neg \scyc{\B}{s}{\act}$, so that $\act$ is not in any supercycle of $\wfg{B}{s}$.
+Let $\B_i \in \preds{\B}{s}{\act}$. 
+By \defn{supercycle}, \clause{supercycle.component-blocked}, 
+$\B_i$ cannot be in any supercycle of $\wfg{B}{s}$, since all $\actp \in \succs{\B}{s}{\B_i}$ must
+also be in the supercycle. Hence $\neg \scyc{\B}{s}{\B_i}$.
+Since $\B_i$ was chosen arbitrarily, we conclude
+$\neg \scyc{\B}{s}{\act} \imp  (\fa \B_i \in \preds{\B}{s}{\act} : \neg \scyc{\B}{s}{\B_i})$, the
+contrapositive of Clause~\ref{prop:sc-membership:act-in}.  
+
+
+%%%%%%%%%%%%%%%%%%%%%
+Proof of Clause~\ref{prop:sc-membership:comp-out}.
+%
+Assume $\scyc{\B}{s}{\B_i}$, and let $\SC \sub \wfg{B}{s}$ be the supercycle containing $\B_i$.  Let
+$\actp \in \succs{\B}{s}{\B_i}$.  By \defn{supercycle}, \clause{supercycle.component-blocked},
+$\actp \in \SC$.  Hence $(\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
+We conclude
+$\scyc{\B}{s}{\B_i} \imp (\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
+%
+Now assume $(\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$, and let 
+$\SC$ be the union of all the supercycles containing all the $\act \in \succs{\B}{s}{\B_i}$. 
+By \prop{supercycle:union}, $\SC \sub \wfg{B}{s}$ is a supercycle.
+Let $\SC'$ be $\SC$ with $\B_i \ar \act$ added, for all 
+$\act \in \succs{\B}{s}{\B_i}$.
+Then $\SC'$ is a supercycle by 
+\defn{supercycle}, and also $\SC' \sub \wfg{B}{s}$. Hence $\scyc{\B}{s}{\act}$.
+We conclude 
+$\scyc{\B}{s}{\B_i} \folf (\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+Proof of Clause~\ref{prop:sc-membership:comp-in}.
+%
+Assume $\scyc{\B}{s}{\B_i}$, so that $\SC \sub \wfg{B}{s}$ si the supercycle containing $\B_i$.
+Let  $\act \in \preds{\B}{s}{\B_i}$, and let $\SC'$ be $\SC$ with 
+$\act \ar \B_i$ added. Hence $\SC'$ is a supercycle 
+by Definition~\ref{def:supercycle},
+  Clause~\ref{def:supercycle.action-blocked}.
+Since $\act$ was chosen arbitrarily, we conclude 
+$(\fa \act \in \preds{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
+
 \epr
+
+
+
+From Clauses 1 and 2, we conclude that $\B_i$ has an SC-violation if 
+$\ex \act: \B_i \ar \act \in \wfg{\B}{s} \lor \act \ar \B_i \in \wfg{\B}{s}$ and $\act$ has an SC-violation.
+
+
+
 
 
 Definition~\ref{def:supercycle} implies that the supercycle-membership status of a node $v$ depends
@@ -104,8 +127,6 @@ solely on its outgoing wait-for edges, and the outgoing wait-for edges of the no
 for, etc. so that $v$'s supercycle-membership is a function of the subgraph of the wait-for graph
 that is reachable from $v$.  Hence, we only look at outgoing wait-for edges in computing
 supercycle-violation, which is just the negation of supercycle-membership.
-
-
 
 A node that is not in any supercycle may nevertheless be a node of a wait-for cycle, since a cycle
 of wait-for-edges does not necesarily imply a supercycle. Hence, to compute the supercycle violation

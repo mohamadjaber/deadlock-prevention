@@ -24,7 +24,7 @@
 \newcommand{\tab}[1]{Tab.~\ref{tab:#1}}
 \newcommand{\eq}[1]{(\ref{eq:#1})}
 \newcommand{\res}[1]{(\ref{res:#1})}
-\newcommand{\ex}[1]{Ex.~\ref{ex:#1}}
+%\newcommand{\ex}[1]{Ex.~\ref{ex:#1}}
 \newcommand{\secn}[1]{Sect.~\ref{sec:#1}}
 \newcommand{\rem}[1]{Rem.~\ref{rem:#1}}
 \newcommand{\ntn}[1]{Not.~\ref{ntn:#1}}
@@ -36,6 +36,7 @@
 \newcommand{\axss}[2]{Ax.~\ref{ax:#1}, \ref{ax:#2}}
 \newcommand{\ax}[1]{Ax.~\ref{ax:#1}}
 \newcommand{\prop}[1]{Prop.~\ref{prop:#1}}
+\newcommand{\clause}[1]{Clause~\ref{clause:#1}}
 
 
 
@@ -142,8 +143,12 @@
 \newcommand{\sg}[1]{\ensuremath{\MATHIDN{G}_{#1}}}
 \newcommand{\ssg}[2]{\ensuremath{\MATHIDN{G}_{#1}^{#2}}}
 
-\newcommand{\scyc}[3]{\ensuremath{\MATHIDN{scyc}_{#1}^{#2}({#3})}}
+\newcommand{\scyc}[3]{\ensuremath{\MATHIDN{scyc}_{#1}({#2, #3})}}
 \newcommand{\scscyc}[3]{\ensuremath{\MATHIDN{scscyc}_{#1}^{#2}({#3})}}
+
+
+\newcommand{\preds}[3]{\ensuremath{\MATHID{preds}_{#1}({#2, #3})}}
+\newcommand{\succs}[3]{\ensuremath{\MATHID{succs}_{#1}({#2, #3})}}
 
 
 \newcommand{\SC}{\ensuremath{\MATHIDN{SC}}}
@@ -431,9 +436,9 @@
 \renewcommand{\d}{\, : \,}	% separator in quantified formulae
 %\newcommand{\df}{\mbox{$\:\stackrel{\rm df}{=\!\!=}\:$}}
 \newcommand{\ev}{\equiv}
-\newcommand{\ifof}{\Longleftrightarrow}	% logical equivalence
+\newcommand{\ifof}{\Leftrightarrow}	% logical equivalence
 \newcommand{\imp}{\Rightarrow}		% logical implication
-%%\newcommand{\implies}{\Rightarrow}
+\newcommand{\folf}{\Leftarrow}                 % follows from 
 \newcommand{\ints}{\cap}
 \renewcommand{\l}{\ell}
 \newcommand{\lra}{\longrightarrow}
