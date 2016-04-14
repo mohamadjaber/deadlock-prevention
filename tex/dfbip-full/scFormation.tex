@@ -28,58 +28,27 @@ in the wait-for-graph, as follows:
 Let $\act, \B_i$ be nodes of $\wfg{\B}{s}$. Then
 \bn
 
-\item \label{prop:sc-membership:act-out}
-$\scyc{\B}{s}{\act} \ifof (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
-
-\item \label{prop:sc-membership:act-in}
-$\scyc{\B}{s}{\act} \folf (\ex \B_i \in \preds{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
-
-\item \label{prop:sc-membership:comp-out}
+\item \label{clause:sc-membership:comp-out}
 $\scyc{\B}{s}{\B_i} \ifof (\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
 
-\item \label{prop:sc-membership:comp-in}
+\item \label{clause:sc-membership:comp-in}
 $\scyc{\B}{s}{\B_i} \imp (\fa \act \in \preds{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
 
-\en
+\item \label{clause:sc-membership:act-out}
+$\scyc{\B}{s}{\act} \ifof (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
 
+\item \label{clause:sc-membership:act-in}
+$\scyc{\B}{s}{\act} \folf (\ex \B_i \in \preds{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
+
+\en
 \ep
 %
 \bpr
 We deal with each clause in turn.
 
 
-%%%%%%%%%%%%%%
-Proof of Clause~\ref{prop:sc-membership:act-out}.
-%
-Assume $\scyc{\B}{s}{\act}$, and let $\SC \sub \wfg{B}{s}$ be the supercycle containing $\act$.  By
-\defn{supercycle}, \clause{supercycle.action-blocked}, there exists a
-$\B_i \in \succs{\B}{s}{\act}$ such that $\B_i \in \SC$.  Hence $\scyc{\B}{s}{\B_i}$.
-We conclude
-$\scyc{\B}{s}{\act} \imp (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
-%
-Now assume $(\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$, and let 
-$\SC \sub \wfg{B}{s}$ be the supercycle containing some $\B_i \in \succs{\B}{s}{\act}$. 
-Let $\SC'$ be $\SC$ with $\act \ar \B_i$ added. Then $\SC'$ is a supercycle by 
-\defn{supercycle}, and also $\SC' \sub \wfg{B}{s}$. Hence $\scyc{\B}{s}{\act}$.
-We conclude 
-$\scyc{\B}{s}{\act} \folf (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%
-Proof of Clause~\ref{prop:sc-membership:act-in}.  
-%
-Assume $\neg \scyc{\B}{s}{\act}$, so that $\act$ is not in any supercycle of $\wfg{B}{s}$.
-Let $\B_i \in \preds{\B}{s}{\act}$. 
-By \defn{supercycle}, \clause{supercycle.component-blocked}, 
-$\B_i$ cannot be in any supercycle of $\wfg{B}{s}$, since all $\actp \in \succs{\B}{s}{\B_i}$ must
-also be in the supercycle. Hence $\neg \scyc{\B}{s}{\B_i}$.
-Since $\B_i$ was chosen arbitrarily, we conclude
-$\neg \scyc{\B}{s}{\act} \imp  (\fa \B_i \in \preds{\B}{s}{\act} : \neg \scyc{\B}{s}{\B_i})$, the
-contrapositive of Clause~\ref{prop:sc-membership:act-in}.  
-
-
 %%%%%%%%%%%%%%%%%%%%%
-Proof of Clause~\ref{prop:sc-membership:comp-out}.
+\textit{Proof of \clause{sc-membership:comp-out}}.
 %
 Assume $\scyc{\B}{s}{\B_i}$, and let $\SC \sub \wfg{B}{s}$ be the supercycle containing $\B_i$.  Let
 $\actp \in \succs{\B}{s}{\B_i}$.  By \defn{supercycle}, \clause{supercycle.component-blocked},
@@ -101,7 +70,7 @@ $\scyc{\B}{s}{\B_i} \folf (\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-Proof of Clause~\ref{prop:sc-membership:comp-in}.
+\textit{Proof of \clause{sc-membership:comp-in}}.
 %
 Assume $\scyc{\B}{s}{\B_i}$, so that $\SC \sub \wfg{B}{s}$ si the supercycle containing $\B_i$.
 Let  $\act \in \preds{\B}{s}{\B_i}$, and let $\SC'$ be $\SC$ with 
@@ -111,29 +80,68 @@ by Definition~\ref{def:supercycle},
 Since $\act$ was chosen arbitrarily, we conclude 
 $(\fa \act \in \preds{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
 
+
+
+%%%%%%%%%%%%%%
+\textit{Proof of \clause{sc-membership:act-out}}.
+%
+Assume $\scyc{\B}{s}{\act}$, and let $\SC \sub \wfg{B}{s}$ be the supercycle containing $\act$.  By
+\defn{supercycle}, \clause{supercycle.action-blocked}, there exists a
+$\B_i \in \succs{\B}{s}{\act}$ such that $\B_i \in \SC$.  Hence $\scyc{\B}{s}{\B_i}$.
+We conclude
+$\scyc{\B}{s}{\act} \imp (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
+%
+Now assume $(\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$, and let 
+$\SC \sub \wfg{B}{s}$ be the supercycle containing some $\B_i \in \succs{\B}{s}{\act}$. 
+Let $\SC'$ be $\SC$ with $\act \ar \B_i$ added. Then $\SC'$ is a supercycle by 
+\defn{supercycle}, and also $\SC' \sub \wfg{B}{s}$. Hence $\scyc{\B}{s}{\act}$.
+We conclude 
+$\scyc{\B}{s}{\act} \folf (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\textit{Proof of \clause{sc-membership:act-in}}.  
+%
+Assume $\neg \scyc{\B}{s}{\act}$, so that $\act$ is not in any supercycle of $\wfg{B}{s}$.
+Let $\B_i \in \preds{\B}{s}{\act}$. 
+By \defn{supercycle}, \clause{supercycle.component-blocked}, 
+$\B_i$ cannot be in any supercycle of $\wfg{B}{s}$, since all $\actp \in \succs{\B}{s}{\B_i}$ must
+also be in the supercycle. Hence $\neg \scyc{\B}{s}{\B_i}$.
+Since $\B_i$ was chosen arbitrarily, we conclude
+$\neg \scyc{\B}{s}{\act} \imp  (\fa \B_i \in \preds{\B}{s}{\act} : \neg \scyc{\B}{s}{\B_i})$, the
+contrapositive of \clause{sc-membership:act-in}.  
 \epr
 
+Note that \clause{sc-membership:comp-in} cannot be strengthened to an equivalence: if all
+the interactions that wait for a component $\B_i$ are in a supercycle, then $\B_i$ itself may or may
+not be in a supercycle, depending on whether $\B_i$ is waiting for some $\actp$ that is not in a
+supercycle.
+%
+Likewise, \clause{sc-membership:act-in} cannot be strengthened to an equivalence: if $\act$
+is in a supercycle, then any component $\B_i$ that waits for $\act$ may or may not be in a 
+supercycle, depending on whether $\B_i$ is waiting for some $\actp$ that is not in a supercycle. 
 
 
-From Clauses 1 and 2, we conclude that $\B_i$ has an SC-violation if 
-$\ex \act: \B_i \ar \act \in \wfg{\B}{s} \lor \act \ar \B_i \in \wfg{\B}{s}$ and $\act$ has an SC-violation.
 
 
+While \prop{sc-membership} gives relationships between supercycle membership of a node and both its
+successors and predecessors, nevertheless \defn{supercycle} implies that the ``causality'' of
+supercycle-membership of a node $v$ is from the successors of $v$ to $v$, \ie membership of $v$ in a
+supercycle is caused only by membership of $v$'s successors in a supercycle. Repeating this step, we
+infer that $v$'s supercycle-membership is caused by the subgraph of the wait-for graph that is
+reachable from $v$.
 
-
-
-Definition~\ref{def:supercycle} implies that the supercycle-membership status of a node $v$ depends
-solely on its outgoing wait-for edges, and the outgoing wait-for edges of the nodes that $v$ waits
-for, etc. so that $v$'s supercycle-membership is a function of the subgraph of the wait-for graph
-that is reachable from $v$.  Hence, we only look at outgoing wait-for edges in computing
-supercycle-violation, which is just the negation of supercycle-membership.
-
-A node that is not in any supercycle may nevertheless be a node of a wait-for cycle, since a cycle
-of wait-for-edges does not necesarily imply a supercycle. Hence, to compute the supercycle violation
-condition properly, we introduce a notion of the \emph{level} of a violation. A node with no
+Hence, we follow outgoing wait-for edges in computing supercycle-membership. Actually, it turns out
+to be easier to compute the negation of supercycle membership, which we call \intro{supercycle
+  violation}. This is because supercycle-violation has a base case: when a node has no outgoing
+wait-for edges. We need a base case, and an inductive definition, because 
+a node that is not in any supercycle may nevertheless be a node of a wait-for cycle, since a cycle
+of wait-for-edges does not necesarily imply a supercycle. Hence, to compute supercycle violation
+properly, we introduce a notion of the \emph{level} of a violation. A node with no
 outgoing wait-for edges has a level-1 violation. A node whose violation is based on outgoing edges
-to neighbors whose violation level is at most $d-1$, has itself a level-$d$ violation.  Hence we
-formalize the notion of \emph{level-$d$ supercycle violation} as the predicate $\viol{v}{d}{t}$.
+to neighbors whose violation level is at most $d-1$, has itself a level-$d$ violation. We
+formalize the notion of \emph{level-$d$ supercycle violation} as the predicate $\viol{v}{d}{t}$,
+defined by induction on $d$.
 
 
 \bd[Supercycle violation, $\scViol{v}{d}{t}$]
@@ -151,19 +159,19 @@ interaction in this case, since a component must have at least one outgoing wait
 
 \noindent
 \ul{Inductive step, $d > 1$.}  $\viol{v}{d}{t}$ iff any of the following cases hold. Otherwise $\neg \viol{v}{d}{t}$.
-
+%
 \bn
 
 \item  \label{def:supercycle.violation.component.out}
 $v$ is a component $\B_i$ and there exists interaction $\act$ such that $\B_i \ar \act \in \wfg{\B}{t}$ and $(\ex d' : 1 \le d' < d: \viol{\act}{d'}{t})$.
 That is, $\B_i$ enables an interaction $\act$ which has a level-$d'$ supercycle-violation, for some $d' < d$.
-Justification is Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:comp-out}.
+Justification is \prop{sc-membership}, \clause{sc-membership:comp-out}.
 
 
 \item \label{def:supercycle.violation.interaction.out}
 $v$ is an interaction $\act$ and for all components $\B_i$ such that $\act \ar \B_i \in \wfg{\B}{t}$, we have $(\ex d' : 1 \le d' < d: \viol{\B_i}{d'}{t})$.
 That is, each component $\B_i$ that $\act$ waits for has a level-$d'$ supercycle-violation, for some $d' < d$.
-Justification is Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:act-out}.
+Justification is \prop{sc-membership}, \clause{sc-membership:act-out}.
 
 \en
 \ed
@@ -175,11 +183,9 @@ Line 0 corresponds to the base case, line 1 corresponds to item 1 of the inducti
 Line 3 handles all cases that do not return true.
 
 
-
-
-\begin{figure}[ht]
-
+\begin{figure}[t]
 \setcounter{lctr}{-1}
+\horline
 \begin{tabbing}\label{alg:check-scViol}
 aa\= aa\= aa\= \kill
 $\viol{v}{d}{t}$\\
@@ -188,43 +194,11 @@ $\viol{v}{d}{t}$\\
 \lio{\IFC{v = \act \land (\fa \B_i : \act \ar \B_i \in \wfg{\B}{t} : (\ex d' : 1 \le d' < d : \viol{\B_i}{d'}{t}))} \  \RETURNE{\ttt}\ \FI}
 \lioc{\RETURNE{\fff}}{\cmnt no case for \ttt\ result, so result is \fff}
 \end{tabbing}
-\vspace{-6ex}
+\vspace{-3ex}
+\horline
 \caption{Formal definition of $\viol{v}{d}{t}$}
 \label{fig:scViolate}
 \end{figure}
-
-
-
-
-
-% \begin{figure}[ht]
-
-% \setcounter{lctr}{0}
-% \begin{tabbing}\label{alg:check-scViol}
-% mm\= mm\= mm\= mm\= mm\=\kill
-% $\viol{v}{d}{t}$\\
-% \lioc{\IFC{d = 1}}{base case}
-%    \litc{\IFC{\neg \ex u : v \ar u \in \wfg{\B}{t}}\ \RETURNE{\ttt}}{\cmnt $v$ has no outgoing wait-for-edges}
-%    \litc{\ELSE\ \RETURNE{\fff}}{\cmnt $v$ has some outgoing wait-for-edge}
-%    \lit{\FI}
-% \lio{\FI}
-
-% \lio{\cmnt \mbox{now $d > 1$, \ie inductive step}}
-
-% \lioc{\IFC{\mbox{$v$ is a component $\B_i$}}}{\cmnt component case of inductive step}
-%    \lit{\IFC{\ex \act : \B_i \ar \act \in \wfg{\B}{t} : (\ex d' < d : \viol{\act}{d'}{t})}        \  \RETURNE{\ttt}}
-%    \lit{\ELSE\ \RETURNE{\fff}}
-%    \lit{\FI}
-% \lioc{\ELSE \;\;\cmnt \mbox{$v$ is an interaction $\act$}}{\cmnt interaction case of inductive step}
-%    \lit{\IFC{\fa \B_i : \act \ar \B_i \in \wfg{\B}{t} : (\ex d' < d : \viol{\B_i}{d'}{t})} \ \RETURNE{\ttt}}
-%    \lit{\ELSE\ \RETURNE{\fff}}
-%    \lit{\FI}
-% \lio{\FI}
-% \end{tabbing}
-% \vspace{-6ex}
-% \caption{Formal definition of $\viol{v}{d}{t}$}
-% \label{fig:scViolate}
-% \end{figure}
 
 
 In the sequel, we say sc-violation rather than ``supercycle violation.''  The crucial result is
@@ -234,7 +208,8 @@ supercycle.
 
 \bp[Soundness of supercycle violation \wrt supercycle non-membership]
  \label{prop:supercycle-violation} \label{prop:scViol-implies-notInSC}
-If $(\ex d \ge 1: \viol{v}{d}{t})$ then $v$ is not a node of a supercycle in $\wfg{\B}{t}$.
+If $(\ex d \ge 1: \viol{v}{d}{t})$ then  $\neg \scyc{\B}{t}{v}$,
+\ie $v$ is not a node of a supercycle in $\wfg{\B}{t}$.
 \ep
 \prf{
 Proof is by induction in $d$. 
@@ -247,28 +222,16 @@ Proof is by induction in $d$.
 
 \topcase{1}{$v$ is a component $\B_i$}   %\scase{1.1}{$v$ has an out-violation}
 Hence there exists an interaction $\act$ such that $\B_i \ar \act \in \wfg{\B}{t}$ and $\act$ has a level-$(d-1)$
-$SC$-violation. By the induction hypothesis, $\act$ cannot occur in a supercycle in $\wfg{\B}{t}$.
-By Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:comp-out}, 
-$\B_i$ cannot be in a supercycle. 
-
-% \scase{1.2}{$v$ has an in-violation}
-% Hence for some interaction $\act$ such that $\act \ar \B_i \in \wfg{\B}{t}$, $\act$ has a level-$(d-1)$
-% $SC$-violation. By the induction hypothesis, $\act$ cannot occur in a supercycle in $\wfg{\B}{t}$.
-% By Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:comp-in}, 
-% $\B_i$ cannot be in a supercycle. 
-
+$SC$-violation. By the induction hypothesis, $\neg \scyc{\B}{t}{\act}$.
+By \prop{sc-membership}, \clause{sc-membership:comp-out}, 
+$\neg \scyc{\B}{t}{\B_i}$.
 
 \topcase{2}{$v$ is an interaction $\act$}    %\scase{2.1}{$v$ has an out-violation}
 Hence for all components $\B_i$ such that $\act \ar \B_i \in \wfg{\B}{t}$, $\B_i$ has a level-$(d-1)$
-$SC$-violation. By the induction hypothesis, $\B_i$ cannot occur in a strongly connected supercycle in $\wfg{\B}{t}$.
-By Proposition~\ref{prop:sc-membership}, Clause~\ref{prop:sc-membership:act-out}, 
-$\act$ cannot be in a supercycle. 
-
-% \scase{2.2}{$v$ has an in-violation}
-% Hence for all components $\B_i$ such that $\B_i \ar \act \in \wfg{\B}{t}$, $\B_i$ has a level-$(d-1)$
-% $SC$-violation. By the induction hypothesis, $\B_i$ cannot occur in a strongly connected supercycle in $\wfg{\B}{t}$.
-% Hence by definition~(\ref{def:supercycle}), $\act$ cannot be in a strongly connected supercycle, since $\B_i$ has no
-% incoming edges that can be in a strongly connected  supercycle.
+$SC$-violation. By the induction hypothesis, 
+$(\fa \B_i : \act \ar \B_i \in \wfg{\B}{t}: \neg \scyc{\B}{t}{\B_i})$.
+By \prop{sc-membership}, \clause{sc-membership:act-out}, 
+$\neg \scyc{\B}{t}{\act}$.
 }
 
 
@@ -278,7 +241,8 @@ $\act$ cannot be in a supercycle.
 
 \bp[Completeness of supercycle violation \wrt supercycle non-membership]
  \label{prop:notInSC-implies-scViol}
-If $(\fas d \ge 1: \neg \viol{v}{d}{t})$ then $v$ is a node of a supercycle in $\wfg{\B}{t}$.
+If $(\fas d \ge 1: \neg \viol{v}{d}{t})$ then $\scyc{\B}{t}{v}$,
+\ie  $v$ is a node of a supercycle in $\wfg{\B}{t}$.
 \ep
 %
 \prf{
@@ -288,7 +252,7 @@ $V = \set{w \stt w \in \wfg{\B}{t} \land (\exs d: \viol{w}{d}{t})}$.  Let $\bV$ 
 in $\wfg{\B}{t}$ that do not have a supercycle-violation, so 
 $\bV = \set{w \stt w \in \wfg{\B}{t} \land (\fas d \ge 1: \neg \viol{v}{d}{t})}$.
 
-if $\bV$ is empty then the proposition holds vacuously and we are done. So assume that $\bV$ is non-empty and let 
+If $\bV$ is empty then the proposition holds vacuously and we are done. So assume that $\bV$ is non-empty and let 
 $v$ be an arbitrary node in $\bV$.
 
 \topcase{1}{$v$ is a component $\B_i$}  
@@ -302,18 +266,18 @@ Then, by Definition~\ref{def:supercycle.violation}, $v$ has a supercycle violati
 as a member of $\bV$. Hence some wait-for-edge starting in $v$ must end in a node in $\bV$.
 
 
-Hence we have that $\bV$ satisfies all three clauses of Definition~\ref{def:supercycle}: it is nonempty, each component
-in $\bV$ has all its enabled interactions also in $\bV$, and each interaction in $\bV$ waits for a component in $\bV$. 
-Hence $\bV$ as a whole is a supercycle. Since the nodes of $\bV$ are, by definition of $\bV$, exactly the nodes $v$ such that 
-$(\fas d \ge 1: \neg \viol{v}{d}{t})$, we have that any such node is a node of a supercycle in $\wfg{\B}{t}$. Hence the
-Proposition is established.
-}
+Hence we have that $\bV$ satisfies all three clauses of Definition~\ref{def:supercycle}: it is
+nonempty, each component in $\bV$ has all its enabled interactions also in $\bV$, and each
+interaction in $\bV$ waits for a component in $\bV$.  Hence $\bV$ as a whole is a supercycle. Since
+the nodes of $\bV$ are, by definition of $\bV$, exactly the nodes $v$ such that
+$(\fas d \ge 1: \neg \viol{v}{d}{t})$, we have that any such node $v$ is a node of a supercycle in
+$\wfg{\B}{t}$, \ie $\scyc{\B}{t}{v}$. Hence the Proposition is established.  }
 
 %Note that the above implies that there are no wait for edges from component in $U$ to an interaction outside $U$???
 
 
 \bp \label{prop:scViol-iff-notInSC}
-$v$ is not a node of a supercycle in $\wfg{\B}{t}$ iff $(\ex d \ge 1: \viol{v}{d}{t})$.
+$\neg \scyc{\B}{t}{v}$ iff $(\ex d \ge 1: \viol{v}{d}{t})$.
 \ep
 \prf{Immediate from Propositions~\ref{prop:scViol-implies-notInSC} and
   \ref{prop:notInSC-implies-scViol}.}
@@ -325,38 +289,10 @@ $v$ is not a node of a supercycle in $\wfg{\B}{t}$ iff $(\ex d \ge 1: \viol{v}{d
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The supercycle formation condition}
 
-\noindent
-To proceed, we show that wait-for edges not involving some interaction
-$\act$ and its participants $\B_i \in \cmps{\act}$ are unaffected by the execution
-of $\act$.  Say that edge $e$ in a wait-for-graph
-is \emph{$\B_i$-incident} iff $\B_i$ is one of the endpoints of $e$.
-
-
-\bp[Wait-for edge preservation] \label{prop:wait-for-edge-preservation}
-Let $s \la{\act} t$ be a transition of composite component $B =
-\gamma(\B_1,\dots,\B_n)$, and let $e$ be a wait-for edge in $\wfg{\B}{s}$
-that is not $\B_i$-incident, for every $\B_i \in \cmps{\act}$. Then $e \in
-\wfg{\B}{s}$ iff $e \in \wfg{\B}{t}$. 
-\ep
-%
-\prfs{
-Components not involved in the execution of $\act$ do not change state
-along $s \la{\act} t$. Hence the endpoint of $e$ that is a
-component has the same state in $s$ as in $t$. The proposition then
-follows from Definition~\ref{def:static:wait-for-graph}. 
-}
-%
-\prf{
-Fix $e$ to be an arbitrary wait-for-edge that is not
-$\B_i$-incident. $e$ is either $\B_j \ar b$ or $b \ar \B_j$, for some
-component $\B_j$ of $B$ that is not in $\cmps{\act}$, and an interaction $b$
-(different from $\act$) that $\B_j$ participates in.
-%
-Now $s \pj \B_j = t \pj \B_j$, since $s \la{\act} t$ and $\B_j \not\in \cmps{\act}$. Hence $s(\gd{b}{j}) =
-t(\gd{b}{j})$. It follows from Definition~\ref{def:static:wait-for-graph} that 
-$e \in \wfg{\B}{s}$ iff $e \in \wfg{\B}{t}$.
-}
-
+We use the structural properties of supercycles (\secn{supercycle-structural}) and the 
+dynamics of wait-for graphs (\prop{wait-for-edge-preservation}) to define a condition that 
+must hold whenever a supercycle is created. Negating this condition then implies the absence of
+supercycles. 
 
 
 \bp[Supercycle formation condition] \label{prop:supercycle-formation}
@@ -371,67 +307,44 @@ contains a supercycle.  Then, in $\wfg{\B}{t}$, there exists a $\CC$ such that
 \en
 \ep
 %
-\prf{
+\bpr
 By assumption, there is a supercycle $\SC$ that is a subgraph of $\wfg{\B}{t}$.
 By Proposition~\ref{prop:supercycle:contains-mssc}, $\SC$ contains a
 subgraph $\CC$ that is strongly connected, is itself a supercycle, and
 such that there is no wait-for-edge from a node in $\CC$ to a node outside of $\CC$.
 This establishes Clauses~1--4.
 
-Now suppose $\B_i \not\in \CC$ for every $\B_i \in \cmps{\act}$. Then, no edge in $\CC$ is $\B_i$-incident. 
-Hence, by Proposition~\ref{prop:wait-for-edge-preservation}, every edge in $\CC$ is an edge in 
-$\wfg{\B}{s}$. Hence $\CC$ is a subgraph of $\wfg{\B}{s}$. 
-
-
-%Choose an arbitrary  $\B_i \in \cmps{\act}$.
-
-% Case 1: there is no edge in $\wfg{\B}{s}$ from a node in $\CC$ to a node outside of $\CC$.
-
-% Case 2: there exists some edge in $\wfg{\B}{s}$ from a node in $\CC$ to a node outside of $\CC$.
-
-% Let $e$ be an arbitrary edge  from a node in $\CC$ to a node outside of $\CC$.
-% $e$ cannot be present in $\wfg{\B}{t}$, by Clause~4. Hence $e$ is $\B_i$-incident, for some $\B_i \in \cmps{\act}$, by
-% Proposition~\ref{prop:wait-for-edge-preservation}.  
-% %
-% Since $e$ starts in $\CC$ and $\B_i \not\in \CC$ for all $\B_i \in \cmps{\act}$, $e$ cannot start in $\B_i$, and so $e$ must end in $\B_i$.
-% In summary, $e$ starts in some node in $\CC$ and ends in some $\B_i \in \cmps{\act}$.
-
-
-
-Let $v$ be an arbitrary node in $\CC$. Suppose $v$ is a component $\B_j$. 
-By assumption, $\B_j \not\in \cmps{\act}$, and so $s \pj \B_j = t \pj \B_j$ by 
-Definition~\ref{def.bip.composition}. Hence $\B_j$ enables the same set of interactions in state $s$ as in state $t$.
-in $\wfg{\B}{t}$, all of $\B_j$'s wait-for-edges must end in an interaction that is
-in $\CC$, since $\CC$ is a  a supercycle in $\wfg{\B}{t}$. Hence the same holds in $\wfg{\B}{s}$.
-
-If $v$ is an interaction, it must also have a wait-for-edge $e'$ to some component $\B_j \in \CC$, since $\CC$ is
-a supercycle in $\wfg{\B}{t}$. 
-
-Hence $v$ has enough successors in $\CC$ to satisfy the supercycle definition (Def.~\ref{def:supercycle}), 
-
-Hence $\CC$ by itself is a supercycle in $\wfg{\B}{s}$,
-which contradicts the assumption that 
-$\wfg{\B}{s}$ is supercycle-free. Hence, $\B_i \in \CC$ for some $\B_i \in \cmps{\act}$, and so Clause~5 is established.
-}
-
-
-
-
-
-\subsection{Violations of the supercycle formation condition}
-
-We wish to check whether supercycles can be formed or not, \ie whether the supercycle formation
-condition is satisfied or not. In principle, we could check directly
-whether $\wfg{\B}{t}$ contains a supercycle, for each reachable state
-$t$. However, this approach is subject to state-explosion, and so is usually unlikely to be viable in practice.
-Instead, we formulate global conditions for supercycle-freedom, and then ``project'' these
-conditions onto small subsystems, to obtain local versions of these
-conditions that are (1) efficiently checkable, and (2) imply the global versions.
-
-For transition $s \goesto[\act] t$, we determine for every component $\B_i \in \cmps{\act}$ whether
-it is possible for $\B_i$ to be a node in a supercycle in $\wfg{\B}{t}$. 
-If not, then we say that $\B_i$ satisfies the \emph{supercycle violation} condition, and we formalize this condition below.
+Now suppose $\B_i \not\in \CC$ for every $\B_i \in \cmps{\act}$. Then, no edge in $\CC$ is
+$\B_i$-incident.  Hence, by Proposition~\ref{prop:wait-for-edge-preservation}, every edge in $\CC$
+is an edge in $\wfg{\B}{s}$. Hence $\CC$ is a subgraph of $\wfg{\B}{s}$.
 %
+Now let $v$ be an arbitrary node in $\CC$.
+%
+Suppose $v$ is a component $\B_j$.  By assumption, $\B_j \not\in \cmps{\act}$, and so
+$s \pj \B_j = t \pj \B_j$ by Definition~\ref{def.bip.composition}. Hence $\B_j$ enables the same set
+of interactions in state $s$ as in state $t$. Also, in $\wfg{\B}{t}$, all of $\B_j$'s wait-for edges
+must end in an interaction that is in $\CC$, since $\CC$ is a supercycle in $\wfg{\B}{t}$. Hence the
+same holds in $\wfg{\B}{s}$.
+%
+If $v$ is an interaction, it must also have a wait-for-edge $e'$ to some component $\B_j \in \CC$,
+since $\CC$ is a supercycle in $\wfg{\B}{t}$. Hence this also holds in $\wfg{\B}{s}$.
+%
+Hence $v$ has enough successors in $\CC$ to satisfy the supercycle definition (\defn{supercycle}).
+%
+We conclude that $\CC$ by itself is a supercycle in $\wfg{\B}{s}$, which contradicts the assumption
+that $\wfg{\B}{s}$ is supercycle-free. Hence, $\B_i \in \CC$ for some $\B_i \in \cmps{\act}$, and so
+Clause~5 is established.  
+\epr
+
+
+%\subsection{Violations of the supercycle formation condition}
+
+We use \prop{supercycle-formation} to formulate a condition that prevents the formation of
+supercycles. 
+For transition $s \goesto[\act] t$, we determine for every component $\B_i \in \cmps{\act}$ whether
+it is possible for $\B_i$ to be a node in a strongly-connected supercycle $\CC$ in $\wfg{\B}{t}$. 
+%If not, then we say that $\B_i$ satisfies the \emph{supercycle violation} condition, and we
+%formalize this condition below.
 There are two ways for $\B_i$ to not be a node in a strongly-connected supercycle:
 \bn
 \item \textit{no supercycle membership}: $\B_i$ is not a node of any supercycle, \ie $\neg \scyc{\B}{s}{\B_i}$.
@@ -439,58 +352,122 @@ There are two ways for $\B_i$ to not be a node in a strongly-connected supercycl
 \item \textit{no strong-connectedness}: $\B_i$ is a node in a supercycle, but not a node in a \emph{strongly-connected} supercycle. 
 
 \en
-%To avoid state-explosion, we do not check the transition $s \goesto[\act] t$ itself, but rather its
-%projection onto a small subsystem, which we call the
 
-
-
-
-
-
-
-\subsection{Strong connectedness condition}
+%\subsection{Strong connectedness condition}
 % commentary: strong connectedess violation cannot be defined "locally" in a good way, like supercycle violation
 % can, since it depends on reachability, which is a global property. For a supercycle, once the set
-% of ndoes is fixed, the required wait-for realtions are all local properties. HEnce, violation is
+% of nodes is fixed, the required wait-for relations are all local properties. Hence, violation is
 % also a local property. For strong connectedness, the best local property is "no incoming" or "no
 % outging", which is just the linear condition of the FORTE 2013 paper. Hence a local condition for
 % strong conectedness violation is no improvement over FORTE 2013.
 
-Given that $\B_i$ is a node in a supercycle, we wish to determine whether or not it is a node in a
-\emph{strongly-connected} supercycle. We do this by removing all nodes with supercycle-violations,
-and then finding the maximal strongly connected components of the resulting wait-for subgraph.
+%Given that $\B_i$ is a node in a supercycle, we wish to determine whether or not it is a node in a
+%\emph{strongly-connected} supercycle. We do this by removing all nodes with supercycle-violations,
+%and then finding the maximal strongly connected components of the resulting wait-for subgraph.
 
+We formalize the second condition as follows.
 
 \bd[Strong connectedness violation, $\connViol{v}{t}$]
 \label{def:sConn.violation}
- Let $v$ be a node of $\wfg{\B}{t}$.   Then $\connViol{v}{t}$ holds iff there does not exist a strongly connected
+ Let $v$ be a node of $\wfg{\B}{t}$.   Then $\connViol{v}{t}$ holds iff there does not exist a 
+strongly connected
  supercycle $SSC$ such that $v \in SSC$ and $SSC \sub \wfg{B}{t}$.
-% Let $v$ be a node that is in a supercycle of $\wfg{\B}{t}$.  Let $W$ be the result of removing from $\wfg{\B}{t}$ every
-% node $u$ such that $(\ex d \ge 1: \viol{u}{d}{t})$. Let $V$ be the maximal strongly connected component of $W$ that
-% contains $v$. Then $\connViol{v}{t}$ holds iff $V$ (by itself) is not a supercycle.
-% For technical convenience, we also define $\connViol{v}{t}$ to be false when $(\ex d \ge 1: \scViol{v}{d}{t})$, \ie when
-% $v$ is not in a supercycle.
-% Hence $\connViol{v}{t}$ is always well-defined.
 \ed
 
 
 
 
-\subsection{Supercycle formation violation condition}
+\subsection{General supercycle violation condition}
 
-\bd[Formation violation, $\formViol{v}{t}$]
+The general supercycle violation condition is then a disjunction of the supercycle violation condition
+and the string connectedness violation conditions.
+
+
+\bd[General supercycle violation, $\genViol{v}{t}$]
 \label{def:formation.violation}
 Let $v$ be a node of $\wfg{\B}{t}$.
-Then $\formViol{v}{t}  \df (\exs d \ge 1: \scViol{v}{d}{t}) \lor \connViol{v}{t}$.
+Then $\genViol{v}{t}  \df (\exs d \ge 1: \scViol{v}{d}{t}) \lor \connViol{v}{t}$.
 \ed
 %
-Let $s \goesto[\act] t$ be a reachable transition. If, for every $\B_i \in \cmps{\act}$, 
-$\formViol{v}{t}$ holds, then $s \goesto[\act] t$ does not introduce a supercycle, \ie if $s$ is
-supercycle-free, then so is $t$. We establish this in the sequel.
+Let $s \goesto[\act] t$ be a reachable transition. If, for every $\B_i \in \cmps{\act}$,
+$\formViol{v}{t}$ holds, then, as we show below, $s \goesto[\act] t$ does not introduce a
+supercycle, \ie if $s$ is supercycle-free, then so is $t$.  However, evaluating this condition over
+all global transitions is subject to state explosion, and so we formulate below a ``local'' version
+of the general condition, which can be evaluated in ``small subsystems'', and so we often avoid
+state-explosion. Hence the advantage of the local versions is that they are usually efficiently
+computable, as we show in the sequel.  We also formulate a ``linear'' condition (both global and
+local), which is simpler (but ``more incomplete'') than the general condition, and so is easier to
+evaluate.
 
-We remark that, as shown above $(\exs d \ge 1: \scViol{v}{d}{t})$
-implies that $v$ cannot be in a supercycle. Hence, $v$ cannot be in a strongly-connected supercycle. 
-Hence $(\exs d \ge 1: \scViol{v}{d}{t})$ implies $\connViol{v}{t}$. It is however convenient to state the formation
-violation condition in this manner, since, in the sequel, we formulate a ``local'' version for each of  
-$(\exs d \ge 1: \scViol{v}{d}{t})$ and $\connViol{v}{t}$, and the implication does not necessarily hold for the local
-versions. The advantage of the local versions is that they are usually efficiently computable, as we show in the sequel.
+We remark that, as shown above $(\exs d \ge 1: \scViol{v}{d}{t})$ implies that $v$ cannot be in a
+supercycle. Hence, $v$ cannot be in a strongly-connected supercycle.  Hence
+$(\exs d \ge 1: \scViol{v}{d}{t})$ implies $\connViol{v}{t}$. It is however convenient to state the
+formation violation condition in this manner, since we will formulate a local version
+for each of $(\exs d \ge 1: \scViol{v}{d}{t})$ and $\connViol{v}{t}$, and the implication does not
+necessarily hold for the local versions. 
+
+We therefore now have four deadlock-freedom conditions: global general, local general, 
+global linear, and local linear. We therefore define an abstract version of 
+the deadlock-freedom condition first.
+
+
+
+\subsection{Abstract supercycle freedom conditions}
+
+\bd
+A behavioral restriction condition $\BC$ is a predicate $\BC: (\B, Q_0, \act) \to \set{\ttt, \fff}$. 
+\ed
+$\BC$ is a predicate on the effects of a particular interaction $\act$ within a given system $(\B, Q_0)$.
+
+\bd[Supercycle-freedom preserving] \label{def:SC-free-preserving}
+A behavioral restriction condition $\BC$ is supercycle-freedom preserving iff, for every system 
+$(\B, Q_0)$ and $\act \in \gamma$ such that $\BC(\B, Q_0, \act) = \ttt$, the following holds:\\[2ex]
+%
+%\ind for all interactions $\act$ of $\B$ (\ie $a \in \gamma$),\\
+\ind \ind for every reachable transition $s \goesto[\act] t$ of $(\B, Q_0)$\\
+\ind \ind \ind if $s$ is supercycle-free, then $t$ is supercycle-free.
+\ed
+
+
+\bt[Deadlock-freedom via supercycle-freedom preserving restriction]
+\label{theorem:SC-free-preserving.deadlock-free}
+Assume that
+\bn
+\item \label{theorem:SC-free-preserving.initial}
+      for all $s_0 \in Q_0$, $\wfg{\B}{s_0}$ is supercycle-free, and
+\item \label{theorem:SC-free-preserving.reachable-transitions}
+   there exists a supercycle-freedom preserving restriction $\BC$ such that,
+   for all $\act \in \gamma$: $\BC(\B, Q_0, \act) = \ttt$ 
+\en
+Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
+\et
+\prf{
+Let $u$ be an arbitrary reachable state. The proof is by induction on
+the length of the finite execution $\al$ that ends in $u$.
+Assumption~\ref{theorem:SC-free-preserving.initial} provides the base case, for $\al$ having length 0, and
+so $u \in Q_0$. 
+For the induction step, we establish:
+for every reachable transition $s \la{\act} t$,
+$\wfg{\B}{s}$ is supercycle-free implies that $\wfg{\B}{t}$ is
+supercycle-free. This is immediate from Assumption~\ref{theorem:SC-free-preserving.reachable-transitions}, 
+and Definition~\ref{def:SC-free-preserving}.
+}
+
+We notice that the above proof does not make any use of the requirement that there is a single restriction $\BC$ for all
+interactions. Hence we can (superficially) strengthen the result by allowing different restriction predicates for different interactions:
+This is convenient for later application. 
+
+
+
+\bco[Deadlock-freedom via several supercycle-freedom preserving restrictions]
+\label{cor:SC-free-preserving.deadlock-free}
+Assume that
+\bn
+\item \label{cor:SC-free-preserving.initial}
+      for all $s_0 \in Q_0$, $\wfg{\B}{s_0}$ is supercycle-free, and
+\item \label{cor:SC-free-preserving.reachable-transitions}
+   for all $\act \in \gamma$, there exists a supercycle-freedom preserving restriction $\BC$: $\BC(\B, Q_0, \act) = \ttt$ 
+\en
+Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
+\eco
+\prf{As for Theorem~\ref{theorem:SC-free-preserving.deadlock-free}.}

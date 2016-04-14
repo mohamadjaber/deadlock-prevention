@@ -43,6 +43,7 @@ together with the interactions that each component enables.
 
 
 \subsection{Wait-for graphs}
+\label{secn:wait-for-graphs}
 
 The wait-for-graph for a state $s$ is a directed bipartite and-or
 graph which contains as nodes the atomic components $\B_1, \ldots,
@@ -81,22 +82,25 @@ The {\em wait-for-graph} $\wfg{\B}{s}$ of $s$ is a directed bipartite and-or gra
 \end{nlst1}
 \ed
 
-A component $\B_i$ is an and-node since all of its successor actions (or-nodes) must be disabled for $\B_i$ to be
-incapable of executing.  An interaction $\act$ is an or-node since it is disabled if any of its participant components do
-not enable it.  An edge (path) in a wait-for-graph is called a wait-for-edge (wait-for-path).  Write $\act \ar \B_i$
-($\B_i \ar \act$ respectively) for a wait-for-edge from $\act$ to $\B_i$ ($\B_i$ to $\act$ respectively).  We abuse notation by
-writing $e \in \wfg{\B}{s}$ to indicate that $e$ (either $\act \ar \B_i$ or $\B_i
-\ar \act$) is an edge in $\wfg{\B}{s}$.  Also $\B_i \ar \act \ar \B'_i \in \wfg{\B}{s}$ for $B_i \ar \act \in \wfg{\B}{s} \land \act \ar B'_i \in
-\wfg{\B}{s}$, \ie for a wait-for-path of length 2, and similarly for longer wait-for-paths.
+A component $\B_i$ is an and-node since all of its successor actions (or-nodes) must be disabled for
+$\B_i$ to be incapable of executing.  An interaction $\act$ is an or-node since it is disabled if
+any of its participant components do not enable it.  An edge (path) in a wait-for-graph is called a
+wait-for-edge (wait-for-path).  Write $\act \ar \B_i$ ($\B_i \ar \act$ respectively) for a
+wait-for-edge from $\act$ to $\B_i$ ($\B_i$ to $\act$ respectively).  We abuse notation by writing
+$e \in \wfg{\B}{s}$ to indicate that $e$ (either $\act \ar \B_i$ or $\B_i \ar \act$) is an edge in
+$\wfg{\B}{s}$.  Also $\B_i \ar \act \ar \B'_i \in \wfg{\B}{s}$ for
+$B_i \ar \act \in \wfg{\B}{s} \land \act \ar B'_i \in \wfg{\B}{s}$, \ie for a wait-for-path of
+length 2, and similarly for longer wait-for-paths.
 
 % done in Local Enablement Assumption above
 %We assume, in the sequel, that every component $B_i$ always enables at least one interaction, \ie 
 %in all reachable states $s$,  $B_i \ar a$ for at least $a$. This prevents pathological situations where a component
 %causes a deadlock by disabling every interaction that it participates in.
 
-Consider the dining philosophers system given in Figure~\ref{fig:diningSpectrum}.  Figure~\ref{fig:wfg0} shows its
-wait-for-graph in its sole initial state.  Figure~\ref{fig:wfg1} shows the wait-for-graph after execution of $\get_0$.
-Edges from components to interactions are shown solid, and edges from interactions to components are shown dashed.
+Consider the dining philosophers system given in Figure~\ref{fig:diningSpectrum}.
+Figure~\ref{fig:wfg0} shows its wait-for-graph in its sole initial state.  Figure~\ref{fig:wfg1}
+shows the wait-for-graph after execution of $\get_0$.  Edges from components to interactions are
+shown solid, and edges from interactions to components are shown dashed.
 
 \begin{figure*}[ht]
   \begin{center}
@@ -108,6 +112,37 @@ Edges from components to interactions are shown solid, and edges from interactio
 \end{figure*}
 
 
+A key principle of the dynamics of the change of wait-for graphs is that 
+wait-for edges not involving some interaction
+$\act$ and its participants $\B_i \in \cmps{\act}$ are unaffected by the execution
+of $\act$.  Say that edge $e$ in a wait-for-graph
+is \emph{$\B_i$-incident} iff $\B_i$ is one of the endpoints of $e$.
+
+
+\bp[Wait-for edge preservation] \label{prop:wait-for-edge-preservation}
+Let $s \la{\act} t$ be a transition of composite component $B =
+\gamma(\B_1,\dots,\B_n)$, and let $e$ be a wait-for edge in $\wfg{\B}{s}$
+that is not $\B_i$-incident, for every $\B_i \in \cmps{\act}$. Then $e \in
+\wfg{\B}{s}$ iff $e \in \wfg{\B}{t}$. 
+\ep
+%
+\prfs{
+Components not involved in the execution of $\act$ do not change state
+along $s \la{\act} t$. Hence the endpoint of $e$ that is a
+component has the same state in $s$ as in $t$. The proposition then
+follows from Definition~\ref{def:static:wait-for-graph}. 
+}
+%
+\prf{
+Fix $e$ to be an arbitrary wait-for-edge that is not
+$\B_i$-incident. $e$ is either $\B_j \ar b$ or $b \ar \B_j$, for some
+component $\B_j$ of $B$ that is not in $\cmps{\act}$, and an interaction $b$
+(different from $\act$) that $\B_j$ participates in.
+%
+Now $s \pj \B_j = t \pj \B_j$, since $s \la{\act} t$ and $\B_j \not\in \cmps{\act}$. Hence $s(\gd{b}{j}) =
+t(\gd{b}{j})$. It follows from Definition~\ref{def:static:wait-for-graph} that 
+$e \in \wfg{\B}{s}$ iff $e \in \wfg{\B}{t}$.
+}
 
 
 
@@ -286,7 +321,21 @@ In the sequel, we say ``deadlock-free'' to mean ``free of local deadlock''.
 
 
 
+We wish to check whether supercycles can be formed or not.
+% \ie whether the supercycle formation condition is satisfied or not.
+In principle, we could check directly whether $\wfg{\B}{t}$ contains a supercycle, for each
+reachable state $t$. However, this approach is subject to state-explosion, and so is usually
+unlikely to be viable in practice.  Instead, we formulate global conditions for supercycle-freedom,
+and then ``project'' these conditions onto small subsystems, to obtain local versions of these
+conditions that are (1) efficiently checkable, and (2) imply the global versions.
+To formulate these condition, we need to characterize the static (structural) and dynamic
+(formation) properties of supercycles.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Structural properties of supercycles}
+\label{secn:supercycle-structural}
 
 We present some structural properties of supercycles, which
 are central to our deadlock-freedom conditions.
