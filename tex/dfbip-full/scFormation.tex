@@ -411,16 +411,31 @@ global linear, and local linear. We therefore define an abstract version of
 the deadlock-freedom condition first.
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Abstract supercycle freedom conditions}
 
-\bd
-A behavioral restriction condition $\BC$ is a predicate $\BC: (\B, Q_0, \act) \to \set{\ttt, \fff}$. 
+Since we will present several conditions for supercycle-freedom, we now present an abstract
+definition of the essential properties that all such conditions must have.  The key idea is that
+execution of an interaction $\act$ does not create a supercycle, and so any condition which implies 
+this for $\act$ is sufficient. if a different condition implies the same for another interaction
+$\actp$, this presents no problem \wrt establishing deadlock-freedom. Hence, it is sufficient to
+have one such condition for each interaction in  $(\B,Q_0)$. Since each condition restricts the
+behavior of inetraction execution, we call it a ``behavioral restriction condition''.
+
+%Moreover, since implication of $\GAO(\act)$ can be on a ``per interaction'' basis, with different
+%conditions being applied to different interactions, we have:
+
+
+\bd[Behavioral restriction condition]
+A \introdf{behavioral restriction condition} $\BC$ is a predicate
+$\BC: (\B, Q_0, \act) \to \set{\ttt, \fff}$.
 \ed
-$\BC$ is a predicate on the effects of a particular interaction $\act$ within a given system $(\B, Q_0)$.
+%
+$\BC$ is a predicate on the effects of a particular interaction $\act$ within a given system
+$(\B, Q_0)$.
 
 \bd[Supercycle-freedom preserving] \label{def:SC-free-preserving}
-A behavioral restriction condition $\BC$ is supercycle-freedom preserving iff, for every system 
+A behavioral restriction condition $\BC$ is \introdf{supercycle-freedom preserving} iff, for every system 
 $(\B, Q_0)$ and $\act \in \gamma$ such that $\BC(\B, Q_0, \act) = \ttt$, the following holds:\\[2ex]
 %
 %\ind for all interactions $\act$ of $\B$ (\ie $a \in \gamma$),\\
@@ -431,6 +446,7 @@ $(\B, Q_0)$ and $\act \in \gamma$ such that $\BC(\B, Q_0, \act) = \ttt$, the fol
 
 \bt[Deadlock-freedom via supercycle-freedom preserving restriction]
 \label{theorem:SC-free-preserving.deadlock-free}
+\label{thm:SC-free-preserving.deadlock-free}
 Assume that
 \bn
 \item \label{theorem:SC-free-preserving.initial}
@@ -441,22 +457,17 @@ Assume that
 \en
 Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
 \et
-\prf{
-Let $u$ be an arbitrary reachable state. The proof is by induction on
-the length of the finite execution $\al$ that ends in $u$.
-Assumption~\ref{theorem:SC-free-preserving.initial} provides the base case, for $\al$ having length 0, and
-so $u \in Q_0$. 
-For the induction step, we establish:
-for every reachable transition $s \la{\act} t$,
-$\wfg{\B}{s}$ is supercycle-free implies that $\wfg{\B}{t}$ is
-supercycle-free. This is immediate from Assumption~\ref{theorem:SC-free-preserving.reachable-transitions}, 
-and Definition~\ref{def:SC-free-preserving}.
-}
+%
+\bpr Let $u$ be an arbitrary reachable state. The proof is by induction on the length of the finite
+execution $\al$ that ends in $u$.  Assumption~\ref{theorem:SC-free-preserving.initial} provides the
+base case, for $\al$ having length 0, and so $u \in Q_0$.  For the induction step, we establish: for
+every reachable transition $s \la{\act} t$, $\wfg{\B}{s}$ is supercycle-free implies that
+$\wfg{\B}{t}$ is supercycle-free. This is immediate from
+Assumption~\ref{theorem:SC-free-preserving.reachable-transitions}, and
+Definition~\ref{def:SC-free-preserving}.  \epr
 
-We notice that the above proof does not make any use of the requirement that there is a single restriction $\BC$ for all
-interactions. Hence we can (superficially) strengthen the result by allowing different restriction predicates for different interactions:
-This is convenient for later application. 
-
+Since the above proof does not make any use of the requirement that there is a single restriction
+$\BC$ for all interactions, we immediately have:
 
 
 \bco[Deadlock-freedom via several supercycle-freedom preserving restrictions]
@@ -470,4 +481,52 @@ Assume that
 \en
 Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
 \eco
-\prf{As for Theorem~\ref{theorem:SC-free-preserving.deadlock-free}.}
+%
+\bpr
+Similar to the proof of \thm{SC-free-preserving.deadlock-free},  except that, for
+the transition $s \la{\act} t$, use the  supercycle-freedom preserving restriction $\BC$
+corresponding to $\act$.
+\epr
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Overview of the four supercycle-freedom preserving restrictions}
+
+The supercycle formation condition
+(Proposition~\ref{prop:supercycle-formation}) tells us that, when a
+supercycle $\SC$ is created, some component $\B_i$ that participates
+in the interaction $\act$ whose execution created $\SC$, must be a
+node of a strongly connected component $\CC$ of $\SC$, and moreover
+$\CC$ is itself a supercycle in its own right. In a sense, $CC$ is the
+``essential'' part of $\SC$.
+
+Hence, for a BIP system $(\B, Q_0)$, our fundamental condition for the
+prevention of supercycles is that for every reachable transition
+$s \goesto[\act] t$ resulting from execution of $\act$, every
+component $\B_i$ of $\act$ must exhibit a supercycle-violation
+(Definition~\ref{def:supercycle.violation}) in state $t$ (the state
+resulting from the execution of $a$). For a given BIP system
+$(\B, Q_0)$ and interaction $\act$, we denote that condition
+$\GAO(\B, Q_0, \act)$, and define it formally below.  This condition
+is, in a sense, the ``most general'' condition for supercycle-freedom.
+
+If $\GAO(\B, Q_0, \act)$ holds, and global state $s$ is
+supercycle-free, and $s \goesto[\act] t$, then it follows (as we
+establish below) that global state $t$ is also supercycle-free.  So,
+by requiring (1) that all initial states are supercycle-free, and (2)
+that $\GAO(\B, Q_0, \act)$ holds for all interactions
+$\act \in \gamma$, we obtain, by straightforward induction on length
+of executions, that every reachable state is supercycle-free.
+
+It also follows that any condition which implies $\GAO(\B, Q_0, \act)$ is also sufficient to guarantee  supercycle-freedom, and
+hence deadlock-freedom. We exploit this in two ways:
+\bn
+
+\item To provide a ``linear'' condition, $\GLin$, that is easier to evaluate than $\GAO$, since it requires only the
+evaluation of lengths of wait-for-paths, \ie it does not have the ``alternating'' character of $\GAO$. 
+
+\item To provide ``local variants'' of $\GAO$ and $\GLin$,  which can often be
+evaluated in small subsystems of $(\B, Q_0)$, thereby avoiding state-explosion. The local conditions imply the
+corresponding global ones, \ie they are sufficient but not necessary for deadlock-freedom.
+
+\en

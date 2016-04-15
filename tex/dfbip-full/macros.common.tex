@@ -25,7 +25,7 @@
 \newcommand{\eq}[1]{(\ref{eq:#1})}
 \newcommand{\res}[1]{(\ref{res:#1})}
 %\newcommand{\ex}[1]{Ex.~\ref{ex:#1}}
-\newcommand{\secn}[1]{Sect.~\ref{sec:#1}}
+\newcommand{\secn}[1]{Sect.~\ref{secn:#1}}
 \newcommand{\rem}[1]{Rem.~\ref{rem:#1}}
 \newcommand{\ntn}[1]{Not.~\ref{ntn:#1}}
 \newcommand{\lem}[1]{Lem.~\ref{lem:#1}}
@@ -228,8 +228,8 @@
 % formation violation condition
 \newcommand{\formViol}[2]{\ensuremath{\SMATHID{genViolate}_{\B}(#1,#2)}}
 \newcommand{\genViol}[2]{\ensuremath{\SMATHID{genViolate}_{\B}(#1,#2)}}
-\newcommand{\locFormViol}[4]{\ensuremath{\SMATHID{formViolateLoc}(#1,#2,\dsk{#3}{#4})}}
-
+\newcommand{\locFormViol}[4]{\ensuremath{\SMATHID{genViolateLoc}(#1,#2,\dsk{#3}{#4})}}
+\newcommand{\genLocViol}[4]{\ensuremath{\SMATHID{genViolateLoc}(#1,#2,\dsk{#3}{#4})}}
 
 
 % pseudocode
@@ -384,6 +384,7 @@
 \newcommand{\smpage}{\noindent \parbox{\textwidth}}
 
 \newcommand{\intro}{\emph}	
+\newcommand{\introdf}{\emph}	
 
 
 %%%%%%%%%%%%%%%%% GRAPH THEORY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
