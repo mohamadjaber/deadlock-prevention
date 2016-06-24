@@ -102,7 +102,7 @@ public class ResourceAllocation {
 		output += space + "on getTokenToken from lTokenWithResource to lTokenTokenWithResource provided true do {}\n"; 
 
 		output += space + "on releaseTokenResource from lHasToken to lTokenWithResource provided true do {}\n"; 
-		
+		// TO BE REMOVED -- CHECK...
 		output += space + "on getTokenResource from lNoToken to lHasToken provided true do {}\n"; 
 		output += space + "on getTokenResource from lTokenWithResource to lHasToken provided true do {}\n"; 
 		
@@ -382,11 +382,38 @@ public class ResourceAllocation {
 		bipFile.print(resourceAllocation(nbOfClients, nbOfResources, resourceMapping, nbOfTokens));
 	}
 	
+	// No local deadlock - although some components (e.g., c0, may block for ever
+	// However, there is no sub system that can detect this deadlock. 
 	public static void generateTokenRingConflict() throws FileNotFoundException {
 		int nbOfClients = 5; 
 		int nbOfResources = 5; 
-		int[][] resourceMapping = {{0, 1}, {0,1}, {2} , {3}, {4}};
+		int[][] resourceMapping = {{0, 1}, {1, 0}, {2} , {3}, {4}};
 		int[][] conflictingResources = {{0, 1}, {2, 3, 4}};
+		int nbOfTokens = 2; 
+		String fileName = "BIPExamples/resourceAllocationConflict_" + nbOfClients + "_" + nbOfResources + "_" + nbOfTokens + ".bip";
+		
+		bipFile = new PrintStream(new File(fileName));
+		bipFile.print(resourceAllocationConflicting(nbOfClients, nbOfResources, resourceMapping, nbOfTokens, conflictingResources));
+	}
+	// Local deadlock exist
+	public static void generateTokenRingConflict1() throws FileNotFoundException {
+		int nbOfClients = 5; 
+		int nbOfResources = 5; 
+		int[][] resourceMapping = {{0, 2}, {2, 0}, {2} , {3}, {4}};
+		int[][] conflictingResources = {{0, 1}, {2, 3, 4}};
+		int nbOfTokens = 2; 
+		String fileName = "BIPExamples/resourceAllocationConflict_" + nbOfClients + "_" + nbOfResources + "_" + nbOfTokens + ".bip";
+		
+		bipFile = new PrintStream(new File(fileName));
+		bipFile.print(resourceAllocationConflicting(nbOfClients, nbOfResources, resourceMapping, nbOfTokens, conflictingResources));
+	}
+	
+	// Local deadlock exist
+	public static void generateTokenRingConflict2() throws FileNotFoundException {
+		int nbOfClients = 15; 
+		int nbOfResources = 15; 
+		int[][] resourceMapping = {{0, 2}, {1}, {2}, {3}, {0, 2}, {3, 11} , {4, 12}, {5, 13}, {6, 14}, {7}, {8}, {9, 10}, {11}, {2}, {0}};
+		int[][] conflictingResources = {{0, 1}, {2, 3, 4}, {5, 6, 7, 8, 9, 10}, {11, 12, 13, 14}};
 		int nbOfTokens = 2; 
 		String fileName = "BIPExamples/resourceAllocationConflict_" + nbOfClients + "_" + nbOfResources + "_" + nbOfTokens + ".bip";
 		

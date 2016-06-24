@@ -12,20 +12,19 @@ in some  $\dsk{\act}{\l}$. We start with $\l=1$ since $\dsk{\act}{1}$ is the sma
 supercycle-violation can be confirmed. 
 \checkLAOIntDist{$\B, Q_0, \act, \l$} checks $\LAO(B, Q_0, \act, \l)$ for a particular $\l$. 
 
-For a given $\dsk{\act}{\l}$ and state $t_\act$ of $\dsk{\act}{\l}$, procedure \cLScV{$\dsk{\act}{\l},t_\act$} computes
-$\lviol{v}{d}{t_\act}{\act}{\l}$ for $d = 1,\ldots,dd$ where $dd$ is
-the length of the longest simple path in the structure graph of $\dsk{\act}{\l}$.
-% diameter of $\dsk{\act}{\l}$. DIAMETER DOES NOT WORK
-We use a ``memoizing'' strategy; we iterate over $d$, starting with $d=1$ and incrementing.  The iteration for $d$ assumes that
-the iteration for $d-1$ has already been computed.  The results of each iteration are stored in an array
-$\VN{\dsk{\act}{\l}}{t_\act}: (\set{B_1,\ldots,B_n} \un \gamma) \times \set{1,\ldots,dd} \to \set{\ttt,\fff}$.
+%For a given $\dsk{\act}{\l}$ and state $t_\act$ of $\dsk{\act}{\l}$, procedure \cLScV{$\dsk{\act}{\l},t_\act$} computes 
+%$\lviol{v}{d}{t_\act}{\act}{\l}$ for $d = 1,\ldots,dd$ where $dd$ is
+%the length of the longest simple path in the structure graph of $\dsk{\act}{\l}$.
+%We use a ``memoizing'' strategy; we iterate over $d$, starting with $d=1$ and incrementing.  The iteration for $d$ assumes that
+%the iteration for $d-1$ has already been computed.  The results of each iteration are stored in an array
+%$\VN{\dsk{\act}{\l}}{t_\act}: (\set{B_1,\ldots,B_n} \un \gamma) \times \set{1,\ldots,dd} \to \set{\ttt,\fff}$.
 %
 %Procedure \cViol{$\dsk{\act}{\l},t_\act$} iterates over $d = 1,\ldots,\l$ (starting with $d=1$), computing all the supercycle violations that can be
 %certified within $\dsk{\act}{\l}$. 
 %
-\cLScVD{$\dsk{\act}{\l}, t_\act, d$} computes the supercycle violations for a given distance $d$, and
-\cLScVDN{$\dsk{\act}{\l}, t_\act, d, v$} determines the level-$d$ supercycle-violation of node $v$, if any, \ie it computes 
-$\lviol{v}{d}{t_\act}{\act}{\l}$.
+%\cLScVD{$\dsk{\act}{\l}, t_\act, d$} computes the supercycle violations for a given distance $d$, and
+%\cLScVDN{$\dsk{\act}{\l}, t_\act, d, v$} determines the level-$d$ supercycle-violation of node $v$, if any, \ie it computes 
+%$\lviol{v}{d}{t_\act}{\act}{\l}$.
 
 
 
@@ -59,11 +58,10 @@ $\lviol{v}{d}{t_\act}{\act}{\l}$.
 
 \cLScV{$\dsk{\act}{\l},t_\act$} & compute local supercycle violations in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lviol{v}{d}{t_\act}{\act}{\l}$ forall $v,d$\\
 
-\cLScVD{$\dsk{\act}{\l}, t_\act, d$} & compute level-$d$ local supercycle violations in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lviol{v}{d}{t_\act}{\act}{\l}$ forall $v$\\
+%\cLScVD{$\dsk{\act}{\l}, t_\act, d$} & compute level-$d$ local supercycle violations in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lviol{v}{d}{t_\act}{\act}{\l}$ forall $v$\\
 
-\cLScVDN{$\dsk{\act}{\l}, t_\act, d, v$} &
-compute level-$d$ local supercycle violation of node $v$ in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lviol{v}{d}{t_\act}{\act}{\l}$\\
-
+%\cLScVDN{$\dsk{\act}{\l}, t_\act, d, v$} &
+%compute level-$d$ local supercycle violation of node $v$ in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lviol{v}{d}{t_\act}{\act}{\l}$\\
 \hline
 \end{tabular}
 }
@@ -124,10 +122,8 @@ aa\= aa\= aa\= aa\= aa\=\kill
 \cLFV{$B_i, \dsk{\act}{\l},t_\act$}\\
 \cmnt returns true iff $\locFormViol{B_i}{t_\act}{\act}{\l}$ holds (Definition~\ref{def:locFormation.violation})\\
 \cmnt \ie $B_i$ has a local supercycle formation violation in state $t_\act$ of subsystem $\dsk{\act}{\l}$\\
-\lio{\REPEAT \mbox{ until one of the following returns true, or run out of resources}}
-   \lit{\mbox{\cLScVDN{$\dsk{\act}{\l}, t_\act, d,B_i$} for increasing $d$}}
-    \lit{\mbox{\cLconnScV{$B_i,\dsk{\act}{\l},t_\act$}}}
-\lion{\ENDREPEAT}
+\lio{\cLScV{\dsk{\act}{\l},t_\act}}
+\lio{\RETURNE{\VV{\act}{\l}{t_\act}{B_i}{} \, \vee \, \mbox{\cLconnScV{$B_i,\dsk{\act}{\l},t_\act$}}}}
 \end{tabbing}
 
 
@@ -139,12 +135,11 @@ aa\= aa\= aa\= aa\= aa\=\kill
 \cmnt \ie $B_i$ has a local strong connectedness supercycle formation violation in state $t_\act$ of subsystem $\dsk{\act}{\l}$\\
 %\cmnt\ compute local supercycle violations in state $t_\act$ of $\dsk{\act}{\l}$\\
 %\cmnt\ Postcondition: $\fas v \in \set{\B_1,\ldots,\B_n} \un \gamma, d' = 1,\ldots,dd: \VV{\act}{\l}{t_\act}{v}{d'} = \lviol{v}{d'}{t_\act}{\act}{\l}$\\
-\lio{\cLScV{\dsk{\act}{\l},t_\act}}
 \lio{\mbox{remove all nodes with local supercycle violation}}
 \lio{\mbox{compute maximal strongly connected components of remaining wait-for graph}}
 \lio{\FORALLC{\mbox{maximal strongly connected components $C$}}}
-   \lit{\mbox{\IF\ $C$ contains a strongly connected supercycle which contains $B_i$ as a node, \THEN\ \RETURNE{\fff} \FI}}
-\>\{ Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.loc:scc} holds here \}\\
+   \lit{\mbox{\IF\ $C$ contains a non-trivial strongly connected supercycle which contains $B_i$ as a node}}
+   \litc{\THEN\ \RETURNE{\fff} \, \FI}{\cmnt{Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.loc:scc} holds here}} 
 
 \lio{\FORALLC{\mbox{wait-for paths $\pi$ from $B_i$ to the border of  $\dsk{\act}{\l}$}}}
    \litc{\IF\ \mbox{some node of $\pi$ has a local supercycle violation}\ \THEN\ \RETURNE{\ttt}\ \FI}{\cmnt Clause~\ref{def:sConn.violation.loc:wait-for-out} holds}
@@ -154,8 +149,6 @@ aa\= aa\= aa\= aa\= aa\=\kill
 
 \liocn{\RETURNE{\fff}}{\cmnt  Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.border} does not hold}
 \end{tabbing}
-
-
 
 \vspace{-3ex}
 
@@ -168,112 +161,51 @@ aa\= aa\= aa\= aa\= aa\=\kill
 
 
 
-
-% %% early termination version
-% \remove{
-% \setcounter{lctr}{0}
-% \begin{tabbing}
-% \label{alg:eval-ldfc}
-% aa\= aa\= aa\= aa\= aa\=\kill
-% \checkLAOIntDist{$\B, Q_0, \act, \l$}\\
-% \cmnt\ returns $\ttt$ iff $\LAO(\B, Q_0, \act, \l)$\\
-% \lio{\FORALLC{\mbox{reachable transitions $s_\act \goesto[\act] t_\act$ of $\dsk{\act}{\l}$}}}
-%    \litc{\IF \mbox{ $D_a^\l$ contains a strongly-connected supercycle} \THEN}{\cmnt allows early termination}
-%       \lih{\mbox{print(``$B$ deadlocks in state $t_\act$ of subsystem $\dsk{\act}{\l}$'')}}
-%       \lih{\HALT}
-%    \lit{\ELSE}
-%       \lih{\FORALLC{\B_i \in \cmps{\act}}}
-%          \lifc{\IF\ \neg \cLFV{B_i, \dsk{\act}{\l},t_\act}\ \THEN\ \RETURNE{\fff}\ \FI}{\cmnt return $\fff$ if no violation for $\B_i$}
-% %         \lifc{\IFC{\neg \LF{\act}{\l}{t_\act}{v}{\l}}\ 
-%       \lih{\ENDFOR}
-%    \lit{\FI}
-% \lio{\ENDFOR;}
-% \liocn{\RETURNE{\ttt}}{\cmnt return $\ttt$ if all $\B_i \in \cmps{\act}$ violate local supercycle formation}
-% \end{tabbing}
-
-% \caption{Pseudocode for the implementation of the local AND-OR condition.}
-% \label{fig:impl.locANDOR}
-% \end{figure}
-% }
-
-
-
-
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
 \begin{figure}[ht]
+
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:compute-scViol}
 aa\= aa\= aa\= aa\= aa\=\kill
 \cLScV{$\dsk{\act}{\l},t_\act$}\\
 \cmnt\ compute supercycle violations in state $t_\act$ of $\dsk{\act}{\l}$\\
-\cmnt\ Postcondition: $\fas v \in \dsk{\act}{\l}, d' = 1,\ldots,dd: \VV{\act}{\l}{t_\act}{v}{d'} = \lviol{v}{d'}{t_\act}{\act}{\l}$\\
-\lio{dd \gts \mbox{length of the longest simple path in structure graph of \dsk{\act}{\l}}}
-\lio{\FORALLC{d \gts 1\ to\ dd}}
-   \lit{\cLScVD{\dsk{\act}{\l},t_\act,d}}
-\lio{\ENDFOR}
-\end{tabbing}
+\cmnt\ Postcondition: $\fas v \in \dsk{\act}{\l}: \VV{\act}{\l}{t_\act}{v}{}$ 
+$ =
+  \begin{cases}
+    \ttt     & \quad \text{if }  \exists d \geq 1: \lviol{v}{d}{t_\act}{\act}{\l}\\
+    \fff  & \quad \text{otherwise}\\
+  \end{cases}
+$
+\\
+\lio{foundScViolate \gts \fff} \\
 
-\setcounter{lctr}{0}
-\begin{tabbing}\label{alg:compute-scViolDist}
-aa\= aa\= aa\= \kill
-\cLScVD{$\dsk{\act}{\l}, t_\act, d$}\\
-\cmnt\ compute level-$d$ supercycle violations in state $t_\act$ of $\dsk{\act}{\l}$\\
-\cmnt\ Precondition: $\fas v \in \dsk{\act}{\l}, d' = 1,\ldots,d-1: \VV{\act}{\l}{t_\act}{v}{d'} = \lviol{v}{d'}{t_\act}{\act}{\l}$\\
-\cmnt \ie all violations up to level $d-1$ have already been computed and stored in $\VV{\act}{\l}{t_\act}{v}{d'}$\\
-\cmnt\ Postcondition: $\fas v \in \dsk{\act}{\l}, d' = 1,\ldots,d:  \VV{\act}{\l}{t_\act}{v}{d'} = \lviol{v}{d'}{t_\act}{\act}{\l}$\\
-\cmnt \ie compute next level of violations\\
-\lio{\FORALLC{v \in \set{B_1,\ldots,B_n} \un \gamma}}
-   \lit{\cLScVDN{\dsk{\act}{\l},t_\act,d,v}}
-\lio{\ENDFOR}
-\end{tabbing}
+\lio{\FORALLC{v \in \dsk{\act}{\l}}}
+   \lit{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
+                          \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act})}}
+       \lihc{\VV{\act}{\l}{t_\act}{v}{} \gts \ttt}{\cmnt Base case: interaction with no outgoing wait-for-edges}  
+       \lihc{foundScViolate \gts \ttt}  
 
-
-\setcounter{lctr}{0}
-\begin{tabbing}\label{alg:compute-scViolDist}
-aaa\= aa\= aa\= aa\= aa\= \kill
-\cLScVDN{$\dsk{\act}{\l}, t_\act, d, v$}\\
-\cmnt\ compute level-$d$ supercycle violation of node $v$ in state $t_\act$ of $\dsk{\act}{\l}$, \ie computes $\lviol{v}{d}{t_\act}{\act}{\l}$\\
-%\cmnt\ Precondition: $\fas w \in \set{\B_1,\ldots,\B_n} \un \gamma, d' = 1,\ldots,d-1: \VV{\act}{\l}{t_\act}{w}{d'} = \lviol{w}{d'}{t_\act}{\act}{\l}$\\
-%\cmnt\ Postcondition: $\fas w \in \set{\B_1,\ldots,\B_n} \un \gamma, d' = 1,\ldots,d:  \VV{\act}{\l}{t_\act}{w}{d'} = \lviol{w}{d'}{t_\act}{\act}{\l}$ \\
-
-\cmnt\ Precondition: $\fas w \in \dsk{\act}{\l}, d' = 1,\ldots,d-1: \VV{\act}{\l}{t_\act}{w}{d'} = \lviol{w}{d'}{t_\act}{\act}{\l}$\\
-\cmnt\ Postcondition: $\fas w \in \dsk{\act}{\l}-v, d' = 1,\ldots,d-1:  \VV{\act}{\l}{t_\act}{w}{d'} = \lviol{w}{d'}{t_\act}{\act}{\l} ~\land$ \\
-\cmnt\ \hspace{6.5em} $\fas d' = 1,\ldots,d:  \VV{\act}{\l}{t_\act}{v}{d'} = \lviol{w}{d'}{t_\act}{\act}{\l}$ \\
-
-\lio{\IFC{d = 1}}
-       \lit{\IFC{\mbox{$v$ is an interior interaction $\actp$ and }
-              \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act})}}
-                     \lihc{\VV{\act}{\l}{t_\act}{v}{1} \gts \ttt}{\cmnt no outgoing wait-for-edges}   % \lihc{\RETURNE{\ttt}}{\cmnt no outgoing wait-for-edges}
-       \lit{\ELSE\ \VV{\act}{\l}{t_\act}{v}{1} \gts \fff}            %\RETURNE{\fff}}
        \lit{\FI}
-\lio{\FI}
+\lio{\ENDFOR}\\
 
+\lio{\WHILEC{foundScViolate}}
+  \lit{foundScViolate \gts \fff}
+  \lit{\FORALLC{v \in \dsk{\act}{\l} : \lnot \VV{\act}{\l}{t_\act}{v}{}}}
+  \lih{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
+                 (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} :  \VV{\act}{\l}{t_\act}{B_i}{})}}
+          \lif{\VV{\act}{\l}{t_\act}{v}{} \gts \ttt}
+          \lif{foundScViolate \gts \ttt}
 
-\cmnt\ here $d > 1$\\
-
-\lio{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
-                 (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} :   \VV{\act}{\l}{t_\act}{B_i}{d-1})}}
-%                 (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} : \lviol{\B_i}{d-1}{t_\act}{\act}{\l})}}
-%        \lit{\RETURNE{\ttt}}
-          \lit{\VV{\act}{\l}{t_\act}{v}{d} \gts \ttt}
-
-\lio{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
-              (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : \VV{\act}{\l}{t_\act}{\actp}{d-1})}}
-%            (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : \lviol{\actp}{d-1}{t_\act}{\act}{\l})}}
-%       \lit{\RETURNE{\ttt}}
-         \lit{\VV{\act}{\l}{t_\act}{v}{d} \gts \ttt}
-
-%\lio{\ELSE\ \RETURNE{\fff}}
-\lio{\ELSE\ \VV{\act}{\l}{t_\act}{v}{d} \gts \fff}
-
-\lio{\FI}
+\lih{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
+              (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : \VV{\act}{\l}{t_\act}{\actp}{})}}
+         \lif{\VV{\act}{\l}{t_\act}{v}{d} \gts \ttt}
+          \lif{foundScViolate \gts \ttt}
+    \lih{\FI}
+  \lit{\ENDFOR}
+\lion{\ENDWHILE} 
 \end{tabbing}
 \vspace{-3ex}
-
 \caption{Procedure to compute all supercycle-violations in state $t_\act$ of $\dsk{\act}{\l}$}
 \label{fig:computeSCViolateLocDSK}
 \label{fig:computeSCViolateLoc}
@@ -383,23 +315,6 @@ $\cViolDBN{\dsk{\act}{\l}, t_\act, d, v}$\\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
-\subsubsection{Experiments}
-
-TO BE DONE:
-\bn
-
-\item Implement above algorithm
-
-\item Select case studies. We need examples that have ``branching
-waiting'' behavior, \ie a process waits for alternatives. For example,
-dining philosopher is NOT an example of this. 
-
-One possible source is the paper 
-``Evaluating Deadlock Detection Methods for Concurrent Software'', 
-IEEE Transactions on Software Engineering, Vol. 22, No. 3, March 1996
-
-\en
 
 
 
