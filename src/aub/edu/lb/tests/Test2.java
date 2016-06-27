@@ -3,7 +3,8 @@ package aub.edu.lb.tests;
 import java.io.FileNotFoundException;
 
 import aub.edu.lb.bip.examples.*;
-import aub.edu.lb.conditions.LocalCompleteDeadlockFreeCondition;
+import aub.edu.lb.conditions.CheckableCondition;
+import aub.edu.lb.conditions.localAndOr.LALT;
 import aub.edu.lb.configuration.Configuration;
 
 public class Test2 {
@@ -15,7 +16,7 @@ public class Test2 {
 		GasStation gs = new GasStation();
 		gs.generateGasStation(9, 3);
 				
-		LocalCompleteDeadlockFreeCondition ldfc = new LocalCompleteDeadlockFreeCondition("BIPExamples/atm6.bip", true);
+		CheckableCondition ldfc = new LALT("BIPExamples/atm6.bip", true);
 		startTime = System.currentTimeMillis();
 		System.out.println("LCDFC " + ldfc.check());
 		stopTime = System.currentTimeMillis();

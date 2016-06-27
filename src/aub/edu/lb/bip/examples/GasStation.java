@@ -121,7 +121,6 @@ public class GasStation {
 		for(int i = 0 ; i < nbOfCustomers ; i++)
 		{
 			pumpNb = (pumpNb + 1) % nbOfPumps;
-			//if(i%nbOfPumps == 0) pumpNb = (pumpNb + 1)%nbOfPumps;
 			BIPFile.println("    connector rendezvous3 prepayCustom"+  i +" (custom"+  i +".prepay, op.prepay"+  pumpNb +" , pump"+  pumpNb +".activate)");
 			BIPFile.println("    connector rendezvous2 startCustom"+  i +" (custom"+  i +".start, pump"+  pumpNb +".start)");
 			BIPFile.println("    connector rendezvous3 finishCustom"+  i +" (custom"+  i +".finish, pump"+  pumpNb +".finish, op.finish)");
