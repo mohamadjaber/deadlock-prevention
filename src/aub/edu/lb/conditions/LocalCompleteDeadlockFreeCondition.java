@@ -31,15 +31,16 @@ public class LocalCompleteDeadlockFreeCondition extends
 		Configuration.startTime = System.currentTimeMillis();
 
 		Kripke kripke = new Kripke(subSystem);
-		
 	
-		
 		for (KripkeState state : kripke.getStates()) {
 			for (Transition transition : state.getTransitions()) {
 				// sa -- a --> ta
 				if (transition.getLabel().equals(interaction)) {
 					WaitForGraph wfg = new WaitForGraph(transition.getEndState().getState());
 					if (checkPath(wfg, interaction) || checkSC(wfg)) {
+						// Debug
+						Configuration.stopTime = System.currentTimeMillis();
+						Configuration.totalTime += (Configuration.stopTime - Configuration.startTime);
 						return false;
 					}
 

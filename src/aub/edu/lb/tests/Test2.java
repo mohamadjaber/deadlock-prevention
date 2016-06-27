@@ -13,7 +13,7 @@ public class Test2 {
 		long startTime, stopTime;
 		
 		GasStation gs = new GasStation();
-		gs.generateGasStation(9);
+		gs.generateGasStation(9, 3);
 				
 		LocalCompleteDeadlockFreeCondition ldfc = new LocalCompleteDeadlockFreeCondition("BIPExamples/atm6.bip", true);
 		startTime = System.currentTimeMillis();

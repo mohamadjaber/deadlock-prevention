@@ -103,7 +103,7 @@ public class ResourceAllocation {
 
 		output += space + "on releaseTokenResource from lHasToken to lTokenWithResource provided true do {}\n"; 
 		// TO BE REMOVED -- CHECK...
-		output += space + "on getTokenResource from lNoToken to lHasToken provided true do {}\n"; 
+		// output += space + "on getTokenResource from lNoToken to lHasToken provided true do {}\n"; 
 		output += space + "on getTokenResource from lTokenWithResource to lHasToken provided true do {}\n"; 
 		
 		output += "end\n";
@@ -390,7 +390,7 @@ public class ResourceAllocation {
 		int[][] resourceMapping = {{0, 1}, {1, 0}, {2} , {3}, {4}};
 		int[][] conflictingResources = {{0, 1}, {2, 3, 4}};
 		int nbOfTokens = 2; 
-		String fileName = "BIPExamples/resourceAllocationConflict_" + nbOfClients + "_" + nbOfResources + "_" + nbOfTokens + ".bip";
+		String fileName = "BIPExamples/resourceAllocationConflict_" + nbOfClients + "_" + nbOfResources + "_" + nbOfTokens + "xxx.bip";
 		
 		bipFile = new PrintStream(new File(fileName));
 		bipFile.print(resourceAllocationConflicting(nbOfClients, nbOfResources, resourceMapping, nbOfTokens, conflictingResources));

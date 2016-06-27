@@ -25,7 +25,7 @@ public class LocalSconnViolation {
 	 * WL = graph obtained by removing all nodes with no super-cycle violation (WL = subWFGWithoutViolationNodes)
 	 * Bi is in strongly connected super-cycle which is in WL:
 	 * 1. compute strong connected parts of WL = C1, C2, ..., Cn
-	 * 2. if Bi is trivial strongly connected component -> violation -> return true
+	 * 2. if Bi is in trivial strongly connected component -> violation -> return true
 	 * 3. if Bi is in non trivial strongly connected component C: 
 	 *			3.1 Mark all nodes in C that cannot be in strongly connected super-cycle:
 	 *				Repeat until no change:

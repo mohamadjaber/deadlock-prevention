@@ -85,6 +85,9 @@ public class LALT implements CheckableCondition {
 			for(Transition transition: state.getTransitions()) {
 				if(transition.getLabel().equals(interaction)) {
 					if(!localFormViolation(interaction.getComponents(), kripke, transition.getEndState().getState())) 
+						// Debug
+						Configuration.stopTime = System.currentTimeMillis();
+						Configuration.totalTime += (Configuration.stopTime - Configuration.startTime);
 						return false;
 				}
 			}

@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import ujf.verimag.bip.Core.Interactions.CompoundType;
 import BIPTransformation.TransformationFunction;
+import aub.edu.lb.configuration.Configuration;
 import aub.edu.lb.kripke.Kripke;
 import aub.edu.lb.kripke.KripkeState;
 import aub.edu.lb.kripke.Transition;
@@ -42,6 +43,8 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 	 * @return
 	 */
 	protected boolean localLDFC(BIPInteraction interaction) {
+		// Debug
+		Configuration.startTime = System.currentTimeMillis();
 		Kripke kripke = new Kripke(subSystem);
 
 		for(KripkeState state : kripke.getStates()) {
@@ -49,11 +52,16 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 				if(transition.getLabel().equals(interaction)) {
 					WaitForGraph wfg = new WaitForGraph(transition.getEndState().getState());
 					if(!wfg.checkNoInNoOut(interaction.getComponents(), subSystem.getLength())) {
+						Configuration.stopTime = System.currentTimeMillis();
+						Configuration.totalTime += (Configuration.stopTime - Configuration.startTime);
 						return false;
 					}	
 				}
 			}
 		}
+		// Debug
+		Configuration.stopTime = System.currentTimeMillis();
+		Configuration.totalTime += (Configuration.stopTime - Configuration.startTime);
 		return true; 
 	}
 	
@@ -87,7 +95,7 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 			log.info("\nInteraction: " + interaction);
 			subSystem = new SubSystemDepth(interaction);			
 			if(!checkLocalLDFC(interaction)) return false;
-			else log.info(getName() + "(" + interaction + ","+subSystem.getLength() +") = true\n");
+			else log.info(getName() + "(" + interaction + "," + subSystem.getLength() +") = true\n");
 		}
 		return true;
 	}

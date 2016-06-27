@@ -14,10 +14,10 @@ public class GasStation {
 	private PrintStream INCFile ; 
 
 	
-	public void generateGasStation(int nbOfCustomers) {
+	public String generateGasStation(int nbOfCustomers, int nbOfPumps) {
 		try {
 			this.nbOfCustomers = nbOfCustomers;
-			this.nbOfPumps = 3;
+			this.nbOfPumps = nbOfPumps;
 
 			
 			FileName = "BIPExamples/gas_station" + nbOfCustomers + ".bip";
@@ -39,6 +39,7 @@ public class GasStation {
 		catch(IOException e) {
 			System.out.println(e);
 		}
+		return FileName;
 	}
 	
 	
@@ -116,10 +117,11 @@ public class GasStation {
 		BIPFile.println("    component Operator op");
 
 		
-		int pumpNb = -1;
+		int pumpNb = 0;
 		for(int i = 0 ; i < nbOfCustomers ; i++)
 		{
-			if(i%nbOfPumps == 0) pumpNb = (pumpNb + 1)%nbOfPumps;
+			pumpNb = (pumpNb + 1) % nbOfPumps;
+			//if(i%nbOfPumps == 0) pumpNb = (pumpNb + 1)%nbOfPumps;
 			BIPFile.println("    connector rendezvous3 prepayCustom"+  i +" (custom"+  i +".prepay, op.prepay"+  pumpNb +" , pump"+  pumpNb +".activate)");
 			BIPFile.println("    connector rendezvous2 startCustom"+  i +" (custom"+  i +".start, pump"+  pumpNb +".start)");
 			BIPFile.println("    connector rendezvous3 finishCustom"+  i +" (custom"+  i +".finish, pump"+  pumpNb +".finish, op.finish)");
@@ -141,10 +143,6 @@ public class GasStation {
 		INCFile.println(partition1);
 		INCFile.println(partition2);
 		INCFile.println(partition3);
-
-		
-	
-		
 	}
 
 
