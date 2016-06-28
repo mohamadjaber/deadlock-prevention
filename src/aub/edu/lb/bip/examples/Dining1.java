@@ -3,28 +3,43 @@ package aub.edu.lb.bip.examples;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dining1 {
 	private Integer nbOfPhilosophers;
 	private String FileName; 
+	private String FileNameInc; 
 
 	private PrintStream BIPFile ; 
+	private PrintStream INCFile ; 
+
+	private List<String> partitions;
+	private int nbPartitions;
 	
-	public void generateDiningBIP(int nbOfPhilosophers) {
+	public void generateDiningBIP(int nbOfPhilosophers, int partition) {
 		try {
+			this.nbPartitions = partition;
+			partitions = new ArrayList<String>(partition);
+			for(int i = 0; i < nbPartitions; i++) {
+				partitions.add("");
+			}
 			this.nbOfPhilosophers = nbOfPhilosophers;
-			FileName = "dining"+ nbOfPhilosophers + ".bip"; 
-	
+			FileName = "/home/mj54/tools/bench/dining/dining"+ nbOfPhilosophers + ".bip"; 
+			FileNameInc = "/home/mj54/tools/bench/dining/dining" + nbOfPhilosophers + ".incr"; 
+			INCFile = new PrintStream(new File(FileNameInc));
+
 			BIPFile = new PrintStream(new File(FileName));
 			BIPFile.println("model dining");
 			CreateConnectors();
 			CreateAtomics();
 			CreateCompoundType();
 			
-	
+
 			BIPFile.println("component DiningPhilosopher top");
 			BIPFile.write("end\n".getBytes());
 			BIPFile.close();
+			INCFile.close();
 		}
 		catch(IOException e) {
 			System.out.println(e);
@@ -96,11 +111,19 @@ public class Dining1 {
 		{
 			BIPFile.println("    component Philosopher p"+i+"("+i+")");
 			BIPFile.println("    component Fork f"+i+"("+i+")");
+			String s = partitions.get(i % nbPartitions);
+			
+			partitions.set(i % nbPartitions, s + " f" + i + " f" + ((i+1)%nbOfPhilosophers) + " p" + i);
+
 		}
 		for(int i = 0 ; i < nbOfPhilosophers ; i++)
 		{
 			BIPFile.println("    connector SyncThree connGet"+ i + "(f"+ i + ".getRight, p"+ i + ".get, f"+ (i+1)%nbOfPhilosophers + ".getLeft)");
 			BIPFile.println("    connector SyncThree connRelease"+ i + "(f"+ i + ".releaseRight, p"+ i + ".release, f"+ (i+1)%nbOfPhilosophers + ".releaseLeft)");
+		}
+		
+		for(String s: partitions) {
+			INCFile.println(s);
 		}
 
 		BIPFile.println("end\n");
@@ -120,7 +143,7 @@ public class Dining1 {
 		int step = Integer.parseInt(args[1]);
 		int end = Integer.parseInt(args[2]);
 		for(int i = start; i <= end; i+=step) {
-			dp.generateDiningBIP(i);
+			dp.generateDiningBIP(i, i / 5);
 		}
 	}
 
