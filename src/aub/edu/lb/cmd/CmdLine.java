@@ -31,7 +31,7 @@ public class CmdLine {
 			startTime = System.currentTimeMillis();
 			System.out.println(condition.check()? CmdLineFactory.deadlockFreeMessage(): CmdLineFactory.deadlockMessage());
 			stopTime = System.currentTimeMillis();
-			System.out.println(cmdLine.getConditionType() + " -- Total Time (seconds): " + (stopTime-startTime)/1000);
+			System.out.println(cmdLine.getConditionType() + " -- Total Time (ms): " + (stopTime-startTime));
 		}
 	}
 	

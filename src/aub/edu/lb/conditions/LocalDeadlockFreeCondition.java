@@ -108,7 +108,8 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 		}
 		
 		log.info("\n------------------------------------------\n");
-		log.info("Max Length: " + maxLength);
+		log.info("Max Length: " + maxLength + "\n");
+		log.info("Max States: " + maxStates + "\n");
 		return true;
 	}
 	
