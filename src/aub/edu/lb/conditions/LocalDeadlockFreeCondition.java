@@ -22,6 +22,8 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 	
 	protected SubSystemDepth subSystem; 
 	private static Logger log = Logger.getLogger(LocalCompleteDeadlockFreeCondition.class.getName());
+	int maxLength = 0;
+	long maxStates = 0; 
 	
 	static {
 		LogManager.getLogManager().reset();
@@ -67,7 +69,9 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 	
 	private void printLog() {
 		log.info("\nLength = " + subSystem.getLength() + "\n");
-		log.info("Number states of the subSystem: " + subSystem.getNumberStates() + "\n");
+		long nbStates = subSystem.getNumberStates();
+		maxStates = Math.max(maxStates, nbStates);
+		log.info("Number states of the subSystem: " + nbStates + "\n");
 		// log.info(subSystem.toString() + "\n");
 		log.info("Components: " + subSystem.getComponents().size() + " out of " + BIPAPI.getComponents().size() + "\n");
 	}
@@ -88,8 +92,7 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 		if(initialSuperCycle()) {
 			return false;
 		}
-		
-		int maxLength = 0;
+	
 		
 		log.info("Number states of the full system: " + BIPAPI.getNumberStates() + "\n");
 

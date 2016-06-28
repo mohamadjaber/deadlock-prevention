@@ -26,7 +26,9 @@ import aub.edu.lb.model.SubSystemDepth;
 public class LALT implements CheckableCondition {
 	private static Logger log = Logger.getLogger(LocalCompleteDeadlockFreeCondition.class.getName());
 	protected SubSystemDepth subSystem; 
-
+	int maxLength = 0;
+	long maxStates = 0;
+	
 	static {
 		LogManager.getLogManager().reset();
 		ConsoleHandler handler = new ConsoleHandler();
@@ -43,7 +45,6 @@ public class LALT implements CheckableCondition {
 	
 	public boolean check() {
 		if(initialSuperCycle()) return false;
-		int maxLength = 0;
 
 		log.info("Number states of the full system: " + BIPAPI.getNumberStates() + "\n");
 		
@@ -59,13 +60,16 @@ public class LALT implements CheckableCondition {
 		}
 		
 		log.info("\n------------------------------------------\n");
-		log.info("Max Length: " + maxLength);
+		log.info("Max Length: " + maxLength + "\n");
+		log.info("Max States: " + maxStates + "\n");
 		return true;
 	}
 	
 	private void printLog() {
 		log.info("\nLength = " + subSystem.getLength() + "\n");
-		log.info("Number states of the subSystem: " + subSystem.getNumberStates() + "\n");
+		long nbStates = subSystem.getNumberStates();
+		maxStates = Math.max(maxStates, nbStates);
+		log.info("Number states of the subSystem: " + nbStates + "\n");
 		// log.info(subSystem.toString() + "\n");
 		log.info("Components: " + subSystem.getComponents().size() + " out of " + BIPAPI.getComponents().size() + "\n");
 	}
