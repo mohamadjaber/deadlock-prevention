@@ -57,6 +57,7 @@ public class LALT implements CheckableCondition {
 			}
 			log.info("-----------------------------");
 		}
+		log.info("\n------------------------------\n");
 		log.info("Max Length: " + maxLength);
 		return true;
 	}
