@@ -101,7 +101,10 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 				maxLength = Math.max(maxLength, subSystem.getLength());
 				log.info(getName() + "(" + interaction + "," + subSystem.getLength() +") = true\n");
 			}
+			log.info("------------------------------------------");
 		}
+		
+		log.info("\n------------------------------------------\n");
 		log.info("Max Length: " + maxLength);
 		return true;
 	}

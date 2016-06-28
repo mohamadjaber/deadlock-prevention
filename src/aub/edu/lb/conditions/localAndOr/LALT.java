@@ -53,11 +53,12 @@ public class LALT implements CheckableCondition {
 			if(!laltInteraction(interaction)) return false;
 			else {
 				maxLength = Math.max(maxLength, subSystem.getLength());
-				log.info(getName() + "(" + interaction + ", " + subSystem.getLength() +") = true\n");
+				log.info(getName() + "(" + interaction + ","+ subSystem.getLength() +") = true\n");
 			}
-			log.info("-----------------------------");
+			log.info("------------------------------------------");
 		}
-		log.info("\n------------------------------\n");
+		
+		log.info("\n------------------------------------------\n");
 		log.info("Max Length: " + maxLength);
 		return true;
 	}
@@ -90,11 +91,12 @@ public class LALT implements CheckableCondition {
 		for(KripkeState state : kripke.getStates()) {
 			for(Transition transition: state.getTransitions()) {
 				if(transition.getLabel().equals(interaction)) {
-					if(!localFormViolation(interaction.getComponents(), kripke, transition.getEndState().getState())) 
+					if(!localFormViolation(interaction.getComponents(), kripke, transition.getEndState().getState())) {
 						// Debug
 						Configuration.stopTime = System.currentTimeMillis();
 						Configuration.totalTime += (Configuration.stopTime - Configuration.startTime);
 						return false;
+					}
 				}
 			}
 		}
