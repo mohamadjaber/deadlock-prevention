@@ -40,7 +40,7 @@ dining3000:          2m:41
 dining4000:          5m:37
 dining5000:          12m:38
 dining6000:           17m:48
-dining7000:            30:18
+dining7000:            30m:18
 dining8000:            -
 dining9000:            - 
 dining9000:            -
@@ -94,13 +94,40 @@ nb of interactions: 6*n
 n             time                max length            max states                 
 2              15ms                  2                           240 out of 3600
 4              81 ms               2                            6400
-6              15 seconds       3                            23040000 (12 out of 18)
+6              15 seconds       3                            23040000 (12 components out of 18)
 8              117seconds      3         23040000 (12 out of 24) 
-10             148 seconds               3         23040000 (12 out of 30) 
-12             169 seconds               3         23040000 (12 out of 36) 
+10            148 seconds               3         23040000 (12 out of 30) 
+12            169 seconds              3         23040000 (12 out of 36) 
+14             189 seconds            3        23040000 (12 out of 42) 
+16              230 seconds           3           23040000 (12 out of 48)
+18             284 seconds           3           23040000 (12 out of 54)
 
 
+
+    
 the performance can be drastically improved if we parallelize (per interaction) the computation of the condition
 
-LLIN not complete (the system might contain deadlock
+LLAT linear w.r.t. n! although number of states is exponential w.r.t. n
 
+LLIN not complete (the system might contain deadlock)
+
+
+DFinder: 
+n       time 
+2        1sec
+4         3 sec
+6         
+8
+12
+14
+16
+18
+20
+
+——————————
+video surveillance 
+all states 4,410,000 states
+
+LALT 53 seconds 
+Max Length: 3 - 9 out 12 components - (220,500 states)
+—————————— 
