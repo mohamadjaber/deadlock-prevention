@@ -68,7 +68,7 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 	private void printLog() {
 		log.info("\nLength = " + subSystem.getLength() + "\n");
 		log.info("Number states of the subSystem: " + subSystem.getNumberStates() + "\n");
-		log.info(subSystem.toString() + "\n");
+		// log.info(subSystem.toString() + "\n");
 		log.info("Components: " + subSystem.getComponents().size() + " out of " + BIPAPI.getComponents().size() + "\n");
 	}
 	
@@ -89,14 +89,20 @@ public class LocalDeadlockFreeCondition implements CheckableCondition {
 			return false;
 		}
 		
+		int maxLength = 0;
+		
 		log.info("Number states of the full system: " + BIPAPI.getNumberStates() + "\n");
 
 		for(BIPInteraction interaction: BIPAPI.getInteractions()) {
 			log.info("\nInteraction: " + interaction);
 			subSystem = new SubSystemDepth(interaction);			
 			if(!checkLocalLDFC(interaction)) return false;
-			else log.info(getName() + "(" + interaction + "," + subSystem.getLength() +") = true\n");
+			else {
+				maxLength = Math.max(maxLength, subSystem.getLength());
+				log.info(getName() + "(" + interaction + "," + subSystem.getLength() +") = true\n");
+			}
 		}
+		log.info("Max Length: " + maxLength);
 		return true;
 	}
 	
