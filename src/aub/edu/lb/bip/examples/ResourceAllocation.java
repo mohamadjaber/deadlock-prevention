@@ -3,9 +3,16 @@ package aub.edu.lb.bip.examples;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResourceAllocation {
 	private static PrintStream bipFile;
+	private static PrintStream INCFile ; 
+	
+	
+	private static List<String> partitions;
+	private static int countPartition;
 
 	static String space = "\t";
 	static int connectorCounter = 0;
@@ -158,6 +165,11 @@ public class ResourceAllocation {
 						+ ".rcvToken" + ", t" + i + ".releaseTokenResource" + ")\n";
 				output += space + "connector Sync2 conn" + (connectorCounter++) + "(" + "r" + conflictingResources[i][j]
 						+ ".sendToken" + ", t" + i + ".getTokenResource" + ")\n";
+				
+				String partition = partitions.get(countPartition);
+				partition += "r" + conflictingResources[i][j] + " t" + i + " ";
+				partitions.set(countPartition, partition);
+				countPartition = (countPartition + 1) % partitions.size();
 			}
 		}
 		return output;
@@ -171,6 +183,10 @@ public class ResourceAllocation {
 					+ resources[i] + ", r" + resources[i] + ".rcvRequest" + ")\n";
 			output += space + "connector Sync2 conn" + (connectorCounter++) + "(" + "c" + clientId + ".pGrant"
 					+ resources[i] + ", r" + resources[i] + ".sendResource" + ")\n";
+			String partition = partitions.get(countPartition);
+			partition +=  "c" + clientId  + " r" + resources[i] + " "; 
+			partitions.set(countPartition, partition);
+			countPartition = (countPartition + 1) % partitions.size();
 		}
 
 		output += space + "connector Sync" + (resources.length + 1) + " conn" + (connectorCounter++) + "(c" + clientId
@@ -189,6 +205,11 @@ public class ResourceAllocation {
 		for (int i = 0; i < numberOfResources; i++) {
 			output += space + "connector Sync2 conn" + (connectorCounter++) + "(" + "t" + i + ".releaseTokenToken"
 					+ ", t" + ((i + 1) % numberOfResources) + ".getTokenToken" + ")\n";
+			String partition = partitions.get(countPartition);
+			partition +=  "t" + i  + " t" + ((i + 1) % numberOfResources) + " ";
+			partitions.set(countPartition, partition);
+			countPartition = (countPartition + 1) % partitions.size();
+
 		}
 		return output;
 	}
@@ -446,9 +467,23 @@ public class ResourceAllocation {
 		bipFile.print(resourceAllocationConflicting(nbOfClients, nbOfResources, resourceMapping, nbOfTokens,
 				conflictingResources));
 	}
+	
+	// Local deadlock exist but no global deadlock 
+	public static void generateTokenRingConflict4() throws FileNotFoundException {
+		int nbOfClients = 5;
+		int nbOfResources = 5;
+		int[][] resourceMapping = { { 0, 2 }, { 2, 0 }, { 1 }, { 3 }, { 4 } };
+		int[][] conflictingResources = { { 0, 1 }, { 2, 3 }, { 4 } };
+		int nbOfTokens = 3;
+		String fileName = "BIPExamples/resourceAllocationConflict_" + 5 + "_" + 5 + "_" + 3 + ".bip";
 
-	// Local deadlock exist
-	public static void generateTokenRingBench(int n) throws FileNotFoundException {
+		bipFile = new PrintStream(new File(fileName));
+		bipFile.print(resourceAllocationConflicting(nbOfClients, nbOfResources, resourceMapping, nbOfTokens,
+				conflictingResources));
+	}
+
+	// no Local deadlock 
+	public static void generateTokenRingBench(int n, int nbPartitions) throws FileNotFoundException {
 		int nbOfClients = n;
 		int nbOfResources = n;
 		int[][] resourceMapping = new int[n][1];
@@ -459,15 +494,29 @@ public class ResourceAllocation {
 			conflictingResources[i][0] = i;
 		}
 		String fileName = "BIPExamples/resourceAllocationConflict_" + nbOfClients + ".bip";
+		String fileNameInc = "BIPExamples/resourceAllocationConflict_" + nbOfClients + ".incr";
 
 		bipFile = new PrintStream(new File(fileName));
+		INCFile = new PrintStream(new File(fileNameInc)) ; 
+		partitions = new ArrayList<String>(nbPartitions);
+		for(int i = 0; i < nbPartitions; i++) partitions.add("");
+		countPartition = 0;
+		
 		bipFile.print(resourceAllocationConflicting(nbOfClients, nbOfResources, resourceMapping, nbOfTokens,
 				conflictingResources));
+		
+		for(String partition: partitions) {
+			INCFile.println(partition);
+		}
+		
+		bipFile.close();
+		INCFile.close();
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-		for(int i = 2; i <= 50; i+=2)
-			generateTokenRingBench(i);
+		for(int i = 2; i <= 50; i+=2) {
+			generateTokenRingBench(i, (int) Math.ceil(i / 5.));
+		}
 	}
 
 }
