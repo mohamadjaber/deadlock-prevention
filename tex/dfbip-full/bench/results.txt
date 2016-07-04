@@ -118,17 +118,22 @@ LLAT linear w.r.t. n! although number of states is exponential w.r.t. n
 LLIN not complete (the system might contain deadlock)
 
 
-DFinder: 
-n       time 
-2        1sec
-4         3 sec
-6         
-8
+DFinder: IPM (N partitions) 
+n       time 	
+2       1sec       
+4       1sec  
+6	45sec	
+8       
 12
 14
 16
 18
 20
+22
+24
+26
+28
+30
 
 ——————————
 video surveillance 

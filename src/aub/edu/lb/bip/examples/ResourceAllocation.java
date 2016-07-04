@@ -167,9 +167,20 @@ public class ResourceAllocation {
 						+ ".sendToken" + ", t" + i + ".getTokenResource" + ")\n";
 				
 				String partition = partitions.get(countPartition);
-				partition += "r" + conflictingResources[i][j] + " t" + i + " ";
-				partitions.set(countPartition, partition);
-				countPartition = (countPartition + 1) % partitions.size();
+				String newComponent1 = "r" + conflictingResources[i][j];
+				String newComponent2 = "t" + i;
+				boolean found = false;
+				if(!partition.contains(newComponent1)) {
+					partition += newComponent1 + " ";
+					partitions.set(countPartition, partition);
+					found = true;
+				}
+				if(!partition.contains(newComponent2)) {
+					partition += newComponent2 + " ";
+					partitions.set(countPartition, partition);
+					found = true;
+				}
+				if(found) countPartition = (countPartition + 1) % partitions.size();
 			}
 		}
 		return output;
@@ -184,9 +195,23 @@ public class ResourceAllocation {
 			output += space + "connector Sync2 conn" + (connectorCounter++) + "(" + "c" + clientId + ".pGrant"
 					+ resources[i] + ", r" + resources[i] + ".sendResource" + ")\n";
 			String partition = partitions.get(countPartition);
-			partition +=  "c" + clientId  + " r" + resources[i] + " "; 
-			partitions.set(countPartition, partition);
-			countPartition = (countPartition + 1) % partitions.size();
+			boolean found = false;
+			String newComponent1 = "c" + clientId ;
+			String newComponent2 = "r" + resources[i];
+
+			if(!partition.contains(newComponent1)) {
+				partition +=  newComponent1 + " "; 
+				partitions.set(countPartition, partition);
+				found = true;
+			}
+			if(!partition.contains(newComponent2)) {
+				partition +=  newComponent2 + " "; 
+				partitions.set(countPartition, partition);
+				found = true;
+			}
+			
+			if(found) countPartition = (countPartition + 1) % partitions.size();
+			
 		}
 
 		output += space + "connector Sync" + (resources.length + 1) + " conn" + (connectorCounter++) + "(c" + clientId
@@ -206,9 +231,20 @@ public class ResourceAllocation {
 			output += space + "connector Sync2 conn" + (connectorCounter++) + "(" + "t" + i + ".releaseTokenToken"
 					+ ", t" + ((i + 1) % numberOfResources) + ".getTokenToken" + ")\n";
 			String partition = partitions.get(countPartition);
-			partition +=  "t" + i  + " t" + ((i + 1) % numberOfResources) + " ";
-			partitions.set(countPartition, partition);
-			countPartition = (countPartition + 1) % partitions.size();
+			String newComponent1 = "t" + i  ;
+			String newComponent2 = "t" + ((i + 1) % numberOfResources);
+			boolean found = false;
+			if(!partition.contains(newComponent1)) {
+				partition +=  newComponent1 + " ";
+				partitions.set(countPartition, partition);
+				found = true;
+			}
+			if(!partition.contains(newComponent2)) {
+				partition +=  newComponent2 + " ";
+				partitions.set(countPartition, partition);
+				found = true;
+			}
+			if(found) countPartition = (countPartition + 1) % partitions.size();
 
 		}
 		return output;
@@ -494,7 +530,7 @@ public class ResourceAllocation {
 			conflictingResources[i][0] = i;
 		}
 		String fileName = "BIPExamples/resourceAllocationConflict_" + nbOfClients + ".bip";
-		String fileNameInc = "BIPExamples/resourceAllocationConflict_" + nbOfClients + ".incr";
+		String fileNameInc = "BIPExamples/resourceAllocationConflict_" + nbOfClients + "_" + nbPartitions + ".incr";
 
 		bipFile = new PrintStream(new File(fileName));
 		INCFile = new PrintStream(new File(fileNameInc)) ; 
@@ -514,8 +550,12 @@ public class ResourceAllocation {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-		for(int i = 2; i <= 50; i+=2) {
-			generateTokenRingBench(i, (int) Math.ceil(i / 5.));
+		for(int i = 2; i <= 30; i+=2) {
+			generateTokenRingBench(i, i/2);
+			generateTokenRingBench(i, i);
+			generateTokenRingBench(i, 2*i);
+			generateTokenRingBench(i, 4*i);
+			generateTokenRingBench(i, 6*i);
 		}
 	}
 
