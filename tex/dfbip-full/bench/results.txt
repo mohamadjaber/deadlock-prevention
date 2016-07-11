@@ -123,17 +123,17 @@ n       time
 2       1sec       
 4       1sec  
 6	45sec	
-8       
-12
-14
-16
-18
-20
-22
-24
-26
-28
-30
+8        timeout (try N / 2, N/4, 2N, 4N partitions)
+12          "
+14          "
+16	    "
+18	    "
+20	    "
+22          "
+24	    "
+26          "
+28          "
+30          "       
 
 ——————————
 video surveillance 
