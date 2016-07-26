@@ -47,15 +47,27 @@ checkable deadlock freedom condition based on structural restrictions:
 ``the communication structure between the components is given by a
 tree.'' This restriction allows them to analyze only pair systems.
 %
-Brookes and Roscoe~\cite{brookes91deadlockFreedom} provide criteria for
-deadlock freedom of CSP programs based on structural and behavioral restrictions
-combined with analysis of pair systems.
-No implementation, or complexity bounds, are given.
-%
 Aldini and Bernardo \cite{AB03} use a 
 formalism based on process algebra. They check deadlock by analysing cycles in
 the connections between software components, and claim scalability, but no
 complexity bounds are given.
+
+Roscoe and Dathi \cite{RD87} present several rules for deadlock freedom of CSP programs. The basis for these rules is to define ``variant function'' that maps
+the state of each process to a partially ordered set. The first rule requires to establish that, if $P_i$ waits for $P_j$, then the value of $P_i$'s state is greater than the value of
+$P_j$'s state. This precludes the formation of wait-for cycles, and therefore of deadlock. They treat several examples, including a self-timed
+systolic array (in 2 and 3 dimensions), dining philosophers, and a message switching network.
+They generalize the first rule to exploit ``disconnecting edges'' (whose removal partitions the network into disconected components) to decompose the proof of deadlock freedom
+into showing that each disconnected component is deadlock-free, and also to weaken the restriction on the variant function so that it only has to
+decrease for at least one edge on each wait-for cycle.
+
+
+
+Brookes and Roscoe~\cite{brookes91deadlockFreedom} provide criteria for
+deadlock freedom of CSP programs based on structural and behavioral restrictions
+combined with analysis of pair systems.
+No implementation, or complexity bounds, are given.
+
+
 
 We compared our implementation \ldfctool to D-Finder 2~\cite{DFinder2}. D-Finder 2
 computes a finite-state abstraction for each component, which it uses
