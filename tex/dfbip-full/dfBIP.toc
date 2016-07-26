@@ -34,6 +34,6 @@
 \contentsline {subsubsection}{\numberline {7.5.1}Experiment: Dining Philosophers}{33}
 \contentsline {subsubsection}{\numberline {7.5.2}Experiment: Gas Station}{33}
 \contentsline {section}{\numberline {8}Discussion, Related Work, and Further Work}{39}
-\contentsline {paragraph}{Related work.}{39}
-\contentsline {paragraph}{Discussion.}{39}
-\contentsline {paragraph}{Further work.}{40}
+\contentsline {subsection}{\numberline {8.1}Related work.}{39}
+\contentsline {subsection}{\numberline {8.2}Discussion}{40}
+\contentsline {subsection}{\numberline {8.3}Further work.}{41}

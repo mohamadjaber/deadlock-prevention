@@ -1,5 +1,5 @@
 
-\paragraph{Related work.} 
+\subsection{Related work.} 
 The notions of wait-for-graph and supercycle \cite{AC05,AE98}
 were initially defined for a shared memory program
 $P = P_1 \pl \cdots \pl P_K$ in \emph{pairwise normal form}: a binary
@@ -13,7 +13,7 @@ atomically, so the grain of atomicity is proportional to the
 degree of $I$.
 %
 Attie and Chockler \cite{AC05} give two polynomial time 
-methods for deadlock freedom.
+methods for (local and global) deadlock freedom.
 The first checks subsystems consisting of three
 processes. The second computes the wait-for-graphs of all pair subsystems $P_i \pl P_j$,
 and takes their union, for all pairs
@@ -52,20 +52,42 @@ formalism based on process algebra. They check deadlock by analysing cycles in
 the connections between software components, and claim scalability, but no
 complexity bounds are given.
 
-Roscoe and Dathi \cite{RD87} present several rules for deadlock freedom of CSP programs. The basis for these rules is to define ``variant function'' that maps
-the state of each process to a partially ordered set. The first rule requires to establish that, if $P_i$ waits for $P_j$, then the value of $P_i$'s state is greater than the value of
-$P_j$'s state. This precludes the formation of wait-for cycles, and therefore of deadlock. They treat several examples, including a self-timed
-systolic array (in 2 and 3 dimensions), dining philosophers, and a message switching network.
-They generalize the first rule to exploit ``disconnecting edges'' (whose removal partitions the network into disconected components) to decompose the proof of deadlock freedom
-into showing that each disconnected component is deadlock-free, and also to weaken the restriction on the variant function so that it only has to
-decrease for at least one edge on each wait-for cycle.
+Roscoe and Dathi \cite{RD87} present several rules for freedom of global deadlock of
+``triple disjoint'' (no action involves $> 2$ processes) CSP concurrent
+programs. The basis for these rules is to first check that each individual process is deadlock free
+(\ie the network is ``busy''), and then to define a ``variant function'' that maps the state of each
+process to a partially ordered set. The first rule requires to establish that, if $P_i$ waits for
+$P_j$, then the value of $P_i$'s state is greater than the value of $P_j$'s state. 
+Since every process is blocked in a global deadlock, one can then construct an infinite sequence of
+processes with strictly decreasing values, which are therefore all distinct. This cannot happen in a
+finite network, and hence some process is not blocked.
+They treat several examples, including
+a self-timed systolic array (in 2 and 3 dimensions), dining philosophers, and a message switching
+network.  They generalize the first rule to exploit ``disconnecting edges'' (whose removal
+partitions the network into disconected components) to decompose the proof of deadlock freedom into
+showing that each disconnected component is deadlock-free, and also to weaken the restriction on the
+variant function so that it only has to decrease for at least one edge on each wait-for cycle.
+%
+Brookes and Roscoe~\cite{BR91} also provide criteria for deadlock
+freedom of triple-disjoint CSP programs, and use the same technical framework as
+\cite{RD87}.  However, they do not use variant functions, but show that, in a busy
+network, a deadlock implies the existence of a wait-for cycle. They give many examples,
+and demonstrate the absence of wait-for cycles in each example, by ad-hoc
+reasoning. Finally, they give a deadlock freedom rule that exploits disconnecting edges,
+similar to that of \cite{RD87}.
+%
+In both of these papers, the wait-for relations are defined by examining a pair of processes
+at a time: $P_i$ waits for $P_j$ iff $P_i$ offers an action to $P_j$ which $P_j$ is
+not willing to participate in.
 
-
-
-Brookes and Roscoe~\cite{brookes91deadlockFreedom} provide criteria for
-deadlock freedom of CSP programs based on structural and behavioral restrictions
-combined with analysis of pair systems.
-No implementation, or complexity bounds, are given.
+Martin \cite{Ma96} applies the results in \cite{RD87} and \cite{BR91} to formulate
+deadlock-freedom design rules for several classes of
+CSP concurrent programs: cyclic processes, client-server protocols, and resource
+allocation protocols. He also introduces the notion of ``state dependence digraph'' (SDD), whose
+nodes are local states of individual proceses, and whose edges are wait-for relations
+between processes in particular local states. An acyclic SDD implies deadlock-freedom.
+%
+Antonio \etal \cite{AGR16}
 
 
 
@@ -78,13 +100,27 @@ However, \ldfctool had superior running time for
 dining philosophers and gas station (both finite-state).
 
 
-All the above methods verify global (and not local) deadlock-freedom.
-Our method verifies both.
-Also, our approach makes no structural restriction at all on the system being
-checked for deadlock.
+All the above methods (except Attie and Chockler \cite{AC05}) verify global (and not
+local) deadlock-freedom.  Our method verifies local deadlock-freedom, which subsumes 
+global deadlock-freedom as a special case.
+Also, our approach makes no
+structural restriction at all on the system being checked for deadlock.  Our method checks
+for the absence of supercycles, which are a sound and complete characterization of
+deadlock, and the \LAO condition is complete \wrt the occurrence of a supercycle wholly
+within the subsystem being checked. 
+Hence the only source of incompleteness in our method is that of computational
+limitation: if the subsystem being checked becomes too large before 
+the \LAO condition is verified. If compuational resources are not exhausted, then our
+method can keep checking until the subsystem being checked is the entire system, at which
+point \LAO concides with \GAO, which is sound and complete for local deadlock
+(\prop{scViol-iff-notInSC}, \defn{formation.violation}, and \defn{global.ANDOR-cond}).
 
 
-\paragraph{Discussion.}
+
+
+
+
+\subsection{Discussion}
 Our approach has the following advantages:
 \begin{description}
 
@@ -117,7 +153,7 @@ which efficient distributed implementations can be generated
 \end{description}
 
 
-\paragraph{Further work.} 
+\subsection{Further work.} 
 Our implementation uses explicit state enumeration. % to evaluate $\LDFC(a, \l)$.
 Using BDD's may improve the running time 
 when $\LDFC(a, \l)$ holds only for large $\l$.
