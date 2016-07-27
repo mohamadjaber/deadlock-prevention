@@ -451,7 +451,7 @@ public class ResourceAllocation {
 		int[][] conflictingResources = { { 0, 1 }, { 2, 3, 4 } };
 		int nbOfTokens = 2;
 		String fileName = "BIPExamples/resourceAllocationConflict_" + nbOfClients + "_" + nbOfResources + "_"
-				+ nbOfTokens + "xxx.bip";
+				+ nbOfTokens + ".bip";
 
 		bipFile = new PrintStream(new File(fileName));
 		bipFile.print(resourceAllocationConflicting(nbOfClients, nbOfResources, resourceMapping, nbOfTokens,
@@ -506,6 +506,10 @@ public class ResourceAllocation {
 	
 	// Local deadlock exist but no global deadlock 
 	public static void generateTokenRingConflict4() throws FileNotFoundException {
+		partitions = new ArrayList<String>(1);
+		for(int i = 0; i < 1; i++) partitions.add("");
+		countPartition = 0;
+		
 		int nbOfClients = 5;
 		int nbOfResources = 5;
 		int[][] resourceMapping = { { 0, 2 }, { 2, 0 }, { 1 }, { 3 }, { 4 } };
@@ -513,6 +517,23 @@ public class ResourceAllocation {
 		int nbOfTokens = 3;
 		String fileName = "BIPExamples/resourceAllocationConflict_" + 5 + "_" + 5 + "_" + 3 + ".bip";
 
+		bipFile = new PrintStream(new File(fileName));
+		bipFile.print(resourceAllocationConflicting(nbOfClients, nbOfResources, resourceMapping, nbOfTokens,
+				conflictingResources));
+	}
+	
+	// LALT stronger than LIN
+	public static void generateTokenRingConflict5() throws FileNotFoundException {
+		partitions = new ArrayList<String>(1);
+		for(int i = 0; i < 1; i++) partitions.add("");
+		countPartition = 0;
+		
+		int nbOfClients = 5;
+		int nbOfResources = 5;
+		int[][] resourceMapping = { { 0, 2 }, { 0, 2 }, { 1 }, { 3 }, { 4 } };
+		int[][] conflictingResources = { { 0, 1 }, { 2, 3, 4 } };
+		int nbOfTokens = 2;
+		String fileName = "BIPExamples/resourceAllocationConflict_" + 5 + "_" + 5 + "_" + 31 + ".bip";
 		bipFile = new PrintStream(new File(fileName));
 		bipFile.print(resourceAllocationConflicting(nbOfClients, nbOfResources, resourceMapping, nbOfTokens,
 				conflictingResources));
@@ -550,6 +571,11 @@ public class ResourceAllocation {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
+		generateTokenRingConflict4();
+		generateTokenRingConflict5();
+		generateTokenRingConflict();
+
+		/*
 		for(int i = 2; i <= 30; i+=2) {
 			generateTokenRingBench(i, i/2);
 			generateTokenRingBench(i, i);
@@ -557,6 +583,7 @@ public class ResourceAllocation {
 			generateTokenRingBench(i, 4*i);
 			generateTokenRingBench(i, 6*i);
 		}
+		*/
 	}
 
 }

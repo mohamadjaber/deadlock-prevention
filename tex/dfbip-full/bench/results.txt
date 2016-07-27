@@ -51,10 +51,9 @@ note1: one interaction that connects all components.
 
 Lesson 1: DFinder only global deadlock 
 5 clients and 5 resources 
-resourceMapping = {{0, 2}, {2, 0}, {2} , {3}, {4}};
+resourceMapping = {{0, 2}, {2, 0}, {1} , {3}, {4}};
 conflictingResources = {{0, 1}, {2, 3}, {4}};
 nbOfTokens = 3;
-
 
 
 Local deadlock but not global deadlock 
@@ -64,7 +63,7 @@ however there exists a local deadlock (client0.RR, resource0.SR), whole system
 Lesson 2: LALT more complete 
 Resource Allocation: 
 5 clients and 5 resources; 
-resourceMapping = {{0, 2}, {0, 2}, {2} , {3}, {4}};
+resourceMapping = {{0, 2}, {0, 2}, {1} , {3}, {4}};
 conflictingResources = {{0, 1}, {2, 3, 4}};
 nbOfTokens = 2;
 
