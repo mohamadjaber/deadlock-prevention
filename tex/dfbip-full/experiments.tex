@@ -1,21 +1,3 @@
-TO BE DONE:
-\bn
-
-\item Implement above algorithm
-
-\item Select case studies. We need examples that have ``branching
-waiting'' behavior, \ie a process waits for alternatives. For example,
-dining philosopher is NOT an example of this. 
-
-One possible source is the paper 
-``Evaluating Deadlock Detection Methods for Concurrent Software'', 
-IEEE Transactions on Software Engineering, Vol. 22, No. 3, March 1996
-
-\en
-
-
-
-
 \subsubsection{Experiment: Dining Philosophers} 
 We consider $n$ philosophers in a cycle, based on the components of Figure~\ref{fig:diningSpectrum}.
 Figure~\ref{bench:dining} provides experimental results.
@@ -37,7 +19,7 @@ Our results show that \ldfctool has a linear increase of computation time with t
 $(n)$, and so outperforms D-Finder 2.
 
 
-\subsubsection{Experiment: Gas Station}
+\subsubsection{Experiment: Conflict-Resource Allocation System}
 A gas station \cite{gasstation} consists of an operator, % with a computer,
 a set of pumps, and a set of customers. 
 %Each pump can be used by a fixed number of customers.

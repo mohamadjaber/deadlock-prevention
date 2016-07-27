@@ -1,5 +1,19 @@
-\ldfctool, ($\sim 1500$ LOC Java) implements our method for finite-state BIP-systems.
-Pseudocode for \ldfctool is shown in Figure~\ref{fig:implementation}.
+%
+\deadlocktool{} ($\sim 2500$ LOC Java) is an implementation of our method and is available at 
+\href{http://todo}{http://todo}. 
+%
+\deadlocktool{} is equipped with a command line interface that accepts a set 
+of configuration options. 
+It takes the name of the input BIP file and optional flags. 
+\begin{lstlisting}[language=Bash]
+> java -jar ldfc.jar [options] input.bip 
+and options are:
+-condition <s> LLIN (local linear check) or LALT (local and/or check - default)
+               (optional)
+-debug         Prints useful information at each iteration of checking. 
+               Example: selected interaction, depth length, etc.
+               This information could be useful in case when the condition fails.
+\end{lstlisting}
 
-
-TODO
+%% bip results
+We evaluated \deadlocktool{} against DFinder, on two benchmarks: {\em Dining Philosopher} and {\em Generalized Conflict-Resource Allocation System}.

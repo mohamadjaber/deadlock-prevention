@@ -262,7 +262,7 @@ Let $\rho = s_0 \act_1 s_1 \ldots s_{j-1} \act_j s_j \ldots$ be an execution of 
 Then, $\rho \pj (\B', Q'_0)$ is an execution of $(\B', Q'_0)$.
 \ep
 %\begin{proof}
-\prf{
+\begin{prf}
 %Let $\rho = s_0 \act_1 s_1 \ldots s_{j-1} \act_j s_j \ldots$, be an execution of $(\B, Q_0)$,
 By Definitions~\ref{def.bip.state.projection}, \ref{def.bip.subsystem}, and \ref{def.bip.execution.projection}, 
 we have $\rho \pj (\B', Q'_0) = s'_0 \actb_1 s'_1 \actb_2 s'_2 \ldots$ for some $s'_0,\actb_1 s'_1 \actb_2 s'_2 \ldots$,
@@ -276,8 +276,8 @@ Since $\actb_j s'_j$ was not removed in Clause~\ref{def.clause.bip.execution.pro
 Definition~\ref{def.bip.execution.projection}, we have 
 
 \noindent
-(1) $s'_j = s_\l \pj \set{\B_{i_1},\dots,\B_{i_k}}$ for some $\l > 0$ and such that $\act_\l \ints P' \ne \emptyset$\\                     %$\act_\l \in \gamma'$\\
-(2) $\actb_j = \act_\l \ints P'$\\                                                              %$b_j = \act_k$
+(1) $s'_j = s_{\l} \pj \set{\B_{i_1},\dots,\B_{i_k}}$ for some $\l > 0$ and such that $\act_{\l} \ints P' \ne \emptyset$\\                     %$\act_\l \in \gamma'$\\
+(2) $\actb_j = \act_{\l} \ints P'$\\                                                              %$b_j = \act_k$
 (3) $s'_{j-1} = s_m \pj \set{\B_{i_1},\dots,\B_{i_k}}$ for the smallest $m$ such that\\
    \ind $m < \l$ and
         $\fa m' : {m+1 \leq m' < \l} : \act_{m'} \ints P' = \emptyset$                              %\act_{m'} \not\in \gamma'$
@@ -289,11 +289,11 @@ From (3) we have $s'_{j-1} = s_m \pj \set{\B_{i_1},\dots,\B_{i_k}}$.
 %From this and $s_m \pj \set{\B_{i_1},\dots,\B_{i_k}} = s_{\l-1} \pj \set{\B_{i_1},\dots,\B_{i_k}}$ just established, we obtain
 Hence $s'_{j-1} = s_{\l-1} \pj \set{\B_{i_1},\dots,\B_{i_k}}$.
 
-From $s_{\l-1} \goestog[\act_\l] s_\l$,    $\act_\l \ints P' \ne \emptyset$, and Definition~\ref{def.bip.composition}, we have  % $\act_k \in \gamma'$
-        $s_{\l-1} \pj \set{\B_{i_1},\dots,\B_{i_k}} \goestog[\act_\l \ints P'] s_\l \pj \set{\B_{i_1},\dots,\B_{i_k}}$.
+From $s_{\l-1} \goestog[\act_{\l}] s_{\l}$,    $\act_{\l} \ints P' \ne \emptyset$, and Definition~\ref{def.bip.composition}, we have  % $\act_k \in \gamma'$
+        $s_{\l-1} \pj \set{\B_{i_1},\dots,\B_{i_k}} \goestog[\act_{\l} \ints P'] s_{\l} \pj \set{\B_{i_1},\dots,\B_{i_k}}$.
 $s'_{j-1} = s_{\l-1} \pj \set{\B_{i_1},\dots,\B_{i_k}}$ was established above.
-$s'_j = s_\l \pj \set{\B_{i_1},\dots,\B_{i_k}}$ is from (1).
-$\actb_j = \act_\l \ints P'$ is from (2).
+$s'_j = s_{\l} \pj \set{\B_{i_1},\dots,\B_{i_k}}$ is from (1).
+$\actb_j = \act_{\l} \ints P'$ is from (2).
 Hence we obtain $s'_{j-1} \goestog[\actb_j] s'_j$, \ie that $s'_{j-1}, \actb_j s'_j$ is a step of  $(\B', Q'_0)$.
 
 Since $(s'_{j-1}, \actb_j, s'_j)$ was arbitrarily chosen, we conclude that
@@ -303,7 +303,8 @@ The first state of
 $\rho \pj (\B', Q'_0)$  is $s'_0$, and $s'_0 \in Q'_0$ was shown above, so we establish Clause (1) of Definition~\ref{def.bip.execution}.
 
 Since both clauses of Definition~\ref{def.bip.execution} are satisfied, we conclude that $\rho \pj (\B', Q'_0)$ is an execution of $(\B', Q'_0)$.
-}%\end{proof}
+\end{prf}
+%\end{proof}
 
 
 
