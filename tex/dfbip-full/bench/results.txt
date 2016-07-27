@@ -47,6 +47,8 @@ dining10000:            -
 
 
 note1: one interaction that connects all components. 
+
+
 ——————————
 
 Lesson 1: DFinder only global deadlock 

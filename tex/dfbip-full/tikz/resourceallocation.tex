@@ -1,0 +1,162 @@
+\documentclass[11pt]{article}  
+\input{tikzstyle}
+\setlength\parindent{0pt}
+
+\pagestyle{empty}
+\begin{document}
+\begin{tikzpicture}[bip]
+\component{c0}{minimum width=3.2cm, minimum height=1cm}{}{}{\\\\}{};
+   \node[export] (c0sr0) at ($(c0.north west)!.1!(c0.north east)$) [label=below:{\tiny$\sendRequest_0$}] {};
+   \node[export] (c0rg0) at ($(c0.north west)!.3!(c0.north east)$) [label=below:{\tiny$\rcvGrant_0$}] {};
+   \node[export] (c0sr2) at ($(c0.north west)!.5!(c0.north east)$) [label=below:{\tiny$\sendRequest_2$}] {};
+   \node[export] (c0rg2) at ($(c0.north west)!.7!(c0.north east)$) [label=below:{\tiny$\rcvGrant_2$}] {};
+   \node[export] (c0release) at ($(c0.north west)!.9!(c0.north east)$) [label=below:{\tiny$\releaseAll$}] {};
+   
+   \component{c1}{node distance = 3.5cm, right of=c0, minimum width=3.2cm, minimum height=1cm}{}{}{\\\\}{};
+   \node[export] (c1sr2) at ($(c1.north west)!.1!(c1.north east)$) [label=below:{\tiny$\sendRequest_2$}] {};
+   \node[export] (c1rg2) at ($(c1.north west)!.3!(c1.north east)$) [label=below:{\tiny$\rcvGrant_2$}] {};
+   \node[export] (c1sr0) at ($(c1.north west)!.5!(c1.north east)$) [label=below:{\tiny$\sendRequest_0$}] {};
+   \node[export] (c1rg0) at ($(c1.north west)!.7!(c1.north east)$) [label=below:{\tiny$\rcvGrant_0$}] {};
+   \node[export] (c1release) at ($(c1.north west)!.9!(c1.north east)$) [label=below:{\tiny$\releaseAll$}] {};
+   
+   
+      \component{c2}{node distance = 3cm, right of=c1, minimum width=2.2cm, minimum height=1cm}{}{}{\\\\}{};
+   \node[export] (c2sr1) at ($(c2.north west)!.2!(c2.north east)$) [label=below:{\tiny$\sendRequest_1$}] {};
+   \node[export] (c2rg1) at ($(c2.north west)!.5!(c2.north east)$) [label=below:{\tiny$\rcvGrant_1$}] {};
+   \node[export] (c2release) at ($(c2.north west)!.8!(c2.north east)$) [label=below:{\tiny$\releaseAll$}] {};
+   
+    
+      \component{c3}{node distance = 2.5cm, right of=c2, minimum width=2.2cm, minimum height=1cm}{}{}{\\\\}{};
+   \node[export] (c3sr3) at ($(c3.north west)!.2!(c3.north east)$) [label=below:{\tiny$\sendRequest_3$}] {};
+   \node[export] (c3rg3) at ($(c3.north west)!.5!(c3.north east)$) [label=below:{\tiny$\rcvGrant_3$}] {};
+   \node[export] (c3release) at ($(c3.north west)!.8!(c3.north east)$) [label=below:{\tiny$\releaseAll$}] {};
+   
+    
+      \component{c4}{node distance = 2.5cm, right of=c3, minimum width=2.2cm, minimum height=1cm}{}{}{\\\\}{};
+   \node[export] (c4sr4) at ($(c4.north west)!.2!(c4.north east)$) [label=below:{\tiny$\sendRequest_4$}] {};
+   \node[export] (c4rg4) at ($(c4.north west)!.5!(c4.north east)$) [label=below:{\tiny$\rcvGrant_4$}] {};
+   \node[export] (c4release) at ($(c4.north west)!.8!(c4.north east)$) [label=below:{\tiny$\releaseAll$}] {};
+
+  
+  \component{r0}{node distance = 1cm,above=of c0, minimum width=2.2cm, minimum height=1cm}{}{
+}{\\\\}{$R_0$\\\\}; 
+ \node[export] (rr0) at ($(r0.south west)!.2!(r0.south east)$) [label=above:{\tiny$\rcvRequest$}] {};
+ \node[export] (stc0) at ($(r0.south west)!.5!(r0.south east)$) [label=above:{\tiny$\sendGrant$}] {};
+ \node[export] (done0) at ($(r0.south west)!.8!(r0.south east)$) [label=above:{\tiny$\rcvResource$}] {};
+ \node[export] (rtt0) at ($(r0.north west)!.3!(r0.north east)$) [label=below:{\tiny$\rcvToken$}] {};
+ \node[export] (stt0) at ($(r0.north west)!.7!(r0.north east)$) [label=below:{\tiny$\sendToken$}] {};
+ 
+ \component{r1}{node distance = 0.2cm, right=of r0, minimum width=2.2cm, minimum height=1cm}{}{
+}{\\\\}{$R_1$\\\\}; 
+ \node[export] (rr1) at ($(r1.south west)!.2!(r1.south east)$) [label=above:{\tiny$\rcvRequest$}] {};
+ \node[export] (stc1) at ($(r1.south west)!.5!(r1.south east)$) [label=above:{\tiny$\sendGrant$}] {};
+ \node[export] (done1) at ($(r1.south west)!.8!(r1.south east)$) [label=above:{\tiny$\rcvResource$}] {};
+ \node[export] (rtt1) at ($(r1.north west)!.3!(r1.north east)$) [label=below:{\tiny$\rcvToken$}] {};
+ \node[export] (stt1) at ($(r1.north west)!.7!(r1.north east)$) [label=below:{\tiny$\sendToken$}] {}; 
+ 
+  \component{r2}{node distance = 0.2cm,right=of r1, minimum width=2.2cm, minimum height=1cm}{}{
+}{\\\\}{$R_2$\\\\}; 
+ \node[export] (rr2) at ($(r2.south west)!.2!(r2.south east)$) [label=above:{\tiny$\rcvRequest$}] {};
+ \node[export] (stc2) at ($(r2.south west)!.5!(r2.south east)$) [label=above:{\tiny$\sendGrant$}] {};
+ \node[export] (done2) at ($(r2.south west)!.8!(r2.south east)$) [label=above:{\tiny$\rcvResource$}] {};
+ \node[export] (rtt2) at ($(r2.north west)!.3!(r2.north east)$) [label=below:{\tiny$\rcvToken$}] {};
+ \node[export] (stt2) at ($(r2.north west)!.7!(r2.north east)$) [label=below:{\tiny$\sendToken$}] {}; 
+ 
+  \component{r3}{node distance = 0.2cm,right=of r2, minimum width=2.2cm, minimum height=1cm}{}{
+}{\\\\}{$R_3$\\\\}; 
+ \node[export] (rr3) at ($(r3.south west)!.2!(r3.south east)$) [label=above:{\tiny$\rcvRequest$}] {};
+ \node[export] (stc3) at ($(r3.south west)!.5!(r3.south east)$) [label=above:{\tiny$\sendGrant$}] {};
+ \node[export] (done3) at ($(r3.south west)!.8!(r3.south east)$) [label=above:{\tiny$\rcvResource$}] {};
+ \node[export] (rtt3) at ($(r3.north west)!.3!(r3.north east)$) [label=below:{\tiny$\rcvToken$}] {};
+ \node[export] (stt3) at ($(r3.north west)!.7!(r3.north east)$) [label=below:{\tiny$\sendToken$}] {}; 
+ 
+ 
+   \component{r4}{node distance = 0.2cm, right=of r3, minimum width=2cm, minimum height=1cm}{}{
+}{\\\\}{$R_4$\\\\}; 
+ \node[export] (rr4) at ($(r4.south west)!.2!(r4.south east)$) [label=above:{\tiny$\rcvRequest$}] {};
+ \node[export] (stc4) at ($(r4.south west)!.5!(r4.south east)$) [label=above:{\tiny$\sendGrant$}] {};
+ \node[export] (done4) at ($(r4.south west)!.8!(r4.south east)$) [label=above:{\tiny$\rcvResource$}] {};
+ \node[export] (rtt4) at ($(r4.north west)!.3!(r4.north east)$) [label=below:{\tiny$\rcvToken$}] {};
+ \node[export] (stt4) at ($(r4.north west)!.7!(r4.north east)$) [label=below:{\tiny$\sendToken$}] {}; 
+ 
+ %%%%%%%%%%%% tokens
+ \component{t0}{xshift=0.75cm,node distance=1cm,above =of r0,minimum width=3cm}{}{
+   }{}{$RM_{01}$\\\\};
+ \node[export] (t0stt) at ($(t0.south east)!.5!(t0.north east)$) [label=west:{\tiny$\sendTokenToken$}] {};
+ \node[export] (t0rtt) at ($(t0.south west)!.5!(t0.north west)$) [label=east:{\tiny$\rcvTokenToken$}] {};
+
+ \node[export] (t0str) at ($(t0.south west)!.3!(t0.south east)$) [label=above:{\tiny$\sendTokenResource$}] {};
+  \node[export] (t0rtr) at ($(t0.south west)!.7!(t0.south east)$) [label=above:{\tiny$\rcvTokenResource$}] {};
+  
+   \component{t1}{node distance=4cm,right of=t0,minimum width=3cm}{}{
+   }{}{$RM_{23}$\\\\};
+ \node[export] (t1stt) at ($(t1.south east)!.5!(t1.north east)$) [label=west:{\tiny$\sendTokenToken$}] {};
+ \node[export] (t1rtt) at ($(t1.south west)!.5!(t1.north west)$) [label=east:{\tiny$\rcvTokenToken$}] {};
+
+ \node[export] (t1str) at ($(t1.south west)!.3!(t1.south east)$) [label=above:{\tiny$\sendTokenResource$}] {};
+  \node[export] (t1rtr) at ($(t1.south west)!.7!(t1.south east)$) [label=above:{\tiny$\rcvTokenResource$}] {};
+  
+  \component{t2}{node distance=4cm,right of=t1,minimum width=3cm}{}{
+   }{}{$RM_{4}$\\\\};
+ \node[export] (t2stt) at ($(t2.south east)!.5!(t2.north east)$) [label=west:{\tiny$\sendTokenToken$}] {};
+ \node[export] (t2rtt) at ($(t2.south west)!.5!(t2.north west)$) [label=east:{\tiny$\rcvTokenToken$}] {};
+
+ \node[export] (t2str) at ($(t2.south west)!.3!(t2.south east)$) [label=above:{\tiny$\sendTokenResource$}] {};
+  \node[export] (t2rtr) at ($(t2.south west)!.7!(t2.south east)$) [label=above:{\tiny$\rcvTokenResource$}] {};
+  
+  %%%%%%%%%%%interactions
+ \coordinate (ptdone0) at ($(done0)+(0,-0.3)$);
+  \coordinate (ptdone2) at ($(done2)+(0,-0.3)$);
+  \draw[-] (done0) -- (ptdone0) -- (ptdone2) -- (done2);
+  \draw[-] (c0release) -- ($(c0release)+(0,0.7)$);  
+  
+   \draw[-] (c0sr0) -- (rr0);  
+   \draw[-] (c0rg0) -- (stc0);  
+    \draw[-, dashed] (c0sr2) -- (rr2);  
+   \draw[-, dashed] (c0rg2) -- (stc2);  
+
+  
+  \coordinate (ptdone01) at ($(done0)+(1,-0.7)$);
+  \coordinate (ptdone21) at ($(done2)+(1,-0.7)$);
+   \draw[-, black!10] (done0) -- (ptdone01) -- (ptdone21) -- (done2);
+   \draw[-, black!10] (c1release) -- ($(c1release)+(0,0.3)$);  
+   \draw[-, dashed, black!10] (c1sr0) -- (rr0);  
+   \draw[-, dashed, black!10] (c1rg0) -- (stc0);  
+    \draw[-, black!10] (c1sr2) -- (rr2);  
+   \draw[-, black!10] (c1rg2) -- (stc2);  
+   
+   \draw[-, blue!20] (c2release) -- (done1);  
+   \draw[-, blue!20] (c2sr1) -- (rr1);  
+   \draw[-, blue!20] (c2rg1) -- (stc1);  
+   
+   \draw[-, red!20] (c3release) -- (done3);  
+   \draw[-, red!20] (c3sr3) -- (rr3);  
+   \draw[-, red!20] (c3rg3) -- (stc3); 
+   
+   \draw[-, dkgreen!20] (c4release) -- (done4);  
+   \draw[-, dkgreen!20] (c4sr4) -- (rr4);  
+   \draw[-, dkgreen!20] (c4rg4) -- (stc4);
+   
+   \draw[-] (rtt0) -- (t0str);  
+   \draw[-] (stt0) -- (t0rtr);  
+
+   \draw[-, dashed] (rtt1) -- (t0str); 
+   \draw[-, dashed] (stt1) -- (t0rtr);  
+ 
+   \draw[-] (rtt2) -- (t1str);  
+      \draw[-] (stt2) -- (t1rtr);  
+
+   \draw[-, dashed] (rtt3) -- (t1str); 
+      \draw[-, dashed] (stt3) -- (t1rtr); 
+
+   \draw[-] (rtt4) -- (t2str);
+    \draw[-] (stt4) -- (t2rtr);  
+  
+      \draw[-] (t0stt) -- (t1rtt);  
+      \draw[-] (t1stt) -- (t2rtt);  
+
+  \coordinate (pt0rtt) at ($(t0rtt)+(-0.3,1)$);
+       
+  \draw[-] (t2stt) -- ($(t2stt)+(0.3,0)$) -- ($(t2stt)+(0.3,1)$) -- (pt0rtt) -- ($(t0rtt)+(-0.3,0)$) -- (t0rtt);  
+\end{tikzpicture}
+\end{document}

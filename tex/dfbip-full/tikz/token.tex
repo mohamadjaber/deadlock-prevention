@@ -1,0 +1,32 @@
+\documentclass[11pt]{article}  
+\input{tikzstyle}
+\setlength\parindent{0pt}
+
+\pagestyle{empty}
+
+\begin{document}
+\begin{tikzpicture}[bip]
+\component{t0}{minimum width=5cm}{}{
+   \node[place, initial below]  (t)   {$T$}; 
+   \node[place, node distance=1.75cm]  (n) [right=of t]  {$N$};   
+   \node[place, node distance=1.75]  (twr) [above=of t]  {$TwR$};  
+   \node[place, node distance=1.75]  (ttwr) [right=of twr]  {$TTwR$};
+  
+   \path[trans] (t) edge [] node {$\sendTokenToken$} (n); 
+   \path[trans] (n) edge [bend left] node {$\sendTokenToken$} (t); 
+
+   \path[trans] (t) edge [] node {$\sendTokenResource$} (twr); 
+   \path[trans] (twr) edge [bend left] node {$\rcvTokenResource$} (t); 
+
+
+   \path[trans] (twr) edge [] node {$\rcvTokenToken$} (ttwr); 
+   \path[trans] (ttwr) edge [bend left] node {$\sendTokenToken$} (twr); 
+
+   }{}{\\\\ \hspace*{4.1cm}\textbf{RM}};
+ \node[export] (t1p1) at ($(t0.south east)!.5!(t0.north east)$) [label=west:$\sendTokenToken$] {};
+ \node[export] (t1p2) at ($(t0.south west)!.5!(t0.north west)$) [label=east:$\rcvTokenToken$] {};
+
+ \node[export] (t1p3) at ($(t0.south west)!.2!(t0.south east)$) [label=above:$\sendTokenResource$] {};
+  \node[export] (t1p4) at ($(t0.south west)!.5!(t0.south east)$) [label=above:$\rcvTokenResource$] {};
+\end{tikzpicture}
+\end{document}
