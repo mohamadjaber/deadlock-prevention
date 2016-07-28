@@ -5,14 +5,14 @@
 \pagestyle{empty}
 \begin{document}
 \begin{tikzpicture}[bip]
-\component{c0}{minimum width=3.2cm, minimum height=1cm}{}{}{\\\\}{};
+\component{c0}{minimum width=3.2cm, minimum height=1cm}{}{}{\\\\}{$C_0$};
    \node[export] (c0sr0) at ($(c0.north west)!.1!(c0.north east)$) [label=below:{\tiny$\sendRequest_0$}] {};
    \node[export] (c0rg0) at ($(c0.north west)!.3!(c0.north east)$) [label=below:{\tiny$\rcvGrant_0$}] {};
    \node[export] (c0sr2) at ($(c0.north west)!.5!(c0.north east)$) [label=below:{\tiny$\sendRequest_2$}] {};
    \node[export] (c0rg2) at ($(c0.north west)!.7!(c0.north east)$) [label=below:{\tiny$\rcvGrant_2$}] {};
    \node[export] (c0release) at ($(c0.north west)!.9!(c0.north east)$) [label=below:{\tiny$\releaseAll$}] {};
    
-   \component{c1}{node distance = 3.5cm, right of=c0, minimum width=3.2cm, minimum height=1cm}{}{}{\\\\}{};
+   \component{c1}{node distance = 3.5cm, right of=c0, minimum width=3.2cm, minimum height=1cm}{}{}{\\\\}{$C_1$};
    \node[export] (c1sr2) at ($(c1.north west)!.1!(c1.north east)$) [label=below:{\tiny$\sendRequest_2$}] {};
    \node[export] (c1rg2) at ($(c1.north west)!.3!(c1.north east)$) [label=below:{\tiny$\rcvGrant_2$}] {};
    \node[export] (c1sr0) at ($(c1.north west)!.5!(c1.north east)$) [label=below:{\tiny$\sendRequest_0$}] {};
@@ -20,19 +20,19 @@
    \node[export] (c1release) at ($(c1.north west)!.9!(c1.north east)$) [label=below:{\tiny$\releaseAll$}] {};
    
    
-      \component{c2}{node distance = 3cm, right of=c1, minimum width=2.2cm, minimum height=1cm}{}{}{\\\\}{};
+      \component{c2}{node distance = 3cm, right of=c1, minimum width=2.2cm, minimum height=1cm}{}{}{\\\\}{$C_2$};
    \node[export] (c2sr1) at ($(c2.north west)!.2!(c2.north east)$) [label=below:{\tiny$\sendRequest_1$}] {};
    \node[export] (c2rg1) at ($(c2.north west)!.5!(c2.north east)$) [label=below:{\tiny$\rcvGrant_1$}] {};
    \node[export] (c2release) at ($(c2.north west)!.8!(c2.north east)$) [label=below:{\tiny$\releaseAll$}] {};
    
     
-      \component{c3}{node distance = 2.5cm, right of=c2, minimum width=2.2cm, minimum height=1cm}{}{}{\\\\}{};
+      \component{c3}{node distance = 2.5cm, right of=c2, minimum width=2.2cm, minimum height=1cm}{}{}{\\\\}{$C_3$};
    \node[export] (c3sr3) at ($(c3.north west)!.2!(c3.north east)$) [label=below:{\tiny$\sendRequest_3$}] {};
    \node[export] (c3rg3) at ($(c3.north west)!.5!(c3.north east)$) [label=below:{\tiny$\rcvGrant_3$}] {};
    \node[export] (c3release) at ($(c3.north west)!.8!(c3.north east)$) [label=below:{\tiny$\releaseAll$}] {};
    
     
-      \component{c4}{node distance = 2.5cm, right of=c3, minimum width=2.2cm, minimum height=1cm}{}{}{\\\\}{};
+      \component{c4}{node distance = 2.5cm, right of=c3, minimum width=2.2cm, minimum height=1cm}{}{}{\\\\}{$C_4$};
    \node[export] (c4sr4) at ($(c4.north west)!.2!(c4.north east)$) [label=below:{\tiny$\sendRequest_4$}] {};
    \node[export] (c4rg4) at ($(c4.north west)!.5!(c4.north east)$) [label=below:{\tiny$\rcvGrant_4$}] {};
    \node[export] (c4release) at ($(c4.north west)!.8!(c4.north east)$) [label=below:{\tiny$\releaseAll$}] {};
