@@ -1,10 +1,15 @@
 %% bip results
-We evaluated \deadlocktool{} using several case studies and compared its performance against DFinder on two benchmarks: 
-{\em Dining Philosopher} and a generalized {\em Resource Allocation System} that comporises a configuranble multi 
-token-based scheduler.
+We evaluated \deadlocktool{} using several case studies including the dining philosopher example and multiple instances
+of a configurable generalized {\em Resource Allocation System} that comprises 
+a configurable multi token-based scheduler.
+The different configurations of our resource allocation system subsume problems like the Milner's scheduler, 
+Data arbiters and the dining philosopher with a buttler problem. 
+We benchmarked the performance of \deadlocktool{} against DFinder on two benchmarks: 
+{\em Dining Philosopher} with an increasing number of philosophers and 
+a deadlock free resource allocation system with an increasing number of clients and resources. 
 %We provide both benchmarks at \href{http://}{}.
 
-All experiments are conducted on a machine with Intel (R) $8$-Cores (TM) $i7$-$6700$, CPU @ $3.40$GHZ, $32$GB RAM, 
+All experiments were conducted on a machine with Intel (R) $8$-Cores (TM) $i7$-$6700$, CPU @ $3.40$GHZ, $32$GB RAM, 
 running a CentOS Linux distribution. 
 
 \subsubsection{Dining Philosophers Case Study} 
@@ -61,7 +66,7 @@ $10,000$ &          $47 s$  &   $62 s$          & $-$ \\ \hline
 
 
 
-\subsubsection{Experiment: Conflict-Resource Allocation System}
+\subsubsection{Resource Allocation System Case Studies}
 
 We evaluated \deadlocktool{} with a multi token-based resource allocation system. 
 The system consists of $n$ clients, $m$ resources, $k$ tokens. 
@@ -201,29 +206,23 @@ An extension of our work that consider subsystem boundaries at ports and abstrac
 conditions with free Boolean variables can help
 detect such scenarios. 
 
-
 \begin{table}
 \centering
-\begin{tabular}{| l | l | l | l |}
+\begin{tabular}{| l | 
+  c |  c | c | c | 
+  c |  c | c | c | 
+  c |  c | c |  }
 \hline
-Size & \LAO & \LLin & D-Finder \\ \hline \hline
-$10$ &          $148 s$ \\ \hline
-$12$ &          $169 s$ \\ \hline
-$14$ &          $189 s$ \\ \hline
-$16$ &          $230 s$ \\ \hline
-$18$ &          $254 s$  \\ \hline
-$20$ &          $277 s$  \\ \hline 
-$22$ &          $298 s$ \\ \hline 
-$24$ &          $318 s$   \\ \hline 
-$26$ &          $351 s$  \\ \hline 
-$28$ &          $374 s$  \\ \hline
-$30$ &          $430 s$   \\ \hline  
+
+Size & $10$ & $12$ & $14$ & $16$ & $18$ & $20$ & $22$ & $24$ & $26$ & $28$ & $30$ \\ \hline
+Time (sec) & $148 $ & $169 $ & $189 $ & $230 $ & $254 $ & $277 $ & $298 $ & $318 $ & $351 $ & $374 $ & $430 $ \\ \hline 
+
 \end{tabular}
-\caption{Benchmarks: Conflict-Resource Allocation}
+\caption{Benchmarks: Time required for $\LAO$ on the resource allocation system }
 \label{bench:resourceallocation}
 \end{table}
 
-\paragraph{Benchmarking}
+\paragraph{Benchmarking:}
 
 We evaluated the performance of $\LAO$ on a deadlock free system with the following configuration. 
 \begin{itemize}
