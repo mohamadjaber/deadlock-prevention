@@ -1,10 +1,10 @@
 %
-\deadlocktool{} ($\sim 2500$ LOC Java) is an implementation of our method and is available at 
+We provide \deadlocktool{}, a suite of supporting tools that implement our method. \deadlocktool{} is around $\sim 2500$ Java LOC and is available at 
 \href{http://todo}{http://todo}. 
 %
 \deadlocktool{} is equipped with a command line interface that accepts a set 
 of configuration options. 
-It takes the name of the input BIP file and optional flags. 
+It takes the name of the input BIP file and other optional flags. 
 \begin{lstlisting}[language=Bash]
 > java -jar ldfc.jar [options] input.bip 
 and options are:
@@ -13,9 +13,9 @@ and options are:
 -debug         Prints useful information at each iteration of checking. 
                Example: selected interaction, depth length, etc.
                This information could be useful in case when the condition fails.
+
+Examples:
+  java -jar ldfc.jar -debug input.bip # deadlock freedom using default LALT
+  java -jar ldfc.jar -condition=LLIN -debug input.bip # deadlock freedom using LLIN
 \end{lstlisting}
 
-%% bip results
-We evaluated \deadlocktool{} against DFinder, on two benchmarks: {\em Dining Philosopher} and {\em Generalized Conflict-Resource Allocation System}.
-
-All experiments are conducted on a machine with Intel (R) $8$-Cores (TM) $i7$-$6700$, CPU @ $3.40$GHZ, $32$GB RAM, running under CentOS Linux distribution. 
