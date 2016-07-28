@@ -80,14 +80,16 @@ In both of these papers, the wait-for relations are defined by examining a pair 
 at a time: $P_i$ waits for $P_j$ iff $P_i$ offers an action to $P_j$ which $P_j$ is
 not willing to participate in.
 
-Martin \cite{Ma96} applies the results in \cite{RD87} and \cite{BR91} to formulate
-deadlock-freedom design rules for several classes of
-CSP concurrent programs: cyclic processes, client-server protocols, and resource
-allocation protocols. He also introduces the notion of ``state dependence digraph'' (SDD), whose
-nodes are local states of individual proceses, and whose edges are wait-for relations
-between processes in particular local states. An acyclic SDD implies deadlock-freedom.
+Martin \cite{Ma96} applies the results in \cite{RD87} and \cite{BR91} to formulate deadlock-freedom design rules for several classes of CSP concurrent
+programs: cyclic processes, client-server protocols, and resource allocation protocols. He also introduces the notion of ``state dependence digraph''
+(SDD), whose nodes are local states of individual proceses, and whose edges are wait-for relations between processes in particular local states. An
+acyclic SDD implies deadlock-freedom. A cyclic SDD does not imply deadlock, however, since the cycle may be ``spurious'': the local states along the
+cycle may not be reachable at the same time, and so the cycle cannot give rise to an actual deadlock during execution. Hence the SDD approach cannot
+deal with ``non-hereditary'' deadlock freedom, \ie a deadlock free system that contains a deadlock prone subsystem. Consider, \eg, the dining
+philosophers with a butler solution; removing the butler leaves a deadlock prone subsystem.
 %
-Antonio \etal \cite{AGR16}
+Antonio \etal \cite{AGR16} takes the SDD approach and improves its accuracy by checking for mutual reachability of pairs of local states, and also
+eliminating local states and pairs of local states, where action enablement can be verified locally.
 
 
 
