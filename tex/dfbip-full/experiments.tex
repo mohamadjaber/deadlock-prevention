@@ -23,7 +23,7 @@ We applied IPM on all structural partitions and we report on the best result whi
 %(takes less time possibly for hardware related reasons) 
 with the results reported in \cite{DFINDER2-CAV}. 
 
-Table~\ref{table:dining} shows the results. Both $\LAO$ and $\LLin$ outperform the best performance of DFinder2 by several orders of magnitude 
+Table~\ref{bench:dining} shows the results. Both $\LAO$ and $\LLin$ outperform the best performance of DFinder2 by several orders of magnitude 
 for $n\leq 3,000$. Both $\LAO$ successfully completed the deadlock freedom check for $3,000 \leq n \leq 10,000$ 
 in less than one minute, where DFinder2 timed out (~1 Hour). $\LLin$ required $62$ seconds for $n=10,000$. 
 
@@ -63,7 +63,74 @@ $10,000$ &          $47 s$  &   $62 s$          & $-$ \\ \hline
 
 \subsubsection{Experiment: Conflict-Resource Allocation System}
 
-Figure
+We evaluated \deadlocktool{} with a multi token-based resource allocation system. 
+The system consists of $n$ clients, $m$ resources, $k$ tokens. 
+The number of tokens specifies the maximum number of resources that can in use at a given time. 
+The system allows to specify conflicting resources. 
+Only one resource out of a set of conflicting resources can be in use at a given time.
+For each set of conflicting resources, we create a resource manager.
+Resource managers are connected in a ring where they pass tokens to neighboring resource managers or to resources. 
+
+
+Given configuration specifying $n$, $m$, $k$, a map of requests between clients and resources, and a set of sets of conflicting resources, 
+we automatically generate a corresponding BIP model.
+
+Figures~\ref{fig:client},
+~\ref{fig:resourse}, and
+~\ref{fig:conflict-token}
+show BIP atomic components for client, resource and manager components. 
+
+The client in Figure~\ref{fig:client} requests resources $R_0$ and $R_2$ in sequence. It has $5$ ports. 
+Ports $SR_0$ and $SR_2$ send requests for 
+resources $R_0$ and $R_2$, respectively.
+Ports $RG_0$ and $RG_2$ receive grants for 
+resources $R_0$ and $R_2$, respectively.
+Port $rel$ releases all resources. 
+The behavior of the client depends on its request sequence. 
+
+Figure~\ref{fig:resource} shows a resource component. 
+A resource component waits for a request from a connected client on port $RR$. 
+Once a request is received, the resource component transitions to state where it is ready to 
+receive a token from the corresponding resource manager using port $RTT$.
+The resource transitions to a state where it grants the client request using port $STC$ and waits until it is released on port $done$. 
+There, it returns token back to the resource manager and transitions to the start state. 
+
+Figure~\ref{fig:conflict-token} shows a resource manager.
+A resource manager $M$ has four states. 
+\begin{itemize}
+  \item State $T$ denotes that $M$ has a token. $M$ may send the token to either 
+    (1) a resource on port $STR$ and transition to state $TwR$ (token with resource), or 
+    (2) the next resource manager on port $STT$ and transition to state $N$ (no token).
+  \item State $N$ denotes that $N$ has no token. 
+    It may receive a token from a neighboring resource manager in the ring on port $RTT$ 
+    and transition to state $T$. 
+  \item State $TwR$ denotes that $M$ has already passed a token to one of its resources. 
+    $M$ may either receive (1) the assigned token back from the resource using port $RTR$ and transition to state $T$, 
+    or (2) another token from a neighboring manager using port $RTT$ and transition to state $TTwR$ (token and token with resource).
+  \item State $TTwR$ denotes that $M$ has a token and has already passed a token to one of its resources. 
+    In this state $M$ can not send the token it has to a resource it manages to respect the conflict constraint. 
+    $M$ may send the token to the next manager on port $STT$ and transition back to state $TwR$. 
+\end{itemize}
+
+The connections between a resource manager $M$ and its resources on ports $STR$ and $RTR$ specify that the 
+resources are conflicting. 
+A system should have at least $x$ resource managers where $x$ is the maximum between the number of sets of conflicting resources 
+and $k$.
+Note that $k$ resource managers start at state $T$ to denote the $k$ tokens; the rest start at state $N$. 
+
+Figure \ref{fig:resourceallocation} shows a configuration system with $5$ clients and $5$ resources where:
+\begin{itemize}
+  \item Client $C_0$ requires resource $R_0$ then $R_2$,
+  \item Client $C_1$ requires resource $R_2$ then $R_0$,
+  \item Client $C_2$ requires resource $R_1$,
+  \item Client $C_3$ requires resource $R_3$, and
+  \item Client $C_4$ requires resource $R_4$.
+\end{itemize}
+
+The system has three resource managers to specify the conflicting resources. 
+$RM_{01}$ manages conflicting resources $\{R_0,R_1}$. 
+$RM_{23}$ managers conflicting resources $\{R_2,R_3\}$.
+$RM_{4}$ manages resource $R_4$. 
 
 
 \begin{figure}[ht]
@@ -98,6 +165,7 @@ Figure
 \end{center}
 \end{figure}
 
+We evaluated \deadlocktool{} with various configurations where the tool per
 
 **********************************************\\
 Lesson 1: DFinder only global deadlock \\
@@ -166,3 +234,8 @@ TODO
 \end{itemize}
 
 
+Our resource allocation system subsumes the token based Milner scheduler~\cite{milner} which 
+is essentially a token ring with precisely one token present~\cite{AGR16}. 
+The technique presented in ~\cite{AGR16} fails to prove deadlock freedom for Milner Scheduler 
+because it requires a large subset of the system, 
+while $\LAO$ succeeds. 
