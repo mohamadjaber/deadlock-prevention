@@ -37,8 +37,14 @@ supercycle-violation can be confirmed.
 %$\lviolName$, $\ilviolName$, and $\blviolName$, using our ``memoizing'' strategy.
 
 
-\paragraph{Complexity.} The running  time of our implementation is ....TO BE DONE....
-
+\paragraph{Complexity.} The running  time of our implementation is
+$O(\SUM_{a \in \gamma}\  |\Mdsk{\act}{\l_a}| * |\dsk{\act}{\l_a}|)$, 
+where 
+$\Mdsk{\act}{\l_a}$ is the transition system of
+$\dsk{\act}{\l_a}$, and $|\Mdsk{\act}{\l_a}|$ is the size (number of nodes plus number of edges) of 
+$\Mdsk{\act}{\l_a}$, 
+$|\dsk{\act}{\l_a}|$ is the size of the syntactic description of $\dsk{\act}{\l_a}$, and 
+$\l_a$ is the smallest value of $\l$ for which $\LAO(B, Q_0, \act, \l)$ holds
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t]

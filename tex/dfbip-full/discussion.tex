@@ -93,13 +93,13 @@ eliminating local states and pairs of local states, where action enablement can 
 
 
 
-We compared our implementation \ldfctool to D-Finder 2~\cite{DFinder2}. D-Finder 2
+We compared our implementation \deadlocktool to D-Finder 2~\cite{DFinder2}. D-Finder 2
 computes a finite-state abstraction for each component, which it uses
 to compute a global invariant $I$. It then checks if $I$ 
-implies deadlock freedom.  Unlike \ldfctool, D-Finder 2 
+implies deadlock freedom.  Unlike \deadlocktool, D-Finder 2 
 handles infinite state systems.
-However, \ldfctool had superior running time for
-dining philosophers and gas station (both finite-state).
+However, \deadlocktool had superior running time for
+dining philosophers and resource controller (both finite-state).
 
 
 All the above methods (except Attie and Chockler \cite{AC05}) verify global (and not
@@ -135,7 +135,7 @@ which efficient distributed implementations can be generated
 \cite{BonakdarpourBJQS10b}.  
 
 \item[Locality] If a component $B_i$ is modified, or is added to an
-  existing system, then $\LDFC(a, \l)$ only has to
+  existing system, then $\LAO(a, \l)$ only has to
   be re-checked for $B_i$ and components within distance $\l$ of $B_i$.
   A condition whose evaluation considers the entire
   system at once, \eg \cite{AB03,DFinder2,GS03}
@@ -158,7 +158,7 @@ which efficient distributed implementations can be generated
 \subsection{Further work.} 
 Our implementation uses explicit state enumeration. % to evaluate $\LDFC(a, \l)$.
 Using BDD's may improve the running time 
-when $\LDFC(a, \l)$ holds only for large $\l$.
+when $\LAO(B, Q_0, a, \l)$ holds only for large $\l$.
 %, since the time to check $\LDFC(a, \l)$ grows exponentialy with $\l$, in general.
 %
 An enabled port $p$ enables all interactions containing $p$.
@@ -166,9 +166,9 @@ Deadlock-freedom conditions based on ports could exploit
 this interdepence among interaction enablement.
 %
 Our implementation should produce \emph{counterexamples} when a system
-fails to satisfy $\LDFC(a, \l)$.
+fails to satisfy $\LAO(B, Q_0, a, \l)$.
 %
-\emph{Design rules} for ensuring $\LDFC(a, \l)$ will help users to
+\emph{Design rules} for ensuring $\LAO(B, Q_0, a, \l)$ will help users to
 produce deadlock-free systems, and also to interpret counterexamples.
 %
 A \emph{fault} may create a deadlock,  \ie a supercycle, by creating 
@@ -179,7 +179,7 @@ requires that there do not arise during normal
 supercycle by adding $f$ edges. 
 We will investigate criteria for preventing formation of such subgraphs.
 %
-Methods for evaluating $\LDFC(a, \l)$ on \emph{infinite state} systems will be
+Methods for evaluating $\LAO(B, Q_0, a, \l)$ on \emph{infinite state} systems will be
 devised, \eg, by extracting proof obligations and verifying using SMT solvers.
 %This verifies local deadlock freedom, which, unlike global deadlock freedom,
 %cannot be succinctly expressed in first order logic.
