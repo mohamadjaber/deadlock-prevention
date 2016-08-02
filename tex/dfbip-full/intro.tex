@@ -5,8 +5,6 @@
 % depends only on the local topology of direct interaction between components, and \emph{not} on the
 % number of components in the overall system.
 
-
-
 Deadlock freedom is a crucial property of concurrent and distributed systems. With increasing system
 complexity, the challenge of assuring deadlock freedom and other correctness properties becomes even
 greater.  In contrast to the alternatives of (1) deadlock detection and recovery, and (2) deadlock
@@ -15,21 +13,21 @@ avoidance, we advocate deadlock prevention: design the system so that deadlocks 
 
 Deciding deadlock freedom of finite-state concurrent programs is PSPACE-complete, in general
 \cite[chapter 19]{papadimitriou1994computational}. To achieve tractability, we present a criterion
-for deadlock-freedom that can be evaluated by model-checking a set of subsystems of the overall
-large system. If the subsystems are small, the criterion can be checked quickly, and is sound (if
+for deadlock-freedom that is evaluated by model-checking a set of subsystems of the overall
+system. If the subsystems are small, the criterion can be checked quickly, and is sound (if
 true, it implies deadlock-freedom) but not complete (if false, then it yields no information about
 deadlock). If the subsystems are larger, then our criterion becomes more ``accurate'': roughly
 speaking, there is less possibility for the criterion to evaluate to false when the system is
 actually deadlock-free. In the limit, when the set of subsystems includes the entire system itself,
-our criterionbecomes complete, so that evaluation to false implies that the system is actually
+our criterion is complete, so that evaluation to false implies that the system is actually
 deadlock-prone. Hence, our criterion only fails to resolve the question of deadlock-freedom 
-when it exhuasts available computational resources becuase it has not yet evaluated to true, and the
-subssystems being checked have become too large, because of state-explosion.
+when it's evaluation exhausts available computational resources, because
+the subsystems being checked have become too large, and state-explosion has set in.
 
 Our method thus combines the possibility of fast response together with theoretical completeness.
-All deadlock-freedom checks presents in the literature to date are, to our knowledge, incomplete in
+All deadlock-freedom checks given in the literature to date are, to our knowledge, incomplete in
 principle, and so remain incomplete even if unlimited computational resources are available.
-Hence there criteria could fail to resolve deadlock freedom for theoretical reasons, as well as for 
+Hence these criteria could fail to resolve deadlock freedom for theoretical reasons, as well as for 
 lack of computational resources.
 %
 The reason for this incompleteness is that existing criteria all characterize deadlock by the
@@ -40,7 +38,7 @@ All these methods were designed, to some extent, around the principle that under
 assumptions about the system, any deadlock state would contain a proper cycle of ungranted requests.
 \end{quote}
 In a model of concurrency which includes choice of actions
-(\eg BIP, CSP, I/O automata, CCS, etc) a wait-for cycle is an \emph{incomplete} characterization of
+(\eg BIP, CSP, I/O automata, CCS, etc), a wait-for cycle is an \emph{incomplete} characterization of
 deadlock, since a process can be in a wait-for cycle, but not deadlocked, due to having a choice of
 interaction with some process not in the wait-for cycle (see \fig{cycleOK} below).
 
@@ -55,7 +53,7 @@ the system. We first present a ``global'' version of our criterion, which is bot
 supercycles, and can be evaluated over small subsystems.
 
 We present experimental results for dining philosophers and for a multi token-based resource
-allocation system, which generalizes the token based Milner scheduler~\cite{milner}.  These show
+allocation system, which generalizes Milner's token based scheduler~\cite{milner}.  These show
 that our method compares favorably with existing approaches.
 
 

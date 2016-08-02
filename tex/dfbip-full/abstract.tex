@@ -1,15 +1,16 @@
 \begin{abstract}
 
   We present a criterion for checking deadlock freedom of finite state systems expressed in BIP: a
-  component-based framework for the construction of complex distributed systems.  Our criterion can
-  be evaluated by model-checking a set of subsystems of the overall large system. If satisfied in small
+  component-based framework for the construction of complex distributed systems.  Our criterion 
+  is evaluated by model-checking a set of subsystems of the overall large system. If satisfied in small
   subsystems, it implies deadlock-freedom of the overall system (\ie is sound for
   deadlock-freedom). If not satisfied, then we increase the size of the subsystems and re-evaluate,
   as this improves the accuracy of the check.  In the limit, the subsystem being checked becomes the
   entire system, and then our criterion is also complete for deadlock-freedom. 
 %
-  Our criterion can thus only fail to decide the deadlock-freedom of a system because of
-  computational limitations: state-space explosion sets in when the subsystem being checked becomes too large, and
+  Our criterion can thus only fail to decide the deadlock-freedom of a
+  system because of computational limitations: state-space explosion
+  sets in when the subsystems being checked become too large, and
   cannot be model-checked in practice.
 %
   Our method thus combines the possibility of fast response together with theoretical completeness.
@@ -17,7 +18,7 @@
   principle, and so remain incomplete even if unlimited computational resources are available. 
 
   We present experimental results for dining philosophers and for a multi token-based resource
-  allocation system, which generalizes the token based Milner scheduler~\cite{milner}.  These show
+  allocation system, which generalizes Milner's token based scheduler~\cite{milner}.  These show
   that our method compares favorably with existing approaches.
 
 %  For example, in verifying deadlock freedom of dining philosphers, our method shows linear increase
