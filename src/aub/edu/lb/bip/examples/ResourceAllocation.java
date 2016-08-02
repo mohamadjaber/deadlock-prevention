@@ -538,6 +538,24 @@ public class ResourceAllocation {
 		bipFile.print(resourceAllocationConflicting(nbOfClients, nbOfResources, resourceMapping, nbOfTokens,
 				conflictingResources));
 	}
+	
+	
+	// buttler	
+	public static void generateTokenRingConflict51() throws FileNotFoundException {
+		partitions = new ArrayList<String>(1);
+		for(int i = 0; i < 1; i++) partitions.add("");
+		countPartition = 0;
+		
+		int nbOfClients = 3;
+		int nbOfResources = 6;
+		int[][] resourceMapping = { { 3, 0, 1 }, {4, 1, 2 }, {5, 2, 0 } };
+		int[][] conflictingResources = { {0}, {1} , {2}, {3, 4, 5} };
+		int nbOfTokens = 4;
+		String fileName = "BIPExamples/resourceAllocationConflictButtler.bip";
+		bipFile = new PrintStream(new File(fileName));
+		bipFile.print(resourceAllocationConflicting(nbOfClients, nbOfResources, resourceMapping, nbOfTokens,
+				conflictingResources));
+	}
 
 	// no Local deadlock 
 	public static void generateTokenRingBench(int n, int nbPartitions) throws FileNotFoundException {
@@ -571,6 +589,7 @@ public class ResourceAllocation {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
+		generateTokenRingConflict51();
 		generateTokenRingConflict4();
 		generateTokenRingConflict5();
 		generateTokenRingConflict();

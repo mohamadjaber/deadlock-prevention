@@ -1,11 +1,13 @@
 %
-We provide \deadlocktool{}, a suite of supporting tools that implement our method. \deadlocktool{} is around $\sim 2500$ Java LOC and is available at 
-\href{http://todo}{http://todo}. 
+We provide \deadlocktool{}, a suite of supporting tools that implement our method. \deadlocktool{} is around $\sim 2500$ Java LOC.
+% and is available at  \href{http://todo}{http://todo}. 
 %
-\deadlocktool{} is equipped with a command line interface that accepts a set 
+\deadlocktool{} is equipped with a command line interface (see Figure~\ref{code:cmd-ldfc}) that accepts a set 
 of configuration options. 
 It takes the name of the input BIP file and other optional flags. 
-\begin{lstlisting}[language=Bash]
+
+
+\begin{lstlisting}[language=Bash, caption = {\deadlocktool{} Command Line Interface},label={code:cmd-ldfc}]
 > java -jar ldfc.jar [options] input.bip 
 and options are:
 -condition <s> LLIN (local linear check) or LALT (local and/or check - default)
