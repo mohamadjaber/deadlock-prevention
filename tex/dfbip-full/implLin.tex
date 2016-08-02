@@ -15,17 +15,10 @@ before $\dsk{\act}{\l}$ had become the entire system, due to exhaustion of resou
 that executes $a$, and checking that the final state satisfies
 Definition~\ref{def:ldfc-k}. 
 
-
-\paragraph{Complexity.} The running  time of our implementation is
-also 
-$O(\SUM_{a \in \gamma}\ |\Mdsk{\act}{\l_a}| * |\dsk{\act}{\l_a}|)$,
-where $\l_a$ is the smallest value of $\l$ for which $\LLin(B, Q_0, \act, \l)$ holds, and where
-$|\dsk{\act}{\l_a}|$, and $|\Mdsk{\act}{\l_a}|$ are as above.
-
 %If $\LDFC(a, \l)$ does not hold for any finite $\l$, then the
 %iteration for $a$ must be halted by some predetermined time bound, or
 %interactively, or when $\dsk{\act}{\l}$ has become the entire system.
-\begin{figure}[ht]
+\begin{figure}[H]
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:check-df}
 mm\= mm\= mm\= \kill
@@ -66,3 +59,9 @@ mm\= mm\= mm\= \kill
 \label{fig:implementation}
 \label{fig:implementation-checkDF}
 \end{figure}
+
+\paragraph{Complexity.} The running  time of our implementation is
+also 
+$O(\SUM_{a \in \gamma}\ |\Mdsk{\act}{\l_a}| * |\dsk{\act}{\l_a}|)$,
+where $\l_a$ is the smallest value of $\l$ for which $\LLin(B, Q_0, \act, \l)$ holds, and where
+$|\dsk{\act}{\l_a}|$, and $|\Mdsk{\act}{\l_a}|$ are as above.

@@ -1,6 +1,8 @@
 BIPExamples/*.bip
 BIPExamples/*.incr
 dfBIP.pdf
+*.out
+*.toc
 *.bbl
 *.bak
 *.blg

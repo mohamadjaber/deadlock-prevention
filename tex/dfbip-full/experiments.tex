@@ -76,12 +76,11 @@ Only one resource out of a set of conflicting resources can be in use at a given
 For each set of conflicting resources, we create a resource manager.
 Resource managers are connected in a ring where they pass tokens to neighboring resource managers or to resources. 
 
-
 Given configuration specifying $n$, $m$, $k$, a map of requests between clients and resources, and a set of sets of conflicting resources, 
 we automatically generate a corresponding BIP model.
 
 Figures~\ref{fig:client},
-~\ref{fig:resourse}, and
+~\ref{fig:resource}, and
 ~\ref{fig:conflict-token}
 show BIP atomic components for client, resource and manager components. 
 
@@ -93,12 +92,28 @@ resources $R_0$ and $R_2$, respectively.
 Port $rel$ releases all resources. 
 The behavior of the client depends on its request sequence. 
 
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=1.2]{compiledfigures/client-crop.pdf}
+\caption{Client}
+\label{fig:client}
+\end{center}
+\end{figure}
+
 Figure~\ref{fig:resource} shows a resource component. 
 A resource component waits for a request from a connected client on port $RR$. 
 Once a request is received, the resource component transitions to state where it is ready to 
 receive a token from the corresponding resource manager using port $RTT$.
 The resource transitions to a state where it grants the client request using port $STC$ and waits until it is released on port $done$. 
 There, it returns token back to the resource manager and transitions to the start state. 
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=1.2]{compiledfigures/resource-crop.pdf}
+\caption{Resource}
+\label{fig:resource}
+\end{center}
+\end{figure}
 
 Figure~\ref{fig:conflict-token} shows a resource manager.
 A resource manager $M$ has four states. 
@@ -116,6 +131,14 @@ A resource manager $M$ has four states.
     In this state $M$ can not send the token it has to a resource it manages to respect the conflict constraint. 
     $M$ may send the token to the next manager on port $STT$ and transition back to state $TwR$. 
 \end{itemize}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=1.2]{compiledfigures/token-crop.pdf}
+\caption{Token Resource Manager}
+\label{fig:conflict-token}
+\end{center}
+\end{figure}
 
 The connections between a resource manager $M$ and its resources on ports $STR$ and $RTR$ specify that the 
 resources are conflicting. 
@@ -137,32 +160,7 @@ $RM_{01}$ manages conflicting resources $\{R_0,R_1\}$.
 $RM_{23}$ managers conflicting resources $\{R_2,R_3\}$.
 $RM_{4}$ manages resource $R_4$. 
 
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[scale=1.2]{compiledfigures/client-crop.pdf}
-\caption{Client}
-\label{fig:client}
-\end{center}
-\end{figure}
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[scale=1.2]{compiledfigures/resource-crop.pdf}
-\caption{Resource}
-\label{fig:resourse}
-\end{center}
-\end{figure}
-
-\begin{figure}[h]
-\begin{center}
-\includegraphics[scale=1.2]{compiledfigures/token-crop.pdf}
-\caption{Token Resource Manager}
-\label{fig:conflict-token}
-\end{center}
-\end{figure}
-
-\begin{figure}[h]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[scale=1.2]{compiledfigures/resourceallocation-crop.pdf}
 \caption{Conflict-Resource Allocation System}
