@@ -90,6 +90,17 @@ philosophers with a butler solution; removing the butler leaves a deadlock prone
 %
 Antonio \etal \cite{AGR16} takes the SDD approach and improves its accuracy by checking for mutual reachability of pairs of local states, and also
 eliminating local states and pairs of local states, where action enablement can be verified locally.
+These checks are formulated as a boolean formula which is then sent to
+a SAT solver. Their method is able to verify deadlock freedom of
+dining philosophers with a butler, whereas our method timed out, %our method for butler phils
+since the subsystems on which $\LAO(B, Q_0, a, \l)$ is evaluated becomes the entire system.
+On the other hand, our approach succeeded in quickly verifying deadlock-freedom of the resource
+allocation example, whereas the method of 
+Antonio \etal \cite{AGR16} failed for Milner's token based scheduler, which is a special
+case of our resource allocation example.
+%
+An intriguing topic for future work is to attempt to combine the two methods, to obtain the
+advantages of both.
 
 
 
@@ -135,7 +146,7 @@ which efficient distributed implementations can be generated
 \cite{BonakdarpourBJQS10b}.  
 
 \item[Locality] If a component $B_i$ is modified, or is added to an
-  existing system, then $\LAO(a, \l)$ only has to
+  existing system, then $\LAO(B, Q_0, a, \l)$ only has to
   be re-checked for $B_i$ and components within distance $\l$ of $B_i$.
   A condition whose evaluation considers the entire
   system at once, \eg \cite{AB03,DFinder2,GS03}
@@ -159,11 +170,14 @@ which efficient distributed implementations can be generated
 Our implementation uses explicit state enumeration. % to evaluate $\LDFC(a, \l)$.
 Using BDD's may improve the running time 
 when $\LAO(B, Q_0, a, \l)$ holds only for large $\l$.
+Another potential method for improving the running time is to use 
+SAT solving, cf.\ Antonio \etal \cite{AGR16}.
+%
 %, since the time to check $\LDFC(a, \l)$ grows exponentialy with $\l$, in general.
 %
 An enabled port $p$ enables all interactions containing $p$.
 Deadlock-freedom conditions based on ports could exploit
-this interdepence among interaction enablement.
+this interdependence among interaction enablement.
 %
 Our implementation should produce \emph{counterexamples} when a system
 fails to satisfy $\LAO(B, Q_0, a, \l)$.
