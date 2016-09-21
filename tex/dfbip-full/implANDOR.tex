@@ -136,6 +136,8 @@ aa\= aa\= aa\= aa\= aa\=\kill
 \label{fig:impl.locANDOR}
 \end{figure}
 
+% eliminate ugly space after f
+\newcommand{\foundScViolate}{\mathit{foundScViolate}}
 
 \begin{figure}[H]
 \setcounter{lctr}{0}
@@ -151,29 +153,29 @@ $ =
   \end{cases}
 $
 \\
-\lio{foundScViolate \gts \fff} \\
+\lio{\foundScViolate \gts \fff} \\
 
 \lio{\FORALLC{v \in \dsk{\act}{\l}}}
    \lit{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
                           \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act})}}
        \lihc{\VV{\act}{\l}{t_\act}{v}{} \gts \ttt}{\cmnt Base case: interaction with no outgoing wait-for-edges}  
-       \lihc{foundScViolate \gts \ttt}  
+       \lihc{\foundScViolate \gts \ttt}  
 
        \lit{\FI}
 \lio{\ENDFOR}\\
 
-\lio{\WHILEC{foundScViolate}}
-  \lit{foundScViolate \gts \fff}
+\lio{\WHILEC{\foundScViolate}}
+  \lit{\foundScViolate \gts \fff}
   \lit{\FORALLC{v \in \dsk{\act}{\l} : \lnot \VV{\act}{\l}{t_\act}{v}{}}}
   \lih{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
                  (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} :  \VV{\act}{\l}{t_\act}{B_i}{})}}
           \lif{\VV{\act}{\l}{t_\act}{v}{} \gts \ttt}
-          \lif{foundScViolate \gts \ttt}
+          \lif{\foundScViolate \gts \ttt}
 
 \lih{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
               (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : \VV{\act}{\l}{t_\act}{\actp}{})}}
          \lif{\VV{\act}{\l}{t_\act}{v}{d} \gts \ttt}
-          \lif{foundScViolate \gts \ttt}
+          \lif{\foundScViolate \gts \ttt}
     \lih{\FI}
   \lit{\ENDFOR}
 \lion{\ENDWHILE} 
