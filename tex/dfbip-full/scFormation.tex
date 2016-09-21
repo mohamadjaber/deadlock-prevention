@@ -136,7 +136,7 @@ to be easier to compute the negation of supercycle membership, which we call \in
   violation}. This is because supercycle-violation has a base case: when a node has no outgoing
 wait-for edges. We need a base case, and an inductive definition, because 
 a node that is not in any supercycle may nevertheless be a node of a wait-for cycle, since a cycle
-of wait-for-edges does not necesarily imply a supercycle. Hence, to compute supercycle violation
+of wait-for-edges does not necessarily imply a supercycle. Hence, to compute supercycle violation
 properly, we introduce a notion of the \emph{level} of a violation. A node with no
 outgoing wait-for edges has a level-1 violation. A node whose violation is based on outgoing edges
 to neighbors whose violation level is at most $d-1$, has itself a level-$d$ violation. We
@@ -337,7 +337,10 @@ Clause~5 is established.
 \epr
 
 
+
 %\subsection{Violations of the supercycle formation condition}
+
+\subsection{General supercycle violation condition}
 
 We use \prop{supercycle-formation} to formulate a condition that prevents the formation of
 supercycles. 
@@ -354,12 +357,12 @@ There are two ways for $\B_i$ to not be a node in a strongly-connected supercycl
 \en
 
 %\subsection{Strong connectedness condition}
-% commentary: strong connectedess violation cannot be defined "locally" in a good way, like supercycle violation
+% commentary: strong connectedness violation cannot be defined "locally" in a good way, like supercycle violation
 % can, since it depends on reachability, which is a global property. For a supercycle, once the set
 % of nodes is fixed, the required wait-for relations are all local properties. Hence, violation is
 % also a local property. For strong connectedness, the best local property is "no incoming" or "no
-% outging", which is just the linear condition of the FORTE 2013 paper. Hence a local condition for
-% strong conectedness violation is no improvement over FORTE 2013.
+% outgoing", which is just the linear condition of the FORTE 2013 paper. Hence a local condition for
+% strong connectedness violation is no improvement over FORTE 2013.
 
 %Given that $\B_i$ is a node in a supercycle, we wish to determine whether or not it is a node in a
 %\emph{strongly-connected} supercycle. We do this by removing all nodes with supercycle-violations,
@@ -377,7 +380,7 @@ strongly connected
 
 
 
-\subsection{General supercycle violation condition}
+
 
 The general supercycle violation condition is then a disjunction of the supercycle violation condition
 and the string connectedness violation conditions.
@@ -421,7 +424,7 @@ execution of an interaction $\act$ does not create a supercycle, and so any cond
 this for $\act$ is sufficient. if a different condition implies the same for another interaction
 $\actp$, this presents no problem \wrt establishing deadlock-freedom. Hence, it is sufficient to
 have one such condition for each interaction in  $(\B,Q_0)$. Since each condition restricts the
-behavior of inetraction execution, we call it a ``behavioral restriction condition''.
+behavior of interaction execution, we call it a ``behavioral restriction condition''.
 
 %Moreover, since implication of $\GAO(\act)$ can be on a ``per interaction'' basis, with different
 %conditions being applied to different interactions, we have:

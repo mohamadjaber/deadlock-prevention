@@ -35,7 +35,7 @@ occurrence of a wait-for cycle, \eg as stated in Antonio \etal \cite{AGR16}, dis
 work:
 \begin{quote}
 All these methods were designed, to some extent, around the principle that under reasonable
-assumptions about the system, any deadlock state would contain a proper cycle of ungranted requests.
+assumptions about the system, any deadlock state would contain a proper cycle of un-granted requests.
 \end{quote}
 In a model of concurrency which includes choice of actions
 (\eg BIP, CSP, I/O automata, CCS, etc), a wait-for cycle is an \emph{incomplete} characterization of
@@ -61,7 +61,7 @@ This paper extends a preliminary conference version \cite{FORTE13} as
 follows: 
 (1) we present an ``AND-OR'' criterion for deadlock-freedom, which exploits the AND-OR structure of supercycles, and is therefore complete for
 deadlock-freedom in the limit, while \cite{FORTE13} gives a ``linear'' criterion, which is a special case in which the AND-OR structure is ignored, and
-(2) experimental results show that the new criterion is more efficient in practice, and also suceeds in cases where the linear criterion fails.
+(2) experimental results show that the new criterion is more efficient in practice, and also succeeds in cases where the linear criterion fails.
 
 We present experimental results for dining philosophers and for a multi token-based resource allocation system, which generalizes Milner's token based
 scheduler~\cite{milner}.  These show that our method compares favorably with existing approaches.

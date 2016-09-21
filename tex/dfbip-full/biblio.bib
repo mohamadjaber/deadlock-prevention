@@ -1,3 +1,43 @@
+                  
+@Article{Att16a,
+author="Attie, Paul C.",
+title="Synthesis of large dynamic concurrent programs from dynamic specifications",
+journal="Formal Methods in System Design",
+year="2016",
+pages="1--54",
+abstract="We present two methods for synthesizing large concurrent programs from temporal logic specifications. The first method deals with finite-state concurrent programs that are static, i.e., the set of processes is fixed. It produces an infinite family of static finite-state concurrent programs. The second method deals with dynamic concurrent programs, i.e., new processes can be created and added at run-time. It produces a single dynamic concurrent program. A dynamic concurrent program may be viewed as a limiting case of an infinite family of static programs, and so the second method may be viewed as generalizing the first. Our methods are algorithmically efficient, with complexity polynomial in the number of component processes (of the program) that are ``alive'' at any time. We do not explicitly construct the automata-theoretic product of all processes that are alive, thereby avoiding state explosion. Instead, for each interacting pair of processes, we construct (from a pair-specification) a pair-structure which embodies the interaction of the two processes. From each pair-structure, we synthesize a pair-program to coordinate the two processes. Our second method allows pair-programs to be added dynamically at run-time. They are then ``composed conjunctively'' with the currently alive pair-programs to ``re-synthesize'' the program. We can thus add new behaviors, which result in new properties being satisfied, at run-time. This ``incremental composition'' step has complexity independent of the total number of processes; it only requires the mechanical analysis of the two processes in the pair-program, and their immediate neighbors, i.e., the other processes which they interact directly with. Thus, any state-explosion incurred is explosion in the product of only two processes. We establish ``large model'' theorems which show that the synthesized global program inherits correctness properties from the pair-programs.",
+issn="1572-8102",
+doi="10.1007/s10703-016-0252-9",
+url="http://dx.doi.org/10.1007/s10703-016-0252-9"
+}
+
+
+@article{Att16b,
+title = "Finite-state concurrent programs can be expressed in pairwise normal form ",
+journal = "Theoretical Computer Science ",
+volume = "619",
+number = "",
+pages = "1 - 31",
+year = "2016",
+note = "",
+issn = "0304-3975",
+doi = "http://dx.doi.org/10.1016/j.tcs.2015.11.032",
+url = "http://www.sciencedirect.com/science/article/pii/S0304397515011184",
+author = "Paul C. Attie",
+keywords = "Finite-state concurrent programs",
+keywords = "Expressive completeness",
+keywords = "Atomic registers",
+keywords = "State-explosion ",
+abstract = "Abstract We show that any finite-state shared-memory concurrent program can be transformed into pairwise normal form: all variables are shared between exactly two processes, and the guards on transitions are conjunctions of conditions over this pairwise shared state. Specifically, if P is a finite-state shared-memory concurrent program, then there exists a finite-state shared-memory concurrent program P expressed in pairwise normal form such that P is strongly bisimilar to P. Our result is constructive: we give an algorithm for producing P , given P. "
+}
+
+
+
+
+
+
+
+
 @book{milner,
   author    = {Robin Milner},
   title     = {Communication and concurrency},

@@ -2,9 +2,9 @@
 \subsection{Related work.} 
 The notions of wait-for-graph and supercycle \cite{AC05,AE98}
 were initially defined for a shared memory program
-$P = P_1 \pl \cdots \pl P_K$ in \emph{pairwise normal form}: a binary
-symmettric relation $I$ specifies the directly interacting pairs
-(``neighbors'') $\set{P_i, P_j}$.
+$P = P_1 \pl \cdots \pl P_K$ in \emph{pairwise normal form} \cite{Att16a, Att16b}: a binary
+symmetric relation $I$ specifies the directly interacting pairs
+(``neighbors'') $\set{P_i, P_j}$ 
 If $P_i$ has neighbors $P_j$ and $P_k$, then 
 the code in $P_i$ that interacts with $P_j$ is expressed separately from
 the code in $P_i$ that interacts with $P_k$. 
@@ -48,7 +48,7 @@ checkable deadlock freedom condition based on structural restrictions:
 tree.'' This restriction allows them to analyze only pair systems.
 %
 Aldini and Bernardo \cite{AB03} use a 
-formalism based on process algebra. They check deadlock by analysing cycles in
+formalism based on process algebra. They check deadlock by analyzing cycles in
 the connections between software components, and claim scalability, but no
 complexity bounds are given.
 
@@ -64,7 +64,7 @@ finite network, and hence some process is not blocked.
 They treat several examples, including
 a self-timed systolic array (in 2 and 3 dimensions), dining philosophers, and a message switching
 network.  They generalize the first rule to exploit ``disconnecting edges'' (whose removal
-partitions the network into disconected components) to decompose the proof of deadlock freedom into
+partitions the network into disconnected components) to decompose the proof of deadlock freedom into
 showing that each disconnected component is deadlock-free, and also to weaken the restriction on the
 variant function so that it only has to decrease for at least one edge on each wait-for cycle.
 %
@@ -123,9 +123,9 @@ deadlock, and the \LAO condition is complete \wrt the occurrence of a supercycle
 within the subsystem being checked. 
 Hence the only source of incompleteness in our method is that of computational
 limitation: if the subsystem being checked becomes too large before 
-the \LAO condition is verified. If compuational resources are not exhausted, then our
+the \LAO condition is verified. If computational resources are not exhausted, then our
 method can keep checking until the subsystem being checked is the entire system, at which
-point \LAO concides with \GAO, which is sound and complete for local deadlock
+point \LAO coincides with \GAO, which is sound and complete for local deadlock
 (\prop{scViol-iff-notInSC}, \defn{formation.violation}, and \defn{global.ANDOR-cond}).
 
 
@@ -162,6 +162,11 @@ which efficient distributed implementations can be generated
   deadlock-freedom. Conditions more general and/or discriminating than
   the one presented here 
   should be devisable in this framework. This is a topic for future work.
+In addition, our approach is applicable to any model of concurrency in
+which pur notions of wait-for graph and supercycle can be defined. For example,  Attie and Chockler \cite{AC05} give two methods for verifying global
+and local deadlock freedom of shared-memory concurrent programs in pairwise normal form, as noted above.
+Hence, our methods are applicable to other formalisms such as CSP, CCS, I/O Automata, etc.
+
 
 \end{description}
 
@@ -173,14 +178,17 @@ when $\LAO(B, Q_0, a, \l)$ holds only for large $\l$.
 Another potential method for improving the running time is to use 
 SAT solving, cf.\ Antonio \etal \cite{AGR16}.
 %
-%, since the time to check $\LDFC(a, \l)$ grows exponentialy with $\l$, in general.
+%, since the time to check $\LDFC(a, \l)$ grows exponentially with $\l$, in general.
 %
 An enabled port $p$ enables all interactions containing $p$.
 Deadlock-freedom conditions based on ports could exploit
 this interdependence among interaction enablement.
 %
-Our implementation should produce \emph{counterexamples} when a system
-fails to satisfy $\LAO(B, Q_0, a, \l)$.
+Our implementation should produce \emph{counterexamples} when a system fails to satisfy $\LAO(B, Q_0, a, \l)$. These can be used to manually modify the system
+to eliminate a possible deadlock.  Also, when $\LAO(B, Q_0, a, \l)$ fails to verify deadlock-freedom, we increment $\l$, in effect extending the
+subsystem being checked ``in all directions'' away from $a$ (in the structure graph). A counterexample may provide guidance to a more discriminating
+extension, when adds only a few components, so we now consider subsystems whose boundary has varying distance from $a$, in the structure graph. This
+has the benefit that we might verify deadlock freedom using a smaller subsystem than with our current approach.
 %
 \emph{Design rules} for ensuring $\LAO(B, Q_0, a, \l)$ will help users to
 produce deadlock-free systems, and also to interpret counterexamples.

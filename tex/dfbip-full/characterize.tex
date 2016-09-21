@@ -248,7 +248,7 @@ from $s$, including $s$ itself.
 \ep
 %\begin{proof}
 \prfs{Every interaction $\act$ that $\B_i$ enables is not enabled by some
-participant. By Defintion~\ref{def.bip.enablement}, $\act$ cannot be
+participant. By Definition~\ref{def.bip.enablement}, $\act$ cannot be
 executed. Hence $\B_i$ cannot execute any transition.
 }
 %
@@ -395,14 +395,14 @@ $\wodepth{\B}{v}{s}$ for $\odepth{\wfg{\B}{s}}{v}$.
 
 % Base case: in-depth = 0. Let $\SC'$ be the result of removing all nodes of in-depth 0 from $SC$. Since no node waits
 % for a node of in-depth 0, it follows that a node of in-depth 0 does not contribute to the satisfaction of
-% Definition~\ref{def:supercycle}, and hance $\SC'$ is still a supercycle.
+% Definition~\ref{def:supercycle}, and hence $\SC'$ is still a supercycle.
 
 % Inductive step: in-depth = $i$: let $\SC"$ be the result of removing all nodes of in-depth $i-1$ from $SC$.
 % By the induction hypothesis, $\SC"$ is a supercycle. Now let $\SC'$ be the result of 
 % removing, from $\SC"$, all nodes that have in-depth $i$ in $SC$.
 % Now all nodes of in-depth $i$ in $\SC$ have an in-depth of 0 in
 % $\SC"$. Hence removing all such nodes from $\SC"$ results, by the same argument as for the base case, 
-% in a supercyle $\SC'$.
+% in a supercycle $\SC'$.
 % }
 
 
@@ -484,7 +484,7 @@ By Proposition~\ref{prop:supercycle:contains-cycle}, $\SC'$ is nonempty.
 Thus $SC'$ satisfies clause (1) of Definition~\ref{def:supercycle}.
 %
 Let $v$ be an arbitrary vertex of $\SC'$. Hence $v$ has infinite in-depth, and
-therefore so do all of $v$'s sucessors in $\SC$. Hence all of these successors
+therefore so do all of $v$'s successors in $\SC$. Hence all of these successors
 are in $\SC'$. 
 Hence every vertex $v$ in $SC'$ has successors
 in $\SC'$ that satisfy clauses (2) and (3) of Definition~\ref{def:supercycle}.
@@ -543,7 +543,7 @@ Let $\SC, \SC'$ be supercycles in $\wfg{B}{s}$. Then $\SC \un \SC'$ is
 a supercycle in $\wfg{B}{s}$.
 \ep
 %
-\prf{Striaghtforward, since each node in 
+\prf{Straightforward, since each node in 
 $\SC \un \SC'$ has enough successors that it waits for to satisfy 
  \defn{supercycle}.
 }
