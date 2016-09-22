@@ -6,8 +6,8 @@ We provide \deadlocktool{}, a suite of supporting tools that implement our metho
 of configuration options. 
 It takes the name of the input BIP file and other optional flags. 
 
-
-\begin{lstlisting}[language=Bash, caption = {\deadlocktool{} Command Line Interface},label={code:cmd-ldfc}]
+\begin{figure}
+\begin{lstlisting}[language=Bash]
 > java -jar ldfc.jar [options] input.bip 
 and options are:
 -condition <s> LLIN (local linear check) or LALT (local and/or check - default)
@@ -20,4 +20,6 @@ Examples:
   java -jar ldfc.jar -debug input.bip # deadlock freedom using default LALT
   java -jar ldfc.jar -condition=LLIN -debug input.bip # deadlock freedom using LLIN
 \end{lstlisting}
-
+\caption{\deadlocktool{} Command Line Interface}
+\label={code:cmd-ldfc}
+\end{figure}

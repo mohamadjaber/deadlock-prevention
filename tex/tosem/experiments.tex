@@ -45,7 +45,7 @@ $\LAO$ outperforms $\LLin$ in all cases. This due to the following.
 
 
 \begin{table}
-\centering
+\tbl{Benchmarks: Dining Philosopher}{
 \begin{tabular}{| l | l | l | l |}
 \hline
 Size & \LAO & \LLin & D-Finder \\ \hline \hline
@@ -59,8 +59,7 @@ $7,000$ &          $17.2 s$ &   $25$        & $30m:18s$ \\ \hline
 $8,000$ &          $25.6 s$ &   $34$        & $-$ \\ \hline
 $9,000$ &          $34.1 s$ &   $55$        & $-$ \\ \hline
 $10,000$ &          $47 s$  &   $62 s$          & $-$ \\ \hline 
-\end{tabular}
-\caption{Benchmarks: Dining Philosopher}
+\end{tabular}}
 \label{bench:dining}
 \end{table}
 
@@ -163,7 +162,7 @@ $RM_{4}$ manages resource $R_4$.
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[scale=1.2]{compiledfigures/resourceallocation-crop.pdf}
+\includegraphics[scale=0.9]{compiledfigures/resourceallocation-crop.pdf}
 \caption{Conflict-Resource Allocation System}
 \label{fig:resourceallocation}
 \end{center}
@@ -201,12 +200,12 @@ However, it is not possible to find a deadlocked subsystem containing $C_0$ and 
 to include the resource manager $M_{01}$ managing conflicting resources $0$ and $1$. 
 The latter can always exchange the second token with the neighboring resource managers. 
 
-An extension of our work that consider subsystem boundaries at ports and abstracts port enablement 
+An extension of our work that cotablensider subsystem boundaries at ports and abstracts port enablement 
 conditions with free Boolean variables can help
 detect such scenarios. 
 
 \begin{table}
-\centering
+\tbl{Benchmarks: Time required for $\LAO$ on the resource allocation system}{
 \begin{tabular}{| l | 
   c |  c | c | c | 
   c |  c | c | c | 
@@ -216,8 +215,7 @@ detect such scenarios.
 Size & $10$ & $12$ & $14$ & $16$ & $18$ & $20$ & $22$ & $24$ & $26$ & $28$ & $30$ \\ \hline
 Time (sec) & $148 $ & $169 $ & $189 $ & $230 $ & $254 $ & $277 $ & $298 $ & $318 $ & $351 $ & $374 $ & $430 $ \\ \hline 
 
-\end{tabular}
-\caption{Benchmarks: Time required for $\LAO$ on the resource allocation system }
+\end{tabular}}
 \label{bench:resourceallocation}
 \end{table}
 
