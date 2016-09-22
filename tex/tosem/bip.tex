@@ -1,0 +1,329 @@
+%\section{BIP - Behavior Interaction Priority}
+
+BIP is a component framework for constructing systems by superposing three layers of modeling: Behavior, Interaction,
+and Priority.
+%
+A technical treatment of priority is beyond the scope of this paper. Adding priorities never introduces a deadlock,
+since priority enforces a choice between possible transitions from a state, and deadlock-freedom means that there is at
+least one transition from every (reachable) state.  Hence if a BIP system without priorities is deadlock-free, then the
+same system with priorities added will also be deadlock-free.
+
+\bd[Atomic Component]
+An  {\em atomic component} $\B_i$ is a labeled transition system represented by a triple
+$(Q_i, P_i, \goesto_i)$ where $Q_i$ is a set of {\em states}, $P_i$ is a set of {\em communication ports}, and
+$\goesto_i\, \subseteq Q_i \times P_i \times Q_i$ is a set of {\em possible transitions}, each labeled by some port.
+\ed
+
+For states $s_i, t_i \in Q_i$ and port $p_i \in P_i$, write $s_i  \goesto[p_i]_i t_i$, iff
+$(s_i,p_i,t_i) \in\,\goesto_i$. When $p_i$ is irrelevant, write 
+$s_i \goesto_i t_i$. Similarly, $s_i \goesto[p_i]_i$ means that there
+exists $t_i \in Q_i$ such that
+$s_i \goesto[p_i]_i t_i$. In this case, $p_i$ is \emph{enabled} in state $s_i$.
+Ports are used for communication between different components, as
+discussed below.
+
+In practice, we describe the transition system using some syntax, \eg involving variables.  We abstract away from issues
+of syntactic description since we are only interested in enablement of ports and actions. We assume that enablement of a
+port depends only on the local state of a component. In particular, it cannot depend on the state of other
+components. This is a restriction on BIP, and we defer to subsequent work how to lift this restriction.  So, we assume
+the existence of a predicate $\gd{p_i}{i}$ that holds in state $s_i$ of component $\B_i$ iff port $p_i$ is enabled in
+$s_i$, \ie $s_i(\gd{p_i}{i}) = \true \mbox{ iff } s_i \goesto[p_i]_i$.
+
+Figure~\ref{fig:components} shows atomic components for a philosopher $P$
+and a fork $F$ in dining philosophers.
+%
+A philosopher $P$ that is hungry (in state $h$) can eat by
+executing $\get$ and moving to state $e$ (eating). From $e$, $P$
+releases its forks by executing $\release$ and moving back to $h$.
+%
+Adding the thinking state does not change the deadlock behaviour of the system, since the
+thinking to hungry transition is internal to $P$, and so we omit it.
+%
+A fork $F$ is taken by either: (1) the left philosopher 
+(transition $\get_l$) and so moves to state $u_l$ (used by left
+philosopher), or (2) the right philosopher  (transition
+$\get_r$) and so moves to state $u_r$ (used by right
+philosopher). From state $u_r$ (resp. $u_l$), $F$ is released by the
+right philosopher (resp. left philosopher) and so moves back to
+state $f$ (free).
+
+
+
+\bd[Interaction] For a given system built from a set of $n$ atomic components 
+$\{\B_i = (Q_i, P_i, \goesto_i)\}_{i=1}^n$, we require that their respective sets of ports are
+pairwise disjoint,
+\ie for all $i, j$ such that $i, j \in \oneton \land i \ne j$, we have $P_i \ints P_j = \emptyset$.
+An {\em interaction} is a set of ports not containing two or more ports from the same component.
+That is, for an interaction $\act$ we have 
+$\act \subseteq P \land (\fa i \in \set{1..n}: |\act \ints P_i| \le 1)$, where 
+$P = \bigcup_{i=1}^n P_i$ is the set of all ports in the
+system. When we write $\act = \{p_i\}_{i \in I}$, we assume that
+$p_i \in P_i$ for all $i \in I$, where $I \subseteq \set{1..n}$.
+\ed
+
+\noindent
+Execution of an interaction
+$\act = \{p_i\}_{i \in I}$
+involves all the components which have
+ports in $\act$.  
+We denote by $\cmps{\act}$ the
+set of atomic components participating in $\act$, formally:
+$\cmps{\act} = \{\B_i \st p_i \in \act\}$. 
+
+
+\begin{figure}[t]
+  \begin{center}
+    \mbox{
+      \subfigure[Philosopher $P$ and fork $F$ atomic components.]{\label{fig:components}\scalebox{0.4}{\input{figs/philAndFork.pdf_t}}} \quad
+      \subfigure[Dining philosophers composite component with four philosophers.]{\label{fig:diningbip}\scalebox{0.35}{\input{figs/diningbip.pdf_t}}}
+      }
+    \caption{Dining philosophers.}
+    \label{fig:diningSpectrum}
+  \end{center}
+\end{figure}
+
+
+
+
+
+
+
+
+\bd[Composite Component]\label{def.bip.composition} A {\em composite
+  component} (or simply {\em component}) 
+ $\B \df \gamma(\B_1,\dots,\B_n)$
+is defined by a composition
+operator parameterized by a set of interactions $\gamma \subseteq
+2^P$.  $\B$ has a transition system
+$(Q,\gamma, \goestog)$, where %$Q = \bigotimes_{i=1}^n Q_i$ and
+$Q = Q_1 \times \cdots \times Q_n$ and
+$\goestog \sub Q \times \gamma \times Q$ is the least set of transitions satisfying the rule
+%
+\begin{mathpar}
+\inferrule
+{
+    \act = \{p_i\}_{i\in I}\in \gamma\\
+    \forall i\in I: s_i \goesto[p_i]_i t_i\\
+    \forall i\not\in I: s_i = t_i
+}
+{
+    \tpl{s_1,\dots,s_n} \goestog[\act] \tpl{t_1,\dots,t_n}
+}
+\end{mathpar}
+\ed
+%
+This inference rule says that a composite component $\B = \gamma(\B_1,\dots,\B_n)$ can
+execute an interaction $\act \in \gamma$, iff for each port $p_i \in \act$, the
+corresponding atomic component $\B_i$ can execute a transition labeled with
+$p_i$; the states of components that do not participate in the interaction stay
+unchanged. 
+%
+%Given an interaction $\act = \{p_i\}_{i \in I}$, we denote by $\cmps{\act}$ the
+%set of atomic components participating in $\act$, formally:
+%$\cmps{\act} = \{\B_i \st p_i \in \act\}$. 
+%Given a component $\B_i$, we denote by $A_i$ the
+%interactions that $\B_i$ participates in, formally: $A_i = \set{a \st P_i \ints a \ne \emptyset}$.
+Figure \ref{fig:diningbip} shows a composite component consisting of
+four philosophers and the four forks between them. Each philosopher
+and its two neighboring forks share two interactions: 
+$\Get = \set{\get, \use_l, \use_r}$ in which the philosopher obtains the forks, and 
+$\Rel = \set{\release, \free_l, \free_r}$ in which the philosopher releases the forks.
+
+
+
+\bd[Interaction enablement]\label{def.bip.enablement} 
+An atomic component $\B_i = (Q_i,P_i,\goesto_i)$ enables a port $p_i \in P_i$ in state $s_i$ iff $s_i \goesto[p_i]_i$.
+$\B_i$ enables interaction $\act$ in state $s_i$ iff $s_i \goesto[p_i]_i$, where $\set{p_i} = P_i \ints \act$ is the port of $\B_i$ involved in $\act$.
+That is, $\B_i$ enables $\act$ in state $s_i$ iff $\B_i$ enables port $\act \ints P_i$ in state $s_i$. 
+
+Let $\gd{p_i}{i}$ denotes the enablement condition for port $p_i$ in component $\B_i$, that is, $\gd{p_i}{i}$ holds iff
+$s_i$ is the current state of $\B_i$ and $s_i \goesto[p_i]_i$.
+Let $\gd{\act}{i}$ denote the enablement condition for interaction $\act$ in
+component $\B_i$, that is,  $\gd{\act}{i} = \gd{p_i}{i}$ where $\set{p_i} = \act \ints P_i$.  
+%$\gd{a}{i}$ holds iff the current state of $\B_i$ is an $s_i$ such that $s_i \goesto[p_i]_i$.
+
+Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component, and let $s =
+\tpl{s_1,\ldots,s_n}$ be a state of $\B$.  Then $\B$ enables $\act$ in $s$
+iff every $\B_i \in \cmps{\act}$ enables $\act$ in $s_i$.  
+\ed
+%
+The definition of  interaction enablement is a consequence of 
+Definition~\ref{def.bip.composition}.
+Interaction $\act$ being enabled in state $s$ means that executing
+$\act$ is one of the possible transitions that can be taken from $s$.
+
+To avoid pathological cases of deadlock due solely to a single component refusing to enable any interaction at all, 
+we assume that every component always enables at least one interaction.
+Structurally, this means that there is no local state zero transitions, and every port labeling a transition is 
+part of at least one interaction. 
+
+\bd[Local Enablement Assumption] \label{def.bip.local-enablement}
+For every component  $\B_i = (Q_i,P_i,\goesto_i)$, the following holds. In every $s_i \in Q_i$, $\B_i$ enables some
+interaction $\act$.
+\ed
+
+\bd[BIP System]\label{def.bip.system} Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component with transition system $(Q,\gamma,
+\goestog)$, and let $Q_0 \sub Q$ be a set of initial states. Then $(\B,Q_0)$ is a BIP system.  \ed
+%We usually refer to $B$ as a BIP system, understanding that $Q_0$ is implicit.
+
+\noindent
+Figure \ref{fig:diningbip} gives a BIP-system with philosophers initially in state $h$ (hungry) and forks initially in
+state $f$ (free).
+%
+To avoid tedious repetition, we fix, for the rest of the paper, an arbitrary BIP-system $(\B, Q_0)$, with
+$\B \df \gamma(\B_1,\dots,\B_n)$, and transition system $(Q,\gamma, \goestog)$.
+
+
+\bd[Execution]\label{def.bip.execution} Let $(\B, Q_0)$ be a BIP system
+with transition system $(Q,\gamma, \goestog)$.  Let $\rho = s_0 \act_1 s_1 \ldots s_{j-1} \act_j s_j \ldots$ be an alternating sequence of
+states of $\B$ and interactions of $\B$. Then $\rho$ is an execution of
+$(\B, Q_0)$ iff (1) $s_0 \in Q_0$, and (2) $\fa j > 0: s_{j-1} \goesto[\act_j] s_j$.  \ed
+
+
+
+\bd[Reachable state, transition]\label{def.bip.reachable}
+A state or transition that occurs in some execution is called \emph{reachable}.
+
+\ed
+
+
+\bd[State Projection]\label{def.bip.state.projection} Let $(\B, Q_0)$ be a BIP system where $\B = \gamma(\B_1,\dots,\B_n)$ and let
+$s = \tpl{s_1,\dots,s_n}$ be a state of $(B, Q_0)$. Let $\set{\B_{i_1},\dots,\B_{i_k}} \sub \set{\B_1,\dots,\B_n}$. Then
+$s \pj \set{\B_{i_1},\dots,\B_{i_k}} \df \tpl{s_{i_1},\dots,s_{i_k}}$. For a single $\B_i$, we write $s \pj \B_i = s_i$.
+%
+We extend state projection to sets of states element-wise.
+\ed
+
+
+\bd[Subcomponent]\label{def.bip.subcomponent} Let $\B \df \gamma(\B_1,\dots,\B_n)$ be a composite component, and let $\set{\B_{i_1},\dots,\B_{i_k}}$
+be a subset of $\set{\B_{1},\dots,\B_{n}}$.  Let $P' = P_{i_1} \un \cdots \un P_{i_k}$, \ie the union of the ports of $\set{\B_{i_1},\dots,\B_{i_k}}$.
+Then the subcomponent $\B'$ of $\B$ based on $\set{\B_{i_1},\dots,\B_{i_k}}$ is as follows:
+%
+\bn
+\item $\gamma' \df \set{ \act \ints P' \st \act \in \gamma \land \act \ints P' \ne \emptyset}$
+\item $\B' \df \gamma'(\B_{i_1},\dots,\B_{i_k})$ 
+\en
+\ed
+That is, $\gamma'$ consists of those interactions in $\gamma$ that have at least one participant in 
+$\set{\B_{i_1},\dots,\B_{i_k}}$, and restricted to the participants in $\set{\B_{i_1},\dots,\B_{i_k}}$,
+\ie participants not in $\set{\B_{i_1},\dots,\B_{i_k}}$ are removed.
+
+We write $s \pj \B'$ to indicate state projection onto $\B'$, and define 
+$s \pj \B' \df  s \pj \set{\B_{i_1}, \dots, \B_{i_k}}$, where $\B_{i_1},\dots,\B_{i_k}$ are the atomic
+components in $\B'$.
+
+
+%MENTION THAT THE INTERACTION $a$ SHOULD ALSO BE PROJECTED. WHEN WE WRITE $a$ IN A TRANSITION $s_{k-1} \goestog[a] s_k$
+%OF THE PROJECTED SUBSYSTEM, WE REALLY MEAN THE PROJECTION OF $a$. SINCE $a$ IS JUST USED AS A LABEL, THERE IS NO HARM
+%DONE, BUT WE KEEP IN MIND THAT THE PROJECTION OF $a$ ONTO THE SUBSYSTEM IS MEANT
+
+
+
+
+\bd[Subsystem]\label{def.bip.subsystem}
+Let $(\B, Q_0)$ be a BIP system where $\B = \gamma(\B_1,\dots,\B_n)$, and let 
+$\set{\B_{i_1},\dots,\B_{i_k}}$ be a subset of $\set{\B_{1},\dots,\B_{n}}$.
+Then the subsystem $(\B', Q'_0)$ of  $(\B, Q_0)$ based on $\set{\B_{i_1},\dots,\B_{i_k}}$ is as follows:
+\bn
+\item $\B'$ is the subcomponent of $\B$ based on $\set{\B_{i_1},\dots,\B_{i_k}}$ 
+\item $Q'_0 = Q_0 \pj \set{\B_{i_1},\dots,\B_{i_k}}$
+\en
+\ed
+
+
+
+
+\bd[Execution Projection]\label{def.bip.execution.projection}
+Let $(\B, Q_0)$ be a BIP system where $\B = \gamma(\B_1,\dots,\B_n)$, and let $(\B', Q'_0)$, with $\B'
+= \gamma'(\B_{i_1},\dots,\B_{i_k})$ be the subsystem of $(\B, Q_0)$ based on $\set{\B_{i_1},\dots,\B_{i_k}}$.
+Let $P' = P_{i_1} \un \cdots \un P_{i_k}$, \ie $P'$ is the set of ports of $(\B', Q'_0)$.
+%
+Let $\rho = s_0 \act_1 s_1 \ldots s_{j-1} \act_j s_j \ldots$ be an execution of $(\B, Q_0)$.  Then, $\rho \pj (\B', Q'_0)$, the projection
+of $\rho$ onto $(\B', Q'_0)$, is the sequence resulting from:
+\bn
+\item \label{def.clause.bip.execution.projection.state} 
+replacing each $s_j$ by $s_j \pj \set{\B_{i_1},\dots,\B_{i_k}}$, \ie replacing each state by its projection onto $\set{\B_{i_1},\dots,\B_{i_k}}$
+
+\item \label{def.clause.bip.execution.projection.action} removing all $\act_j s_j$ where $\act_j \ints P' = \emptyset$   %$\act_k \not\in \gamma'$\\
+
+\item \label{def.clause.bip.execution.projection.port} replacing each $\act_j$ by $\act_j \ints P'$, \ie replacing each
+interaction by its projection onto the port set $P'$ 
+
+\en
+\ed
+
+
+
+\bp[Execution Projection]\label{prop.bip.execution.projection}
+Let $(\B, Q_0)$ be a BIP system where $\B = \gamma(\B_1,\dots,\B_n)$, and let
+$(\B', Q'_0)$, with $\B' = \gamma'(\B_{i_1},\dots,\B_{i_k})$ be the subsystem of $(\B, Q_0)$ based on $\set{\B_{i_1},\dots,\B_{i_k}}$.
+Let $P' = P_{i_1} \un \cdots \un P_{i_k}$,  \ie the union of the ports of $\set{\B_{i_1},\dots,\B_{i_k}}$.
+Let $\rho = s_0 \act_1 s_1 \ldots s_{j-1} \act_j s_j \ldots$ be an execution of $(\B, Q_0)$. 
+Then, $\rho \pj (\B', Q'_0)$ is an execution of $(\B', Q'_0)$.
+\ep
+%\begin{proof}
+\begin{prf}
+%Let $\rho = s_0 \act_1 s_1 \ldots s_{j-1} \act_j s_j \ldots$, be an execution of $(\B, Q_0)$,
+By Definitions~\ref{def.bip.state.projection}, \ref{def.bip.subsystem}, and \ref{def.bip.execution.projection}, 
+we have $\rho \pj (\B', Q'_0) = s'_0 \actb_1 s'_1 \actb_2 s'_2 \ldots$ for some $s'_0,\actb_1 s'_1 \actb_2 s'_2 \ldots$,
+where $s'_j \in Q' = Q \pj \set{\B_{i_1},\dots,\B_{i_k}}$ for $j \ge 0$.
+%
+Also by Definitions~\ref{def.bip.state.projection}, \ref{def.bip.subsystem}, and \ref{def.bip.execution.projection}, 
+we have $s'_0 \in Q'_0 = Q_0 \pj \set{\B_{i_1},\dots,\B_{i_k}}$, since $s'_0 = s_0 \pj \B'$, and $s_0 \in Q_0$, by Definition~\ref{def.bip.execution}.
+
+Consider an arbitrary step $(s'_{j-1}, \actb_j, s'_j)$ of $\rho \pj (\B', Q'_0)$.
+Since $\actb_j s'_j$ was not removed in Clause~\ref{def.clause.bip.execution.projection.action} of
+Definition~\ref{def.bip.execution.projection}, we have 
+
+\noindent
+(1) $s'_j = s_{\l} \pj \set{\B_{i_1},\dots,\B_{i_k}}$ for some $\l > 0$ and such that $\act_{\l} \ints P' \ne \emptyset$\\                     %$\act_\l \in \gamma'$\\
+(2) $\actb_j = \act_{\l} \ints P'$\\                                                              %$b_j = \act_k$
+(3) $s'_{j-1} = s_m \pj \set{\B_{i_1},\dots,\B_{i_k}}$ for the smallest $m$ such that\\
+   \ind $m < \l$ and
+        $\fa m' : {m+1 \leq m' < \l} : \act_{m'} \ints P' = \emptyset$                              %\act_{m'} \not\in \gamma'$
+
+\noindent
+From  (3) we have $\fa m' : {m+1 \leq m' < \l} : \act_{m'} \ints P' = \emptyset$. So by Definitions~\ref{def.bip.composition} and \ref{def.bip.execution.projection},
+    we have $s_m \pj \set{\B_{i_1},\dots,\B_{i_k}} = s_{\l-1} \pj \set{\B_{i_1},\dots,\B_{i_k}}$.
+From (3) we have $s'_{j-1} = s_m \pj \set{\B_{i_1},\dots,\B_{i_k}}$. 
+%From this and $s_m \pj \set{\B_{i_1},\dots,\B_{i_k}} = s_{\l-1} \pj \set{\B_{i_1},\dots,\B_{i_k}}$ just established, we obtain
+Hence $s'_{j-1} = s_{\l-1} \pj \set{\B_{i_1},\dots,\B_{i_k}}$.
+
+From $s_{\l-1} \goestog[\act_{\l}] s_{\l}$,    $\act_{\l} \ints P' \ne \emptyset$, and Definition~\ref{def.bip.composition}, we have  % $\act_k \in \gamma'$
+        $s_{\l-1} \pj \set{\B_{i_1},\dots,\B_{i_k}} \goestog[\act_{\l} \ints P'] s_{\l} \pj \set{\B_{i_1},\dots,\B_{i_k}}$.
+$s'_{j-1} = s_{\l-1} \pj \set{\B_{i_1},\dots,\B_{i_k}}$ was established above.
+$s'_j = s_{\l} \pj \set{\B_{i_1},\dots,\B_{i_k}}$ is from (1).
+$\actb_j = \act_{\l} \ints P'$ is from (2).
+Hence we obtain $s'_{j-1} \goestog[\actb_j] s'_j$, \ie that $s'_{j-1}, \actb_j s'_j$ is a step of  $(\B', Q'_0)$.
+
+Since $(s'_{j-1}, \actb_j, s'_j)$ was arbitrarily chosen, we conclude that
+every step of $\rho \pj (\B', Q'_0)$  is a step of $(\B', Q'_0)$. This establishes Clause (2) of Definition~\ref{def.bip.execution}.
+%
+The first state of
+$\rho \pj (\B', Q'_0)$  is $s'_0$, and $s'_0 \in Q'_0$ was shown above, so we establish Clause (1) of Definition~\ref{def.bip.execution}.
+
+Since both clauses of Definition~\ref{def.bip.execution} are satisfied, we conclude that $\rho \pj (\B', Q'_0)$ is an execution of $(\B', Q'_0)$.
+\end{prf}
+%\end{proof}
+
+
+
+
+
+
+\bco \label{cor.bip.reachability}
+\label{cor:bip.reachability}
+Let $(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$, and let $P'$ be the port set of $(\B', Q'_0)$.
+Let $s$ be a reachable state of $(\B, Q_0)$. Then $s \pj \B'$ is a reachable state of  $(\B',Q'_0)$. Let $s \la{\act} t$ be
+a reachable transition of $(\B, Q_0)$, and let $\act$ be an interaction of
+ $(\B', Q'_0)$. Then  $s \pj \B' \la{\act \ints P'} t \pj \B'$ is a reachable transition of $(\B', Q'_0)$.
+\eco
+\prf{
+Immediate corollary of Proposition~\ref{prop.bip.execution.projection}.
+}
+
+
+
+
+
+

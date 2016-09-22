@@ -1,0 +1,29 @@
+\documentclass[11pt]{article}  
+\input{tikzstyle}
+\setlength\parindent{0pt}
+
+\pagestyle{empty}
+
+\begin{document}
+\begin{tikzpicture}[bip]
+  \component{r0}{}{}{
+   \node[place, initial above]  (l0)   {}; 
+   \node[place]  (l1) [right=of l0]  {};   
+   \node[place]  (l2) [right=of l1]  {};  
+   \node[place]  (l3) [right=of l2]  {};
+   \node[place]  (l4) [right=of l3]  {}; 
+  
+   \path[trans] (l0) edge [] node {$\rcvRequest$} (l1); 
+   \path[trans] (l1) edge [] node {$\rcvToken$} (l2);
+   \path[trans] (l2) edge [] node {$\sendGrant$} (l3);
+   \path[trans] (l3) edge [] node {$\rcvResource$} (l4);
+   \path[trans] (l4) edge [bend right] node[above] {$\sendToken$}  (l0); 
+}{\\\\}{\\\\ \hspace*{6.5cm} \textbf{Resource}}; 
+ \node[export] (r0p1) at ($(r0.south west)!.1!(r0.south east)$) [label=above:$\rcvRequest$] {};
+ \node[export] (r0p3) at ($(r0.south west)!.3!(r0.south east)$) [label=above:$\sendGrant$] {};
+ \node[export] (r0p4) at ($(r0.south west)!.5!(r0.south east)$) [label=above:$\rcvResource$] {};
+
+ \node[export] (r0p2) at ($(r0.north west)!.3!(r0.north east)$) [label=below:$\rcvToken$] {};
+ \node[export] (r0p5) at ($(r0.north west)!.7!(r0.north east)$) [label=below:$\sendToken$] {};
+\end{tikzpicture}
+\end{document}

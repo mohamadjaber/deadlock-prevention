@@ -1,0 +1,29 @@
+\documentclass[11pt]{article}  
+\input{tikzstyle}
+\setlength\parindent{0pt}
+
+\pagestyle{empty}
+
+\begin{document}
+\begin{tikzpicture}[bip]
+\component{c0}{}{}{
+   \node[place, initial below]  (l0)   {}; 
+   \node[place]  (l1) [right=of l0]  {};   
+   \node[place]  (l2) [right=of l1]  {};  
+   \node[place]  (l3) [right=of l2]  {};
+   \node[place]  (l4) [right=of l3]  {}; 
+  
+   \path[trans] (l0) edge [] node {$\sendRequest_0$} (l1); 
+   \path[trans] (l1) edge [] node {$\rcvGrant_0$} (l2);
+   \path[trans] (l2) edge [] node {$\sendRequest_2$} (l3);
+   \path[trans] (l3) edge [] node {$\rcvGrant_2$} (l4);
+   \path[trans] (l4) edge [bend left] node[above] {$\releaseAll$}  (l0); 
+}{\\\\}{\\ \hspace*{7cm}\textbf{Client}};
+   \node[export] (c0p1) at ($(c0.north west)!.1!(c0.north east)$) [label=below:$\sendRequest_0$] {};
+   \node[export] (c0p2) at ($(c0.north west)!.3!(c0.north east)$) [label=below:$\rcvGrant_0$] {};
+   \node[export] (c0p3) at ($(c0.north west)!.5!(c0.north east)$) [label=below:$\sendRequest_2$] {};
+   \node[export] (c0p4) at ($(c0.north west)!.7!(c0.north east)$) [label=below:$\rcvGrant_2$] {};
+   \node[export] (c0p5) at ($(c0.north west)!.9!(c0.north east)$) [label=below:$\releaseAll$] {};
+\end{tikzpicture}
+
+\end{document}

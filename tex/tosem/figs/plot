@@ -1,0 +1,13 @@
+
+#set terminal postscript 14 dashed color
+#set output "bench.ps" 
+#set xlabel "Number of Philosophers"  
+#set ylabel "Time (ms)"  
+#plot "resultbenchldfc" using 1:2 with lines title "LDFC", "resultbenchgdfc" using 1:2 with linespoint  title "GDFC"
+
+
+set terminal postscript 14 dashed color
+set output "bench.ps" 
+set xlabel "Number of Philosophers"  
+set ylabel "Time (ms)"  
+plot "output" using 1:(($2+$3+$4+$5+$6+$7+$8+$9+$10+$11)/10) with lines title "LDFC", "output" using 1:12 with linespoint title "DFinder"

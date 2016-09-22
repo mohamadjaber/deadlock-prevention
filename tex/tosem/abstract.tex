@@ -1,0 +1,32 @@
+\begin{abstract}
+
+  We present a criterion for checking local and global deadlock freedom of finite state systems expressed in BIP: a
+  component-based framework for the construction of complex distributed systems.  Our criterion 
+  is evaluated by model-checking a set of subsystems of the overall large system. If satisfied in small
+  subsystems, it implies deadlock-freedom of the overall system (\ie is sound for
+  deadlock-freedom). If not satisfied, then we increase the size of the subsystems and re-evaluate,
+  as this improves the accuracy of the check.  In the limit, the subsystem being checked becomes the
+  entire system, and then our criterion is also complete for deadlock-freedom. 
+%
+  Our criterion can thus only fail to decide the deadlock-freedom of a system because of computational limitations: state-space explosion sets in when
+  the subsystems being checked become too large, and cannot be model-checked in practice.
+%
+  Our method thus combines the possibility of fast response together with theoretical completeness.
+  This is in contrast to other criteria for deadlock-freedom, which are incomplete in
+  principle, and so may fail to decide deadlock-freedom even if unlimited computational resources are available. 
+
+In addition, our criterion certifies freedom from local deadlock, in
+which a subsystem is deadlocked while the rest of the system can execute.
+
+  We present experimental results for dining philosophers and for a multi token-based resource
+  allocation system, which subsumes several data arbiters and schedulers, including Milner's token based scheduler.  These show
+  that our method compares favorably with existing approaches.
+
+%  For example, in verifying deadlock freedom of dining philosphers, our method shows linear increase
+%  in computation time with the number of philosophers, whereas other methods (even those that use
+%  abstraction) show super-linear increase, due to state-explosion.
+
+\end{abstract}
+
+
+

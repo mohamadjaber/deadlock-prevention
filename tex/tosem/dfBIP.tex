@@ -1,0 +1,166 @@
+\documentclass[prodmode,acmtosem]{acmsmall} % Aptara syntax
+%\usepackage{authblk}
+
+%\input{a4}
+\input{macros.full.tex}
+\input{macros.common.tex}    % macros common to both llncs and full paper styles
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\title{Global and Local Deadlock Freedom in BIP\thanks{The research leading to these results has received funding from University Research Board (URB) at AUB.}
+}
+
+
+\author{Paul C Attie
+\affil{Department of Computer Science, American University of Beirut, Beirut, Lebanon}
+Saddek Bensalem
+\affil{UJF-Grenoble 1 / CNRS VERIMAG UMR 5104, Grenoble, F-38041, France}
+Marius Bozga
+\affil{UJF-Grenoble 1 / CNRS VERIMAG UMR 5104, Grenoble, F-38041, France}
+Mohamad Jaber
+\affil{Department of Computer Science, American University of Beirut, Beirut, Lebanon}
+Joseph Sifakis
+\affil{Rigorous System Design Laboratory, EPFL, Lausanne,  Switzerland}
+Fadi A Zaraket
+\affil{Department of Electrical and Computer Engineering, American University of Beirut, Beirut, Lebanon}
+}
+
+%\date{19 February, 2013}
+
+\maketitle
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{abstract}
+
+%\newpage 
+%\tableofcontents 
+%\newpage 
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+\label{s:intro}
+\input{intro}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{BIP --- Behavior Interaction Priority}
+\label{s:bip}
+\input{bip}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Characterizing Deadlock-freedom}
+%\label{s:deadlock}
+\label{s:characterize}
+\input{characterize}
+
+
+%\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Supercycle Formation and its Consequences}
+\label{secn:scFormation}
+\input{scFormation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Global Conditions for Deadlock Freedom}
+\label{s:global}
+
+   \subsection{A Global AND-OR Condition for Deadlock Freedom}
+   \label{s:global.ANDOR}
+   \input{globANDORCond}
+
+   \subsection{A Global Linear Condition for Deadlock Freedom}
+   \label{s:globCondition}
+   \label{s:global.Linear}
+   \input{globLinCond}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Local Conditions for Deadlock Freedom}
+\label{s:local}
+
+   \label{s:local.preamble}
+   \input{locPreamble}
+
+   \subsection{Projection onto Subsystems}
+   \label{s:projection}
+   \input{projection}
+
+%   \clearpage
+   \subsection{A Local AND-OR Condition for Deadlock Freedom}
+   \label{s:ANDORcond}
+   \input{locANDORCond}
+
+   \subsection{A Local Linear Condition for Deadlock Freedom}
+   \label{s:condition}
+   \input{locLinCond}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Implementation and Experiments}
+\label{s:impl}
+
+   \subsection{Checking that initial states are supercycle-free}
+   \label{s:initSCFree}
+   \input{initSCFree}
+
+   \subsection{Implementation of the Linear Condition}
+   \label{s:implLin}
+   \input{implLin}
+   
+   \subsection{Implementation of the AND-OR Condition}
+   \label{s:implANDOR}
+   \input{implANDOR}
+
+   \subsection{Tool-set}
+   \label{s:experiments}
+   \input{tool-set}
+
+   \subsection{Experimentation}
+   \label{s:experiments}
+   \input{experiments}
+
+%\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion, Related Work, and Further Work}
+\label{s:discussion}
+\input{discussion}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%% BIBLIOGRAPHY %%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{ACM-Reference-Format-Journals}
+\bibliography{biblio}
+
+
+%%% alternative biblio
+%\bibliographystyle{alpha}
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
