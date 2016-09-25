@@ -31,7 +31,7 @@ Hence these criteria could fail to resolve deadlock freedom for theoretical reas
 lack of computational resources.
 %
 The reason for this incompleteness is that existing criteria all characterize deadlock by the
-occurrence of a wait-for cycle, \eg as stated in Antonio \etal \cite{AGR16}, discussion of related
+occurrence of a wait-for cycle, \eg as stated by \citeN{AGR16}, discussion of related
 work:
 \begin{quote}
 All these methods were designed, to some extent, around the principle that under reasonable
@@ -60,7 +60,7 @@ a subsystem is deadlocked while the rest of the system can execute. Other criter
 This paper significantly extends a preliminary conference version \cite{FORTE13} as
 follows: 
 (1) we present an ``AND-OR'' criterion for deadlock-freedom, which exploits the AND-OR structure of supercycles, and is therefore complete for
-deadlock-freedom in the limit, while \cite{FORTE13} gives a ``linear'' criterion, which is a special case in which the AND-OR structure is ignored, and
+deadlock-freedom in the limit, while our preliminary work \cite{FORTE13} gives a ``linear'' criterion, which is a special case in which the AND-OR structure is ignored, and
 (2) experimental results show that the new criterion is more efficient in practice, and also succeeds in cases where the linear criterion fails.
 
 We present experimental results for dining philosophers and for a multi token-based resource allocation system, which generalizes Milner's token based

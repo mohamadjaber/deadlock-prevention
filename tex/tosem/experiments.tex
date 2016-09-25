@@ -26,7 +26,7 @@ the Incremental Positive Mapping (IPM) technique \cite{DFinder2}.
 IPM requires a manual partitioning of the system to exploit its efficiency. 
 We applied IPM on all structural partitions and we report on the best result which is consistent 
 %(takes less time possibly for hardware related reasons) 
-with the results reported in \cite{DFinder2}. 
+with the results reported in \citeN{DFinder2}. 
 
 Table~\ref{bench:dining} shows the results. Both $\LAO$ and $\LLin$ outperform the best performance of DFinder2 by several orders of magnitude 
 for $n\leq 3,000$. Both $\LAO$ successfully completed the deadlock freedom check for $3,000 \leq n \leq 10,000$ 
@@ -239,6 +239,7 @@ using $\LAO$ with respect to $n$. This indicates that the number of subsystems t
 
 Our resource allocation system subsumes the token based Milner scheduler~\cite{milner} which 
 is essentially a token ring with precisely one token present~\cite{AGR16}. 
-The technique presented in ~\cite{AGR16} fails to prove deadlock freedom for Milner Scheduler 
+%The technique presented in ~\cite{AGR16} fails to prove deadlock freedom for Milner Scheduler 
+\cite{AGR16} present a technique that fails to prove deadlock freedom for Milner Scheduler 
 because it requires a large subset of the system, 
 while $\LAO$ succeeds. 
