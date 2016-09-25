@@ -82,7 +82,7 @@ not willing to participate in.
 
 Martin \cite{Ma96} applies the results in \cite{RD87} and \cite{BR91} to formulate deadlock-freedom design rules for several classes of CSP concurrent
 programs: cyclic processes, client-server protocols, and resource allocation protocols. He also introduces the notion of ``state dependence digraph''
-(SDD), whose nodes are local states of individual proceses, and whose edges are wait-for relations between processes in particular local states. An
+(SDD), whose nodes are local states of individual processes, and whose edges are wait-for relations between processes in particular local states. An
 acyclic SDD implies deadlock-freedom. A cyclic SDD does not imply deadlock, however, since the cycle may be ``spurious'': the local states along the
 cycle may not be reachable at the same time, and so the cycle cannot give rise to an actual deadlock during execution. Hence the SDD approach cannot
 deal with ``non-hereditary'' deadlock freedom, \ie a deadlock free system that contains a deadlock prone subsystem. Consider, \eg, the dining
@@ -163,7 +163,7 @@ which efficient distributed implementations can be generated
   the one presented here 
   should be devisable in this framework. This is a topic for future work.
 In addition, our approach is applicable to any model of concurrency in
-which pur notions of wait-for graph and supercycle can be defined. For example,  Attie and Chockler \cite{AC05} give two methods for verifying global
+which our notions of wait-for graph and supercycle can be defined. For example,  Attie and Chockler \cite{AC05} give two methods for verifying global
 and local deadlock freedom of shared-memory concurrent programs in pairwise normal form, as noted above.
 Hence, our methods are applicable to other formalisms such as CSP, CCS, I/O Automata, etc.
 
