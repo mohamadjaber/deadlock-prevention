@@ -659,3 +659,9 @@ backgroundcolor=\color{background},
 
 \renewcommand{\l}{\ell}
 
+% add break line for theorems and propostions
+\makeatletter
+\renewcommand*{\@opargbegintheorem}[3]{\trivlist
+      \item[\hskip \labelsep{\bfseries #1\ #2}] \textbf{(#3)}\ \itshape}
+\makeatother
+

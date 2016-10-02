@@ -38,9 +38,9 @@ All these methods were designed, to some extent, around the principle that under
 assumptions about the system, any deadlock state would contain a proper cycle of un-granted requests.
 \end{quote}
 In a model of concurrency which includes choice of actions
-(\eg BIP, CSP, I/O automata, CCS, etc), a wait-for cycle is an \emph{incomplete} characterization of
+(\eg BIP, CSP, I/O automata, CCS), a wait-for cycle is an \emph{incomplete} characterization of
 deadlock, since a process can be in a wait-for cycle, but not deadlocked, due to having a choice of
-interaction with another process not in the wait-for cycle (see \fig{cycleOK} below).
+interaction with another process not in the wait-for cycle (see Figure \ref{fig:cycleOK}).
 
 Our method, in contrast, characterizes deadlock by the occurrence of a \emph{supercycle} \cite{AE98,AC05}, which, very roughly, is the AND-OR analogue
 of a wait-for cycle: a subset of processes constitutes a supercycle $\SC$ iff every possible action of every process in $\SC$ is blocked by another

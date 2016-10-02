@@ -9,8 +9,8 @@
   \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
   \selectfont}%
 \fi\endgroup%
-\begin{picture}(4707,2274)(3436,-6964)
-\put(7051,-5986){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}Lemma~\ref{LAOGAO}}%
+\begin{picture}(4932,2274)(3211,-6964)
+\put(3226,-5986){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}Lemma~\ref{LLinGLin}}%
 }}}}
 \put(3601,-6886){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$\LLin(\B,Q_0,\act,\l)$}%
 }}}}
@@ -24,6 +24,6 @@
 }}}}
 \put(5626,-4861){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}Lemma~\ref{GLinGAO}}%
 }}}}
-\put(3451,-5986){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}Lemma~\ref{LLinGLin}}%
+\put(6826,-5986){\makebox(0,0)[lb]{\smash{{\SetFigFont{12}{14.4}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}Lemma~\ref{LAOGAO}}%
 }}}}
 \end{picture}%

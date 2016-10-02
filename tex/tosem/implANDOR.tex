@@ -11,27 +11,21 @@ supercycle-violation can be confirmed.
 Figure~\ref{fig:summaryProcedures} shows a summary of the procedures.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[H]
-{\scriptsize
+\begin{figure}%[H]
+{\normalsize
 \begin{tabular}{|l|l|}
 \hline
-\checkLAO{$\B, Q_0$} & true iff $(\fa \act \in \gamma, \ex \l > 0: \LAO(B, Q_0, \act, \l))$\\
-\checkLAOInt{$\B, Q_0, \act$} & true iff $(\ex \l > 0: \LAO(B, Q_0, \act, \l))$\\
-\checkLAOIntDist{$\B, Q_0, \act, \l$} &  true iff $\LAO(\B, Q_0, \act, \l)$\\
+\checkLAO{$\B, Q_0$} & true iff $(\fa \act \in \gamma, \ex \l > 0: \LAO(B, Q_0, \act, \l))$\\ \hline
+\checkLAOInt{$\B, Q_0, \act$} & true iff $(\ex \l > 0: \LAO(B, Q_0, \act, \l))$\\ \hline
+\checkLAOIntDist{$\B, Q_0, \act, \l$} &  true iff $\LAO(\B, Q_0, \act, \l)$\\ \hline
 
-\cLFV{$B_i, \dsk{\act}{\l},t_\act$} & true iff $B_i$ has local sc-formation violation in state $t_\act$ of 
-                                      $\dsk{\act}{\l}$, \ie $\locFormViol{B_i}{t_\act}{\act}{\l}$ holds\\
+\cLFV{$B_i, \dsk{\act}{\l},t_\act$} & true iff $B_i$ has local sc-formation violation \\
+& in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\locFormViol{B_i}{t_\act}{\act}{\l}$ holds\\ \hline
 
 \cLconnScV{$B_i, \dsk{\act}{\l},t_\act$} & true iff $B_i$ has local strong connectedness
-                                         violation in $t_{\act}$,  \ie $\locConnViol{B_i}{t_\act}{\act}{\l}$ holds\\
+                                         violation \\ & in $t_{\act}$,  \ie $\locConnViol{B_i}{t_\act}{\act}{\l}$ holds\\ \hline
 
-\cLScV{$\dsk{\act}{\l},t_\act$} & compute local supercycle violations in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lviol{v}{d}{t_\act}{\act}{\l}$ for all $v,d$\\
-
-%\cLScVD{$\dsk{\act}{\l}, t_\act, d$} & compute level-$d$ local supercycle violations in state $t_\act$ of $\dsk{\act}{\l}$, \ie
-%$\lviol{v}{d}{t_\act}{\act}{\l}$ for all $v$\\
-
-%\cLScVDN{$\dsk{\act}{\l}, t_\act, d, v$} &
-%compute level-$d$ local supercycle violation of node $v$ in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lviol{v}{d}{t_\act}{\act}{\l}$\\
+\cLScV{$\dsk{\act}{\l},t_\act$} & compute local supercycle violations \\ & in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lviol{v}{d}{t_\act}{\act}{\l}$ for all $v,d$\\
 \hline
 \end{tabular}
 }
@@ -53,7 +47,7 @@ $\l_a$ is the smallest value of $\l$ for which $\LAO(B, Q_0, \act, \l)$ holds.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{figure}[H]
+\begin{figure}%[H]
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:check.LAO}
 aa\= aa\= aa\= \kill

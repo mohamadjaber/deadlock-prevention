@@ -212,24 +212,32 @@ $\Rel_0$ in turn waits for $P_0$. However, this supercycle occurs in a state whe
 and $F_0$ is in $u_l$. This state is not reachable from the initial state. 
 
 
-
-Figure~\ref{fig:cycleOK} shows an ``abstract'' example, where there is
-a cycle of wait-for-edges, without there being a supercycle. This shows
-that a cycle does not necessarily imply a supercycle, and hence
-deadlock. Adding a wait-for-edge from $d$ to $\B_1$ would create a
-supercycle in Figure~\ref{fig:cycleOK}.
+Figure~\ref{fig:SCnotCycle} shows an example of a supercycle that is not a simple cycle. 
+The ``essential'' part of the supercycle, consisting of components $B_1, B_2,B_3$, and their actions $a,b,c,d$, is boldened. 
+The supercycle can be extended to contain $B_4$, but beither $B_5$ nor $B_6$: $B_6$ is enabled, and $B_5$ has is ready to execute $h$, which waits
+only for $B_6$.
 %
 \begin{figure}[ht]
 \begin{center}
-\scalebox{0.5}{\input{figs/cycleOK.pdf_t}}
+\scalebox{0.6}{\input{figs/SCnotCycle.pdf_t}}
+\caption{Example supercycle that is not a simple cycle}
+\label{fig:SCnotCycle}
+\end{center}
+\end{figure}
+%
+Figure~\ref{fig:cycleOK} shows that deleting the wait-for edge from $d$ to $\B_1$ in Figure~\ref{fig:SCnotCycle}  results in 
+an example where there is
+a cycle of wait-for-edges, without there being a supercycle. This shows
+that a cycle does not necessarily imply a supercycle, and hence
+deadlock. 
+%
+\begin{figure}[ht]
+\begin{center}
+\scalebox{0.6}{\input{figs/cycleOK.pdf_t}}
 \caption{Example where a wait-for cycle does not imply deadlock}
 \label{fig:cycleOK}
 \end{center}
 \end{figure}
-
-
-
-
 
 
 The existence of a supercycle is sufficient and necessary for the occurrence of
