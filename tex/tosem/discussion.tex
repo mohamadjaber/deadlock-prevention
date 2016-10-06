@@ -145,30 +145,30 @@ point \LAO coincides with \GAO, which is sound and complete for local deadlock
 
 \subsection{Discussion}
 Our approach has the following advantages:
-\begin{description}
+\begin{itemize}
 
-\item[Local and global deadlock] Our method shows that no subset of processes
+\item \emph{Local and global deadlock}: our method shows that no subset of processes
   can be deadlocked, \ie absence of both local and global deadlock. 
 
-\item[Check works for realistic formalism]   By applying the approach to BIP, we
+\item \emph{Check works for realistic formalism}:  by applying the approach to BIP, we
 provide an efficient deadlock-freedom check within a formalism from
 which efficient distributed implementations can be generated
 \cite{BonakdarpourBJQS10b}.  
 
-\item[Locality] If a component $B_i$ is modified, or is added to an
+\item \emph{Locality}: if a component $B_i$ is modified, or is added to an
   existing system, then $\LAO(B, Q_0, a, \l)$ only has to
   be re-checked for $B_i$ and components within distance $\l$ of $B_i$.
   A condition whose evaluation considers the entire
   system at once, \eg \cite{AB03,DFinder2,GS03}
   would have to be re-checked for the entire system. 
 
-\item[Easily parallelizable] Since the checking of each subsystem $\dsk{a}{\l}$
+\item \emph{Easily parallelizable}: since the checking of each subsystem $\dsk{a}{\l}$
   is independent of the others, the checks can be carried out in parallel. Hence
   our method can be easily parallelized and distributed, for speedup, if needed.
   Alternatively, performing the checks sequentially
   minimizes the amount of memory needed. 
 
-\item[Framework aspect] Supercycles and in/out-depth provide a \emph{framework} for
+\item \emph{Framework aspect}: supercycles and in/out-depth provide a \emph{framework} for
   deadlock-freedom. Conditions more general and/or discriminating than
   the one presented here 
   should be devisable in this framework. This is a topic for future work.
@@ -181,7 +181,7 @@ and local deadlock freedom of shared-memory concurrent programs in pairwise norm
 Hence, our methods are applicable to other formalisms such as CSP, CCS, I/O Automata, etc.
 
 
-\end{description}
+\end{itemize}
 
 
 \subsection{Further work.} 

@@ -1,4 +1,3 @@
-\begin{abstract}
 We present a criterion for checking local and global deadlock freedom
 of finite state systems expressed in BIP: a component-based framework
 for the construction of complex distributed systems.  Our criterion is
@@ -22,7 +21,8 @@ is deadlocked while the rest of the system executes.  We present
 experimental results for dining philosophers and for a multi
 token-based resource allocation system, which subsumes several data
 arbiters and schedulers, including Milner's token based scheduler.
-\end{abstract}
+
+
 
 
 

@@ -61,7 +61,15 @@ This paper significantly extends a preliminary conference version \cite{FORTE13}
 follows: 
 (1) we present an ``AND-OR'' criterion for deadlock-freedom, which exploits the AND-OR structure of supercycles, and is therefore complete for
 deadlock-freedom in the limit, while our preliminary work \cite{FORTE13} gives a ``linear'' criterion, which is a special case in which the AND-OR structure is ignored, and
-(2) experimental results show that the new criterion is more efficient in practice, and also succeeds in cases where the linear criterion fails.
+(2) experimental results show that the new criterion is more efficient
+in practice, and also succeeds in cases where the linear criterion
+fails.
+We therefore have the best of both worlds: early stopping, and
+therefore efficient verification of deadlock-freedom, in many cases,
+together with theoretical completeness.
+%
+Our criterion is, to the best of our knowledge, the first criterion that is sound \emph{and complete} for local and global deadlock-freedom in
+concurrent programs with nondeterministic local choice, \ie a process can nondeterministically choose among enabled actions.
 
 We present experimental results for dining philosophers and for a multi token-based resource allocation system, which generalizes Milner's token based
 scheduler~\cite{milner}.  These show that our method compares favorably with existing approaches.
