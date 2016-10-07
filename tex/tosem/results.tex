@@ -1,0 +1,71 @@
+
+
+Figure~\ref{fig:implications} gives the implication relations between our four deadlock-freedom conditions.
+Each implication arrow is labeled by the Lemma that provides the corresponding result.
+\begin{figure}[ht]
+\begin{center}
+\scalebox{0.8}{\input{figs/implications.pdf_t}}
+\caption{Implication relations between deadlock-freedom conditions}
+\label{fig:implications}
+\end{center}
+\end{figure}
+
+
+We can use the four conditions together: if, for each interaction, we verify one of the conditions, then we can infer deadlock-freedom, \ie combining the conditions in this manner is still sound \wrt deadlock-freedom.
+
+\bt[Deadlock-freedom via \GAO, \GLin, \LAO, \LLin]
+\label{theorem:local.deadlock-free}
+Assume that
+\bn
+\item \label{theorem:local.deadlock-free.initial}
+      for all $s_0 \in Q_0$, $\wfg{\B}{s_0}$ is supercycle-free, and
+\item \label{theorem:local.deadlock-free.scfPres}
+      for all interactions $\act$ of $\B$ (\ie $\act \in \gamma$), one of
+      the following holds:
+      \bn
+      \item $\GAO(\B,Q_0,\act)$
+      \item $\GLin(\B,Q_0,\act)$
+      \item $\ex \l > 0: \LAO(\B,Q_0,\act,\l)$ 
+      \item $\ex \l > 0: \LLin(\B,Q_0,\act,\l)$ 
+      \en
+\en
+Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free, and so 
+$(\B, Q_0)$ is free of local and global deadlock.
+\et
+\prf{Immediate from
+Theorems~\ref{thm:GAO.SC-free-preserving}, \ref{thm:GLin.SC-free-preserving}, \ref{thm:LAO.SC-free-preserving}, \ref{thm:LLin.SC-free-preserving}
+and Corollary~\ref{cor:SC-free-preserving.deadlock-free}.}
+
+
+
+
+Finally, we establish that \GAO is complete \wrt deadlock-freedom: any system that is free of local and global deadlock will satisfy \GAO.
+
+\bt[Completeness of \GAO \wrt Deadlock-freedom]
+\label{theorem:gao-is-complete}
+Assume that $(\B,Q_0)$ is free from local and global deadlock. 
+Then,  for all interactions $\act$ of $\B$ (\ie $\act \in \gamma$), 
+$\GAO(\B,Q_0,\act)$ holds.
+\et
+%
+\prf{
+Let $\act$ be an arbitrary interaction in $\gamma$, and let 
+$s \goesto[\act] t$ be a reachable transition of $(\B, Q_0)$.
+Hence $t$ is a reachable state of $(\B,Q_0)$.
+Suppose that $\wfg{\B}{t}$ contains a supercycle $\SC$. Then, by 
+Proposition~\ref{prop:static:supercycle-is-sufficient}, the
+subcomponent $B'$ consisting of all the atomic components $B_i \in \SC$
+cannot execute a transition from any state reachable from $t$, and so is deadlocked.
+Hence $(\B,Q_0)$ has a local deadlock in reachable state $t$, contrary to assumption.
+Hence $\wfg{\B}{t}$ is supercycle-free.
+
+Let $v$ be an arbitrary node in $\wfg{\B}{t}$.
+By Definition~\ref{defn:supercycle.membership}, $\neg \scyc{\B}{s}{v}$ holds.
+Hence by Proposition~\ref{prop:notInSC-implies-scViol}, $(\ex d \ge 1: \viol{v}{d}{t})$ holds.
+By Definition~\ref{defn:formation.violation},  $\genViol{v}{t}$ holds.
+Since $v$ is an arbitrary node in $\wfg{\B}{t}$, and all $\B_i \in \comps{\act}$ are nodes in 
+$\wfg{\B}{t}$, we have $(\fas \B_i \in \comps{\act}, \formViol{\B_i}{t})$.
+By Definition~\ref{defn:global.ANDOR-cond}, $\GAO(\B, Q_0, \act)$ holds.
+Since $\act$ is an arbitrary interaction in $\gamma$, we have
+$(\fas \act \in \gamma: \GAO(\B,Q_0,\act))$, and the theorem is established.
+}

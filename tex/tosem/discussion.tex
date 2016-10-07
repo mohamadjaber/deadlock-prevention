@@ -129,9 +129,14 @@ global deadlock-freedom as a special case.
 Also, our approach makes no
 structural restriction at all on the system being checked for deadlock.  Our method checks
 for the absence of supercycles, which are a sound and complete characterization of
-deadlock, and the \LAO condition is complete \wrt the occurrence of a supercycle wholly
-within the subsystem being checked. 
-Hence the only source of incompleteness in our method is that of computational
+deadlock. Moreover, the \LAO condition is complete \wrt the occurrence of a supercycle wholly
+within the subsystem being checked, and the \GAO condition is complete
+\wrt freedom from local and global deadlock, as given by
+Theorem~\ref{theorem:gao-is-complete}.
+None of the above papers give a completeness result similar to 
+Theorem~\ref{theorem:gao-is-complete}.
+%
+Hence, the only source of incompleteness in our method is that of computational
 limitation: if the subsystem being checked becomes too large before 
 the \LAO condition is verified. If computational resources are not exhausted, then our
 method can keep checking until the subsystem being checked is the entire system, at which

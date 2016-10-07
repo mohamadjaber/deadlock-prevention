@@ -209,7 +209,8 @@ supercycle.
 \bp[Soundness of supercycle violation \wrt supercycle non-membership]
  \label{prop:supercycle-violation} \label{prop:scViol-implies-notInSC}
 If $(\ex d \ge 1: \viol{v}{d}{t})$ then  $\neg \scyc{\B}{t}{v}$,
-\ie $v$ is not a node of a supercycle in $\wfg{\B}{t}$.
+\ie supercycle violation implies supercycle non-membership.
+%$v$ is not a node of a supercycle in $\wfg{\B}{t}$.
 \ep
 \prf{
 Proof is by induction in $d$. 
@@ -241,12 +242,13 @@ $\neg \scyc{\B}{t}{\act}$.
 
 \bp[Completeness of supercycle violation \wrt supercycle non-membership]
  \label{prop:notInSC-implies-scViol}
-If $(\fas d \ge 1: \neg \viol{v}{d}{t})$ then $\scyc{\B}{t}{v}$,
-\ie  $v$ is a node of a supercycle in $\wfg{\B}{t}$.
+If  $\neg \scyc{\B}{t}{v}$ then $(\ex d \ge 1: \viol{v}{d}{t})$,
+\ie supercycle non-membership implies supercycle violation.
 \ep
 %
 \prf{
 %
+We establish the contrapositive $(\fas d \ge 1: \neg \viol{v}{d}{t})$ then $\scyc{\B}{t}{v}$.
 Let $V$ be the set of nodes in $\wfg{\B}{t}$ with a supercycle-violation, \ie
 $V = \set{w \stt w \in \wfg{\B}{t} \land (\exs d: \viol{w}{d}{t})}$.  Let $\bV$ be the remaining nodes, \ie all nodes
 in $\wfg{\B}{t}$ that do not have a supercycle-violation, so 
@@ -383,7 +385,7 @@ strongly connected
 
 
 The general supercycle violation condition is then a disjunction of the supercycle violation condition
-and the string connectedness violation conditions.
+and the strong connectedness violation conditions.
 
 
 \bd[General supercycle violation, $\genViol{v}{t}$]

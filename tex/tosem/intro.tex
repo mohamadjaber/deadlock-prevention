@@ -89,4 +89,22 @@ scheduler~\cite{milner}.  These show that our method compares favorably with exi
 % atomicity.
 
 
-
+Section~\ref{s:bip} presents BIP.  
+Section~\ref{s:characterize} characterizes local and global
+deadlocks as the occurrence of a pattern of wait-for edges called a
+\emph{supercycle}, and presents some structural properties of supercycles.
+Section~\ref{secn:scFormation} considers how a supercyle can be
+formed, and analyzes the consequences of supercycle formation.
+Section~\ref{s:global} presents global conditions for the prevention
+of the formation of supercycles. Global means that these conditions
+are evaluated in the entire system.
+Section~\ref{s:local} presents local conditions for the prevention of 
+the formation of supercycles. These can be evaluated in (small)
+subsystems of the overall system, and are obtained by ``projecting''
+the global conditions onto a subsystem.
+Section~\ref{s:results} presents the main soundness and completeness
+results of the paper, and gives the implication relation among our
+various conditions for deadlock-freedom.
+Section~\ref{s:impl} gives algorithms to evaluate the local
+conditions, and presents experimental evaluation.
+Section~\ref{s:discussion} discusses related work, further work, and concludes.
