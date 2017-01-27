@@ -1,0 +1,85 @@
+\section{Reviewer 1}
+This work presents the details of a technique to determine whether a multi-process system
+is free from deadlock. In order to avoid the problems of state-explosion in model checking
+multi-component systems, the technique is designed to apply first to smaller sub-systems
+of the larger system.  Freedom from deadlock in the smaller system implies freedom
+from deadlock in the larger system.  If the smaller system is not free from deadlock,
+one can expand the model to include more components and perform the check again on
+a larger sub-system, until the point where either the system is shown to satisfy deadlock
+freedom, the entire system is found not to be deadlock free,  or state explosion prevents
+the further application of model checking.
+
+
+Evaluation: the paper is well motivated and well written; the topic of
+avoiding state explosion in model checking multi-component systems
+is both interesting and important.
+
+I have a few concerns about the presentation of the results, and about the
+comparison with related work sections.  I feel these are relatively minor
+questions and that assuming the authors address the questions the paper should
+then be accepted for publication.
+
+Detailed comments/questions:
+\begin{enumerate}
+
+\item there has been some work on showing how to use CTL-like logics to answer
+questions about deadlock freedom.  E.g.
+  Computation Tree Logic with Deadlock Detection
+  Rob van Glabbeek1,2, Bas Luttik3,4 \& Nikola Trˇcka, that appeared in
+  Logical Methods in Computer Science
+  Vol. 5 (4:5) 2009, pp. 1–24
+Can you comment on the use of those logics in the setting of detecting deadlocks in
+BIP?
+
+\item  pg 3, second para from bottom: what does `irrelevant' mean in this context?
+
+\item pg 4, top of page: "we assume that enablement of a port depends only on the
+local state of a component" --- I found this a bit confusing, especially as it related
+to models of the dining philosophers or token passing models.  More specifically, I
+did not follow the reasoning about how one analyzed multi-process systems
+where shared variable interaction was critical to showing deadlock behavior.
+
+~
+
+It would be very helpful if in the paper the authors could `work through' the application
+of the local reasoning for both a version of the dinning philosophers and a version
+of a single token ring like protocol where the processes require the token to make
+any progress.
+
+~
+
+ In the dining philosophers or the token passing model, what do the reduced systems
+look like? Individual components?  Can you show how the smaller reduced systems
+contain sufficient information about the behavior of the larger system to draw conclusions
+about the reachable state space?
+
+
+\item  definition 2.5. pg 5:  local enablement assumption --- for systems that satisfy
+this assumption, does that imply freedom from deadlock?   Can you comment on how and where
+this definition will be used?  what implications does it have for the systems that satisfy it?
+
+\item  pg. 6 \& 7, application of proposition 2.13 --- detailing how this proposition works
+on the dining philosophers model and the token passing model would be very helpful
+for understanding the technique.
+
+\item pg 7; def. 3.1 and 3.2 --- definition 3.1 of global deadlock seems straightforward, but
+def. 3.2 is not.  A more detailed description of the intuition behind definition 3.1 would
+be very useful.  Maybe a small example would help.
+
+\item pg 27, def. 6.11 --- it would be very helpful to provide a bit more
+intuition as to what this definition is describing --- in particular it was not
+clear to me how to interpret the use of the definition in understanding the
+application on page 32..
+
+\item  related work: there has been extensive work on compositional reasoning
+technique applied to multi-component systems, both in terms of analyzing
+safety properties, and in terms of analyzing ltl and ctl formulae.  Could you comment
+on the relationship of that work to this current submission?
+
+\end{enumerate}
+
+
+
+
+
+

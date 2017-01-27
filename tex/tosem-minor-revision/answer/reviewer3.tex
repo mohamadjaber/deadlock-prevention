@@ -1,0 +1,84 @@
+% !TEX root = answers.tex
+\section{Reviewer 3}
+This paper presents a method for checking for the ABSENCE of local as well as global deadlocks in finite state systems. The method is based on examining subsystems of the given system of processes; in essence, if none of the examined subsystems exhibits a deadlock, neither does the full system. Experiments show that this method can establish deadlock-freedom by examining only small subsystems, a significant savings in time and space over an alternative method which considers the full system.
+
+~
+
+As individual processes have a choice of actions, the traditional criterion for a deadlock, that of a wait-for cycle, must be generalized to that of a wait-for supercycle. This concept was examined in earlier work. The contribution of this work is to design abstractions that allow checking for this property on subsystems of processes. In a subsystem, the behavior of processes outside the subsystem is considered pessimistically, so that any reachable wait-for supercycle witnessing a local deadlock in the full system appears as a reachable wait-for supercycle in at least one sub-system. It follows (from the contrapositive) that if all subsystems are free of supercycles, there is no local deadlock in the full system and, therefore, there is no global deadlock either. The paper actually formulates two criteria for the subsystems: one detects supercycles with pessimistic assumptions on the external processes; the other detects strongly connected supercycles. 
+
+~
+
+Completeness is trivial. The subsystems are chosen to be those in a circle of radius of l (roughly); by successively increasing l, eventually the subsystem becomes the entire system, so detection is precise.
+
+~
+
+
+The paper is written carefully and is self-contained, giving all necessary background on deadlock and supercycles. The experimental results are interesting and impressive: they show that for two example protocols, deadlock freedom can be established by considering small subsystems, which means a corresponding order-of-magnitude reduction in analysis time over methods that directly consider the entire system. 
+
+~
+
+\paragraph{Suggestions:}
+
+\begin{enumerate}
+\item It would help a reader to see a simple but non-trivial example of this method at work at the very beginning of the paper. One now has to read through nearly 25 pages before getting to the heart of the local method, described in Section 6 and even further to see the examples used to test the method.
+
+\item The analysis of supercycles can, I believe, be considerably simplified.
+
+~
+
+  A first observation is that the definition (3.5) of a supercycle is in the form of a post-fixpoint, of the form [SC $\Rightarrow$ F(SC)],  where the conditions (2) and (3) define the monotone function F(SC). From the Knaster-Tarski theorem, it follows that there is a largest SC, which is the greatest fixpoint of F. This, in turn, implies that the condition for NOT being in any supercycle is given by the negation of the greatest fixpoint, i.e., a least fixpoint. The supercycle violation conditions (Definition 4.3) are just the per-stage approximations of this least fixpoint. This considerably simplifies the development, for instance, Prop. 3.17 (union of supercycles) is a trivial consequence of the monotonicity of F. And Prop. 4.5 (Completeness of supercycle violation) is just the fact that the negation of a greatest fixpoint results in a least fixpoint. I believe that a careful examination of Section 4 from this point of view will reveal many such opportunities for simplifying the presentation and clarify the formulation of the violation conditions.
+
+~
+
+  A second observation is that the analysis of the strongly connected structure of the wait-for graph is a very good starting point for definitions such as the in- and out-depth. This analysis is done in Prop. 3.16. The SCC being analyzed in Prop. 3.16 is a terminal SCC. Any terminal SCC of a supercycle must be non-trivial. Moreover, nodes with finite in-depth are "higher up" interior nodes in the SCC DAG, while those with infinite out-depth are any that reach a non-trivial SCC. 
+
+~
+
+  I strongly recommend that the authors consider reworking the section to incorporate the simplifications that follow from taking these two observations as fundamental. I found in my reading that keeping these two observations in mind simplified and illuminated much of the subsequent discussion.
+
+\end{enumerate}
+
+\paragraph{Requirements:}
+\begin{enumerate}
+\item The paper has a good discussion of related work on deadlock detection. However, it is, I believe, missing a significant set of prior research on abstraction methods, in particular those related to compositional reasoning, which can be used to prove global safety and deadlock-freedom. Here are a selection of references. The three papers below formulate methods to infer global invariants from compositional analysis. These invariants can be used to check for the absence of global deadlock and possibly for the absence of local deadlock as well. (There is much work on compositional analysis, these papers should be taken as starting points.)
+
+~
+
+Amir Pnueli, Sitvanit Ruah, Lenore D. Zuck:
+Automatic Deductive Verification with Invisible Invariants. TACAS 2001: 82-97
+
+~
+
+Ariel Cohen, Kedar S. Namjoshi:
+Local Proofs for Global Safety Properties. CAV 2007: 55-67
+
+~
+
+Parosh Aziz Abdulla, Frédéric Haziza, Lukás Holík:
+All for the Price of Few. VMCAI 2013: 476-495
+
+~
+
+The following work describes a technique developed by Kurshan that is very similar in spirit to the abstraction done here. In essence, the method cuts "wires" connecting a sub-system to the rest, the wires become pessimistic free inputs.
+
+~
+
+Edmund M. Clarke, Robert P. Kurshan, Helmut Veith:
+The Localization Reduction and Counterexample-Guided Abstraction Refinement. Essays in Memory of Amir Pnueli 2010: 61-71
+
+
+\item Questions
+
+
+Could your method be used to establish deadlock freedom for an entire parameterized family? E.g., for the dining philosophers' protocol for all N? This would seem to require some use of symmetry in combination with local analysis, as is done in the three papers on invariant generation listed above.
+
+
+\item Typos
+
+
+"boldened" ... not sure that is a word.
+
+~
+
+"beither" $\rightarrow$ either
+\end{enumerate}
