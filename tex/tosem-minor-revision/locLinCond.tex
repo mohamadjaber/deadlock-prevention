@@ -1,0 +1,217 @@
+We now formulate a local version of $\GLin$.
+Observe that if
+$\widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$,
+then there is some finite $\l$ such that 
+$\widepth{\B}{\B_i}{t} = \l \lor \wodepth{\B}{\B_i}{t} = \l$.
+
+
+% OMIT THIS AND LEAVE TO ANOTHER PAPER
+% %containing $\B_i$ and all nodes(components and interactions) have distance from $\B_i$ of up to $\l+1$.
+% Then $\widepth{\B}{\B_i}{t} = \l \lor \wodepth{\B}{\B_i}{t} = \l$ can be verified in 
+% the wait-for-graph of 
+% $\ssg{i}{\l+1}$, since we verify either that all wait-for-paths ending in $\B_i$
+% have length $\le \l$, or that 
+% all wait-for-paths starting in $\B_i$ 
+% have length $\le \l$.
+% These conditions can be checked in $\ssg{i}{\l+1}$, since $\ssg{i}{\l+1}$
+% contains every node in a
+% wait-for-path of length $\l+1$ or less and which starts or ends in $\B_i$.
+% %
+% Since $\ssg{i}{\l+1} \sub \ssg{\act}{\l+2}$ for $\B_i \in \cmps{\act}$, we use 
+% $\ssg{\act}{\l+2}$ instead of the set of subsystems 
+% $\set{\ssg{i}{\l+1} : \B_i \in \cmps{\act}}$. 
+% %% DISCUSS tradeoff: one larger $\ssg{a}{\l+2}$ instead of several smaller 
+% %$\ssg{i}{\l+1}?
+% %We leave analysis of the tradeoff between using one larger system
+% %($\ssg{a}{\l+2}$) versus several smaller ones ($\ssg{i}{\l+1}$) to another paper.
+
+
+
+
+\bd[$\LLin(\B, Q_0, \act, \l)$] \label{def:ldfc-k}
+\label{def:locLinear}
+%Let $(B, Q_0)$ be a BIP system, with $B =\gamma(\B_1,\dots,\B_n)$.
+%Let $a$ be an interaction of $(B, Q_0)$, \ie $a \in \gamma$.
+Let $\l > 0$ and $s_\act \goesto[\act] t_\act$ be an arbitrary reachable transition of $\dsk{\act}{\l}$.
+Then, in $t_\act$, the following holds. 
+For every component $\B_i$ of $\cmps{\act}$:  
+either $\B_i$ has in-depth less than $2\l - 1$, or out-depth less than $2\l - 1$, in $\wfg{\dsk{\act}{\l}}{t_\act}$. 
+Formally,\\
+\ind  $\fa \B_i \in \cmps{\act}: 
+\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1$.
+\ed
+
+
+To infer deadlock-freedom in $(\B, Q_0)$ by checking $\LLin(\B, Q_0, a, \l)$,
+% which is a condition on the behavior of the subsystem $\ds{a}$,
+ we show that wait-for behavior in $\B$ ``projects down''
+to any subcomponent $\B'$, and that wait-for behavior in $\B'$ ``projects up'' to $\B$.
+
+% Let $e$ be a wait-for-edge with both endpoints in $B'$. Then if $e$ is
+% present in the wait-for-graph of $B$ for state $s$, then $e$ is also present in the wait-for-graph
+% $B'$ for $s \pj B'$ ($e$ projects down), and vice-versa ($e$ projects up).
+
+%Thus $\wfg{B'}{s \pj B'}$ is a ``projection'' of $\wfg{\B}{s}$ onto $B'$.
+
+
+%\vspace{0.5ex}
+
+Since wait-for-edges project up and down, it follows that wait-for-paths
+project up and down, provided that the subsystem contains the entire wait-for-path.
+
+\bp[In-projection, Out-projection] \label{prop:in-out-projection}
+%Let $(B, Q_0)$ be a BIP system, 
+Let $\l > 0$, let $\B_i$ be an atomic component of $\B$, and let 
+$(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$ which is based on a superset of $\ssg{a}{2\l}$.
+Let $s$ be a state of $(B, Q_0)$, and $s' = s \pj B'$. Then
+(1) $\widepth{\B}{\B_i}{s} < 2\l-1$ iff $\widepth{\B'}{\B_i}{s'} < 2\l-1$, and
+(2) $\wodepth{\B}{\B_i}{s} < 2\l-1$ iff $\wodepth{\B'}{\B_i}{s'} < 2\l-1$.
+\ep
+\prfs{Follows from Definition~\ref{def:depth},
+Proposition~\ref{prop:edge-projection}, and the observation that $\wfg{\B'}{s'}$
+contains all wait-for-paths of length $\le \l$ that start or end in $\B_i$.}
+%
+\prf{
+We establish clause (1). The proof of clause (2) is analogous, except we replace paths ending in
+$\B_i$ by paths starting from $\B_i$.
+The proof of clause (1) is by double implication.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\ul{$\widepth{\B}{\B_i}{s} < 2\l-1$ implies $\widepth{\B'}{\B_i}{s'} < 2\l-1$}:
+%
+Assume $\widepth{\B}{\B_i}{s} < 2\l-1$.
+Let $\pi$ be an arbitrary wait-for path in $\wfg{\B'}{s'}$ that ends in $\B_i$. 
+%
+Since $(\B', Q'_0)$ is a subsystem of $(\B, Q_0)$, by Definition~\ref{def:static:wait-for-graph} and $s' = s \pj B'$,
+$\wfg{\B'}{s'}$ is a subgraph of $\wfg{\B}{s}$.
+%
+Hence $\pi$ is a wait-for-path in $\wfg{\B}{s}$.
+By $\widepth{\B}{\B_i}{s} < 2\l-1$, we have $|\pi| < 2\l-1$. 
+Hence $\widepth{\B'}{\B_i}{s'} < 2\l-1$ since $\pi$ was arbitrarily chosen.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ul{$\widepth{\B'}{\B_i}{s'} < 2\l-1$ implies $\widepth{\B}{\B_i}{s} < 2\l-1$}:
+%
+Assume $\widepth{\B}{\B_i}{s} \ge 2\l-1$. Then there exists a wait-for path $\pi$ in $\wfg{\B}{s}$ such that 
+$|\pi| \ge 2\l-1$. Let $\rho$ be the prefix of $\pi$ with length $2\l-1$. 
+%
+Since $(\B', Q'_0)$ is based on a superset of $\ssg{a}{2\l}$, and since the distance from $\B_i$ to the border of 
+$\ssg{a}{2\l}$ is $2\l-1$, we conclude that $\rho$ is a wait-for path
+that is wholly contained in $\wfg{\B'}{s'}$. Hence we have $\widepth{\B'}{\B_i}{s'} \ge 2\l-1$.
+%
+We have thus established 
+$\widepth{\B}{\B_i}{s} \ge 2\l-1$ implies $\widepth{\B'}{\B_i}{s'} \ge 2\l-1$.
+The contrapositive is the desired result.
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\vspace{0.5ex}
+
+\noindent
+We now show that $\LLin(\B, Q_0, \act, \l)$ implies $\GLin(\B, Q_0, \act)$, which in turn implies deadlock-freedom.  
+
+\bl
+\label{lemma:loc-implies-glob}
+\label{lemma:locLinear-implies-globlinear}
+\label{LLinGLin}
+%Let $(B, Q_0)$ be a BIP system, with $B = \gamma(\B_1,\dots,\B_n)$, and 
+Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
+If $\LLin(\B, Q_0, \act, \l)$ holds for some finite $\l > 0$, then $\GLin(\B, Q_0, \act)$ holds.
+\el
+%
+%% \prfs{
+%% Let $s \la{\act} t$ be a reachable transition of $(B, Q_0)$ and let 
+%% $s_\act = s \pj \dsk{\act}{\l}$, $t_\act = t \pj \dsk{\act}{\l}$.
+%% Then $s_\act \la{\act} t_\act$ is a reachable transition of $\dsk{\act}{\l}$ by 
+%% Corollary~\ref{cor.bip.reachability}.
+%% By $\LLin(\B, Q_0, \act, \l)$,
+%% $\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} \le \l \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} \le \l$.
+%% Hence by Proposition~\ref{prop:in-out-projection},
+%% $\widepth{\B}{\B_i}{t} \le \l \lor \wodepth{\B}{\B_i}{t} \le \l$.
+%% So
+%% $\widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
+%% Hence $\GLin(\B, Q_0, \act)$ holds.}
+%
+\prf{
+Let $s \la{\act} t$ be a reachable transition of $(\B, Q_0)$ and let 
+$\B_i \in \cmps{\act}$, $s_\act = s \pj \dsk{\act}{\l}$, $t_\act = t \pj \dsk{\act}{\l}$.
+Then $s_\act \la{\act} t_\act$ is a reachable transition of $\dsk{\act}{\l}$ by Corollary~\ref{cor.bip.reachability}.
+By $\LLin(\B, Q_0, \act, \l)$, 
+$\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1$.
+Hence by Proposition~\ref{prop:in-out-projection},
+$\widepth{\B}{\B_i}{t} < 2\l-1 \lor \wodepth{\B}{\B_i}{t} < 2\l-1$.
+So
+$\widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
+Hence $\GLin(\B, Q_0, \act)$.
+}
+
+
+\bt \label{thm:LLin.SC-free-preserving}
+$\LLin$ is supercycle-freedom preserving
+\et
+\prf{
+Follows immediately from Lemma~\ref{lemma:locLinear-implies-globlinear} and Theorem~\ref{thm:GLin.SC-free-preserving}.
+}
+
+
+
+
+%% \paragraph{Complexity of evaluating $\LDFC(a, \l)$.}
+%% Using explicit state enumeration, $\LDFC(a, \l)$ can be evaluated in
+%% time $O(\SUM_{a \in \gamma} |\dsk{a}{\l}|)$, where $|\dsk{a}{\l}|$ denotes the
+%% size of the transition system of $\dsk{a}{\l}$.
+
+\bp[Finite out-depth implies local supercycle-violation]
+\label{prop:finOutDepth-Implies-locScViol}
+For $d < \l$: $(\wodepth{\dsk{\act}{\l}}{v}{t_\act} = d)  \imp \locScViol{v}{d+1}{t_\act}{\act}{\l}$.
+\ep
+\prf{Proof is by induction on $d$. 
+
+\ul{Base case, $d=0$.}
+Then $v$ has no outgoing wait-for edges. Hence $\locScViol{v}{1}{t_\act}{\act}{\l}$ by Definition~\ref{def:supercycle.violation.local}.
+
+\ul{Induction step, $d > 0$.}
+Assume $(\wodepth{\dsk{\act}{\l}}{v}{t_\act} = d)$. Then, every outgoing wait-for edge of $v$ is to some $v'$ such that 
+$(\wodepth{\dsk{\act}{\l}}{v'}{t_\act} = d' < d)$. By the induction hypothesis, $\locScViol{v'}{d'+1}{t_\act}{\act}{\l}$.
+Hence, by Definition~\ref{def:supercycle.violation.local},  $\locScViol{v}{d+1}{t_\act}{\act}{\l}$.
+}
+
+
+\bl
+%\label{lemma:loc-implies-glob}
+\label{lemma:locLinear-implies-locANDOR}
+\label{LLinLAO}
+Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
+Then $\LLin(\B, Q_0, \act, \l)$ implies $\LAO(\B, Q_0, \act, \l)$.
+\el
+\prf{
+Assume $\LLin(\B, Q_0, \act, \l)$. Let $s_\act \goesto[\act] t_\act$ be an arbitrary reachable transition of $\dsk{\act}{\l}$,
+and let $\B_i$ be an arbitrary component of $\cmps{\act}$.
+Then, from Definition~\ref{def:locLinear}, we have:
+  $$\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1.$$
+The proof proceeds by two cases. 
+
+\ul{ $\widepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1$}:
+Hence $\B_i$ cannot be in a strongly connected supercycle, because $\B_i$ would then lie on at least one wait-for cycle, and so would have infinite
+in-depth. Hence $\locConnViol{\B_i}{t_\act}{\act}{\l}$ by Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.loc:scc}.
+Hence by Definition~\ref{def:locFormation.violation}, $\locFormViol{\B_i}{t_\act}{\act}{\l}$.
+
+\ul{$\wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1$}:
+Hence $\wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} = d$ for some $d < 2\l-1$.
+By Proposition~\ref{prop:finOutDepth-Implies-locScViol}, $\locScViol{\B_i}{d+1}{t_\act}{\act}{\l}$.
+Hence by Definition~\ref{def:locFormation.violation}, $\locFormViol{\B_i}{t_\act}{\act}{\l}$.
+
+\noindent
+In both cases, we have $\locFormViol{\B_i}{t_\act}{\act}{\l}$.
+Since $\B_i$ is an arbitrarily chosen  component of $\cmps{\act}$, we have $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{t_\act}{\act}{\l}$.
+Hence, by Definition~\ref{def:lao}, we conclude $\LAO(\B, Q_0, \act, \l)$.
+}
+

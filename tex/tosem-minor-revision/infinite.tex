@@ -1,0 +1,15 @@
+We now present a condition for deadlock-freedom of infinite-state systems,
+which can be checked using \eg an SMT solver.
+$\LDFC(\BD_a)$ is implied by the conjunction of the following Hoare triples:
+%
+     $$\{ I \land (\land B \in C_a : ready_a(B)) \}\ a\ \{ (\land B_i \in \BD_a : noIn(B_i) \lor noOut(B_i)) \}$$ 
+%
+  where $I$ is any invariant, i.e., any predicate that characterizes a superset of the reachable
+  states. $a'$ is an interaction whose participant set is contained in $\BD_a$, and $en(a')$ means that
+  $a'$ is enabled. $noIn(B_i)$ means that $B_i$ has no incoming wait-for edges. $noOut(B_i)$ means
+  that no interaction that $B_i$ readies has outgoing wait-for edges.
+
+  Assuming that the state changes effected by interactions can be described by simple code,
+  e.g., conditionals and assignments, but not loops, these triples can be mechanically reduced to
+  first order formulae, e.g., using weakest preconditions \cite{Dij75}. The validity of these
+  formulae can then be checked using SMT solvers.

@@ -1,0 +1,248 @@
+\documentclass[prodmode,acmtosem]{acmsmall} % Aptara syntax
+%\usepackage{authblk}
+
+%\input{../../tex/dfbip-full/a4}
+\input{macros.full.tex}
+\input{macros.common.tex}    % macros common to both llncs and full paper styles
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\sloppy
+
+
+% Page heads
+\markboth{P.C. Attie et al.}{Global and Local Deadlock Freedom in BIP}
+
+\title{Global and Local Deadlock Freedom in BIP\thanks{The research leading to these results has received funding from University Research Board (URB) at AUB.}
+}
+
+
+\author{PAUL C ATTIE
+\affil{Department of Computer Science, American University of Beirut, Beirut, Lebanon}
+SADDEK BENSALEM
+\affil{UJF-Grenoble 1 / CNRS VERIMAG UMR 5104, Grenoble, F-38041, France}
+MARIUS BOZGA
+\affil{UJF-Grenoble 1 / CNRS VERIMAG UMR 5104, Grenoble, F-38041, France}
+MOHAMAD JABER
+\affil{Department of Computer Science, American University of Beirut, Beirut, Lebanon}
+JOSEPH SIFAKIS
+\affil{Rigorous System Design Laboratory, EPFL, Lausanne,  Switzerland}
+FADI A ZARAKET
+\affil{Department of Electrical and Computer Engineering, American University of Beirut, Beirut, Lebanon}
+}
+
+\input{abstract}
+
+
+
+% start generated code
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10003752.10010124.10010138.10010142</concept_id>
+<concept_desc>Theory of computation~Program verification</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10011007.10010940.10010941.10010949.10010957.10010834</concept_id>
+<concept_desc>Software and its engineering~Deadlocks</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10011007.10010940.10010992.10010998.10003791</concept_id>
+<concept_desc>Software and its engineering~Model checking</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10011007.10011074.10011099.10011692</concept_id>
+<concept_desc>Software and its engineering~Formal software verification</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10011007.10010940.10010971.10010980.10010982</concept_id>
+<concept_desc>Software and its engineering~State systems</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+<concept>
+<concept_id>10011007.10010940.10010992.10010993.10010961</concept_id>
+<concept_desc>Software and its engineering~Synchronization</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Theory of computation~Program verification}
+\ccsdesc[500]{Software and its engineering~Deadlocks}
+\ccsdesc[500]{Software and its engineering~Model checking}
+\ccsdesc[500]{Software and its engineering~Formal software verification}
+\ccsdesc[300]{Software and its engineering~State systems}
+\ccsdesc[300]{Software and its engineering~Synchronization}
+% end generated code
+
+
+
+
+
+
+%\terms{Design, Theory, Verification}
+
+\keywords{Nondeterminism, Completeness}
+
+\acmformat{Paul C. Attie, Saddek Bensalem, Marius Bozga, Mohamad Jaber, Joseph Sifakis,  Fadi A Zaraket, 2016.
+Global and Local Deadlock Freedom in BIP.}
+
+\begin{bottomstuff}
+Author's addresses: Paul C. Attie {and} Mohamad Jaber,
+Department of Computer Science, American University of Beirut, Beirut, Lebanon,
+Saddek Bensalem and Marius Bozga, VERIMAG, Grenoble, France,
+Joseph Sifakis, EPFL, Lausanne, Switzerland, 
+Fadi A Zaraket, Department of Electrical and Computer Engineering,
+ American University of Beirut, Beirut, Lebanon.
+\end{bottomstuff}
+
+
+
+
+
+
+
+
+
+
+
+\maketitle
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+\label{s:intro}
+\input{intro}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{BIP --- Behavior Interaction Priority}
+\label{s:bip}
+\input{bip}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Characterizing Deadlock-freedom}
+%\label{s:deadlock}
+\label{s:characterize}
+\input{characterize}
+
+
+%\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Supercycle Formation and its Consequences}
+\label{secn:scFormation}
+\input{scFormation}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Global Conditions for Deadlock Freedom}
+\label{s:global}
+
+   \subsection{A Global AND-OR Condition for Deadlock Freedom}
+   \label{s:global.ANDOR}
+   \input{globANDORCond}
+
+   \subsection{A Global Linear Condition for Deadlock Freedom}
+   \label{s:globCondition}
+   \label{s:global.Linear}
+   \input{globLinCond}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Local Conditions for Deadlock Freedom}
+\label{s:local}
+
+   \label{s:local.preamble}
+   \input{locPreamble}
+
+   \subsection{Projection onto Subsystems}
+   \label{s:projection}
+   \input{projection}
+
+%   \clearpage
+   \subsection{A Local AND-OR Condition for Deadlock Freedom}
+   \label{s:ANDORcond}
+   \input{locANDORCond}
+
+   \subsection{A Local Linear Condition for Deadlock Freedom}
+   \label{s:condition}
+   \input{locLinCond}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Overall Soundness, Completeness, and Implication Results}
+%\section{Soundness and Completeness \wrt local and global deadlock}
+
+\label{s:results}
+\input{results}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Implementation and Experiments}
+\label{s:impl}
+
+   \subsection{Checking that initial states are supercycle-free}
+   \label{s:initSCFree}
+   \input{initSCFree}
+
+   \subsection{Implementation of the Linear Condition}
+   \label{s:implLin}
+   \input{implLin}
+   
+   \subsection{Implementation of the AND-OR Condition}
+   \label{s:implANDOR}
+   \input{implANDOR}
+
+   \subsection{Tool-set}
+   \label{s:tools}
+   \input{tool-set}
+
+   \subsection{Experimentation}
+   \label{s:experiments}
+   \input{experiments}
+
+%\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Discussion, Related Work, and Further Work}
+\label{s:discussion}
+\input{discussion}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%% BIBLIOGRAPHY %%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{ACM-Reference-Format-Journals}
+\bibliography{biblio}
+
+
+%%% alternative biblio
+%\bibliographystyle{alpha}
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

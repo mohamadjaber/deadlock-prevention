@@ -1,0 +1,75 @@
+\usepackage{tikz}
+\usetikzlibrary{intersections,patterns,decorations.markings,decorations.pathreplacing,arrows,automata,calc,decorations,fit,positioning,backgrounds}
+\usetikzlibrary{positioning}
+\usetikzlibrary{fadings}
+%\usetikzlibrary{mindmap}
+\usetikzlibrary{arrows,shapes,automata,shadows}
+\usetikzlibrary{trees}
+\usetikzlibrary{plotmarks}
+
+
+\tikzset{
+-re-/.style={decoration={
+  markings,
+  mark=at position 0.3
+  with {\node[draw=black,circle, fill=white!90!red, inner sep=1pt] {};}},postaction={decorate}}, 
+-disable-/.style={decoration={
+  markings,
+  mark=at position 0.3
+  with {\node[draw=black,circle,fill=white!10!black, inner sep=1pt] {};}},postaction={decorate}}}
+  
+  
+\tikzstyle{component}=[auto,thick,
+  align=center,inner sep=0cm,minimum size=0pt, transform shape,>=stealth',shorten >=1pt
+]{}
+
+\tikzstyle{prop}=[draw=black, rectangle,fill=white!90!red,auto]{}
+\tikzstyle{export}=[state,fill=black,minimum size=1.5mm,inner sep=0mm]{}
+\tikzstyle{bip}=[auto,node distance=1cm,line width=2pt,>=to,thick,align=center, font=\scriptsize]{}
+\tikzstyle{trans}=[draw, ->, line width=0.1mm]{}
+\tikzstyle{transinst}=[draw, ->, line width=0.1mm, -re-]{}
+\tikzstyle{transdisable}=[draw, ->, line width=0.1mm, -disable-]{}
+\tikzstyle{recover}=[draw, ->, line width=0.15mm, blue]{}
+
+\newcommand{\component}[6]{
+  \node[rectangle,draw, fill=white] (#1) #3 [#2] {
+  	#5
+    \begin{tikzpicture}[component]
+      \tikzset{
+      place/.style={state,fill=white!89!black,draw=white!50!black,minimum size=0.75cm,inner sep=0.0cm},
+    }
+      #4
+    \end{tikzpicture}
+     #6   
+  }
+}
+
+\tikzstyle{boxgroup}=[draw,rectangle,minimum width=2.5em,minimum height=1.5em, fill=black!5,drop shadow]
+\pgfdeclarelayer{boxlayer}    % declare background layer
+\pgfsetlayers{boxlayer,main}  % set the order of the layers (main is the standard layer)
+
+
+% macros tikz
+\newcommand{\sendToken}{\ensuremath{STT}}
+\newcommand{\rcvToken}{\ensuremath{RTT}}
+\newcommand{\sendRequest}{\ensuremath{SR}}
+\newcommand{\rcvRequest}{\ensuremath{RR}}
+\newcommand{\sendGrant}{\ensuremath{STC}}
+\newcommand{\rcvGrant}{\ensuremath{RG}}
+\newcommand{\releaseAll}{\ensuremath{rel}}
+\newcommand{\sendTokenResource}{\ensuremath{STR}}
+\newcommand{\sendTokenToken}{\ensuremath{STT}}
+\newcommand{\rcvTokenToken}{\ensuremath{RTT}}
+\newcommand{\rcvTokenResource}{\ensuremath{RTR}}
+\newcommand{\rcvResource}{\ensuremath{done}}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray45}{gray}{.45}
+\definecolor{gray75}{gray}{.75}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{blueb}{rgb}{0,0,1}
+\definecolor{redb}{rgb}{0.5,0,0}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}

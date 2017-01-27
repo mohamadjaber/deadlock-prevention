@@ -1,0 +1,67 @@
+
+%That is, a system $(B, Q_0)$ whose set of states is finite. 
+%Implementations of the method for infinite-state systems are a subject for future work.
+
+%
+\checkLin{$\B, Q_0$}\ iterates over each interaction $\act$ of ($\B, Q_0$), and checks 
+$(\ex \l > 0: \LLin(B, Q_0, \act, \l))$ by starting with $\l=1$ and incrementing $\l$ until
+either $\LLin(B, Q_0, \act, \l)$ is found to hold, or 
+$\dsk{\act}{\l}$ has become the entire system and $\LLin(B, Q_0, \act, \l)$ does not hold. In the latter case, 
+$\LLin(B, Q_0, \act, \l)$ does not hold for any finite $\l$, and, in practice, 
+computation would halt 
+before $\dsk{\act}{\l}$ had become the entire system, due to exhaustion of resources.
+
+\checkLinIntDist{$\B, Q_0, \act, \l$} checks $\LLin(B, Q_0, \act, \l)$ by examining every reachable transition
+that executes $a$, and checking that the final state satisfies
+Definition~\ref{def:ldfc-k}. 
+
+%If $\LDFC(a, \l)$ does not hold for any finite $\l$, then the
+%iteration for $a$ must be halted by some predetermined time bound, or
+%interactively, or when $\dsk{\act}{\l}$ has become the entire system.
+\begin{figure}[H]
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:check-df}
+mm\= mm\= mm\= \kill
+\checkLin{$\B, Q_0$},  where $\B \df \gamma(\B_1,\dots,\B_n)$\\
+\lio{\FORALLC{\mbox{interactions $\act \in \gamma$}}}
+   \lit{\IFC{\checkLinInt{\B, Q_0, \act} = \fff}\ \RETURNE{\fff} \ \FI}
+\lio{\ENDFOR;}
+\liocn{\RETURNE{\ttt}}{\cmnt\ return $\ttt$ if check succeeds for all $\act \in \gamma$}
+\end{tabbing}
+
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:checkInt}
+mm\= mm\= mm\= \kill
+\checkLinInt{$\B, Q_0, \act$},  where $\B \df \gamma(\B_1,\dots,\B_n), \act \in \gamma$\\
+\cmnt\ check $(\ex \l > 0: \LLin(\B, Q_0, \act, \l))$\\
+\lioc{\l \gts 1;}{\cmnt\ start with $\l = 1$}
+\lio{\WHILEC{\ttt}}
+   \litc{\IFC{\checkLinIntDist{\act, \l} = \ttt}\ \RETURNE{\ttt}\ \FI;}{\cmnt\ success, so return true}
+   \litc{\IFC{\dsk{\act}{\l} = \gamma(\B_1,\dots,\B_n)}\ \RETURNE{\fff}\ \FI;}{\cmnt\ exhausted all subsystems, return false}
+   \litc{\l \gts \l + 1}{\cmnt\ increment $\l$ until success or intractable or failure}
+\lio{\ENDWHILE}
+\end{tabbing}
+
+\setcounter{lctr}{0}
+\begin{tabbing}
+\label{alg:eval-ldfc}
+mm\= mm\= mm\= \kill
+\checkLinIntDist{$\B, Q_0, \act, \l$}\\
+\lio{\FORALLC{\mbox{reachable transitions $s_\act \goesto[\act] t_\act$ of $\dsk{\act}{\l}$}}}
+   \lit{\IFC{\neg(\fa \B_i \in \cmps{\act}:  \widepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l - 1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l -1)}}
+  	\lihc{\RETURNE{\fff}}{\cmnt\ check Definition~\ref{def:ldfc-k}}
+  \lit{\FI}
+\lio{\ENDFOR;}
+\liocn{\RETURNE{\ttt}}{\cmnt\ return $\ttt$ if check succeeds for all transitions}
+\end{tabbing}
+
+\caption{Pseudocode for the implementation of the linear condition.}
+\label{fig:implementation}
+\label{fig:implementation-checkDF}
+\end{figure}
+
+\paragraph{Complexity} The running  time of our implementation is
+also 
+$O(\SUM_{a \in \gamma}\ |\Mdsk{\act}{\l_a}| * |\dsk{\act}{\l_a}|)$,
+where $\l_a$ is the smallest value of $\l$ for which $\LLin(B, Q_0, \act, \l)$ holds, and where
+$|\dsk{\act}{\l_a}|$, and $|\Mdsk{\act}{\l_a}|$ are as above.

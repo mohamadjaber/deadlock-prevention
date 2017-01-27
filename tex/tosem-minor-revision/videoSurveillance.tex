@@ -1,0 +1,60 @@
+
+
+
+The video surveillance case study consists of a video capture device component
+feeding video frames into several buffer components. 
+Several edge detection components, each with its separate algorithm and configuration, 
+extract edge marks from the frames of the buffers. 
+An edge fusion component aggregates the results of the edge detection components 
+into one edge mark result. 
+Several segmentation components, each with its separate algorithm and configuration,
+segment the frames from the buffers with the help of the edge marks resulting from 
+the edge fusion component.
+A segmentation fusion component aggregates the results of the segmentation components
+into a final segmentation result. 
+The edge marks and the segmentation results from the fusion edge and segmentation components, 
+respectively, 
+are fed to an object identification component. 
+The object identification component reports whether specific objects exist in the video or not. 
+
+
+%We assume the system was designed for military usages that need high 
+%resolution analysis, and then it is used for home surveillance purposes
+%where lower resolutions are suitable. 
+%If only home surveillance resolution
+%is desired, just two detectors and one segmentor
+%are needed. 
+
+
+
+
+%\usepackage{pgf}
+%\usepackage{tikz}
+%\usetikzlibrary{arrows,automata}
+
+\begin{figure}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2.8cm,
+                    semithick]
+  \tikzstyle{every state}=[fill=red,draw=none,text=white]
+
+  \node[initial,state] (A)                    {$s_0$};
+  \node[state]         (B) [above right of=A] {$s_{01}$};
+  \node[state]         (C) [below right of=A] {$s_{02}$};
+  \node[state]         (D) [below right of=B] {$s_1$};
+  \node[state]         (E) [below of=C]       {$s_2$};
+
+  \path (A) edge              node {edge,true} (B);
+  
+  \path (B) edge              node {edge,true} (D);
+  
+  \path (D) edge  [bend left] node {label,true} (E);
+  
+  \path (E) edge  [bend left] node {reset0,true} (A);
+        
+  \path (A)  edge             node {segment,true} (C);
+  \path (C)  edge [bend left] node {segment,true} (D);
+\end{tikzpicture}
+\caption{State diagram of the object identification 
+  component}
+\end{figure}
+
