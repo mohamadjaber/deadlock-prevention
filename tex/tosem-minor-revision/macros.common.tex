@@ -59,6 +59,7 @@
 \newcommand{\MATHIDSP}[1]{\ensuremath{\mathit{#1}}\xspace}
 
 \newcommand{\CMATHID}[1]{\ensuremath{\mathcal{#1}}\xspace}
+\newcommand{\CMATHIDN}[1]{\ensuremath{\mathcal{#1}}}
 
 \newcommand{\SMATHID}[1]{\ensuremath{\mathsf{#1}}}
 
@@ -138,6 +139,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DEADLOCK SPECIFIC MACROS
+
 \newcommand{\scf}[2]{\MATHID{sc\_free}_{#1}(#2)}
 
 \newcommand{\wfg}[2]{\ensuremath{\MATHIDN{W}_{#1}({#2})}}
@@ -259,9 +261,16 @@
 \newcommand{\bV}{\overline{V}}
 
 
+% fixpoint
+\newcommand{\lat}[2]{\ensuremath{\CMATHIDN{L}_{#1}({#2})}}           % wait for lattice
+\newcommand{\ewfg}{\ensuremath{\emptyset}\xspace}                         % empty wait for graph
+\newcommand{\ord}{\sub}
+\newcommand{\meet}{\land}
+\newcommand{\join}{\lor}
 
-
-
+\newcommand{\SF}[1]{\ensuremath{\CMATHIDN{S}(#1)}}
+\newcommand{\VF}[1]{\ensuremath{\CMATHIDN{V}(#1)}}
+\newcommand{\blocks}[2]{\ensuremath{\MATHIDN{blocks}(#1, #2)}}
 
 
 %%%%% REVISED CONDITION NAMES

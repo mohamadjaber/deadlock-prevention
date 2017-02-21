@@ -340,6 +340,49 @@ To formulate these conditions, we need to characterize the static (structural) a
 (formation) properties of supercycles.
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{A fixpoint characterization of supercycles}
+\label{secn:supercycle-fixpoint}
+
+\bd[Wait-for lattice] \label{defn:wflattice}
+Define the finite lattice $\lat{\B}{s} = \tpl{ \wfg{B}{s}, \ewfg, \ord }$ whose elements are all the subgraphs of 
+\wfg{B}{s}, and where \wfg{B}{s} is the top element, the empty wait-for graph, denoted by \ewfg is the bottom element, 
+and $U \ord V$ iff $U$ is a subgraph of $V$, \ie $\ord$ is the ``is a subgraph of'' order relation.
+\ed
+It follows from \defn{wflattice} that meet is given by graph intersection and join is given by graph union, as follows:
+$U \meet V$ consists of the nodes and edges that are present in both $U$ and $V$, and 
+$U \join V$ consists of the nodes and edges that are present in $U$, or in $V$, or in both. Note that $\join$ is \emph{not} disjoint graph union: 
+it is possible for $U$ and $V$ to have nodes and edges in common.
+
+\bd \label{defn:blocks}
+Let $U \ord \wfg{B}{s}$ and $a, B_i$ be nodes in $\wfg{B}{s}$. Then 
+$\blocks{a}{U} \df (\ex B_i \in U : a \ar B_i \sub \wfg{B}{s})$, and 
+$\blocks{B_i}{U} \df (\fa a : B_i \ar a \sub\wfg{B}{s} \imp a \in U \land \blocks{a}{U})$.
+\ed
+
+\bd \label{defn:scFix}
+$\SF{U} = U -  \set{v \stt \neg blocks(v,U)}$ 
+%$\SF{U} = U - ( \set{a \stt \neg blocks(a,U)}  \un \set{B_i \stt \neg blocks(B_i, U)} )$
+\ed
+
+
+\bd \label{defn:violFix}
+$\VF{U} = U \un  \set{v \stt blocks(v,U)}$
+%$\VF{U} = U \un ( \set{a \stt blocks(a,U)}  \un \set{B_i \stt blocks(B_i, U)} )$
+\ed
+
+%It is clear that $\SF{}$ and $\VF{}$ are monotone, and so their greatest and least fixpoints 
+
+\bp
+Let $U$ be such that $U \ord \SF{U}$. Then $U$ is a supercycle. 
+\ep
+%
+\begin{proof}
+Since $\SF{U} \ord U$ by \defn{scFix}, we have $U = \SF{U}$. Hence, ...
+\end{proof}
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Structural properties of supercycles}
