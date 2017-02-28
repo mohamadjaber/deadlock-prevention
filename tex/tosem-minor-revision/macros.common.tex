@@ -142,7 +142,24 @@
 
 \newcommand{\scf}[2]{\MATHID{sc\_free}_{#1}(#2)}
 
+\newcommand{\power}[1]{\ensuremath{\CMATHIDN{P}(#1)}}   % powerset notation
+
 \newcommand{\wfg}[2]{\ensuremath{\MATHIDN{W}_{#1}({#2})}}
+%\newcommand{\wfgS}[2]{\ensuremath{\MATHIDN{\widehat{W}}_{#1}({#2})}}  %set of subgraphs of wiat for graph
+\newcommand{\wfgS}[2]{\ensuremath{\power{\wfg{#1}{#2}}}}
+
+
+
+\newcommand{\lwfg}[3]{\ensuremath{\MATHIDN{W}_{#1}^{#3}({#2})}}
+\newcommand{\lwfgS}[3]{\ensuremath{\power{\lwfg{#1}{#2}{#3}}}}
+
+
+
+
+\newcommand{\compl}[1]{\ensuremath{\MATHIDN{\overline{#1}}}}
+
+
+
 \newcommand{\wfgr}[2]{\ensuremath{\MATHIDN{W}^R_{#1}({#2})}}
 \newcommand{\sg}[1]{\ensuremath{\MATHIDN{G}_{#1}}}
 \newcommand{\ssg}[2]{\ensuremath{\MATHIDN{G}_{#1}^{#2}}}
@@ -215,6 +232,8 @@
 \newcommand{\viol}[3]{\ensuremath{\SMATHID{scViolate}_{\B}(#1,#2,#3)}} % supercycle violation condition
 \newcommand{\scViol}[3]{\ensuremath{\SMATHID{scViolate}_{\B}(#1,#2,#3)}} % supercycle violation condition
 
+\newcommand{\scV}[2]{\ensuremath{\SMATHID{scViolate}_{\B}(#1,#2)}} % overall supercycle violation 
+\newcommand{\scVd}[3]{\ensuremath{\SMATHID{scViolate}_{\B}(#1,#2,#3)}} % supercycle violation at depth $d$
 
 \newcommand{\lviol}[5]{\ensuremath{\SMATHID{scViolateLoc}(#1,#2,#3,\dsk{#4}{#5})}}
 % local supercycle violation condition
@@ -263,14 +282,28 @@
 
 % fixpoint
 \newcommand{\lat}[2]{\ensuremath{\CMATHIDN{L}_{#1}({#2})}}           % wait for lattice
+\newcommand{\llat}[3]{\ensuremath{\CMATHIDN{L}_{#1}^{#3}({#2})}}           % wait for lattice
 \newcommand{\ewfg}{\ensuremath{\emptyset}\xspace}                         % empty wait for graph
 \newcommand{\ord}{\sub}
+\newcommand{\subg}{\sub}  % subgraph
 \newcommand{\meet}{\land}
 \newcommand{\join}{\lor}
 
-\newcommand{\SF}[1]{\ensuremath{\CMATHIDN{S}(#1)}}
-\newcommand{\VF}[1]{\ensuremath{\CMATHIDN{V}(#1)}}
+\newcommand{\SF}[1]{\ensuremath{\CMATHIDN{S}(#1)}}   % fixpoint mapping for supercycles
+\newcommand{\SFs}{\ensuremath{\CMATHIDN{S}}}           % SF symbol with no args
+\newcommand{\VF}[1]{\ensuremath{\CMATHIDN{V}(#1)}}   % fixpoint mapping for supercycle violation
+\newcommand{\VFs}{\ensuremath{\CMATHIDN{V}}}  % VF symbol with no args
 \newcommand{\blocks}[2]{\ensuremath{\MATHIDN{blocks}(#1, #2)}}
+\newcommand{\lfp}[1]{\ensuremath{\MATHIDN{lfp}(#1)}}
+\newcommand{\gfp}[1]{\ensuremath{\MATHIDN{gfp}(#1)}}
+
+
+\newcommand{\lSF}[1]{\ensuremath{\CMATHIDN{SL}(#1)}}   % fixpoint mapping for supercycles
+\newcommand{\lSFs}{\ensuremath{\CMATHIDN{SL}}}           % SF symbol with no args
+\newcommand{\lVF}[1]{\ensuremath{\CMATHIDN{VL}(#1)}}   % fixpoint mapping for supercycle violation
+\newcommand{\lVFs}{\ensuremath{\CMATHIDN{VL}}}  % VF symbol with no args
+\newcommand{\lblocks}[2]{\ensuremath{\MATHIDN{lblocks}(#1, #2)}}
+
 
 
 %%%%% REVISED CONDITION NAMES

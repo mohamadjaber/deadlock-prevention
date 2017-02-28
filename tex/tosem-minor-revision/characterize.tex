@@ -331,8 +331,8 @@ In the sequel, we say ``deadlock-free'' to mean ``free of local deadlock''.
 
 We wish to check whether supercycles can be formed or not.
 % \ie whether the supercycle formation condition is satisfied or not.
-In principle, we could check directly whether $\wfg{\B}{t}$ contains a supercycle, for each
-reachable state $t$. However, this approach is subject to state-explosion, and so is usually
+In principle, we could check directly whether $\wfg{\B}{s}$ contains a supercycle, for each
+reachable state $s$. However, this approach is subject to state-explosion, and so is usually
 unlikely to be viable in practice.  Instead, we formulate global conditions for supercycle-freedom,
 and then ``project'' these conditions onto small subsystems, to obtain local versions of these
 conditions that are (1) efficiently checkable, and (2) imply the global versions.
@@ -344,45 +344,139 @@ To formulate these conditions, we need to characterize the static (structural) a
 \subsection{A fixpoint characterization of supercycles}
 \label{secn:supercycle-fixpoint}
 
-\bd[Wait-for lattice] \label{defn:wflattice}
-Define the finite lattice $\lat{\B}{s} = \tpl{ \wfg{B}{s}, \ewfg, \ord }$ whose elements are all the subgraphs of 
-\wfg{B}{s}, and where \wfg{B}{s} is the top element, the empty wait-for graph, denoted by \ewfg is the bottom element, 
-and $U \ord V$ iff $U$ is a subgraph of $V$, \ie $\ord$ is the ``is a subgraph of'' order relation.
+\bd[Subgraph of a wait-for graph] \label{defn:wsubgraph}
+$W$ is a subgraph of $\wfg{\B}{s}$ iff the nodes of $W$ are a subset of the nodes of $\wfg{\B}{s}$ and the edges of $W$ are the induced edges from 
+$\wfg{\B}{s}$, \ie if $u,v$ are nodes of $W$ and $u \ar v$ is en edge of $\wfg{\B}{s}$, then $u \ar v$ is en edge of $W$.
+Write $W \subg \wfg{\B}{s}$ when $W$ is a subgraph of $\wfg{\B}{s}$, and extend the definition of $\subg$ to subgraphs of $\wfg{\B}{s}$ in the obvious
+manner, so that $V \subg W$ means that $V$ is a subgraph of $W$.
 \ed
-It follows from \defn{wflattice} that meet is given by graph intersection and join is given by graph union, as follows:
-$U \meet V$ consists of the nodes and edges that are present in both $U$ and $V$, and 
-$U \join V$ consists of the nodes and edges that are present in $U$, or in $V$, or in both. Note that $\join$ is \emph{not} disjoint graph union: 
-it is possible for $U$ and $V$ to have nodes and edges in common.
+
+\bd[Set of subgraphs] \label{defn:wsetOfSubgraphs}
+$\wfgS{B}{s} = \set{ W \stt W \subg \wfg{B}{s} }$.
+\ed
+
+
+\bd[Wait-for lattice] \label{defn:wflattice}
+Define the partially ordered set $\lat{\B}{s} = \tpl{ \wfgS{B}{s}, \subg }$ %\tpl{ \wfg{B}{s}, \ewfg, \subg }$
+whose elements are all the subgraphs of 
+\wfg{B}{s}, and where  $U \subg V$ is as in \defn{wsubgraph}.   
+%iff $U$ is a subgraph of $V$, \ie $\ord$ is the ``is a subgraph of'' order relation.
+\ed
+
+The following proposition follows immediately from the definitions; its proof is left to the reader.
+\bp \label{prop:isALattice}
+$\lat{\B}{s} = \tpl{ \wfgS{B}{s}, \subg }$ is a complete boolean lattice as follows:
+\be
+
+\item meet is given by graph intersection: 
+$U \meet V$ consists of the nodes that are present in both $U$ and $V$, together with their induced edges
+
+\item join is given by graph union: $U \join V$ consists of the nodes and edges that are present in $U$, or in $V$, or in both, together with their
+  induced edges.
+ Note that $\join$ is \emph{not} disjoint graph union: 
+it is possible for $U$ and $V$ to have nodes and edges in common. Note also that $U \join V$ may contain edges not present in either $U$ nor $V$,
+since the edges are those induced by  \wfg{B}{s}. 
+
+\item \wfg{B}{s}  is the top element 
+
+\item  the empty wait-for graph, denoted by \ewfg, is the bottom element
+
+\item the complement of $W$ is \compl{W} obtained by taking all the nodes of $W$  that are not in \wfg{B}{s}, together with the induced edges.
+\ee
+\ep
+As noted, $\join, \meet$ and complement are determined entirely by the sets of nodes in the relevant subgraphs. Theresulting edges are always those
+that are induced by \wfg{B}{s}. 
+
+
 
 \bd \label{defn:blocks}
-Let $U \ord \wfg{B}{s}$ and $a, B_i$ be nodes in $\wfg{B}{s}$. Then 
+Let $U \subg \wfg{B}{s}$ and $a, B_i$ be nodes in $\wfg{B}{s}$. Then 
 $\blocks{a}{U} \df (\ex B_i \in U : a \ar B_i \sub \wfg{B}{s})$, and 
 $\blocks{B_i}{U} \df (\fa a : B_i \ar a \sub\wfg{B}{s} \imp a \in U \land \blocks{a}{U})$.
 \ed
 
 \bd \label{defn:scFix}
-$\SF{U} = U -  \set{v \stt \neg blocks(v,U)}$ 
-%$\SF{U} = U - ( \set{a \stt \neg blocks(a,U)}  \un \set{B_i \stt \neg blocks(B_i, U)} )$
+Define $\SFs: \wfgS{B}{s} \to \wfgS{B}{s}$ as follows.
+$\SF{W}$ is the subgraph with nodes $\set{w \stt \blocks{w}{W} }$, together with their induced edges.
 \ed
 
 
 \bd \label{defn:violFix}
-$\VF{U} = U \un  \set{v \stt blocks(v,U)}$
-%$\VF{U} = U \un ( \set{a \stt blocks(a,U)}  \un \set{B_i \stt blocks(B_i, U)} )$
+Define $\VFs: \wfgS{B}{s} \to \wfgS{B}{s}$ as follows.
+$\VF{W}$ is the subgraph with nodes \compl{\set{w \stt \neg \blocks{w}{W} }}, together with their induced edges.
 \ed
 
-%It is clear that $\SF{}$ and $\VF{}$ are monotone, and so their greatest and least fixpoints 
+\bp \label{prop:monotone}
+$\SFs$ and $\VFs$ are monotone.
+\ep
+Hence, by the Knaster-Tarski theorem, the least and greatest fixpoints of $\SF{}$ and $\VF{}$ exist.
+%, and so their greatest and least fixpoints 
 
-\bp
-Let $U$ be such that $U \ord \SF{U}$. Then $U$ is a supercycle. 
+\bp \label{prop:supercycleGFP}
+Let $W \subg \wfg{B}{s}$. Then $W$ is a supercycle in \wfg{B}{s} iff $W \subg \SF{W}$.
 \ep
 %
 \begin{proof}
 Since $\SF{U} \ord U$ by \defn{scFix}, we have $U = \SF{U}$. Hence, ...
 \end{proof}
 
+Thus the supercycles of \wfg{B}{s} are exactly the post-fixpoints of $\SFs$. This implies that the union of two supercycles is also a supercycle. 
+
+\bp \label{prop:GFPisLargestSC}
+Let $W$ be the greatest fixpoint of $\SFs$. Then either
+(a) \wfg{B}{s} is supercycle-free and $W = \ewfg$, or 
+(b) \wfg{B}{s} contains supercycles, and $W$ is the largest supercycle in \wfg{B}{s}
+\ep
+%
+\begin{proof}
+By Knaster-Tarski, the greaterst fixpoint is the join of all the post-fixpoints. 
+If \wfg{B}{s} is supercycle-free, then by \prop{supercycleGFP}, the set of post-fixpoints of $\SFs$ is empty. 
+Hence $W = \ewfg$.
+If \wfg{B}{s} contains supercycles, , then by \prop{supercycleGFP},  the set of post-fixpoints of $\SFs$ is exactly the set of 
+supercycles of \wfg{B}{s}, and so $W$ is the union of all these supercycles, and so $W$ is the largest supercycle in \wfg{B}{s}.
+\end{proof}
 
 
+\bp \label{prop:LFGisScViolations}
+Let  $V= \lfp{\VFs}$, \ie $V$ is the least fixpoint of $\VFs$. Then $v \in V$ iff $v$ is not a node in any supercycle of \wfg{B}{s}.    
+%the nodes of $V$ are exactly the nodes in \wfg{B}{s} that have supercycle violations. 
+\ep
+\begin{proof}
+%Follows from \prop{GFPisLargestSC} are the Park conjugate (dual) fixpoint theorem in complete boolean lattices.
+From the Park conjugate (dual) fixpoint theorem in complete boolean lattices, we have 
+\lfp{\VFs} = \compl{\gfp{\SFs}}.
+By \prop{GFPisLargestSC} , \gfp{\SFs} is the largest supercycle in \wfg{B}{s}. Hence the nodes not in 
+\gfp{\SFs} are exactly the nodes that have supercycle violations. These are exactly the nodes in \lfp{\VFs}.
+\end{proof}
+
+
+\bp \label{prop:computeLFP}
+$\lfp{\VFs} = \join_{d \ge 0} \VFs^{d} (\ewfg)$.
+\ep
+\begin{proof}
+$\VFs$ is monotone and $\lat{\B}{s}$ is finite. Hence $\VFs$ is continuous. Follows by standard results, \eg see the CPO fixpoint theorem I in 
+\cite{DP02}.
+\end{proof}
+
+
+
+\bd[Supercycle violation, $\scV{v}{s}$, $\scVd{v}{d}{s}$]
+\label{def:supercycle-violation}
+\label{def:supercycle.violation}
+\label{defn:supercycle.violation}
+$\scV{v}{s} \df v \in \lfp{\VFs}$ and 
+$\scVd{v}{d}{s} \df v \in \VFs^{d} (\ewfg)$.
+\ed
+
+It follows from \prop{LFGisScViolations} that $\scV{v}{s}$ iff there does not exist $\SC$ such that $\SC$ is a supercycle and $v \in SC$.
+
+We say that a node $v$ of \wfg{B}{s} has a \emph{supercycle violation}\footnote{In the sequel, we say sc-violation rather than ``supercycle violation.''} iff $v$ is not a node in any supercycle of \wfg{B}{s}, 
+\ie iff $\scV{v}{s}$ holds. 
+By \prop{computeLFP}, we can compute $\lfp{\VFs}$ (and therefore $\scV{v}{s}$) by iterating $\VFs$, starting from $\ewfg$, until there is no more change.
+
+%In the sequel, we say sc-violation rather than ``supercycle violation.''  The crucial result is
+%that, if $v$ has a level-$d$ sc-violation, for some $d \ge 1$, then $v$ cannot be a node of a
+%supercycle.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Structural properties of supercycles}
