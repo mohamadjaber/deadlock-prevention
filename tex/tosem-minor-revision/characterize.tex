@@ -405,27 +405,29 @@ $\SF{W}$ is the subgraph with nodes $\set{w \stt \blocks{w}{W} }$, together with
 Define $\VFs: \wfgS{B}{s} \to \wfgS{B}{s}$ as follows.
 $\VF{W}$ is the subgraph with nodes \compl{\set{w \stt \neg \blocks{w}{W} }}, together with their induced edges.
 \ed
+%
+Hence $\VF{\UU} = \compl{\SF{\comp{\UU}}}$, \ie $\VFs$ and $\SFs$ are duals.
 
 \bp \label{prop:monotone}
-$\SFs$ and $\VFs$ are monotone.
+$\SFs$ and $\VFs$ are monotone and continuous.
 \ep
-Hence, by the Knaster-Tarski theorem, the least and greatest fixpoints of $\SF{}$ and $\VF{}$ exist.
+Hence, by the Knaster-Tarski theorem, the least and greatest fixpoints of $\SFs$ and $\VFs$ exist.
 %, and so their greatest and least fixpoints 
 
 \bp \label{prop:supercycleGFP}
-Let $W \subg \wfg{B}{s}$. Then $W$ is a supercycle in \wfg{B}{s} iff $W \subg \SF{W}$.
+Let $\UU \subg \wfg{B}{s}$. Then $\UU$ is a supercycle in \wfg{B}{s} iff $\UU \subg \SF{\UU}$.
 \ep
 %
 \begin{proof}
-Since $\SF{U} \ord U$ by \defn{scFix}, we have $U = \SF{U}$. Hence, ...
+Since $\SF{\UU} \subg \UU$ by \defn{scFix}, we have $U = \SF{U}$. Hence, ...
 \end{proof}
 
 Thus the supercycles of \wfg{B}{s} are exactly the post-fixpoints of $\SFs$. This implies that the union of two supercycles is also a supercycle. 
 
 \bp \label{prop:GFPisLargestSC}
-Let $W$ be the greatest fixpoint of $\SFs$. Then either
-(a) \wfg{B}{s} is supercycle-free and $W = \ewfg$, or 
-(b) \wfg{B}{s} contains supercycles, and $W$ is the largest supercycle in \wfg{B}{s}
+Let $\SC$ be the greatest fixpoint of $\SFs$. Then either
+(a) \wfg{B}{s} is supercycle-free and $\SC = \ewfg$, or 
+(b) \wfg{B}{s} contains supercycles, and $\SC$ is the largest supercycle in \wfg{B}{s}
 \ep
 %
 \begin{proof}
@@ -437,7 +439,7 @@ supercycles of \wfg{B}{s}, and so $W$ is the union of all these supercycles, and
 \end{proof}
 
 
-\bp \label{prop:LFGisScViolations}
+\bp \label{prop:LFPisScViolations}
 Let  $V= \lfp{\VFs}$, \ie $V$ is the least fixpoint of $\VFs$. Then $v \in V$ iff $v$ is not a node in any supercycle of \wfg{B}{s}.    
 %the nodes of $V$ are exactly the nodes in \wfg{B}{s} that have supercycle violations. 
 \ep
@@ -451,7 +453,7 @@ By \prop{GFPisLargestSC} , \gfp{\SFs} is the largest supercycle in \wfg{B}{s}. H
 
 
 \bp \label{prop:computeLFP}
-$\lfp{\VFs} = \join_{d \ge 0} \VFs^{d} (\ewfg)$.
+$\lfp{\VFs} = \JOIN_{d \ge 0} \VFs^{d} (\ewfg)$.
 \ep
 \begin{proof}
 $\VFs$ is monotone and $\lat{\B}{s}$ is finite. Hence $\VFs$ is continuous. Follows by standard results, \eg see the CPO fixpoint theorem I in 
@@ -478,12 +480,167 @@ By \prop{computeLFP}, we can compute $\lfp{\VFs}$ (and therefore $\scV{v}{s}$) b
 %that, if $v$ has a level-$d$ sc-violation, for some $d \ge 1$, then $v$ cannot be a node of a
 %supercycle.
 
+
+
+
+
+
+
+
+\bd[Supercycle membership, $\scyc{\B}{s}{v}$]
+\label{defn:supercycle.membership}
+Let $v$ be a node of $\wfg{\B}{s}$. Then
+$\scyc{\B}{s}{v}$ holds iff there exists a supercycle $SC \sub
+\wfg{\B}{s}$ such that $v \in SC$. 
+%Define $\scyc{\B}{s}{\B_i}$, $\scyc{\B}{s}{\act}$ to mean that $\B_i$,
+%$\act$, respectively, are nodes of a supercycle of $\wfg{\B}{s}$.
+\ed
+
+If a component or interaction is not a node of a supercycle, then we say that it has a
+\emph{SC-violation}, \ie a supercycle-violation.
+%
+
+
+
+\bp \label{prop:scViol-iff-notInSC}
+$\neg \scyc{\B}{t}{v}$ iff $(\ex d \ge 1: \viol{v}{d}{t})$.
+\ep
+%\prf{Immediate from Propositions~\ref{prop:scViol-implies-notInSC} and
+%  \ref{prop:notInSC-implies-scViol}.}
+
+
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Structural properties of supercycles}
 \label{secn:supercycle-structural}
 
+%\subsection{Supercycle Membership} 
+
 We present some structural properties of supercycles, which
 are central to our deadlock-freedom conditions.
+
+
+Define
+$\preds{\B}{s}{v} = \set{w \stt w \ar v \in \wfg{\B}{s}}$ and 
+$\succs{\B}{s}{v} = \set{w \stt v \ar w \in \wfg{\B}{s}}$.
+The definition of a supercycle (\defn{supercycle}) 
+imposes certain constraints on supercycle membership of a node \wrt its predecessors and successors
+in the wait-for-graph, as follows:
+
+%this is not used anywhere, and is present only for its own sake
+\bp[Supercycle-membership constraints]
+\label{prop:sc-membership}
+Let $\act, \B_i$ be nodes of $\wfg{\B}{s}$. Then
+\bn
+
+\item \label{clause:sc-membership:comp-out}
+$\scyc{\B}{s}{\B_i} \ifof (\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
+
+\item \label{clause:sc-membership:comp-in}
+$\scyc{\B}{s}{\B_i} \imp (\fa \act \in \preds{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
+
+\item \label{clause:sc-membership:act-out}
+$\scyc{\B}{s}{\act} \ifof (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
+
+\item \label{clause:sc-membership:act-in}
+$\scyc{\B}{s}{\act} \folf (\ex \B_i \in \preds{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
+
+\en
+\ep
+%
+\bpr
+We deal with each clause in turn.
+
+
+%%%%%%%%%%%%%%%%%%%%%
+\textit{Proof of \clause{sc-membership:comp-out}}.
+%
+Assume $\scyc{\B}{s}{\B_i}$, and let $\SC \sub \wfg{B}{s}$ be the supercycle containing $\B_i$.  Let
+$\actp \in \succs{\B}{s}{\B_i}$.  By \defn{supercycle}, \clause{supercycle.component-blocked},
+$\actp \in \SC$.  Hence $(\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
+We conclude
+$\scyc{\B}{s}{\B_i} \imp (\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
+%
+Now assume $(\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$, and let 
+$\SC$ be the union of all the supercycles containing all the $\act \in \succs{\B}{s}{\B_i}$. 
+By \prop{supercycle:union}, $\SC \sub \wfg{B}{s}$ is a supercycle.
+Let $\SC'$ be $\SC$ with $\B_i \ar \act$ added, for all 
+$\act \in \succs{\B}{s}{\B_i}$.
+Then $\SC'$ is a supercycle by 
+\defn{supercycle}, and also $\SC' \sub \wfg{B}{s}$. Hence $\scyc{\B}{s}{\act}$.
+We conclude 
+$\scyc{\B}{s}{\B_i} \folf (\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textit{Proof of \clause{sc-membership:comp-in}}.
+%
+Assume $\scyc{\B}{s}{\B_i}$, so that $\SC \sub \wfg{B}{s}$ is the supercycle containing $\B_i$.
+Let  $\act \in \preds{\B}{s}{\B_i}$, and let $\SC'$ be $\SC$ with 
+$\act \ar \B_i$ added. Hence $\SC'$ is a supercycle 
+by Definition~\ref{def:supercycle},
+  Clause~\ref{def:supercycle.action-blocked}.
+Since $\act$ was chosen arbitrarily, we conclude 
+$(\fa \act \in \preds{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
+
+
+
+%%%%%%%%%%%%%%
+\textit{Proof of \clause{sc-membership:act-out}}.
+%
+Assume $\scyc{\B}{s}{\act}$, and let $\SC \sub \wfg{B}{s}$ be the supercycle containing $\act$.  By
+\defn{supercycle}, \clause{supercycle.action-blocked}, there exists a
+$\B_i \in \succs{\B}{s}{\act}$ such that $\B_i \in \SC$.  Hence $\scyc{\B}{s}{\B_i}$.
+We conclude
+$\scyc{\B}{s}{\act} \imp (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
+%
+Now assume $(\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$, and let 
+$\SC \sub \wfg{B}{s}$ be the supercycle containing some $\B_i \in \succs{\B}{s}{\act}$. 
+Let $\SC'$ be $\SC$ with $\act \ar \B_i$ added. Then $\SC'$ is a supercycle by 
+\defn{supercycle}, and also $\SC' \sub \wfg{B}{s}$. Hence $\scyc{\B}{s}{\act}$.
+We conclude 
+$\scyc{\B}{s}{\act} \folf (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+\textit{Proof of \clause{sc-membership:act-in}}.  
+%
+Assume $\neg \scyc{\B}{s}{\act}$, so that $\act$ is not in any supercycle of $\wfg{B}{s}$.
+Let $\B_i \in \preds{\B}{s}{\act}$. 
+By \defn{supercycle}, \clause{supercycle.component-blocked}, 
+$\B_i$ cannot be in any supercycle of $\wfg{B}{s}$, since all $\actp \in \succs{\B}{s}{\B_i}$ must
+also be in the supercycle. Hence $\neg \scyc{\B}{s}{\B_i}$.
+Since $\B_i$ was chosen arbitrarily, we conclude
+$\neg \scyc{\B}{s}{\act} \imp  (\fa \B_i \in \preds{\B}{s}{\act} : \neg \scyc{\B}{s}{\B_i})$, the
+contrapositive of \clause{sc-membership:act-in}.  
+\epr
+
+Note that \clause{sc-membership:comp-in} cannot be strengthened to an equivalence: if all
+the interactions that wait for a component $\B_i$ are in a supercycle, then $\B_i$ itself may or may
+not be in a supercycle, depending on whether $\B_i$ is waiting for some $\actp$ that is not in a
+supercycle.
+%
+Likewise, \clause{sc-membership:act-in} cannot be strengthened to an equivalence: if $\act$
+is in a supercycle, then any component $\B_i$ that waits for $\act$ may or may not be in a 
+supercycle, depending on whether $\B_i$ is waiting for some $\actp$ that is not in a supercycle. 
+
+
+
+
+While \prop{sc-membership} gives relationships between supercycle membership of a node and both its
+successors and predecessors, nevertheless \defn{supercycle} implies that the ``causality'' of
+supercycle-membership of a node $v$ is from the successors of $v$ to $v$, \ie membership of $v$ in a
+supercycle is caused only by membership of $v$'s successors in a supercycle. Repeating this step, we
+infer that $v$'s supercycle-membership is caused by the subgraph of the wait-for graph that is
+reachable from $v$.
+
+
 
 
 \bd[Path, path length] \label{def:path} \label{defn:path}

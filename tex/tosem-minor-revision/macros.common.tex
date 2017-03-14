@@ -150,10 +150,13 @@
 
 
 
-\newcommand{\lwfg}[3]{\ensuremath{\MATHIDN{W}_{#1}^{#3}({#2})}}
+%\newcommand{\lwfg}[3]{\ensuremath{\MATHIDN{W}_{#1}^{#3}({#2})}}
+\newcommand{\lwfg}[3]{\ensuremath{\MATHIDN{W}_{#3}({#2})}}
 \newcommand{\lwfgS}[3]{\ensuremath{\power{\lwfg{#1}{#2}{#3}}}}
 
-
+\newcommand{\UU}{\MATHID{U}} %wait for subgraphs
+\newcommand{\US}{\MATHID{U}}
+\newcommand{\VS}{\MATHID{V}}
 
 
 \newcommand{\compl}[1]{\ensuremath{\MATHIDN{\overline{#1}}}}
@@ -284,10 +287,12 @@
 \newcommand{\lat}[2]{\ensuremath{\CMATHIDN{L}_{#1}({#2})}}           % wait for lattice
 \newcommand{\llat}[3]{\ensuremath{\CMATHIDN{L}_{#1}^{#3}({#2})}}           % wait for lattice
 \newcommand{\ewfg}{\ensuremath{\emptyset}\xspace}                         % empty wait for graph
-\newcommand{\ord}{\sub}
-\newcommand{\subg}{\sub}  % subgraph
-\newcommand{\meet}{\land}
-\newcommand{\join}{\lor}
+\newcommand{\ord}{\sqsubseteq}
+\newcommand{\subg}{\sqsubseteq}  % subgraph
+\newcommand{\meet}{\sqcap}
+\newcommand{\join}{\sqcup}
+\newcommand{\MEET}{\bigsqcap}
+\newcommand{\JOIN}{\bigsqcup}
 
 \newcommand{\SF}[1]{\ensuremath{\CMATHIDN{S}(#1)}}   % fixpoint mapping for supercycles
 \newcommand{\SFs}{\ensuremath{\CMATHIDN{S}}}           % SF symbol with no args
@@ -645,9 +650,7 @@
 %%%%%%%%%%%%%% MACROS FOR NUMBERED LINES IN CODE TABBING ENVIRONMENT %%%%%%%%%%%%%%%%
 
 \newcounter{lctr}
-
 \newcommand{\as}[1]{\{#1\}}
-
 
 %% line number on left, body in math mode
 \newcommand{\li}{\addtocounter{lctr}{1}\arabic{lctr}.}
@@ -667,6 +670,8 @@
 %%%% in listing)
 \newcommand{\lion}[1]{\addtocounter{lctr}{1}\arabic{lctr}.\>\ensuremath{#1}}
 \newcommand{\liocn}[2]{\addtocounter{lctr}{1}\arabic{lctr}.\>\ensuremath{#1}\`{#2}}
+
+
 
 
 \usepackage{hyperref}
