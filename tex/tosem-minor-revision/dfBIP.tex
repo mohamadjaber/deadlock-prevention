@@ -102,14 +102,6 @@ Fadi A Zaraket, Department of Electrical and Computer Engineering,
 
 
 
-
-
-
-
-
-
-
-
 \maketitle
 
 
@@ -133,62 +125,39 @@ Fadi A Zaraket, Department of Electrical and Computer Engineering,
 \input{characterize}
 
 
-%\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Supercycle Formation and its Consequences}
-\label{secn:scFormation}
-\input{scFormation}
+\section{Global Supercycles}
+\label{secn:globalSupercycles}
+\input{globalSupercycles}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Global Conditions for Deadlock Freedom}
 \section{Global Conditions for Deadlock Freedom}
+\label{secn:globalDeadlockFreedom}
 \label{s:global}
+\input{globalDeadlockFreedom}
 
-   \subsection{A Global AND-OR Condition for Deadlock Freedom}
-   \label{s:global.ANDOR}
-   \input{globANDORCond}
 
-   \subsection{A Global Linear Condition for Deadlock Freedom}
-   \label{s:globCondition}
-   \label{s:global.Linear}
-   \input{globLinCond}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Local Supercycles}
+\label{secn:localSupercycles}
+\input{localSupercycles}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Local Conditions for Deadlock Freedom}
+\label{secn:localDeadlockFreedom}
 \label{s:local}
-
-   \label{s:local.preamble}
-   \input{locPreamble}
-
-   \subsection{Projection onto Subsystems}
-   \label{s:projection}
-   \input{projection}
+\input{localDeadlockFreedom}
 
 
-   \subsection{Fixpoint characterization of supercycles in a  subsystem}
-   \label{s:local.fixpoint}
-   \input{fixpointLoc}
-
-
-%   \clearpage
-   \subsection{A Local AND-OR Condition for Deadlock Freedom}
-   \label{s:ANDORcond}
-   \input{locANDORCond}
-
-   \subsection{A Local Linear Condition for Deadlock Freedom}
-   \label{s:condition}
-   \input{locLinCond}
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Overall Soundness, Completeness, and Implication Results}
 %\section{Soundness and Completeness \wrt local and global deadlock}
 
 \label{s:results}
 \input{results}
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
