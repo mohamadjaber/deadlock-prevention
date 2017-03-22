@@ -158,8 +158,10 @@ For every component  $\B_i = (Q_i,P_i,\goesto_i)$, the following holds. In every
 interaction $\act$.
 \end{definition}
 
-\bd[BIP System]\label{def.bip.system} Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component with transition system $(Q,\gamma,
-\goestog)$, and let $Q_0 \sub Q$ be a set of initial states. Then $(\B,Q_0)$ is a BIP system.  \ed
+\begin{definition}[BIP System]\label{def.bip.system} Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component with transition system $(Q,\gamma,
+\goestog)$, and let $Q_0 \sub Q$ be a set of initial states. Then
+$(\B,Q_0)$ is a BIP system.  
+\end{definition}
 %We usually refer to $B$ as a BIP system, understanding that $Q_0$ is implicit.
 
 \noindent
@@ -212,8 +214,7 @@ components in $\B'$.
 
 
 
-
-\bd[Subsystem]\label{def.bip.subsystem}
+\begin{definition}[Subsystem]\label{def.bip.subsystem}
 Let $(\B, Q_0)$ be a BIP system where $\B = \gamma(\B_1,\dots,\B_n)$, and let 
 $\set{\B_{i_1},\dots,\B_{i_k}}$ be a subset of $\set{\B_{1},\dots,\B_{n}}$.
 Then the subsystem $(\B', Q'_0)$ of  $(\B, Q_0)$ based on $\set{\B_{i_1},\dots,\B_{i_k}}$ is as follows:
@@ -221,8 +222,7 @@ Then the subsystem $(\B', Q'_0)$ of  $(\B, Q_0)$ based on $\set{\B_{i_1},\dots,\
 \item $\B'$ is the subcomponent of $\B$ based on $\set{\B_{i_1},\dots,\B_{i_k}}$ 
 \item $Q'_0 = Q_0 \pj \set{\B_{i_1},\dots,\B_{i_k}}$
 \en
-\ed
-
+\end{definition}
 
 
 \begin{definition}[Execution Projection]\label{def.bip.execution.projection}

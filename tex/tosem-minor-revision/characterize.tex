@@ -133,12 +133,12 @@ of $\act$.  Say that edge $e$ in a wait-for-graph
 is \emph{$\B_i$-incident} iff $\B_i$ is one of the endpoints of $e$.
 
 
-\bp[Wait-for edge preservation] \label{prop:wait-for-edge-preservation}
+\begin{proposition}[Wait-for edge preservation] \label{prop:wait-for-edge-preservation}
 Let $s \la{\act} t$ be a transition of composite component $B =
 \gamma(\B_1,\dots,\B_n)$, and let $e$ be a wait-for edge in $\wfg{\B}{s}$
 that is not $\B_i$-incident, for every $\B_i \in \cmps{\act}$. Then $e \in
 \wfg{\B}{s}$ iff $e \in \wfg{\B}{t}$. 
-\ep
+\end{proposition}
 %
 % \prfs{
 % Components not involved in the execution of $\act$ do not change state
@@ -262,12 +262,12 @@ Proposition~\ref{prop:static:supercycle-is-sufficient} states that the
 existence of a supercycle implies a local deadlock: all components in
 the supercycle are blocked forever.
 
-\bp
+\begin{proposition}
 \label{prop:static:supercycle-is-sufficient}
 Let $s$ be a state of $\B$.
 If $\SC \sub \wfg{\B}{s}$ is a supercycle, then all components $\B_i$ in $\SC$ cannot execute a transition in any state reachable
 from $s$, including $s$ itself.
-\ep
+\end{proposition}
 %\begin{proof}
 % \prfs{Every interaction $\act$ that $\B_i$ enables is not enabled by some
 % participant. By Definition~\ref{def.bip.enablement}, $\act$ cannot be
@@ -288,7 +288,7 @@ if a set of components, \emph{considered in isolation}, are blocked,
 then there exists a supercycle consisting of exactly those components,
 together with the interactions that each component enables.
 %
-\bp
+\begin{proposition}
 \label{prop:static:supercycle-is-necessary} 
 \label{prop:supercycle-is-necessary}
 Let $\B'$ be a subcomponent of $\B$, and
@@ -296,7 +296,7 @@ let $s$ be an arbitrary state of $\B$ such that $\B'$,
 when considered in isolation, has no enabled interaction in state $s \pj \B'$.
 %
 Then, $\wfg{\B}{s}$ contains a supercycle.
-\ep
+\end{proposition}
 %
 % \prfs{Every atomic component $\B_i$ in $\B'$ is individually deadlock free, by assumption, 
 % and so there is at least one interaction $a_i$ which
@@ -327,12 +327,12 @@ supercycles in $\wfg{\B}{s}$ means there is no locally deadlocked subsystem.
 
 
 
-\bco[Supercycle-free implies free of local deadlock]
+\begin{corollary}[Supercycle-free implies free of local deadlock]
 \label{cor:static:dead-free}
 %Let $(B,Q_0)$ be a BIP system, with $B = \gamma(\B_1,\dots,\B_n)$. 
 If, for every reachable state $s$ of $(\B,Q_0)$, $\wfg{\B}{s}$ is supercycle-free, then
 $(\B,Q_0)$ is free of local deadlock.
-\eco
+\end{corollary}
 %
 \begin{proof}
 We establish the contrapositive.
@@ -377,12 +377,12 @@ behavior of interaction execution, we call it a ``behavioral restriction conditi
 \begin{definition}[Behavioral restriction condition]
 A \introdf{behavioral restriction condition} $\BC$ is a predicate
 $\BC: (\B, Q_0, \act) \to \set{\ttt, \fff}$.
-\ed
+\end{definition}
 %
 $\BC$ is a predicate on the effects of a particular interaction $\act$ within a given system
 $(\B, Q_0)$.
 
-\bd[Supercycle-freedom preserving] \label{def:SC-free-preserving}
+\begin{definition}[Supercycle-freedom preserving] \label{def:SC-free-preserving}
 A behavioral restriction condition $\BC$ is \introdf{supercycle-freedom preserving} iff, for every system 
 $(\B, Q_0)$ and $\act \in \gamma$ such that $\BC(\B, Q_0, \act) = \ttt$, the following holds:\\[2ex]
 %

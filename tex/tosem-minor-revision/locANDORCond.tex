@@ -25,8 +25,7 @@ $\connViol{v}{t}$, we project onto a subsystem.
 
 We now present the local version of the strong connectedness violation condition, given above in Definition~\ref{def:sConn.violation}.
 
-
-\bd[Local strong connectedness violation, $\locConnViol{v}{t_\act}{\act}{\l}$]
+\begin{definition}[Local strong connectedness violation, $\locConnViol{v}{t_\act}{\act}{\l}$]
 \label{def:sConn.violation.loc}
 
 Let $L$ be the nodes of $\wfg{\dsk{a}{\l}}{t_\act}$ that have no local
@@ -59,21 +58,21 @@ either
     \en
 
 \en
-\ed
+\end{definition}
 
 
 We show that the local strong connectedness condition implies the global strong connectedness condition.
 
-\bp
+\begin{proposition}
 \label{prop:locConnViol-implies-ConnViol}
  \label{prop:locConnViol-implies-connViol}
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
 For all interactions $\act \in \gamma$, and $\l > 0$, let $t_\act = t \pj \dsk{\act}{\l}$.
 Then\\
 \ind $\locConnViol{v}{t_\act}{\act}{\l} \imp \connViol{v}{t}$.
-\ep
+\end{proposition}
 %
-\bpr
+\begin{proof}
 By contradiction. Assume there exists a node $v$ in $\dsk{a}{\l}$ such that $\locConnViol{v}{t_\act}{\act}{\l} \land \neg \connViol{v}{t}$.
 By $\neg \connViol{v}{t}$ and Definition~\ref{def:sConn.violation}, there exists a strongly connected
 supercycle $SSC$ such that $v \in SSC$ and $SSC \sub \wfg{B}{t}$. Then, there are two cases:
@@ -104,7 +103,7 @@ supercycle $SSC$ such that $v \in SSC$ and $SSC \sub \wfg{B}{t}$. Then, there ar
 In both cases,  Definition~\ref{def:sConn.violation.loc} is violated. 
 But  Definition~\ref{def:sConn.violation.loc} must hold, since we have $\locConnViol{v}{t_\act}{\act}{\l}$. 
 Hence the desired contradiction.
-\epr
+\end{proof}
 
 
 % Let $v$ be a node that is in a supercycle of $\wfg{\dsk{a}{\l}}{t_\act}$, and $t_\act$ a state of $\dsk{\act}{\l}$.
@@ -129,28 +128,26 @@ disjunction of local supercycle violation and local strong connectedness violati
 the local supercycle formation condition implies the global supercycle formation condition.
 
 
-
-\bd[General local supercycle violation, $\locFormViol{v}{t_\act}{\act}{\l}$]
+\begin{definition}[General local supercycle violation, $\locFormViol{v}{t_\act}{\act}{\l}$]
 \label{def:locFormation.violation}
 Let $v$ be a node of $\dsk{\act}{\l}$.
 Then $\locFormViol{v}{t_\act}{\act}{\l}  \df  (\exs d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l}) \lor \locConnViol{v}{t_\act}{\act}{\l}$.
-\ed
+\end{definition}
 %Let $s \goesto[\act] t$ be a reachable transition. If, for every $\B_i \in \cmps{\act}$, 
 %$\formViol{v}{t}$ holds, then $s \goesto[\act] t$ does not introduce a supercycle, \ie if $s$ is
 %supercycle-free, then so is $t$. We establish this in the sequel.
 %
 
-
-\bp \label{prop:locFromViol-implies-formViol}
+\begin{proposition} \label{prop:locFromViol-implies-formViol}
 \label{prop:locformviol-implies-formviol}
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
 For all interactions $\act \in \gamma$, and $\l > 0$, let $t_\act = t \pj \dsk{\act}{\l}$.
 Then\\
 %\ind $\fa d \ge 1: $\locFormViol{v}{t_\act}{\act}{\l}\locFormViol{v}{d}{t_\act}{\act}{\l} \imp \formViol{v}{d}{t}$.
 \ind $ \locFormViol{v}{t_\act}{\act}{\l} \imp \formViol{v}{t}$.
-\ep
+\end{proposition}
 %
-\bpr
+\begin{proof}
 Assume that $\locFormViol{v}{t_\act}{\act}{\l}$ holds. Then, by Definition~\ref{def:formation.violation}, 
 $(\exs d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l}) \lor \locConnViol{v}{t_\act}{\act}{\l}$.
 We proceed by cases:
@@ -160,7 +157,7 @@ We proceed by cases:
 \en
 By Definition~\ref{def:formation.violation},  $\formViol{v}{t}  \df (\exs d \ge 1: \scViol{u}{d}{t}) \lor \connViol{v}{t}$.
 Hence we conclude that $\formViol{v}{t}$ holds.
-\epr
+\end{proof}
 
 
 
@@ -170,28 +167,28 @@ Hence we conclude that $\formViol{v}{t}$ holds.
 The actual local condition, \LAO, is given by applying the local supercycle formation condition to every reachable transition 
 of the subsystem $\dsk{\act}{\l}$ being considered, and to every component $B_i \in \cmps{\act}$.
 
-\bd[$\LAO(\B, Q_0, \act, \l)$] \label{def:lao}
+\begin{definition}[$\LAO(\B, Q_0, \act, \l)$] \label{def:lao}
 Let $\l > 0$, and let $s_\act \goesto[\act] t_\act$ be an arbitrary reachable transition of $\dsk{\act}{\l}$.
 Then, in $t_\act$, the following holds. 
 For every component $\B_i$ of $\cmps{\act}$:  
 $\B_i$ has a supercycle formation violation that can be confirmed within $\dsk{\act}{\l}$.
 Formally,\\
 \ind  $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{t_\act}{\act}{\l}$.
-\ed
+\end{definition}
 %
 We showed previously that $\GAO$ implies deadlock-freedom, and so it remains to establish that $\LAO$ implies $\GAO$. 
 
 
-
-\bl \label{lemma:loc.ANDOR.implies.glob.AND-OR}
+\begin{lemma}
+\label{lemma:loc.ANDOR.implies.glob.AND-OR}
 \label{LAOGAO}
 Let $\act \in \gamma$ be an interaction of BIP-system $(\B, Q_0)$. Then\\
 \ind $(\ex \l > 0: \LAO(\B, Q_0, \act, \l))$ implies $\GAO(\B, Q_0, \act)$
-\el
+\end{lemma}
 %
 %\prf{Immediate from Proposition~\ref{prop:locformviol-implies-formviol} and Definitions~\ref{def:global.ANDOR-cond}, \ref{def:lao}.}
 
-\bpr
+\begin{proof}
 Assume $\LAO(\B, Q_0, \act, \l)$ for some $\l > 0$. 
 %
 Let $s \goesto[\act] t$ be an arbitrary reachable transition of BIP-system $(\B, Q_0)$, and let 
@@ -211,16 +208,18 @@ From this and Proposition~\ref{prop:locFromViol-implies-formViol},\\
 
 \noindent
 Hence, by Definition~\ref{def:global.ANDOR-cond}, $\GAO(\B, Q_0, \act)$ holds.
-\epr
+\end{proof}
 
 
 
-\bt \label{thm:LAO.SC-free-preserving}
+\begin{theorem} \label{thm:LAO.SC-free-preserving}
 $\LAO$ is supercycle-freedom preserving
-\et
-\prf{
+\end{theorem}
+%
+\begin{proof}
 Follows immediately from Lemma~\ref{lemma:loc.ANDOR.implies.glob.AND-OR} and Theorem~\ref{thm:GAO.SC-free-preserving}.
-}
+\end{proof}
+
 
 
 

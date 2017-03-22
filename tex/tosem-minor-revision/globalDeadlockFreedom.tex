@@ -10,7 +10,7 @@ must hold whenever a supercycle is created. Negating this condition then implies
 supercycles. 
 
 
-\bp[Supercycle formation condition] \label{prop:supercycle-formation}
+\begin{proposition}[Supercycle formation condition] \label{prop:supercycle-formation}
 Assume that $s \goesto[\act] t$ is a transition of $(\B, Q_0)$, $\wfg{\B}{s}$ is supercycle-free, and that $\wfg{\B}{t}$
 contains a supercycle.  Then, in $\wfg{\B}{t}$, there exists a $\CC$ such that
 \bn
@@ -20,9 +20,9 @@ contains a supercycle.  Then, in $\wfg{\B}{t}$, there exists a $\CC$ such that
 \item  in $\wfg{\B}{t}$, there is no wait-for edge from a node in $\CC$ to a node outside of $\CC$
 \item there exists a component $\B_i \in \cmps{\act}$ such that $\B_i$ is in $\CC$
 \en
-\ep
+\end{proposition}
 %
-\bpr
+\begin{proof}
 By assumption, there is a supercycle $\SC$ that is a subgraph of $\wfg{\B}{t}$.
 By Proposition~\ref{prop:supercycle:contains-mssc}, $\SC$ contains a
 subgraph $\CC$ that is strongly connected, is itself a supercycle, and
@@ -49,7 +49,7 @@ Hence $v$ has enough successors in $\CC$ to satisfy the supercycle definition (\
 We conclude that $\CC$ by itself is a supercycle in $\wfg{\B}{s}$, which contradicts the assumption
 that $\wfg{\B}{s}$ is supercycle-free. Hence, $\B_i \in \CC$ for some $\B_i \in \cmps{\act}$, and so
 Clause~5 is established.  
-\epr
+\end {proof}
 
 
 
@@ -85,12 +85,12 @@ There are two ways for $\B_i$ to not be a node in a strongly-connected supercycl
 
 We formalize the second condition as follows.
 
-\bd[Strong connectedness violation, $\connViol{v}{t}$]
+\begin{definition}[Strong connectedness violation, $\connViol{v}{t}$]
 \label{def:sConn.violation}
  Let $v$ be a node of $\wfg{\B}{t}$.   Then $\connViol{v}{t}$ holds iff there does not exist a 
 strongly connected
  supercycle $SSC$ such that $v \in SSC$ and $SSC \sub \wfg{B}{t}$.
-\ed
+\end{definition}
 
 
 
@@ -101,14 +101,14 @@ The general supercycle violation condition is then a disjunction of the supercyc
 and the strong connectedness violation conditions.
 
 
-\bd[General supercycle violation, $\genViol{v}{t}$]
+\begin{definition}[General supercycle violation, $\genViol{v}{t}$]
 \label{def:formation.violation} 
 \label{defn:formation.violation} 
 Let $v$ be a node of $\wfg{\B}{t}$.
 Then 
 $\genViol{v}{t}  \df \scV{v}{t}  \lor \connViol{v}{t}$.
 %$\genViol{v}{t}  \df (\exs d \ge 1: \scViol{v}{d}{t}) \lor \connViol{v}{t}$.
-\ed
+\end{definition}
 %
 Let $s \goesto[\act] t$ be a reachable transition. If, for every $\B_i \in \cmps{\act}$,
 $\formViol{v}{t}$ holds, then, as we show below, $s \goesto[\act] t$ does not introduce a

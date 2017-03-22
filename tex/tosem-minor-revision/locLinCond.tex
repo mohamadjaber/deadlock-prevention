@@ -27,8 +27,7 @@ $\widepth{\B}{\B_i}{t} = \l \lor \wodepth{\B}{\B_i}{t} = \l$.
 
 
 
-
-\bd[$\LLin(\B, Q_0, \act, \l)$] \label{def:ldfc-k}
+\begin{definition}[$\LLin(\B, Q_0, \act, \l)$] \label{def:ldfc-k}
 \label{def:locLinear}
 %Let $(B, Q_0)$ be a BIP system, with $B =\gamma(\B_1,\dots,\B_n)$.
 %Let $a$ be an interaction of $(B, Q_0)$, \ie $a \in \gamma$.
@@ -39,7 +38,7 @@ either $\B_i$ has in-depth less than $2\l - 1$, or out-depth less than $2\l - 1$
 Formally,\\
 \ind  $\fa \B_i \in \cmps{\act}: 
 \widepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l-1$.
-\ed
+\end{definition}
 
 
 To infer deadlock-freedom in $(\B, Q_0)$ by checking $\LLin(\B, Q_0, a, \l)$,
@@ -59,19 +58,20 @@ to any subcomponent $\B'$, and that wait-for behavior in $\B'$ ``projects up'' t
 Since wait-for-edges project up and down, it follows that wait-for-paths
 project up and down, provided that the subsystem contains the entire wait-for-path.
 
-\bp[In-projection, Out-projection] \label{prop:in-out-projection}
+\begin{proposition}[In-projection, Out-projection] \label{prop:in-out-projection}
 %Let $(B, Q_0)$ be a BIP system, 
 Let $\l > 0$, let $\B_i$ be an atomic component of $\B$, and let 
 $(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$ which is based on a superset of $\ssg{a}{2\l}$.
 Let $s$ be a state of $(B, Q_0)$, and $s' = s \pj B'$. Then
 (1) $\widepth{\B}{\B_i}{s} < 2\l-1$ iff $\widepth{\B'}{\B_i}{s'} < 2\l-1$, and
 (2) $\wodepth{\B}{\B_i}{s} < 2\l-1$ iff $\wodepth{\B'}{\B_i}{s'} < 2\l-1$.
-\ep
-\prfs{Follows from Definition~\ref{def:depth},
-Proposition~\ref{prop:edge-projection}, and the observation that $\wfg{\B'}{s'}$
-contains all wait-for-paths of length $\le \l$ that start or end in $\B_i$.}
+\end{proposition}
 %
-\prf{
+% \prfs{Follows from Definition~\ref{def:depth},
+% Proposition~\ref{prop:edge-projection}, and the observation that $\wfg{\B'}{s'}$
+% contains all wait-for-paths of length $\le \l$ that start or end in $\B_i$.}
+%
+\begin{proof}
 We establish clause (1). The proof of clause (2) is analogous, except we replace paths ending in
 $\B_i$ by paths starting from $\B_i$.
 The proof of clause (1) is by double implication.
@@ -107,7 +107,8 @@ that is wholly contained in $\wfg{\B'}{s'}$. Hence we have $\widepth{\B'}{\B_i}{
 We have thus established 
 $\widepth{\B}{\B_i}{s} \ge 2\l-1$ implies $\widepth{\B'}{\B_i}{s'} \ge 2\l-1$.
 The contrapositive is the desired result.
-}
+\end{proof}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -118,14 +119,14 @@ The contrapositive is the desired result.
 \noindent
 We now show that $\LLin(\B, Q_0, \act, \l)$ implies $\GLin(\B, Q_0, \act)$, which in turn implies deadlock-freedom.  
 
-\bl
+\begin{lemma}
 \label{lemma:loc-implies-glob}
 \label{lemma:locLinear-implies-globlinear}
 \label{LLinGLin}
 %Let $(B, Q_0)$ be a BIP system, with $B = \gamma(\B_1,\dots,\B_n)$, and 
 Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
 If $\LLin(\B, Q_0, \act, \l)$ holds for some finite $\l > 0$, then $\GLin(\B, Q_0, \act)$ holds.
-\el
+\end{lemma}
 %
 %% \prfs{
 %% Let $s \la{\act} t$ be a reachable transition of $(B, Q_0)$ and let 
@@ -140,7 +141,7 @@ If $\LLin(\B, Q_0, \act, \l)$ holds for some finite $\l > 0$, then $\GLin(\B, Q_
 %% $\widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
 %% Hence $\GLin(\B, Q_0, \act)$ holds.}
 %
-\prf{
+\begin{proof}
 Let $s \la{\act} t$ be a reachable transition of $(\B, Q_0)$ and let 
 $\B_i \in \cmps{\act}$, $s_\act = s \pj \dsk{\act}{\l}$, $t_\act = t \pj \dsk{\act}{\l}$.
 Then $s_\act \la{\act} t_\act$ is a reachable transition of $\dsk{\act}{\l}$ by Corollary~\ref{cor.bip.reachability}.
@@ -151,7 +152,7 @@ $\widepth{\B}{\B_i}{t} < 2\l-1 \lor \wodepth{\B}{\B_i}{t} < 2\l-1$.
 So
 $\widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
 Hence $\GLin(\B, Q_0, \act)$.
-}
+\end{proof}
 
 
 
@@ -163,11 +164,13 @@ Hence $\GLin(\B, Q_0, \act)$.
 %% time $O(\SUM_{a \in \gamma} |\dsk{a}{\l}|)$, where $|\dsk{a}{\l}|$ denotes the
 %% size of the transition system of $\dsk{a}{\l}$.
 
-\bp[Finite out-depth implies local supercycle-violation]
+\begin{proposition}[Finite out-depth implies local supercycle-violation]
 \label{prop:finOutDepth-Implies-locScViol}
 For $d < \l$: $(\wodepth{\dsk{\act}{\l}}{v}{t_\act} = d)  \imp \locScViol{v}{d+1}{t_\act}{\act}{\l}$.
-\ep
-\prf{Proof is by induction on $d$. 
+\end{proposition}
+%
+\begin{proof}
+Proof is by induction on $d$. 
 
 \ul{Base case, $d=0$.}
 Then $v$ has no outgoing wait-for edges. Hence $\locScViol{v}{1}{t_\act}{\act}{\l}$ by Definition~\ref{def:supercycle.violation.local}.
@@ -176,17 +179,18 @@ Then $v$ has no outgoing wait-for edges. Hence $\locScViol{v}{1}{t_\act}{\act}{\
 Assume $(\wodepth{\dsk{\act}{\l}}{v}{t_\act} = d)$. Then, every outgoing wait-for edge of $v$ is to some $v'$ such that 
 $(\wodepth{\dsk{\act}{\l}}{v'}{t_\act} = d' < d)$. By the induction hypothesis, $\locScViol{v'}{d'+1}{t_\act}{\act}{\l}$.
 Hence, by Definition~\ref{def:supercycle.violation.local},  $\locScViol{v}{d+1}{t_\act}{\act}{\l}$.
-}
+\end{proof}
 
 
-\bl
+\begin{lemma}
 %\label{lemma:loc-implies-glob}
 \label{lemma:locLinear-implies-locANDOR}
 \label{LLinLAO}
 Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
 Then $\LLin(\B, Q_0, \act, \l)$ implies $\LAO(\B, Q_0, \act, \l)$.
-\el
-\prf{
+\end{lemma}
+%
+\begin{proof}
 Assume $\LLin(\B, Q_0, \act, \l)$. Let $s_\act \goesto[\act] t_\act$ be an arbitrary reachable transition of $\dsk{\act}{\l}$,
 and let $\B_i$ be an arbitrary component of $\cmps{\act}$.
 Then, from Definition~\ref{def:locLinear}, we have:
@@ -207,19 +211,18 @@ Hence by Definition~\ref{def:locFormation.violation}, $\locFormViol{\B_i}{t_\act
 In both cases, we have $\locFormViol{\B_i}{t_\act}{\act}{\l}$.
 Since $\B_i$ is an arbitrarily chosen  component of $\cmps{\act}$, we have $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{t_\act}{\act}{\l}$.
 Hence, by Definition~\ref{def:lao}, we conclude $\LAO(\B, Q_0, \act, \l)$.
-}
+\end{proof}
 
 
 
-
-
-\bt \label{thm:LLin.SC-free-preserving}
+\begin{theorem} \label{thm:LLin.SC-free-preserving}
 $\LLin$ is supercycle-freedom preserving
-\et
-\prf{
+\end{theorem}
+%
+\begin{proof}
 Follows immediately from
 Lemma~\ref{lemma:locLinear-implies-globlinear} and
 Theorem~\ref{thm:GLin.SC-free-preserving}.
 %
 Also follows immediately from Lemma~\ref{lemma:locLinear-implies-locANDOR} and Theorem~\ref{thm:GAO.SC-free-preserving}
-}
+\end{proof}

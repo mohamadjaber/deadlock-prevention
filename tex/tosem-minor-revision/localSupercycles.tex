@@ -30,8 +30,7 @@ subsystem of $(B,Q_0)$ to that in $(B,Q_0)$ overall.
 % \ed
 
 
-
-\bd[Structure Graph $\sg{\B}$, $\ssg{\act}{\l}$] \label{def:structure-graph} The structure
+\begin{definition}[Structure Graph $\sg{\B}$, $\ssg{\act}{\l}$] \label{def:structure-graph} The structure
 graph $\sg{\B}$ of composite component $B = \gamma(\B_1,\dots,\B_n)$ is a
 bipartite graph whose nodes are the $\B_1, \ldots, \B_n$ and all the
 $\act \in \gamma$.  There is an edge between $\B_i$ and
@@ -40,29 +39,27 @@ interaction $\act$ iff $\B_i$ participates in $\act$, \ie $\B_i \in \cmps{\act}$
 between them.  Let $\ssg{\act}{\l}$ be the subgraph
 of $\sg{\B}$ that contains $\act$ and all nodes of $\sg{\B}$
 that have a distance to $\act$ less than or equal to $\l$.
-\ed
+\end{definition}
 
 
-
-\bd[Deadlock-checking subsystem, $\dsk{\act}{\l}$] \label{def:dsk}
+\begin{definition}[Deadlock-checking subsystem, $\dsk{\act}{\l}$] \label{def:dsk}
 Define $\dsk{\act}{\l}$, the \emph{deadlock-checking subsystem for interaction $\act$ and
 depth $\l$}, to be the subsystem of $(\B, Q_0)$ based on the set of
 components in $\ssg{\act}{2\l}$.  % PREVIOUSLY: $\ssg{\act}{\l+2}$.
-\ed
+\end{definition}
 
-\bd[Border node, interior node of $\dsk{\act}{\l}$]  \label{def:dsk.border-and internal}
+\begin{definition}[Border node, interior node of $\dsk{\act}{\l}$]  \label{def:dsk.border-and internal}
 A node $v$ of $\dsk{\act}{\l}$ is a \emph{border-node} iff it has an
 edge in $\sg{\B}$ to a node outside of $\dsk{\act}{\l}$.
 If node $v$ of $\dsk{\act}{\l}$ is not a border node, then it is an \emph{internal node}.
-\ed
+\end{definition}
 Note that all border nodes of  $\dsk{\act}{\l}$ are interactions,
 since $2\l$ is even. Hence all component nodes of $\dsk{\act}{\l}$ are
 interior nodes.
 % TBD: EXPLAIN WHY....
 
 
-
-\bp[Wait-for-edge projection] \label{prop:edge-projection}
+\begin{proposition}[Wait-for-edge projection] \label{prop:edge-projection}
 %Let $(B, Q_0)$ be a BIP system, and 
 Let $(\B', Q'_0)$ be a subsystem of
 $(\B, Q_0)$. Let $s$ be a state of $(\B, Q_0)$, and $s' = s \pj \B'$.
@@ -70,12 +67,13 @@ Let $a$ be an interaction of $(\B', Q'_0)$, and $\B_i \in \cmps{\act}$ an atomic
 Then 
 (1) $\act \ar \B_i \in \wfg{\B}{s}$ iff $\act \ar \B_i \in \wfg{\B'}{s'}$, and
 (2) $\B_i \ar \act \in \wfg{\B}{s}$ iff $\B_i \ar \act \in \wfg{\B'}{s'}$.
-\ep
-\prfs{
-Since $s' = s \pj \B'$, all port enablement conditions of components in $\B'$ have the same value in $s$ and in
-$s'$. The proposition then follows by straightforward application of Definition~\ref{def:static:wait-for-graph}.
-}
-\prf{
+\end{proposition}
+%
+% \prfs{
+% Since $s' = s \pj \B'$, all port enablement conditions of components in $\B'$ have the same value in $s$ and in
+% $s'$. The proposition then follows by straightforward application of Definition~\ref{def:static:wait-for-graph}.
+%}
+\begin{proof}
 By Definition~\ref{def:static:wait-for-graph}, $\act \ar \B_i \in \wfg{\B}{s}$ iff $s \pj i (\gd{\act}{\B_i}) = \false$.
 Since $s' = s \pj \B'$, we have $s' \pj i = s \pj i$. Hence
 $s \pj i (\gd{\act}{\B_i}) = s' \pj i (\gd{\act}{\B_i})$.
@@ -91,7 +89,7 @@ $s \pj i (\gd{\act}{\B_i}) = s' \pj i (\gd{\act}{\B_i})$.
 By Definition~\ref{def:static:wait-for-graph},
 $\B_i \ar \act \in \wfg{\B'}{s'}$ iff $s' \pj i (\gd{\act}{\B_i}) = \true$.
 Putting the above three equalities together gives us clause (2).
-}
+\end{proof}
 
 In the sequel, we fix a particular subsystem $\dsk{\act}{\l}$, which
 we refer to simply as \DS, with $\act$ and $\l$ being implicit (to
@@ -100,8 +98,7 @@ When $\DS = \dsk{\act}{\l}$, we write $\DS.action = \act$ and
 $\DS.radius = \l$. 
 
 
-
-\bd[Projection of a wait-for graph] \label{defn:projWgraph}
+\begin{definition}[Projection of a wait-for graph] \label{defn:projWgraph}
 $\wfg{B}{s} \pj \DS$ is the wait-for graph whose nodes are the
 components and interactions in $D$, and whose edges are the induced
 edges from $\wfg{B}{s}$, \ie for nodes $v, w$ of $\wfg{B}{s} \pj \DS$,
@@ -109,7 +106,7 @@ $v \ar w$ is an edge in $\wfg{B}{s} \pj \DS$ iff $v \ar w$ is an edge in $\wfg{B
 
 Write $\lwfg{B}{s}{\DS}$ for $\wfg{B}{s} \pj \DS$.
 %$\lwfg{B}{s}{\act,\l} \df \wfg{B}{s} \pj \dsk{\act}{\l}$.
-\ed
+\end{definition}
 
 
 %\input{fixpointLoc}
@@ -120,90 +117,82 @@ Write $\lwfg{B}{s}{\DS}$ for $\wfg{B}{s} \pj \DS$.
 We carry over the defintion of subgraph $\subg$ from \secn{supercycle-fixpoint}, and develop the analogous definitions for an arbitrary subsystem of $\B$.
 
 
-\bd[Set of subgraphs] \label{defn:wsetOfSubgraphsLoc}
+\begin{definition}[Set of subgraphs] \label{defn:wsetOfSubgraphsLoc}
 $\lwfgS{B}{s}{\DS} \df  \set{ W \stt W \subg \lwfg{B}{s}{\DS} }$.
 %$\lwfgS{B}{s}{\act,\l} \df  \set{ W \stt W \subg \lwfg{B}{s}{\act,\l} }$.
-\ed
+\end{definition}
 
-\bd[Wait-for lattice] \label{defn:wflatticeLoc}
+\begin{definition}[Wait-for lattice] \label{defn:wflatticeLoc}
 Define the partially ordered set 
 $\llat{\B}{s}{\DS}  = \tpl{ \lwfgS{B}{s}{\DS}  \subg }$ 
 %$\llat{\B}{s}{\act,\l}  = \tpl{ \lwfgS{B}{s}{\act,\l}  \subg }$ 
 whose elements are all the subgraphs of 
 \lwfgS{B}{s}{\DS}, and where  $U \subg V$ is as in \defn{wsubgraph}.   
 %iff $U$ is a subgraph of $V$, \ie $\ord$ is the ``is a subgraph of'' order relation.
-\ed
+\end{definition}
 
-
-\bp \label{prop:isALatticeLoc}
+\begin{proposition} \label{prop:isALatticeLoc}
 $\llat{\B}{s}{\DS}  = \tpl{ \lwfgS{B}{s}{\DS}  \subg }$
 %$\llat{\B}{s}{\act,\l}  = \tpl{ \lwfgS{B}{s}{\act,\l}  \subg }$
  is a complete boolean lattice, with $\meet$, $\join$, and complementation as in 
 \prop{isALattice}, top element $\lwfgS{B}{s}{\DS}$, and bottom element \ewfg.
-\ep
+\end{proposition}
 
-
-\bd[$\mathit{lblocks}$] \label{defn:blocksLoc}
+\begin{definition}[$\mathit{lblocks}$] \label{defn:blocksLoc}
 %Let $U \subg \lwfgS{B}{s}{\act,\l}$ and $a, B_i$ be nodes in $\wfg{B}{s}$. Then 
 Let $U \subg \lwfgS{B}{s}{\DS}$ and $a, B_i$ be nodes in $\wfg{B}{s}$. Then 
 $\lblocks{a}{U} \df (\ex B_i \in U : a \ar B_i \sub \wfg{B}{s})$ or $a$ is a border interaction, and 
 $\lblocks{B_i}{U} \df (\fa a : B_i \ar a \sub\wfg{B}{s} \imp a \in U)$.
-\ed
+\end{definition}
 
 
-
-\bd \label{defn:scFixL}
+\begin{definition} \label{defn:scFixL}
 %Define $\lSFs:  \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
 Define $\lSFs:  \lwfgS{B}{s}{\DS}  \to  \lwfgS{B}{s}{\DS}$ as follows.
 $\lSF{W}$ is the subgraph with nodes $\set{w \stt \lblocks{w}{W} }$, together with their induced edges.
-\ed
+\end{definition}
 
-
-\bd \label{defn:violFixL}
+\begin{definition} \label{defn:violFixL}
 %Define $\lVFs: \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
 Define $\lVFs: \lwfgS{B}{s}{\DS}  \to  \lwfgS{B}{s}{\DS}$ as follows.
 $\lVF{\US}$ is the subgraph with nodes $\set{w \stt \neg \lblocks{w}{\compl{\US}} }$, together with their induced edges.
-\ed
+\end{definition}
 
-
-\bp \label{prop:monotoneL}
+\begin{proposition} \label{prop:monotoneL}
 $\lSFs$ and $\lVFs$ are monotone. and continuous.
-\ep
+\end{proposition}
 
-
-\bp \label{prop:supercycleLocGFP}
+\begin{proposition} \label{prop:supercycleLocGFP}
 Let $\UU \subg \lwfgS{B}{s}{\DS}$. Then $\UU$ is a supercycle in $\lwfgS{B}{s}{\DS}$ implies that $\UU \subg \lSF{\UU}$.
-\ep
+\end{proposition}
 %
 \begin{proof}
 ....%Since $\SF{\UU} \subg \UU$ by \defn{scFix}, we have $U = \SF{U}$. Hence, ...
 \end{proof}
 
-
-\bp \label{prop:borderLocGFP}
+\begin{proposition} \label{prop:borderLocGFP}
 Let $\UU \subg \lwfgS{B}{s}{\DS}$. If $\UU$ consists entirely of border nodes, then $\UU \subg \lSF{\UU}$.
-\ep
+\end{proposition}
 
-
-\bp \label{prop:locGFP}
+\begin{proposition} \label{prop:locGFP}
 Let $\UU \subg \lwfgS{B}{s}{\DS}$. Then, $\UU$ is a union of supercycles and border nodes iff $\UU \subg \lSF{\UU}$.
-\ep
+\end{proposition}
 
-\bp \label{prop:GFPisLargestLocSC}
+\begin{proposition} \label{prop:GFPisLargestLocSC}
 Let $\UU$ be the greatest fixpoint of $\lSFs$. Then $\UU$ is the union of all border nodes and all supercycles in 
 $\lwfgS{B}{s}{\DS}$.
-\ep
+\end{proposition}
 
-\bp \label{prop:LFPisLocScViolations}
+\begin{proposition} \label{prop:LFPisLocScViolations}
 Let  $\VS= \lfp{\lVFs}$, \ie $\VS$ is the least fixpoint of $\lVFs$. Then $v \in \VS$ iff $v$ is not a border node of 
 $\lwfgS{B}{s}{\DS}$, and $v$ is not a node in any supercycle of $\lwfgS{B}{s}{\DS}$.
 %the nodes of $V$ are exactly the nodes in \wfg{B}{s} that have supercycle violations. 
-\ep
+\end{proposition}
 
-
-\bp \label{prop:computeLocLFP}
+\begin{proposition} \label{prop:computeLocLFP}
 $\lfp{\lVFs} = \JOIN_{d \ge 0} \lVFs^{d} (\ewfg)$.
-\ep
+\end{proposition}
+%
 \begin{proof}
 $\lVFs$ is continuous. Follows by standard results, \eg see the CPO fixpoint theorem I in 
 \cite{DP02}.
@@ -222,13 +211,13 @@ $\lVFs$ is continuous. Follows by standard results, \eg see the CPO fixpoint the
 We define the predicate $\lviol{v}{d}{t}{\act}{\l}$ to hold iff node $v$ in $\wfg{B}{t}$ has a level-$d$ supercycle-violation
 \emph{that can be confirmed within $\dsk{\act}{\l}$}.
 
-\bd[Local supercycle violation, $\locScViol{v}{d}{t_\act}{\act}{\l}$]
+\begin{definition}[Local supercycle violation, $\locScViol{v}{d}{t_\act}{\act}{\l}$]
 \label{def:supercycle.violation.local}
 Let $t_\act$ be a state of $\dsk{\act}{\l}$ and $v$ be a node of $\dsk{\act}{\l}$.
 Define 
 $\scVL{v}{t_\act}{\act}{\l} \df v \in \JOIN_{d \ge 0} \lVFs^{d} (\ewfg)$, and 
 $\lviol{v}{d}{t_\act}{\act}{\l} \df v \in \lVFs^{d} (\ewfg)$.
-\ed
+\end{definition}
 
 
 
@@ -332,21 +321,19 @@ $\lviol{v}{d}{t_\act}{\act}{\l} \df v \in \lVFs^{d} (\ewfg)$.
 
 We now show that a local supercycle-violation implies (global) supercycle-violation.
 
-
-\bp
+\begin{proposition}
 (a) Let $\UU \subg \lwfgS{B}{s}{\DS}$. Then $\lVF{Z} \subg \VF{Z}$.\\
 (b) $\lVFs^{d} (\ewfg) \subg \VFs^{d} (\ewfg)$.
-\ep
+\end{proposition}
 
-
-\bp
+\begin{proposition}
 \label{prop:locScViol-implies-scViol}
  \label{prop:lviol-implies-viol}
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
 For all interactions $\act \in \gamma$, and $\l \ge 1$, let $t_\act = t \pj \dsk{\act}{\l}$.
 Then\\
 \ind $\fa d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l} \imp \scViol{v}{d}{t}$.
-\ep
+\end{proposition}
 
 
 

@@ -13,7 +13,7 @@ Each implication arrow is labeled by the Lemma that provides the corresponding r
 
 We can use the four conditions together: if, for each interaction, we verify one of the conditions, then we can infer deadlock-freedom, \ie combining the conditions in this manner is still sound \wrt deadlock-freedom.
 
-\bt[Deadlock-freedom via \GAO, \GLin, \LAO, \LLin]
+\begin{theorem}[Deadlock-freedom via \GAO, \GLin, \LAO, \LLin]
 \label{theorem:local.deadlock-free}
 Assume that
 \bn
@@ -31,24 +31,27 @@ Assume that
 \en
 Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free, and so 
 $(\B, Q_0)$ is free of local and global deadlock.
-\et
-\prf{Immediate from
+\end{theorem}
+%
+\begin{proof}
+Immediate from
 Theorems~\ref{thm:GAO.SC-free-preserving}, \ref{thm:GLin.SC-free-preserving}, \ref{thm:LAO.SC-free-preserving}, \ref{thm:LLin.SC-free-preserving}
-and Corollary~\ref{cor:SC-free-preserving.deadlock-free}.}
+and Corollary~\ref{cor:SC-free-preserving.deadlock-free}.
+\end{proof}
 
 
 
 
 Finally, we establish that \GAO is complete \wrt deadlock-freedom: any system that is free of local and global deadlock will satisfy \GAO.
 
-\bt[Completeness of \GAO \wrt Deadlock-freedom]
+\begin{theorem}[Completeness of \GAO \wrt Deadlock-freedom]
 \label{theorem:gao-is-complete}
 Assume that $(\B,Q_0)$ is free from local and global deadlock. 
 Then,  for all interactions $\act$ of $\B$ (\ie $\act \in \gamma$), 
 $\GAO(\B,Q_0,\act)$ holds.
-\et
+\end{theorem}
 %
-\prf{
+\begin{proof}
 Let $\act$ be an arbitrary interaction in $\gamma$, and let 
 $s \goesto[\act] t$ be a reachable transition of $(\B, Q_0)$.
 Hence $t$ is a reachable state of $(\B,Q_0)$.
@@ -68,4 +71,4 @@ $\wfg{\B}{t}$, we have $(\fas \B_i \in \comps{\act}, \formViol{\B_i}{t})$.
 By Definition~\ref{defn:global.ANDOR-cond}, $\GAO(\B, Q_0, \act)$ holds.
 Since $\act$ is an arbitrary interaction in $\gamma$, we have
 $(\fas \act \in \gamma: \GAO(\B,Q_0,\act))$, and the theorem is established.
-}
+\end{proof}
