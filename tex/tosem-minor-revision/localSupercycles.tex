@@ -1,13 +1,396 @@
 
    \label{s:local.preamble}
-   \input{locPreamble}
+%   \input{locPreamble}
 
-   \subsection{Projection onto Subsystems}
-   \label{s:projection}
-   \input{projection}
+Evaluating the global restrictions $\GAO(B,Q_0,\act)$, $\GLin(B,Q_0,\act)$ requires checking all reachable transitions of
+$(\B, Q_0)$, which is, in general, subject to state-explosion.
+We need restrictions which imply a global restriction, 
+and which can be checked efficiently.
+%
+To this end, we first develop some terminology, and a projection result, for relating the waiting-behavior in a
+subsystem of $(B,Q_0)$ to that in $(B,Q_0)$ overall.
 
 
-   \subsection{Fixpoint characterization of local supercycles}
-   \label{s:local.fixpoint}
-   \input{fixpointLoc}
+
+\subsection{Projection onto Subsystems}
+\label{s:projection}
+
+%\input{projection}
+
+% \bd[Structure Graph $\sg{\B}$, $\ssg{i}{\l}$, $\ssg{\act}{\l}$] \label{def:structure-graph} The structure
+% graph $\sg{\B}$ of composite component $B = \gamma(\B_1,\dots,\B_n)$ is a
+% bipartite graph whose nodes are the $\B_1, \ldots, \B_n$ and all the
+% $\act \in \gamma$.  There is an edge between $\B_i$ and
+% interaction $\act$ iff $\B_i$ participates in $\act$, \ie $\B_i \in \cmps{\act}$.  Define the
+% \emph{distance} between two nodes to be the number of edges in a shortest path
+% between them.  Let $\ssg{i}{\l}$ ($\ssg{\act}{\l}$ respectively) be the subgraph
+% of $\sg{\B}$ that contains $\B_i$ ($\act$ respectively) and all nodes of $\sg{\B}$
+% that have a distance to $\B_i$ ($\act$ respectively) less than or equal to $\l$.
+% %Let $\ssg{a}{k}$ be the union of $\ssg{i}{k}$ for all $\B_i \in \cmps{\act}$. 
+% \ed
+
+
+
+\bd[Structure Graph $\sg{\B}$, $\ssg{\act}{\l}$] \label{def:structure-graph} The structure
+graph $\sg{\B}$ of composite component $B = \gamma(\B_1,\dots,\B_n)$ is a
+bipartite graph whose nodes are the $\B_1, \ldots, \B_n$ and all the
+$\act \in \gamma$.  There is an edge between $\B_i$ and
+interaction $\act$ iff $\B_i$ participates in $\act$, \ie $\B_i \in \cmps{\act}$.  Define the
+\emph{distance} between two nodes to be the number of edges in a shortest path
+between them.  Let $\ssg{\act}{\l}$ be the subgraph
+of $\sg{\B}$ that contains $\act$ and all nodes of $\sg{\B}$
+that have a distance to $\act$ less than or equal to $\l$.
+\ed
+
+
+
+\bd[Deadlock-checking subsystem, $\dsk{\act}{\l}$] \label{def:dsk}
+Define $\dsk{\act}{\l}$, the \emph{deadlock-checking subsystem for interaction $\act$ and
+depth $\l$}, to be the subsystem of $(\B, Q_0)$ based on the set of
+components in $\ssg{\act}{2\l}$.  % PREVIOUSLY: $\ssg{\act}{\l+2}$.
+\ed
+
+\bd[Border node, interior node of $\dsk{\act}{\l}$]  \label{def:dsk.border-and internal}
+A node $v$ of $\dsk{\act}{\l}$ is a \emph{border-node} iff it has an
+edge in $\sg{\B}$ to a node outside of $\dsk{\act}{\l}$.
+If node $v$ of $\dsk{\act}{\l}$ is not a border node, then it is an \emph{internal node}.
+\ed
+Note that all border nodes of  $\dsk{\act}{\l}$ are interactions,
+since $2\l$ is even. Hence all component nodes of $\dsk{\act}{\l}$ are
+interior nodes.
+% TBD: EXPLAIN WHY....
+
+
+
+\bp[Wait-for-edge projection] \label{prop:edge-projection}
+%Let $(B, Q_0)$ be a BIP system, and 
+Let $(\B', Q'_0)$ be a subsystem of
+$(\B, Q_0)$. Let $s$ be a state of $(\B, Q_0)$, and $s' = s \pj \B'$.
+Let $a$ be an interaction of $(\B', Q'_0)$, and $\B_i \in \cmps{\act}$ an atomic component of $\B'$.
+Then 
+(1) $\act \ar \B_i \in \wfg{\B}{s}$ iff $\act \ar \B_i \in \wfg{\B'}{s'}$, and
+(2) $\B_i \ar \act \in \wfg{\B}{s}$ iff $\B_i \ar \act \in \wfg{\B'}{s'}$.
+\ep
+\prfs{
+Since $s' = s \pj \B'$, all port enablement conditions of components in $\B'$ have the same value in $s$ and in
+$s'$. The proposition then follows by straightforward application of Definition~\ref{def:static:wait-for-graph}.
+}
+\prf{
+By Definition~\ref{def:static:wait-for-graph}, $\act \ar \B_i \in \wfg{\B}{s}$ iff $s \pj i (\gd{\act}{\B_i}) = \false$.
+Since $s' = s \pj \B'$, we have $s' \pj i = s \pj i$. Hence
+$s \pj i (\gd{\act}{\B_i}) = s' \pj i (\gd{\act}{\B_i})$.
+By Definition~\ref{def:static:wait-for-graph}, 
+$a \ar \B_i \in \wfg{\B'}{s'}$ iff $s' \pj i (\gd{\act}{\B_i}) = \false$.
+Putting together these three equalities gives us clause (1).
+
+By Definition~\ref{def:static:wait-for-graph},
+$\B_i \ar \act \in \wfg{\B}{s}$ iff 
+$s \pj i (\gd{\act}{\B_i}) = \true$.
+Since $s' = s \pj \B'$, we have $s' \pj i = s \pj i$. Hence
+$s \pj i (\gd{\act}{\B_i}) = s' \pj i (\gd{\act}{\B_i})$.
+By Definition~\ref{def:static:wait-for-graph},
+$\B_i \ar \act \in \wfg{\B'}{s'}$ iff $s' \pj i (\gd{\act}{\B_i}) = \true$.
+Putting the above three equalities together gives us clause (2).
+}
+
+In the sequel, we fix a particular subsystem $\dsk{\act}{\l}$, which
+we refer to simply as \DS, with $\act$ and $\l$ being implicit (to
+avoid notational clutter with double-sub/superscripts). 
+When $\DS = \dsk{\act}{\l}$, we write $\DS.action = \act$ and
+$\DS.radius = \l$. 
+
+
+
+\bd[Projection of a wait-for graph] \label{defn:projWgraph}
+$\wfg{B}{s} \pj \DS$ is the wait-for graph whose nodes are the
+components and interactions in $D$, and whose edges are the induced
+edges from $\wfg{B}{s}$, \ie for nodes $v, w$ of $\wfg{B}{s} \pj \DS$,
+$v \ar w$ is an edge in $\wfg{B}{s} \pj \DS$ iff $v \ar w$ is an edge in $\wfg{B}{s}$.
+
+Write $\lwfg{B}{s}{\DS}$ for $\wfg{B}{s} \pj \DS$.
+%$\lwfg{B}{s}{\act,\l} \df \wfg{B}{s} \pj \dsk{\act}{\l}$.
+\ed
+
+
+%\input{fixpointLoc}
+\subsection{Fixpoint characterization of  supercycles in a  subsystem}
+
+\label{s:local.fixpoint}
+
+We carry over the defintion of subgraph $\subg$ from \secn{supercycle-fixpoint}, and develop the analogous definitions for an arbitrary subsystem of $\B$.
+
+
+\bd[Set of subgraphs] \label{defn:wsetOfSubgraphsLoc}
+$\lwfgS{B}{s}{\DS} \df  \set{ W \stt W \subg \lwfg{B}{s}{\DS} }$.
+%$\lwfgS{B}{s}{\act,\l} \df  \set{ W \stt W \subg \lwfg{B}{s}{\act,\l} }$.
+\ed
+
+\bd[Wait-for lattice] \label{defn:wflatticeLoc}
+Define the partially ordered set 
+$\llat{\B}{s}{\DS}  = \tpl{ \lwfgS{B}{s}{\DS}  \subg }$ 
+%$\llat{\B}{s}{\act,\l}  = \tpl{ \lwfgS{B}{s}{\act,\l}  \subg }$ 
+whose elements are all the subgraphs of 
+\lwfgS{B}{s}{\DS}, and where  $U \subg V$ is as in \defn{wsubgraph}.   
+%iff $U$ is a subgraph of $V$, \ie $\ord$ is the ``is a subgraph of'' order relation.
+\ed
+
+
+\bp \label{prop:isALatticeLoc}
+$\llat{\B}{s}{\DS}  = \tpl{ \lwfgS{B}{s}{\DS}  \subg }$
+%$\llat{\B}{s}{\act,\l}  = \tpl{ \lwfgS{B}{s}{\act,\l}  \subg }$
+ is a complete boolean lattice, with $\meet$, $\join$, and complementation as in 
+\prop{isALattice}, top element $\lwfgS{B}{s}{\DS}$, and bottom element \ewfg.
+\ep
+
+
+\bd[$\mathit{lblocks}$] \label{defn:blocksLoc}
+%Let $U \subg \lwfgS{B}{s}{\act,\l}$ and $a, B_i$ be nodes in $\wfg{B}{s}$. Then 
+Let $U \subg \lwfgS{B}{s}{\DS}$ and $a, B_i$ be nodes in $\wfg{B}{s}$. Then 
+$\lblocks{a}{U} \df (\ex B_i \in U : a \ar B_i \sub \wfg{B}{s})$ or $a$ is a border interaction, and 
+$\lblocks{B_i}{U} \df (\fa a : B_i \ar a \sub\wfg{B}{s} \imp a \in U)$.
+\ed
+
+
+
+\bd \label{defn:scFixL}
+%Define $\lSFs:  \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
+Define $\lSFs:  \lwfgS{B}{s}{\DS}  \to  \lwfgS{B}{s}{\DS}$ as follows.
+$\lSF{W}$ is the subgraph with nodes $\set{w \stt \lblocks{w}{W} }$, together with their induced edges.
+\ed
+
+
+\bd \label{defn:violFixL}
+%Define $\lVFs: \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
+Define $\lVFs: \lwfgS{B}{s}{\DS}  \to  \lwfgS{B}{s}{\DS}$ as follows.
+$\lVF{\US}$ is the subgraph with nodes $\set{w \stt \neg \lblocks{w}{\compl{\US}} }$, together with their induced edges.
+\ed
+
+
+\bp \label{prop:monotoneL}
+$\lSFs$ and $\lVFs$ are monotone. and continuous.
+\ep
+
+
+\bp \label{prop:supercycleLocGFP}
+Let $\UU \subg \lwfgS{B}{s}{\DS}$. Then $\UU$ is a supercycle in $\lwfgS{B}{s}{\DS}$ implies that $\UU \subg \lSF{\UU}$.
+\ep
+%
+\begin{proof}
+....%Since $\SF{\UU} \subg \UU$ by \defn{scFix}, we have $U = \SF{U}$. Hence, ...
+\end{proof}
+
+
+\bp \label{prop:borderLocGFP}
+Let $\UU \subg \lwfgS{B}{s}{\DS}$. If $\UU$ consists entirely of border nodes, then $\UU \subg \lSF{\UU}$.
+\ep
+
+
+\bp \label{prop:locGFP}
+Let $\UU \subg \lwfgS{B}{s}{\DS}$. Then, $\UU$ is a union of supercycles and border nodes iff $\UU \subg \lSF{\UU}$.
+\ep
+
+\bp \label{prop:GFPisLargestLocSC}
+Let $\UU$ be the greatest fixpoint of $\lSFs$. Then $\UU$ is the union of all border nodes and all supercycles in 
+$\lwfgS{B}{s}{\DS}$.
+\ep
+
+\bp \label{prop:LFPisLocScViolations}
+Let  $\VS= \lfp{\lVFs}$, \ie $\VS$ is the least fixpoint of $\lVFs$. Then $v \in \VS$ iff $v$ is not a border node of 
+$\lwfgS{B}{s}{\DS}$, and $v$ is not a node in any supercycle of $\lwfgS{B}{s}{\DS}$.
+%the nodes of $V$ are exactly the nodes in \wfg{B}{s} that have supercycle violations. 
+\ep
+
+
+\bp \label{prop:computeLocLFP}
+$\lfp{\lVFs} = \JOIN_{d \ge 0} \lVFs^{d} (\ewfg)$.
+\ep
+\begin{proof}
+$\lVFs$ is continuous. Follows by standard results, \eg see the CPO fixpoint theorem I in 
+\cite{DP02}.
+\end{proof}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+We define the predicate $\lviol{v}{d}{t}{\act}{\l}$ to hold iff node $v$ in $\wfg{B}{t}$ has a level-$d$ supercycle-violation
+\emph{that can be confirmed within $\dsk{\act}{\l}$}.
+
+\bd[Local supercycle violation, $\locScViol{v}{d}{t_\act}{\act}{\l}$]
+\label{def:supercycle.violation.local}
+Let $t_\act$ be a state of $\dsk{\act}{\l}$ and $v$ be a node of $\dsk{\act}{\l}$.
+Define 
+$\scVL{v}{t_\act}{\act}{\l} \df v \in \JOIN_{d \ge 0} \lVFs^{d} (\ewfg)$, and 
+$\lviol{v}{d}{t_\act}{\act}{\l} \df v \in \lVFs^{d} (\ewfg)$.
+\ed
+
+
+
+
+%%% REMOVED DUE TO FIXPOINT CHARACTERIZATION
+% We define $\lviol{v}{d}{t_\act}{\act}{\l}$ by induction on $d$, as follows.
+
+% \noindent
+% \ul{Base case, $d=1$.} $\lviol{v}{1}{t_\act}{\act}{\l}$  iff
+% $v$ is an interaction $\actp$ and 
+% $\actp$ is an interior node of $\dsk{\act}{\l}$ that has no outgoing wait-for edges in $\wfg{\dsk{\act}{\l}}{t_\act}$.
+% Otherwise $\neg \lviol{v}{1}{t_\act}{\act}{\l}$. 
+
+% \noindent
+% \ul{Inductive step, $d > 1$.} $\lviol{v}{d}{t_\act}{\act}{\l}$ iff either of the following two cases hold. Otherwise $\neg \lviol{v}{d}{t_\act}{\act}{\l}$.
+
+% \bn
+
+% \item \ul{$v$ is a component $\B_i$} and there exists an interaction $\actp$ such that $B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act}$ and 
+%     $(\ex d': 1 \le d' < d : \lviol{\actp}{d'}{t_\act}{\act}{\l})$.
+%     That is, $\B_i$ enables an interaction $\actp$ which has a level-$d'$ supercycle-violation in $\dsk{\act}{\l}$, for some $d' < d$. 
+% %    It does not matter whether $\B_i$ is border or interior. COMPONENTS ARE ALWAYS INTERIOR NOW
+
+
+% \item \ul{$v$ is an interaction $\actp$ and an internal node of $\dsk{\act}{\l}$} and
+%     for all components $\B_i$ such that $\actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act}$, we have 
+%     $(\ex d' : 1 \le d' < d : \lviol{\B_i}{d'}{t_\act}{\act}{\l})$.
+%     That is, each component $\B_i$ that $\actp$ waits for has a level-$d'$ supercycle-violation in $\dsk{\act}{\l}$, for some $d' < d$
+
+% \en
+% \ed
+% %
+% Note that if $v$ is an interaction $\actp$ and a border node, then
+% $\lviol{\actp}{d}{t_\act}{\act}{\l}$ is false, for all $d$.  This is because $\actp$ has some
+% component that is outside $\dsk{\act}{\l}$, and so this component cannot be checked.  A component
+% cannot have a level-1 supercycle-violation since it must
+% have at least one outgoing wait-for edge at all times.
+% %
+% Figure~\ref{fig:scViolateLoc} gives a formal, recursive definition of $\lviol{v}{d}{t_\act}{\act}{\l}$.
+% The notation $v = \B_i$ means that $v$ is some component $\B_i$. Likewise, 
+% $v = \actp$ means that $v$ is some interaction $\act$, and 
+% ``$v = \actp$ is interior'' means that  $v$ is an interaction $\act$ and also an internal node.
+% Line 0 corresponds to the base case, line 1 corresponds to item 1 of the inductive case, and line 2 corresponds to item 2 of the inductive case.
+% Line 3 handles all cases that do not return true.
+
+% \begin{figure}[ht]
+% \setcounter{lctr}{-1}
+% \begin{tabbing}
+% aa\= aa\= aa\= mm\= mm\=\kill
+% $\lviol{v}{d}{t_\act}{\act}{\l}$\\
+% \cmnt\ Precondition: $v$ is a node of $\dsk{\act}{\l}$ and $d \ge 1$\\
+% \lio{\IFC{d = 1 \land \mbox{$v = \actp$ is interior} \land \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act})}  \ \RETURNE{\ttt};}
+% %\cmnt\ here $d > 1$\\
+% \lio{\IFC{\mbox{$v = \actp $ is interior} \land (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} : (\ex d' : 1 \le d' < d : \lviol{\B_i}{d'}{t_\act}{\act}{\l}))}}
+%     \>\>{\RETURNE{\ttt};}\\ 
+% \lio{\IFC{\mbox{$v = \B_i$} \land (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : (\ex d' : 1 \le d' < d :\lviol{\actp}{d'}{t_\act}{\act}{\l}))}  \ \RETURNE{\ttt};}
+% \lio{\RETURNE{\fff}}
+% \end{tabbing}
+% \vspace{-6ex}
+% \caption{Formal definition of $\lviol{v}{d}{t_\act}{\act}{\l}$.}
+% \label{fig:scViolateLoc}
+% \end{figure}
+
+
+
+
+
+% \begin{figure}[ht]
+% \setcounter{lctr}{0}
+% \begin{tabbing}
+% mm\= mm\= mm\= mm\= mm\=\kill
+% $\lviol{v}{d}{t_\act}{\act}{\l}$\\
+% \cmnt\ Precondition: $v$ is a node of $\dsk{\act}{\l}$ and $d \ge 1$\\
+
+% \lio{\IFC{d = 1}}
+%        \lit{\IFC{\mbox{$v$ is an interior interaction $\actp$ and }
+%               \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act})}}
+%                     \lihc{\RETURNE{\ttt}}{\cmnt no outgoing wait-for-edges}
+%        \lit{\ELSE\ \RETURNE{\fff}}
+%        \lit{\FI}
+% \lio{\FI}
+
+% \cmnt\ here $d > 1$\\
+
+% \lio{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
+%                  (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} : \lviol{\B_i}{d-1}{t_\act}{\act}{\l})}}
+%         \lit{\RETURNE{\ttt}}
+
+% \lio{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
+%             (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : \lviol{\actp}{d-1}{t_\act}{\act}{\l})}}
+%       \lit{\RETURNE{\ttt}}
+
+% \lio{\ELSE\ \RETURNE{\fff}}
+% \lio{\FI}
+% \end{tabbing}
+% \caption{Formal definition of $\lviol{v}{d}{t_\act}{\act}{\l}$.}
+% \label{fig:scViolateLoc}
+% %\label{alg:check-scViol}
+% \end{figure}
+
+
+We now show that a local supercycle-violation implies (global) supercycle-violation.
+
+
+\bp
+(a) Let $\UU \subg \lwfgS{B}{s}{\DS}$. Then $\lVF{Z} \subg \VF{Z}$.\\
+(b) $\lVFs^{d} (\ewfg) \subg \VFs^{d} (\ewfg)$.
+\ep
+
+
+\bp
+\label{prop:locScViol-implies-scViol}
+ \label{prop:lviol-implies-viol}
+Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
+For all interactions $\act \in \gamma$, and $\l \ge 1$, let $t_\act = t \pj \dsk{\act}{\l}$.
+Then\\
+\ind $\fa d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l} \imp \scViol{v}{d}{t}$.
+\ep
+
+
+
+% \prf{
+% Proof is by induction on $d$. 
+
+% \noindent
+% \ul{Base case, $d=1$.} Assume $\lviol{v}{1}{t_\act}{\act}{\l}$ for some node $v$. Then, by 
+% Figure~\ref{fig:scViolateLoc}, 
+% $v$ is an interior node and an interaction $\actp$ of
+% $\dsk{\act}{\l}$, and has no outgoing 
+% wait-for edges. Therefore, in $\wfg{\B}{t}$, it is still the case that $v$ has no outgoing 
+% wait-for edges. Hence $\viol{v}{1}{t}$ holds.
+
+
+% \noindent
+% \ul{Inductive step, $d > 1$.}
+% Assume $\lviol{v}{d}{t_\act}{\act}{\l}$ for some node $v$ and some $d > 1$. 
+% We proceed by cases on Figure~\ref{fig:scViolateLoc}.
+
+% \bn
+
+% \item \ul{$v$ is an interior interaction $\actp$ and} \\
+% \ul{$(\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} : (\ex d' : 1 \le d' < d : \lviol{\B_i}{d'}{t_\act}{\act}{\l}))$}.
+
+% Choose an arbitrary $\B_i$ such that $\actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act}$.
+% By the induction hypothesis applied to $\lviol{\B_i}{d'}{t_\act}{\act}{\l}$, we have $\viol{\B_i}{d'}{t}$ for some $d' < d$.
+% Since $\wfg{\dsk{\act}{\l}}{t_\act} \sub \wfg{\B}{t}$ by construction, we have 
+% $\actp \ar B_i \in \wfg{\B}{t}$ and $\viol{\B_i}{d'}{t}$.
+% Hence by Definition~\ref{def:supercycle-violation}, Clause~\ref{def:supercycle.violation.component.out}, 
+% we have $\viol{v}{d}{t}$.
+
+
+% \item \ul{$v$ is a component $\B_i$ and}\\
+% \ul{$(\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : (\ex d' : 1 \le d' < d :\lviol{\actp}{d'}{t_\act}{\act}{\l}))$}.
+
+% By the induction hypothesis applied to $\lviol{\actp}{d'}{t_\act}{\act}{\l}$, we have $\viol{\actp}{d'}{t}$ for some $d' < d$.
+% Since $\wfg{\dsk{\act}{\l}}{t_\act} \sub \wfg{\B}{t}$ by construction, we have 
+% $\B_i \ar \actp \in \wfg{\B}{t}$ and $\viol{\actp}{d'}{t}$.
+% Hence by Definition~\ref{def:supercycle-violation}, Clause~\ref{def:supercycle.violation.component.out}, 
+% we have $\viol{v}{d}{t}$.
+
+% \en
+% }
+
+
 

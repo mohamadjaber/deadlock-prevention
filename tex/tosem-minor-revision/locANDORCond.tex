@@ -15,9 +15,7 @@ $\connViol{v}{t}$, we project onto a subsystem.
 
 
 
-\subsubsection{Local supercycle violation condition}
-
-
+%\subsubsection{Local supercycle violation condition}
 
 
 
@@ -82,7 +80,8 @@ supercycle $SSC$ such that $v \in SSC$ and $SSC \sub \wfg{B}{t}$. Then, there ar
 %
 \bn
 \item $SSC \sub \wfg{\dsk{a}{\l}}{t_\act}$: let $x$ be any node in $SSC$. Since $x$ is a node in a supercycle, we have by
-  Proposition~\ref{prop:scViol-implies-notInSC}, that $\neg (\ex d \ge 1: \scViol{x}{d}{t})$. Hence 
+%OLD  Proposition~\ref{prop:scViol-implies-notInSC}, that $\neg (\ex d \ge  1: \scViol{x}{d}{t})$. Hence 
+  \defn{supercycle.membership} and \prop{scViol-iff-notInSC}, that $\neg (\ex d \ge 1: \scViol{x}{d}{t})$. Hence 
   $(\fa d \ge 1: \neg \scViol{x}{d}{t})$. Hence by Proposition~\ref{prop:locScViol-implies-scViol}, 
   we have $(\fa d \ge 1: \neg \locScViol{x}{d}{t_\act}{\act}{\l})$. Let $L, WL$ be as given in Definition~\ref{def:sConn.violation.loc}.
   Then $x \in L$, and since $x$ is an arbitrary node of $SSC$, we have $SSC \sub WL$. 

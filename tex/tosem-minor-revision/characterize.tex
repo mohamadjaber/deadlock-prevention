@@ -1,7 +1,7 @@
 %\section{Deadlock-freedom}
 
 
-\bd[Global Deadlock-freedom]
+\begin{definition}[Global Deadlock-freedom]
 \label{def:static:deadlock-free}
 \label{def:global.deadlock-free} 
 \label{defn:static:deadlock-free}
@@ -12,10 +12,10 @@ Formally, $\fa s \in \rstates{\B,Q_0}, \ex \act : s \enb{\act}{\B}$.
 %% A BIP-system $(\B, Q_0)$ is \emph{global deadlock prone} iff there exists a reachable state
 %% $s$ of $(\B, Q_0)$ in which no interaction $a$ is enabled.
 %% A BIP-system $(\B, Q_0)$ is \emph{free of global deadlock} iff it is not global deadlock prone.
-\ed
+\end{definition}
 
 
-\bd[Local Deadlock-freedom]
+\begin{definition}[Local Deadlock-freedom]
 \label{def:local.deadlock-free} 
 \label{defn:local.deadlock-free} 
 A BIP-system $(\B, Q_0)$ is \emph{free of local deadlock} iff, 
@@ -26,7 +26,7 @@ Formally:\\
 \ind \ind $\fa s \in \rstates{\B,Q_0},  \ex \act : s \pj \B' \enb{\act}{\B'}$.
 %A BIP-system $(\B, Q_0)$ is \emph{local deadlock prone}  iff there exists a subsystem $(\B', Q'_0)$ of  $(\B, Q_0)$
 %and a reachable state $s$ of $(\B, Q_0)$ such that $(\B', Q'_0)$ has no interaction enabled in state $s \pj \B'$.
-\ed
+\end{definition}
 
 
 Proposition~\ref{prop:static:supercycle-is-sufficient} states that the
@@ -53,7 +53,7 @@ and from an interaction $a$ to all the components that participate in
 $a$ and which do not enable it (in $s$).
 
 
-\bd[Wait-for-graph  $\wfg{\B}{s}$]
+\begin{definition}[Wait-for-graph  $\wfg{\B}{s}$]
 \label{def:static:wait-for-graph} 
 \label{defn:static:wait-for-graph} 
 Let $\B = \gamma(\B_1,\dots,\B_n)$ be a BIP composite component, and let
@@ -80,7 +80,7 @@ The {\em wait-for-graph} $\wfg{\B}{s}$ of $s$ is a directed bipartite and-or gra
    $\B_i$ which participates in $\act$ but does not enable it, in state $s_i$.
                   
 \end{nlst1}
-\ed
+\end{definition}
 
 A component $\B_i$ is an and-node since all of its successor actions (or-nodes) must be disabled for
 $\B_i$ to be incapable of executing.  An interaction $\act$ is an or-node since it is disabled if
@@ -92,12 +92,12 @@ wait-for-edge (wait-for-path).
 %causes a deadlock by disabling every interaction that it participates in.
 
 
-\bd[Subgraph of a wait-for graph] \label{defn:wsubgraph}
+\begin{definition}[Subgraph of a wait-for graph] \label{defn:wsubgraph}
 $\US$ is a subgraph of $\wfg{\B}{s}$ iff the nodes of $\US$ are a subset of the nodes of $\wfg{\B}{s}$ and the edges of $\US$ are the induced edges from 
 $\wfg{\B}{s}$, \ie if $u,v$ are nodes of $\US$ and $u \ar v$ is en edge of $\wfg{\B}{s}$, then $u \ar v$ is en edge of $\US$.
 Write $\US \subg \wfg{\B}{s}$ when $\US$ is a subgraph of $\wfg{\B}{s}$, and extend the definition of $\subg$ to subgraphs of $\wfg{\B}{s}$ in the obvious
 manner, so that $\US \subg \VS$ means that $\US$ is a subgraph of $\VS$.
-\ed
+\end{definition}
 
 Write $\act \ar \B_i$ ($\B_i \ar \act$ respectively) for a
 wait-for-edge from $\act$ to $\B_i$ ($\B_i$ to $\act$ respectively).  We abuse notation by writing
@@ -140,14 +140,14 @@ that is not $\B_i$-incident, for every $\B_i \in \cmps{\act}$. Then $e \in
 \wfg{\B}{s}$ iff $e \in \wfg{\B}{t}$. 
 \ep
 %
-\prfs{
-Components not involved in the execution of $\act$ do not change state
-along $s \la{\act} t$. Hence the endpoint of $e$ that is a
-component has the same state in $s$ as in $t$. The proposition then
-follows from Definition~\ref{def:static:wait-for-graph}. 
-}
+% \prfs{
+% Components not involved in the execution of $\act$ do not change state
+% along $s \la{\act} t$. Hence the endpoint of $e$ that is a
+% component has the same state in $s$ as in $t$. The proposition then
+% follows from Definition~\ref{def:static:wait-for-graph}. 
+% }
 %
-\prf{
+\begin{proof}
 Fix $e$ to be an arbitrary wait-for-edge that is not
 $\B_i$-incident. $e$ is either $\B_j \ar b$ or $b \ar \B_j$, for some
 component $\B_j$ of $B$ that is not in $\cmps{\act}$, and an interaction $b$
@@ -156,7 +156,7 @@ component $\B_j$ of $B$ that is not in $\cmps{\act}$, and an interaction $b$
 Now $s \pj \B_j = t \pj \B_j$, since $s \la{\act} t$ and $\B_j \not\in \cmps{\act}$. Hence $s(\gd{b}{j}) =
 t(\gd{b}{j})$. It follows from Definition~\ref{def:static:wait-for-graph} that 
 $e \in \wfg{\B}{s}$ iff $e \in \wfg{\B}{t}$.
-}
+\end{proof}
 
 
 
@@ -166,7 +166,7 @@ $e \in \wfg{\B}{s}$ iff $e \in \wfg{\B}{t}$.
 We characterize a deadlock as the existence in the wait-for-graph of a
 graph-theoretic construct that we call a {\em supercycle}.
 
-\bd[Supercycle]
+\begin{definition}[Supercycle]
 \label{def:supercycle} 
 \label{defn:supercycle} 
 Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component and $s$ be a state of $\B$.
@@ -194,12 +194,12 @@ if $\act$ is a node in $\SC$, then there exists a $\B_j$ such that:
 that is, $\act \in \SC$ implies $\ex \B_j : \act \ar \B_j \in \wfg{\B}{s} \land \act \ar \B_j \in \SC$,
 
 \end{nlst1}
-\ed
+\end{definition}
 %where $\act \in SC$ means that $\act$ is a node in $\SC$, etc. 
 %Also, write $SC \sub \wfg{\B}{s}$ when $\SC$ is a subgraph of $\wfg{\B}{s}$.
 
 
-\bd[Supercycle-free]
+\begin{definition}[Supercycle-free]
 \label{def:supercycle-free}
 \label{defn:supercycle-free}
 $\wfg{\B}{s}$ is \emph{supercycle-free} iff 
@@ -207,7 +207,7 @@ there does not exist a supercycle $\SC$ in $\wfg{\B}{s}$.
 In this case, say that state $s$ is supercycle-free.
 %Formally, we define the predicate 
 %    $\scf{B}{s} \df \neg \ex \SC: \SC \sub \wfg{\B}{s} \ \mbox{and $\SC$ is a supercycle}$. 
-\ed
+\end{definition}
 
 \begin{figure*}[ht]
   \begin{center}
@@ -269,18 +269,18 @@ If $\SC \sub \wfg{\B}{s}$ is a supercycle, then all components $\B_i$ in $\SC$ c
 from $s$, including $s$ itself.
 \ep
 %\begin{proof}
-\prfs{Every interaction $\act$ that $\B_i$ enables is not enabled by some
-participant. By Definition~\ref{def.bip.enablement}, $\act$ cannot be
-executed. Hence $\B_i$ cannot execute any transition.
-}
+% \prfs{Every interaction $\act$ that $\B_i$ enables is not enabled by some
+% participant. By Definition~\ref{def.bip.enablement}, $\act$ cannot be
+% executed. Hence $\B_i$ cannot execute any transition.
+% }
 %
-\prf{
+\begin{proof}
 Let $\B_i$ be an arbitrary component in $SC$. By Definition~\ref{def:supercycle}, every interaction that $\B_i$ enables
 has a wait-for-edge to some other component $\B_j$ in $\SC$ and so cannot be executed in state $s$. Hence in any
 transition from $s$ to another global state $t$, all of the components $\B_i$ in $\SC$ remain in the same local state. 
 Hence $\SC \sub \wfg{\B}{t}$, \ie the same supercycle $\SC$ remains in global state $t$. Repeating this argument from state $t$
 and onwards leads us to conclude that $\SC \sub \wfg{\B}{u}$ for any state $u$ reachable from $s$.
-}%\end{proof}
+\end{proof}
 
 Proposition~\ref{prop:static:supercycle-is-necessary} states that the
 existence of a supercycle is necessary for a local deadlock to occur:
@@ -297,14 +297,16 @@ when considered in isolation, has no enabled interaction in state $s \pj \B'$.
 %
 Then, $\wfg{\B}{s}$ contains a supercycle.
 \ep
-\prfs{Every atomic component $\B_i$ in $\B'$ is individually deadlock free, by assumption, 
-and so there is at least one interaction $a_i$ which
-$\B_i$ enables. Now $a_i$ is not enabled in $\B'$, by the antecedent of the proposition. Hence $a_i$ has some
-outgoing wait-for-edge in $\wfg{\B}{s}$. The subgraph of $\wfg{\B}{s}$ induced by all
-the $\B_i$ and all their (locally) enabled interactions is therefore a supercycle.
-}
 %
-\prf{Let $\B_i$ be an arbitrary atomic component in $\B'$, and let $\act_i$ be any interaction that $\B_i$ enables. Since $\B'$ has no
+% \prfs{Every atomic component $\B_i$ in $\B'$ is individually deadlock free, by assumption, 
+% and so there is at least one interaction $a_i$ which
+% $\B_i$ enables. Now $a_i$ is not enabled in $\B'$, by the antecedent of the proposition. Hence $a_i$ has some
+% outgoing wait-for-edge in $\wfg{\B}{s}$. The subgraph of $\wfg{\B}{s}$ induced by all
+% the $\B_i$ and all their (locally) enabled interactions is therefore a supercycle.
+% }
+%
+\begin{proof}
+Let $\B_i$ be an arbitrary atomic component in $\B'$, and let $\act_i$ be any interaction that $\B_i$ enables. Since $\B'$ has no
 enabled interaction, it follows that $\act_i$ is not enabled in $\B'$, and
 therefore has a wait-for-edge to some atomic component $\B_j$ in
 $\B'$. Let $SC$ be the subgraph of $\wfg{\B}{s}$ induced by:
@@ -316,7 +318,7 @@ $\B'$. Let $SC$ be the subgraph of $\wfg{\B}{s}$ induced by:
      component $\B_j$ in $\B'$ that does not enable $\B_j$.
 \en
 $\SC$ satisfies Definition~\ref {def:supercycle} and so is a supercycle.
-}
+\end{proof}
 
 We consider subcomponent $\B'$ in isolation to avoid other phenomena that prevent interactions from executing, \eg
 conspiracies \cite{AFG93}.  
@@ -332,12 +334,12 @@ If, for every reachable state $s$ of $(\B,Q_0)$, $\wfg{\B}{s}$ is supercycle-fre
 $(\B,Q_0)$ is free of local deadlock.
 \eco
 %
-\prf{
+\begin{proof}
 We establish the contrapositive.
 Suppose that $(\B, Q_0)$ is not free of local deadlock. Then there exists a subsystem $(\B', Q'_0)$ of $(\B, Q_0)$, and
 a reachable state $s$ of $(\B', Q'_0)$, such that $\B'$ enables no interaction in state  $s \pj \B'$.
 By Proposition~\ref{prop:supercycle-is-necessary}, $\wfg{\B}{s}$ contains a supercycle.
-}
+\end{proof}
 
 In the sequel, we say ``deadlock-free'' to mean ``free of local deadlock''.
 
@@ -358,6 +360,7 @@ To formulate these conditions, we need to characterize the static (structural) a
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Abstract supercycle freedom conditions}
+\label{secn:abstract-scfree-conditions}
 
 Since we will present several conditions for supercycle-freedom, we now present an abstract
 definition of the essential properties that all such conditions must have.  The key idea is that
@@ -371,7 +374,7 @@ behavior of interaction execution, we call it a ``behavioral restriction conditi
 %conditions being applied to different interactions, we have:
 
 
-\bd[Behavioral restriction condition]
+\begin{definition}[Behavioral restriction condition]
 A \introdf{behavioral restriction condition} $\BC$ is a predicate
 $\BC: (\B, Q_0, \act) \to \set{\ttt, \fff}$.
 \ed
@@ -386,10 +389,10 @@ $(\B, Q_0)$ and $\act \in \gamma$ such that $\BC(\B, Q_0, \act) = \ttt$, the fol
 %\ind for all interactions $\act$ of $\B$ (\ie $a \in \gamma$),\\
 \ind \ind for every reachable transition $s \goesto[\act] t$ of $(\B, Q_0)$\\
 \ind \ind \ind if $s$ is supercycle-free, then $t$ is supercycle-free.
-\ed
+\end{definition}
 
 
-\bt[Deadlock-freedom via supercycle-freedom preserving restriction]
+\begin{theorem}[Deadlock-freedom via supercycle-freedom preserving restriction]
 \label{theorem:SC-free-preserving.deadlock-free}
 \label{thm:SC-free-preserving.deadlock-free}
 Assume that
@@ -401,21 +404,22 @@ Assume that
    for all $\act \in \gamma$: $\BC(\B, Q_0, \act) = \ttt$ 
 \en
 Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
-\et
+\end{theorem}
 %
-\bpr Let $u$ be an arbitrary reachable state. The proof is by induction on the length of the finite
+\begin{proof} Let $u$ be an arbitrary reachable state. The proof is by induction on the length of the finite
 execution $\al$ that ends in $u$.  Assumption~\ref{theorem:SC-free-preserving.initial} provides the
 base case, for $\al$ having length 0, and so $u \in Q_0$.  For the induction step, we establish: for
 every reachable transition $s \la{\act} t$, $\wfg{\B}{s}$ is supercycle-free implies that
 $\wfg{\B}{t}$ is supercycle-free. This is immediate from
 Assumption~\ref{theorem:SC-free-preserving.reachable-transitions}, and
-Definition~\ref{def:SC-free-preserving}.  \epr
+Definition~\ref{def:SC-free-preserving}. 
+\end{proof}
 
 Since the above proof does not make any use of the requirement that there is a single restriction
 $\BC$ for all interactions, we immediately have:
 
 
-\bco[Deadlock-freedom via several supercycle-freedom preserving restrictions]
+\begin{corollary}[Deadlock-freedom via several supercycle-freedom preserving restrictions]
 
 \label{cor:SC-free-preserving.deadlock-free}
 Assume that
@@ -426,13 +430,13 @@ Assume that
    for all $\act \in \gamma$, there exists a supercycle-freedom preserving restriction $\BC$: $\BC(\B, Q_0, \act) = \ttt$ 
 \en
 Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
-\eco
+\end{corollary}
 %
-\bpr
+\begin{proof}
 Similar to the proof of \thm{SC-free-preserving.deadlock-free},  except that, for
 the transition $s \la{\act} t$, use the  supercycle-freedom preserving restriction $\BC$
 corresponding to $\act$.
-\epr
+\end{proof}
 
 
 

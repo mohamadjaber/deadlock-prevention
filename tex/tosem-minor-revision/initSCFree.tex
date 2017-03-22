@@ -27,12 +27,14 @@ mm\= mm\= mm\= mm\= mm\=\kill
 Consider the execution of \cInitSCFree{$Q_0$} for an arbitrary $s_0 \in Q_0$.
 
 Suppose that $U$ is nonempty. 
-By Proposition~\ref{prop:notInSC-implies-scViol}, $U$ is a supercycle. 
+%OLD By \prop{scViol-iff-notInSC} Proposition~\ref{prop:notInSC-implies-scViol}, $U$ is a supercycle. 
+By \prop{scViol-iff-notInSC}, $U$ is a supercycle. 
 Since $U \sub \wfg{\B}{s_0}$, we conclude that $s_0$ not supercycle-free, so false is the correct
 result in this case.
 
 Now suppose that $U$ is empty. Hence every node in $\wfg{\B}{s_0}$ has a supercycle violation, and so
-by Proposition~\ref{prop:scViol-implies-notInSC}, no node of $\wfg{\B}{s_0}$ can be in a 
+%OLD by Proposition~\ref{prop:scViol-implies-notInSC}, no node of $\wfg{\B}{s_0}$ can be in a 
+by \prop{scViol-iff-notInSC}, no node of $\wfg{\B}{s_0}$ can be in a 
 strongly-connected supercycle. Hence  $\wfg{\B}{s_0}$ does not contain a strongly-connected supercycle.
 So, by Proposition~\ref{prop:supercycle:contains-mssc}, $\wfg{\B}{s_0}$ does not contain a supercycle.
 }

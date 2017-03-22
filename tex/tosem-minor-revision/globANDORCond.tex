@@ -12,7 +12,7 @@ Formally,\\
 \ind  $\fas \B_i \in \comps{\act}, \formViol{\B_i}{t}$.
 %\ind  $\fas \B_i \in \comps{\act}, \exs d \ge 1: \viol{\B_i}{d}{t}$.
 \ed
-We now show that $\GAO$ is supercycle-freedom preserving.
+%We now show that $\GAO$ is supercycle-freedom preserving.
 
 
 \bt \label{thm:GAO.SC-free-preserving}
@@ -33,9 +33,9 @@ Since $\CC$ is a strongly connected supercycle, we have,
  by Definition~\ref{def:sConn.violation}, that $\neg \connViol{\B_i}{t}$ holds.
 
 Since $\CC$ is a supercycle, we have, by Proposition~\ref{prop:scViol-iff-notInSC}, 
-that $\neg (\exs d \ge 1: \scViol{\B_i}{d}{t})$ holds.
+that $\neg \scV{B_i}{t}$ holds. %$\neg (\exs d \ge 1: \scViol{\B_i}{d}{t})$ holds.
 
-Hence, by Definition~\ref{def:formation.violation}, $\neg \formViol{\B_i}{t}$
+Hence, by Definition~\ref{def:formation.violation}, $\neg \formViol{\B_i}{t}$.
 But, by Definition~\ref{def:global.ANDOR-cond}, we have $\formViol{\B_i}{t}$.
 Hence, we have the desired contradiction, and so the theorem holds.
 }

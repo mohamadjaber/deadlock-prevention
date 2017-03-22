@@ -2,26 +2,26 @@ In some cases, a simpler condition suffices to guarantee deadlock-freedom. This 
 aspect of $\GAO$. After execution of a reachable transition $s \la{\act} t$ of $(\B, Q_0)$, 
 we consider the in-depth and out-depth of the components $\B_i \in \cmps{\act}$. There are three cases:
 %
-\bdn
+\begin{itemize}
 
-\item[Case 1] \label{case:finite-in}
+\item \emph{Case 1} \label{case:finite-in}
 $\B_i$ has finite in-depth in $\wfg{\B}{t}$: then, if $\B_i \in
 \SC$, it can be removed and still leave a supercycle $\SC'$, by
 Proposition~\ref{prop:supercycle:essential-subgraph-of}. Hence 
 $\SC'$ exists in $\wfg{\B}{s}$, and so 
 $\B_i$ is not essential to the creation of a supercycle.
 
-\item[Case 2] \label{case:finite-out}
+\item \emph{Case 2} \label{case:finite-out}
 $\B_i$ has finite out-depth in $\wfg{\B}{t}$: 
 by Proposition~\ref{prop:supercycle:no-finite-outdegree}, 
 $\B_i$ cannot be part of a supercycle, and so $\SC \sub \wfg{\B}{s}$.
 
-\item[Case 3] \label{case:infinite-both}
+\item \emph{Case 3} \label{case:infinite-both}
 $\B_i$ has infinite in-depth and infinite out-depth in
 $\wfg{\B}{t}$: in this case, $\B_i$ is possibly an essential part of
 $\SC$, \ie $\SC$ was created in going from $s$ to $t$.
 
-\edn
+\end{itemize}
 We thus impose a condition which guarantees that only 
 Case~1 %~\ref{case:finite-in} 
 or Case~2 %\ref{case:finite-out}
@@ -29,30 +29,26 @@ occur.
 
 
 
-\bd[$\GLin(B,Q_0,\act)$] \label{def:global:dfc}
+\begin{definition}[$\GLin(B,Q_0,\act)$] \label{def:global:dfc}
 %Let $(B, Q_0)$ be a BIP system, with $B =\gamma(\B_1,\dots,\B_n)$, and 
 %$a$ an interaction of $(B, Q_0)$, \ie $a \in \gamma$.
 $\GLin(B,Q_0,\act)$ holds iff, for every reachable transition $s \goesto[\act] t$ of BIP-system $(\B, Q_0)$, 
 the following holds in state $t$:\\
   $$\fa \B_i \in \cmps{a}: \widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega.$$
-That is, for every component $\B_i$ of $\cmps{\act}$:  either $\B_i$ has finite in-depth,
-or finite out-depth, in $\wfg{\B}{t}$.
+That is, for every component $\B_i$ of $\cmps{\act}$:  either $\B_i$ has finite in-depth, or finite out-depth, in $\wfg{\B}{t}$.
+\end{definition}
 
 
 
-\ed
-
-
-
-\bp \label{prop:indepth-finite-implies-scViol}
+\begin{proposition} \label{prop:indepth-finite-implies-scViol}
 Assume that node $v$ of $\wfg{\B}{t}$ has a finite in-depth of $d$ in $\wfg{\B}{t}$, \ie 
 $\widepth{\B}{v}{t} = d$. Then $\connViol{v}{t}$.
-\ep
+\end{proposition}
 %
-\prf{
+\begin{proof}
 A node with finite in-depth cannot be in a wait-for-cycle, and
 therefore cannot be in a strongly connected supercycle.
-}
+\end{proof}
 
 
 % \prf{
@@ -75,36 +71,44 @@ therefore cannot be in a strongly connected supercycle.
 
 
 
-\bp \label{prop:outdepth-finite-implies-scViol}
+\begin{proposition} \label{prop:outdepth-finite-implies-scViol}
 Assume that node $v$ of $\wfg{\B}{t}$ has a finite out-depth of $d$ in $\wfg{\B}{t}$, \ie 
-$\wodepth{\B}{v}{t} = d$. Then $\viol{v}{d+1}{t}$.
-\ep
+$\wodepth{\B}{v}{t} = d$. Then $\viol{v}{d}{t}$.  % USED TO BE d+1. CHECK
+\end{proposition}
 %
- \prf{
- Proof is by induction on $d$.
+\begin{proof}
+Proof is by induction on $d$.\\
 
 \noindent
 \ul{Base case, $d=0$.} Hence by $\wodepth{\B}{v}{t} = 0$ and Definitions~\ref{def:path} and \ref{def:depth},  
-$v$ has no outgoing wait-for-edges in $\wfg{\B}{t}$. Hence by Definition~\ref{def:supercycle.violation},
-$\viol{v}{1}{t}$.
+$v$ has no outgoing wait-for-edges in $\wfg{\B}{t}$. Hence $\neg \blocks{v}{\wfg{\B}{t}}$, \ie $v$ is not blocked by the entire set of nodes in 
+$\wfg{\B}{t}$. Hence $\neg \blocks{v}{\compl{\ewfg}}$, since $\wfg{\B}{t} = \compl{\ewfg}$. So by \defn{violFix}, 
+$v \in \VF{\ewfg}$. By \defn{supercycle.violation}, $\scVd{v}{0}{s}$.\\
+
+%OLD Hence by Definition~\ref{def:supercycle.violation}, $\viol{v}{1}{t}$.
 
 \noindent
 \ul{Inductive step, $d > 0$.}
-Let $u$ be an arbitrary successor of $v$, \ie a node $u$ such that $v \ar u \in \wfg{\B}{t}$.
-By Definitions~\ref{def:path} and \ref{def:depth}, $u$ has an out-depth $d'$ that is less than $d$. 
+Let $w$ be an arbitrary successor of $v$, \ie a node $w$ such that $v \ar w \in \wfg{\B}{t}$.
+By Definitions~\ref{def:path} and \ref{def:depth}, $w$ has an out-depth $d'$ that is less than $d$. 
 That is, $\wodepth{\B}{u}{t} = d' < d$.
-By the induction hypothesis applied to $d'$, we obtain $\viol{u}{d'+1}{t}$. Hence by Definition~\ref{def:supercycle.violation}, 
-Clauses~\ref{def:supercycle.violation.component.out} and \ref{def:supercycle.violation.interaction.out}, $\viol{v}{d+1}{t}$.
-}
+By the induction hypothesis applied to $d'$, we obtain $\viol{w}{d'}{t}$, and so $w \in \VFs^{d'} (\ewfg)$ by \defn{supercycle.violation}.
+Hence $w \in \VFs^{d-1} (\ewfg)$, since, by monotonicity of $\VFs$, we have $\VFs^{d'} (\ewfg) \subg \VFs^{d}$ when $d' \le d$.
+Since  $w$ is an arbitrary successor of $v$, it follows that $v$ is only blocked by nodes in $\VFs^{d-1} (\ewfg)$.
+Hence $\neg \blocks{v}{\compl{\VFs^{d-1} (\ewfg)}}$. 
+By \defn{violFix}, $v \in \VF{\VFs^{d-1} (\ewfg)}$, \ie $v \in \VFs^{d} (\ewfg)$.
+By \defn{supercycle.violation}, $\scVd{v}{d}{s}$.
+% OLD Hence by Definition~\ref{def:supercycle.violation}, Clauses~\ref{def:supercycle.violation.component.out} and \ref{def:supercycle.violation.interaction.out}, $\viol{v}{d+1}{t}$.
+\end{proof}
 
 
 
 
-\bl \label{lemma:glob-lin-implies-globANDOR}
-\label{GLinGAO}
+\begin{lemma} \label{lemma:glob-lin-implies-globANDOR} \label{GLinGAO}
 $\fa \act \in \gamma: \GLin(\B, Q_0, \act) \imp \GAO(\B, Q_0, \act)$.  
-\el
-\prf{
+\end{lemma}
+%
+\begin{proof}
 Assume, for arbitrary $\act \in \gamma$, that $\GLin(\B, Q_0, \act)$ holds. That is, 
  
 \ind For every reachable transition $s \goesto[\act] t$ of $(\B, Q_0)$,\\
@@ -123,16 +127,16 @@ Hence by Definition~\ref{def:formation.violation}, \\
 
 \noindent
 Hence $\GAO(\B, Q_0, \act)$ holds.
-}
+\end{proof}
 
 
-\bt \label{thm:GLin.SC-free-preserving}
+\begin{theorem} \label{thm:GLin.SC-free-preserving}
 $\GLin$ is supercycle-freedom preserving
-\et
+\end{theorem}
 %
-\prf{
+\begin{proof}
 Follows immediately from Lemma~\ref{lemma:glob-lin-implies-globANDOR} and Theorem~\ref{thm:GAO.SC-free-preserving}.
-}
+\end{proof}
 
 
 %Since $\GLin(\act)$ implies $\GAO(\act)$, and $(\fa \act \in \gamma: \GAO(\act))$ implies deadlock-freedom (assuming also that initial
@@ -144,7 +148,7 @@ Follows immediately from Lemma~\ref{lemma:glob-lin-implies-globANDOR} and Theore
 \subsection{Deadlock freedom using global restrictions}
 
 
-\bco[Deadlock-freedom via \GAO, \GLin] 
+\begin{corollary}[Deadlock-freedom via $\GAO, \GLin$] 
 \label{theorem:global.deadlock-free}
 Assume that
 \bn
@@ -155,8 +159,11 @@ Assume that
 \en
 Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free, and so 
 $(\B, Q_0)$ is free of local deadlock.
-\eco
-\prf{Immediate from Theorems~\ref{thm:GAO.SC-free-preserving}, \ref{thm:GLin.SC-free-preserving} and Corollary~\ref{cor:SC-free-preserving.deadlock-free}.}
+\end{corollary}
+%
+\begin{proof}
+Immediate from Theorems~\ref{thm:GAO.SC-free-preserving}, \ref{thm:GLin.SC-free-preserving} and Corollary~\ref{cor:SC-free-preserving.deadlock-free}.
+\end{proof}
 
 
 
