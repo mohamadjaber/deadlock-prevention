@@ -128,7 +128,7 @@ there is an edge in $\wfg{\B}{s}$ from $\B_i$ to $\act$:
       \end{nlst2}
 that is, $\B_i \ar \act \in \wfg{\B}{s}$ implies $\B_i \ar \act \in \SC$,
 
-   \item \label{def:supercycle.action-blocked}  \label{clause:supercycle.action-blocked}  
+   \item 
 if $\act$ is a node in $\SC$, then, either $\act$ is a border interaction of $\DS$, or  there exists a $\B_j$ such that:
       \begin{nlst2}
       \item $\B_j$  is a node in $\SC$, and
@@ -217,7 +217,7 @@ $\lSFs$ and $\lVFs$ are monotone and continuous.
 % \end{proof}
 
 
-\begin{proposition} \label{prop:locGFP} \label{supercycleGFPLoc}
+\begin{proposition} \label{prop:locGFP} \label{prop:supercycleGFPLoc}
 Let $\UU \subg \lwfg{B}{s}{\DS}$. Then, $\US$ is a local supercycle in $\lwfg{B}{s}{\DS}$ iff $\US \subg \lSF{\US}$.
 \end{proposition}
 %
@@ -258,7 +258,7 @@ By the Knaster-Tarski theorem, the greaterst fixpoint is the join of all the pos
 If $\lwfg{B}{s}{\DS}$ is supercycle-free, then by \prop{supercycleGFPLoc}, the set of post-fixpoints of $\lSFs$ is empty. 
 Hence $\SC = \ewfg$ (this is possible since there may be no border interactions). %CHECK DEF BORDER INTERACTION
 If $\lwfg{B}{s}{\DS}$ contains supercycles, then by \prop{supercycleGFPLoc},  the set of post-fixpoints of $\lSFs$ is exactly the set of 
-local supercycles of $\lwfgS{B}{s}{\DS}$, and so $\SC$ is the join of all these local supercycles, and so $\SC$ is the largest local supercycle in \wfg{B}{s}.
+local supercycles of $\lwfg{B}{s}{\DS}$, and so $\SC$ is the join of all these local supercycles, and so $\SC$ is the largest local supercycle in \wfg{B}{s}.
 \end{proof}
 
 
