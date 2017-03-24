@@ -41,19 +41,18 @@ that are induced by \wfg{B}{s}.
 
 
 
-\begin{definition}[$\mathit{blocks}$] \label{defn:blocks}
-Let $\US \subg \wfg{B}{s}$ and $a, B_i$ be nodes in $\wfg{B}{s}$. Then 
-$\blocks{a}{\US} \df (\ex B_i \in \US : a \ar B_i \sub \wfg{B}{s})$, and 
-$\blocks{B_i}{\US} \df (\fa a : B_i \ar a \sub\wfg{B}{s} \imp a \in \US)$.
+\begin{definition}[$\mathit{blocks}, \SFs, \VFs$] \label{defn:blocks} 
+Let $\US \subg \wfg{B}{s}$ and $\act, B_i$ be nodes in $\wfg{B}{s}$. Then 
+$\blocks{\act}{\US} \df (\ex B_i \in \US : \act \ar B_i \in \wfg{B}{s})$, and 
+$\blocks{\B_i}{\US} \df (\fa \act : \B_i \ar \act \in \wfg{B}{s} \imp \act \in \US)$.
 \end{definition}
 
-\begin{definition} \label{defn:scFix}
+\begin{definition} \label{defn:scFix} 
 Define $\SFs: \wfgS{B}{s} \to \wfgS{B}{s}$ as follows.
 $\SF{\US}$ is the subgraph with nodes $\set{v \stt \blocks{v}{\US} }$, together with their induced edges.
 \end{definition}
 
-
-\begin{definition}\label{defn:violFix}
+\begin{definition} \label{defn:violFix}
 Define $\VFs: \wfgS{B}{s} \to \wfgS{B}{s}$ as follows.
 $\VF{\US}$ is the subgraph with nodes ${\set{v \stt \neg \blocks{v}{\compl{\US}}}}$, together with their induced edges.
 \end{definition}
@@ -66,23 +65,42 @@ $\SFs$ and $\VFs$ are monotone and continuous.
 %
 \begin{proof}
 % show its monotnoe
-.........
-% follows its continuous
-Since $\lat{\B}{s}$ is finite, it follows that $\SFs$ and $\VFs$ are continuous.
+We show first that $\SFs$ is monotonic, \ie $\US \subg \VS \imp \SF{\US} \subg \SF{\VS}$.
+Let $\ndv$ be an arbitrary node in $\SF{\US}$, so that $\blocks{\ndv}{\US}$ holds. There are two cases.\\
+
+\emph{Case of $\ndv$ is an interaction $\act$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $\ex \B_i \in \US  : \act \ar \B_i \sub \wfg{B}{s}$.
+Since $\US \subg \VS$, this same $\B_i$ is also a node of $\VS$, and so  $\ex \B_i \in \VS  : \act \ar \B_i \sub \wfg{B}{s}$. 
+Hence  $\blocks{\act}{\VS}$, and so $\act \in \SF{\VS}$. \\
+
+\emph{Case of $\ndv$ is a component $\B_i$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $(\fa \act : \B_i \ar \act \in \wfg{B}{s} \imp \act \in \US)$.
+Since $\US \subg \VS$, we have  $(\fa \act : \B_i \ar \act \in \wfg{B}{s} \imp \act \in \VS)$. 
+Hence $\blocks{\B_i}{\VS}$, and so $\B_i \in \SF{\VS}$. \\
+
+In both cases, we have $\ndv \in \SF{\VS}$. Since $\ndv$ was chosen arbitrarily from $\SF{\US} $, it follows that $\SF{\US} \subg \SF{\VS}$. Hence
+$\SFs$ is monotone.
+%
+Since the dual of a monotone mapping in a complete boolean lattice is also monotone, we have that $\VFs$ is monotone.
+%
+Finally, since $\lat{\B}{s}$ is finite, it follows that $\SFs$ and $\VFs$ are continuous.
 \end{proof}
 
 Hence, by the Knaster-Tarski theorem, the least and greatest fixpoints of $\SFs$ and $\VFs$ exist.
 %, and so their greatest and least fixpoints 
 
 \begin{proposition} \label{prop:supercycleGFP}
-Let $\UU \subg \wfg{B}{s}$. Then $\UU$ is a supercycle in \wfg{B}{s} iff $\UU \subg \SF{\UU}$.
+Let $\US \subg \wfg{B}{s}$. Then $\US$ is a supercycle in \wfg{B}{s} iff $\US \subg \SF{\US}$.
 \end{proposition}
 %
 \begin{proof}
-Since $\SF{\UU} \subg \UU$ by \defn{scFix}, we have $U = \SF{U}$. Hence, ...
+Let $\US$ be a supercycle in \wfg{B}{s}. By \defn{supercycle}, every node in $\US$ is blocked by $\US$, \ie 
+$(\fa \ndv \in \US: \blocks{\B_i}{\US})$. By \defn{scFix}, $\US \subg \SF{\US}$.
+%
+Conversely, suppose $\US \subg \SF{\US}$ for some subgraph $\US$ of \wfg{B}{s}. Hence 
+$(\fa \ndv \in \US: \ndv \in \SF{\US})$, so by \defn{scFix}, $(\fa \ndv \in \US: \blocks{\B_i}{\US})$.
+Hence every node in $\US$ is blocked by $\US$, and so $\US$ satisfies \defn{supercycle}, and is therefore a supercycle.
 \end{proof}
-
-Thus the supercycles of \wfg{B}{s} are exactly the post-fixpoints of $\SFs$. This implies that the union of two supercycles is also a supercycle. 
+%
+Thus the supercycles of \wfg{B}{s} are exactly the post-fixpoints of $\SFs$. %This implies that the union of two supercycles is also a supercycle. 
 
 \begin{proposition} \label{prop:GFPisLargestSC}
 Let $\SC$ be the greatest fixpoint of $\SFs$. Then either
@@ -91,11 +109,11 @@ Let $\SC$ be the greatest fixpoint of $\SFs$. Then either
 \end{proposition}
 %
 \begin{proof}
-By Knaster-Tarski, the greaterst fixpoint is the join of all the post-fixpoints. 
+By the Knaster-Tarski theorem, the greaterst fixpoint is the join of all the post-fixpoints. 
 If \wfg{B}{s} is supercycle-free, then by \prop{supercycleGFP}, the set of post-fixpoints of $\SFs$ is empty. 
-Hence $W = \ewfg$.
-If \wfg{B}{s} contains supercycles, , then by \prop{supercycleGFP},  the set of post-fixpoints of $\SFs$ is exactly the set of 
-supercycles of \wfg{B}{s}, and so $W$ is the union of all these supercycles, and so $W$ is the largest supercycle in \wfg{B}{s}.
+Hence $\SC = \ewfg$.
+If \wfg{B}{s} contains supercycles, then by \prop{supercycleGFP},  the set of post-fixpoints of $\SFs$ is exactly the set of 
+supercycles of \wfg{B}{s}, and so $\SC$ is the join of all these supercycles, and so $\SC$ is the largest supercycle in \wfg{B}{s}.
 \end{proof}
 
 Let $\MATHIDN{lfp}, \MATHIDN{gfp}$ denote the least-fixed-point and greatest-fixed-point operators, respectively.
