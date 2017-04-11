@@ -14,7 +14,7 @@ supercycles.
 Assume that $s \goesto[\act] t$ is a transition of $(\B, Q_0)$, $\wfg{\B}{s}$ is supercycle-free, and that $\wfg{\B}{t}$
 contains a supercycle.  Then, in $\wfg{\B}{t}$, there exists a $\CC$ such that
 \bn
-\item $\CC$ is a subgraph of $\wfg{\B}{t}$
+\item $\CC$ is a subgraph of $\wfg{\B}{t}$, \ie $\CC \subg \wfg{\B}{t}$
 \item $\CC$ is strongly connected
 \item $\CC$ is a supercycle
 \item  in $\wfg{\B}{t}$, there is no wait-for edge from a node in $\CC$ to a node outside of $\CC$
@@ -89,11 +89,8 @@ We formalize the second condition as follows.
 \label{def:sConn.violation}
  Let $v$ be a node of $\wfg{\B}{t}$.   Then $\connViol{v}{t}$ holds iff there does not exist a 
 strongly connected
- supercycle $SSC$ such that $v \in SSC$ and $SSC \sub \wfg{B}{t}$.
+ supercycle $SSC$ such that $v \in SSC$ and $SSC \subg \wfg{B}{t}$.
 \end{definition}
-
-
-
 
 
 

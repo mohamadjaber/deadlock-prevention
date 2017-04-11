@@ -44,7 +44,7 @@ that have a distance to $\act$ less than or equal to $\l$.
 
 \begin{definition}[Deadlock-checking subsystem, $\dsk{\act}{\l}$] \label{def:dsk}
 Define $\dsk{\act}{\l}$, the \emph{deadlock-checking subsystem for interaction $\act$ and
-depth $\l$}, to be the subsystem of $(\B, Q_0)$ based on the set of
+radius $\l$}, to be the subsystem of $(\B, Q_0)$ based on the set of % depth --> radius
 components in $\ssg{\act}{2\l}$.  % PREVIOUSLY: $\ssg{\act}{\l+2}$.
 \end{definition}
 
@@ -63,7 +63,7 @@ interior nodes.
 %Let $(B, Q_0)$ be a BIP system, and 
 Let $(\B', Q'_0)$ be a subsystem of
 $(\B, Q_0)$. Let $s$ be a state of $(\B, Q_0)$, and $s' = s \pj \B'$.
-Let $a$ be an interaction of $(\B', Q'_0)$, and $\B_i \in \cmps{\act}$ an atomic component of $\B'$.
+Let $\act$ be an interaction of $(\B', Q'_0)$, and $\B_i \in \cmps{\act}$ an atomic component of $(\B', Q'_0)$.
 Then 
 (1) $\act \ar \B_i \in \wfg{\B}{s}$ iff $\act \ar \B_i \in \wfg{\B'}{s'}$, and
 (2) $\B_i \ar \act \in \wfg{\B}{s}$ iff $\B_i \ar \act \in \wfg{\B'}{s'}$.
@@ -94,8 +94,7 @@ Putting the above three equalities together gives us clause (2).
 In the sequel, we fix a particular subsystem $\dsk{\act}{\l}$, which
 we refer to simply as \DS, with $\act$ and $\l$ being implicit (to
 avoid notational clutter with double-sub/superscripts). 
-When $\DS = \dsk{\act}{\l}$, we write $\DS.action = \act$ and
-$\DS.radius = \l$. 
+We write $\DS.action = \act$ and $\DS.radius = \l$. 
 
 
 \begin{definition}[Projection of a wait-for graph] \label{defn:projWgraph}
@@ -112,6 +111,14 @@ Write $\lwfg{B}{s}{\DS}$ for $\wfg{B}{s} \pj \DS$.
 %\input{fixpointLoc}
 \subsection{Fixpoint characterization of  local supercycles in a  subsystem}
 \label{s:local.fixpoint}
+
+We now develop a local version of the sequence of defnitions and propositions given in \secn{supercycle-fixpoint}.  Local means that they apply to any
+subsystem $(\B', Q'_0)$ of $(\B, Q_0)$. A subsystem has, in general, border nodes, \ie those nodes with a neighbor outside of the
+subsystem. The supercycle membership of these nodes cannot be determined with certainty, by inspecting just the subsystem.
+Hence we pessimistically assum that bordernodes are in a supercycle. When false, this assumption may produce a false negative, and so we sacrifice
+completeness of our deadlock-freedom criterion. We do however, avoid false positives (that may result if we assume a border node is not in a supercycle when in fact it
+is), and so we maintain soundness of our criterion. 
+
 
 \begin{definition}[Local supercycle]
 \label{defn:supercycleLoc} 
@@ -147,11 +154,12 @@ of $\DS$.
 
 
 
-We carry over the defintion of subgraph $\subg$ from \secn{supercycle-fixpoint}, and develop the analogous definitions for an arbitrary subsystem of $\B$.
+We carry over the defintion of subgraph $\subg$ from \secn{supercycle-fixpoint}, and develop the analogous definitions for an arbitrary subsystem
+of $\B$.
 
 
 \begin{definition}[Set of subgraphs] \label{defn:wsetOfSubgraphsLoc}
-$\lwfgS{B}{s}{\DS} \df  \set{ W \stt W \subg \lwfg{B}{s}{\DS} }$.
+$\lwfgS{B}{s}{\DS} \df  \set{ \XS \stt \XS \subg \lwfg{B}{s}{\DS} }$.
 %$\lwfgS{B}{s}{\act,\l} \df  \set{ W \stt W \subg \lwfg{B}{s}{\act,\l} }$.
 \end{definition}
 
@@ -167,25 +175,25 @@ whose elements are all the subgraphs of
 \begin{proposition} \label{prop:isALatticeLoc}
 $\llat{\B}{s}{\DS}  = \tpl{ \lwfgS{B}{s}{\DS}  \subg }$
 %$\llat{\B}{s}{\act,\l}  = \tpl{ \lwfgS{B}{s}{\act,\l}  \subg }$
- is a complete boolean lattice, with $\meet$, $\join$, and complementation as in 
+ is a finite complete boolean lattice, with $\meet$, $\join$, and complementation as in 
 \prop{isALattice}, top element $\lwfgS{B}{s}{\DS}$, and bottom element \ewfg.
 \end{proposition}
 
 \begin{definition}[$\mathit{lblocks}$] \label{defn:blocksLoc}
 %Let $U \subg \lwfgS{B}{s}{\act,\l}$ and $a, B_i$ be nodes in $\wfg{B}{s}$. Then 
 Let $U \subg \lwfgS{B}{s}{\DS}$ and $\act, B_i$ be nodes in $\wfg{B}{s}$. Then 
-$\lblocks{\act}{\US} \df (\ex \B_i \in \US : \act \ar \B_i \sub \wfg{B}{s})$ or $\act$ is a border interaction, and 
-$\lblocks{\B_i}{\US} \df (\fa \act : \B_i \ar a \sub\wfg{\B}{s} \imp \act \in \US)$.
+$\lblocks{\act}{\US} \df (\ex \B_i \in \US : \act \ar \B_i \sub \wfg{B}{s})$ or $\act$ is a border interaction of $\DS$, and 
+$\lblocks{\B_i}{\US} \df (\fa \act : \B_i \ar \act \sub\wfg{\B}{s} \imp \act \in \US)$.
 \end{definition}
 
 
-\begin{definition} \label{defn:scFixLoc}
+\begin{definition}[$\lSFs$] \label{defn:scFixLoc}
 %Define $\lSFs:  \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
 Define $\lSFs:  \lwfgS{B}{s}{\DS}  \to  \lwfgS{B}{s}{\DS}$ as follows.
 $\lSF{\US}$ is the subgraph with nodes $\set{\ndv \stt \lblocks{\ndv}{\US} }$, together with their induced edges.
 \end{definition}
 
-\begin{definition} \label{defn:violFixLoc}
+\begin{definition}[$\lVFs$] \label{defn:violFixLoc}
 %Define $\lVFs: \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
 Define $\lVFs: \lwfgS{B}{s}{\DS}  \to  \lwfgS{B}{s}{\DS}$ as follows.
 $\lVF{\US}$ is the subgraph with nodes $\set{\ndv \stt \neg \lblocks{\ndv}{\compl{\US}} }$, together with their induced edges, 
@@ -195,40 +203,26 @@ where we take the complement $\compl{\US}$ with respect to $\DS$.
 \begin{proposition} \label{prop:monotoneLoc}
 $\lSFs$ and $\lVFs$ are monotone and continuous.
 \end{proposition}
+%
+\begin{proof}
+.....
+\end{proof}
 
 
-
-
-% \begin{proposition} \label{prop:supercycleLocGFP}
-% Let $\US \subg \lwfg{B}{s}{\DS}$. Then $\US$ is a supercycle in $\lwfg{B}{s}{\DS}$ implies that $\UU \subg \lSF{\UU}$.
-% \end{proposition}
-% %
-% \begin{proof}
-% Let $\US$ be a supercycle in \wfg{B}{s}. By \defn{supercycle}, every node in $\US$ is blocked by $\US$, \ie 
-% $(\fa \ndv \in \US: \blocks{\ndv}{\US})$. By \defn{scFixL}, $\US \subg \lSF{\US}$.
-% \end{proof}
-
-% \begin{proposition} \label{prop:borderLocGFP}
-% Let $\US \subg \lwfgS{B}{s}{\DS}$. If $\US$ consists entirely of border interactions, then $\US \subg \lSF{\US}$.
-% \end{proposition}
-% %
-% \begin{proof}
-% Let $\ndv \in \US$. Since $\ndv$ is a border interaction, we have $\lblocks{\ndv}{\US})$ by \defn{blocksLoc}.
-% Hence $(\fa \ndv \in \US: \blocks{\ndv}{\US})$. By \defn{scFixL}, $\US \subg \lSF{\US}$.
-% \end{proof}
 
 
 \begin{proposition} \label{prop:locGFP} \label{prop:supercycleGFPLoc}
-Let $\UU \subg \lwfg{B}{s}{\DS}$. Then, $\US$ is a local supercycle in $\lwfg{B}{s}{\DS}$ iff $\US \subg \lSF{\US}$.
+Let $\XS \ne \ewfg$ and $\XS \subg \lwfg{B}{s}{\DS}$, \ie $\XS$ is a non-empty subgraph of $\lwfg{B}{s}{\DS}$.
+Then, $\XS$ is a local supercycle in $\lwfg{B}{s}{\DS}$ iff $\XS \subg \lSF{\XS}$.
 \end{proposition}
 %
 \begin{proof}
-Let $\US$ be a local supercycle in $\lwfg{B}{s}{\DS}$. By \defn{supercycleLoc}, every node in $\US$ is blocked by $\US$ or is a border interaction, \ie 
-$(\fa \ndv \in \US: \lblocks{\B_i}{\US})$. By \defn{scFix}, $\US \subg \SF{\US}$.
+Let $\XS$ be a local supercycle in $\lwfg{B}{s}{\DS}$. By \defn{supercycleLoc}, every node in $\XS$ is blocked by $\XS$ or is a border interaction, \ie 
+$(\fa \ndv \in \XS: \lblocks{\B_i}{\XS})$. By \defn{scFix}, $\XS \subg \SF{\XS}$.
 
-Conversely, suppose $\US \subg \SF{\US}$ for some subgraph $\US$ of $\lwfgS{B}{s}{\DS}$. Hence 
-$(\fa \ndv \in \US: \ndv \in \SF{\US})$, so by \defn{scFixLoc}, $(\fa \ndv \in \US: \lblocks{\B_i}{\US})$.
-Hence every node in $\US$ is blocked by $\US$ or is a border interaction, and so $\US$ satisfies \defn{supercycleLoc}, and is therefore a local supercycle.
+Conversely, suppose $\XS \subg \SF{\XS}$ for some subgraph $\XS$ of $\lwfgS{B}{s}{\DS}$. Hence 
+$(\fa \ndv \in \XS: \ndv \in \SF{\XS})$, so by \defn{scFixLoc}, $(\fa \ndv \in \XS: \lblocks{\B_i}{\XS})$.
+Hence every node in $\XS$ is blocked by $\XS$ or is a border interaction, and so $\XS$ satisfies \defn{supercycleLoc}, and is therefore a local supercycle.
 \end{proof}
 
 %\begin{proposition} \label{prop:GFPisLargestLocSC}

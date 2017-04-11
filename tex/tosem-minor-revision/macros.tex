@@ -1,0 +1,761 @@
+%\setlength{\parindent}{1.5em}
+%\setlength{\parskip}{1ex}
+\renewcommand{\floatpagefraction}{0.8}
+
+%\newlength{\parboxwidth}
+%\setlength{\parboxwidth}{6.0in}
+
+
+\sloppy
+
+%%%%%%%%%%%%%%%%%%%%%%%%% EQUATION AND PROOF ENVIRONMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Equation Environments
+\newcommand{\leqn}[2]{\bs ~~~~~\parbox[t]{4.5in}{#2} \hfill{#1}\bs}
+
+\newcommand{\prf}[1]{\vspace{-1ex} \noindent \textit{Proof.} #1 \hfill{$\Box$}}
+%\newcommand{\prf}[1]{}
+
+\newcommand{\prfs}[1]{}            % proof sketches
+%\newcommand{\prfs}[1]{\vspace{-1ex} \noindent \textit{Proof sketch.} #1 \hfill{$\Box$}}
+
+%\newenvironment{proof}{\vspace{-1.0ex}\textit{Proof.} }	% Proof environment
+ %                     {\hfill{$\Box$}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% CONDITIONAL TEXT INCLUSION %%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+\newcommand{\full}[1]{#1}
+
+
+
+
+
+
+%%%%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{latexsym}
+\usepackage{xspace}
+ 
+%\usepackage{epic}
+%\usepackage{eepic}
+%\usepackage{epsfig}
+\usepackage{url}
+
+\usepackage{graphicx,color,xspace}
+\usepackage{mathpartir}
+
+\graphicspath{{figs/}} % figure path
+\usepackage{float}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%% REFERENCES
+
+\newcommand{\defn}[1]{Def.~\ref{defn:#1}}
+\newcommand{\fig}[2][]{Fig.~\ref{fig:#2}\ensuremath{#1}}
+%\newcommand{\tab}[1]{Tab.~\ref{tab:#1}}
+\newcommand{\eq}[1]{(\ref{eq:#1})}
+\newcommand{\res}[1]{(\ref{res:#1})}
+%\newcommand{\ex}[1]{Ex.~\ref{ex:#1}}
+\newcommand{\secn}[1]{Sect.~\ref{secn:#1}}
+\newcommand{\rem}[1]{Rem.~\ref{rem:#1}}
+\newcommand{\ntn}[1]{Not.~\ref{ntn:#1}}
+\newcommand{\lem}[1]{Lem.~\ref{lem:#1}}
+\newcommand{\cor}[1]{Cor.~\ref{cor:#1}}
+\newcommand{\thm}[1]{Th.~\ref{thm:#1}}
+\newcommand{\app}[1]{App.~\ref{app:#1}}
+\newcommand{\axs}[1]{Ax.~\ref{ax:#1}}
+\newcommand{\axss}[2]{Ax.~\ref{ax:#1}, \ref{ax:#2}}
+\newcommand{\ax}[1]{Ax.~\ref{ax:#1}}
+\newcommand{\prop}[1]{Prop.~\ref{prop:#1}}
+\newcommand{\clause}[1]{Clause~\ref{clause:#1}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+
+
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+
+\usepackage{subfigure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% META COMMANDS
+
+\newcommand{\MATH}[1]{\ensuremath{#1}\xspace}
+
+\newcommand{\MATHID}[1]{\ensuremath{\mathit{#1}}}
+\newcommand{\MATHIDN}[1]{\ensuremath{\mathit{#1}}}
+\newcommand{\MATHIDSP}[1]{\ensuremath{\mathit{#1}}\xspace}
+
+\newcommand{\CMATHID}[1]{\ensuremath{\mathcal{#1}}\xspace}
+\newcommand{\CMATHIDN}[1]{\ensuremath{\mathcal{#1}}}
+
+\newcommand{\SMATHID}[1]{\ensuremath{\mathsf{#1}}}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ABBREVIATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\ie}{i.e.,\xspace}
+\newcommand{\eg}{e.g.,\xspace}
+\newcommand{\wrt}{w.r.t.\xspace}
+\newcommand{\etal}{et.\ al.\xspace}
+
+%% Lists
+\newcommand{\be}{\begin{itemize}}
+\newcommand{\ee}{\end{itemize}}
+\newcommand{\bn}{\begin{enumerate}}
+\newcommand{\en}{\end{enumerate}}
+\newcommand{\bdn}{\begin{description}}
+\newcommand{\edn}{\end{description}}
+%\renewcommand{\i}{\item}
+
+%% Theorem-like Environments
+%\newcommand{\bp}{\begin{proposition}}
+%\newcommand{\ep}{\end{proposition}}
+%\newcommand{\bl}{\begin{lemma}}
+%\newcommand{\el}{\end{lemma}}
+%\newcommand{\bco}{\begin{corollary}}
+%\newcommand{\eco}{\end{corollary}}
+%\newcommand{\bt}{\begin{theorem}}
+%\newcommand{\et}{\end{theorem}}
+%\newcommand{\bpr}{\begin{proof}}
+%\newcommand{\epr}{\end{proof}}
+%\newcommand{\bd}{\begin{definition}}
+%\newcommand{\ed}{\end{definition}}
+
+
+%% Misc
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\ul}{\underline}
+\newcommand{\ms}{\medskip}
+\newcommand{\bs}{\bigskip}
+%\newcommand{\ms}{\medskip}
+\renewcommand{\ss}{\smallskip}
+
+\newcommand{\bfg}{\begin{figure}}
+\newcommand{\efg}{\end{figure}}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% BIP SPECIFIC MACROS
+
+\newcommand{\act}{\ensuremath{\mathsf{a}}}       % general action
+\newcommand{\actp}{\mathsf{aa}}   % second action name, used in violation defs
+\newcommand{\actb}{\mathsf{b}}     % used in projection def
+%\newcommand{\a}{\mathsf{a}}
+\newcommand{\comp}{\mathsf{B}}
+%\newcommand{\B}{\mathsf{B}}
+\newcommand{\B}{\mathsf{B}}
+
+\newcommand{\gd}[2]{\ensuremath{\MATHIDN{enb}_{#1}^{#2}}}
+
+\newcommand{\enb}[2]{\mbox{$\, \stackrel{#1}{\longrightarrow}_{#2} \,$}}
+
+\newcommand{\enbf}[2]{\ensuremath{\mathit{enabled}(#1, #2)}}   
+\newcommand{\nenb}[2]{\mbox{$\, \stackrel{#1}{\not\longrightarrow}_{#2} \,$}}
+
+\newcommand{\comps}[1]{\ensuremath{\MATHIDN{components}(#1)}}    % components of an interaction
+\newcommand{\cmps}[1]{\ensuremath{\MATHIDN{components}(#1)}}    % components of an interaction
+
+\newcommand{\rstates}[1]{\ensuremath{\MATHIDN{rstates}(#1)}}  % reachable states
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DEADLOCK SPECIFIC MACROS
+
+%\newcommand{\scf}[2]{\MATHID{sc\_free}_{#1}(#2)}
+
+\newcommand{\power}[1]{\ensuremath{\CMATHIDN{P}(#1)}}   % powerset notation
+
+\newcommand{\wfg}[2]{\ensuremath{\MATHIDN{W}_{#1}({#2})}}
+%\newcommand{\wfgS}[2]{\ensuremath{\MATHIDN{\widehat{W}}_{#1}({#2})}}  %set of subgraphs of wiat for graph
+\newcommand{\wfgS}[2]{\ensuremath{\power{\wfg{#1}{#2}}}}
+\newcommand{\wfgPow}[2]{\ensuremath{\power{\wfg{#1}{#2}}}}
+
+
+
+%\newcommand{\lwfg}[3]{\ensuremath{\MATHIDN{W}_{#1}^{#3}({#2})}}
+\newcommand{\lwfg}[3]{\ensuremath{\MATHIDN{W}_{#3}({#2})}}
+\newcommand{\lwfgS}[3]{\ensuremath{\power{\lwfg{#1}{#2}{#3}}}}
+
+\newcommand{\UU}{\MATHID{U}} %wait for subgraphs
+\newcommand{\US}{\MATHID{U}} % subgraph
+\newcommand{\VS}{\MATHID{V}} % subgraph
+\newcommand{\XS}{\MATHID{X}} % subgraph
+\newcommand{\YS}{\MATHID{Y}} % subgraph
+\newcommand{\ndv}{\MATHID{v}} % node in a wait for graph
+\newcommand{\ndw}{\MATHID{w}} % node in a wait for graph
+\newcommand{\ndx}{\MATHID{x}} % node in a wait for graph
+\newcommand{\ndy}{\MATHID{y}} % node in a wait for graph
+
+
+\newcommand{\compl}[1]{\ensuremath{\overline{\MATHIDN{#1}}}}
+\newcommand{\complL}[1]{\ensuremath{\widehat{\MATHIDN{#1}}}} % local
+                                % complement, widehat is placeholder, come up with something better
+
+
+\newcommand{\mscc}[1]{\ensuremath{\MATHIDN{mscc(#1)}}}         % mscc component graph
+
+
+
+\newcommand{\wfgr}[2]{\ensuremath{\MATHIDN{W}^R_{#1}({#2})}}
+\newcommand{\sg}[1]{\ensuremath{\MATHIDN{G}_{#1}}}
+\newcommand{\ssg}[2]{\ensuremath{\MATHIDN{G}_{#1}^{#2}}}
+
+\newcommand{\scyc}[3]{\ensuremath{\MATHIDN{scyc}_{#1}({#3, #2})}}
+\newcommand{\scscyc}[3]{\ensuremath{\MATHIDN{scscyc}_{#1}^{#2}({#3})}}
+
+
+\newcommand{\preds}[3]{\ensuremath{\MATHID{preds}_{#1}({#2, #3})}}
+\newcommand{\succs}[3]{\ensuremath{\MATHID{succs}_{#1}({#2, #3})}}
+
+
+\newcommand{\SC}{\ensuremath{\MATHIDN{SC}}}
+\newcommand{\CC}{\ensuremath{\MATHIDN{CC}}}
+
+\newcommand{\In}[4]{\MATHID{In}_{#1}(#1, #2, #3)}
+\newcommand{\Out}[4]{\MATHID{Out}_{#1}(#1, #2, #3)}
+
+\newcommand{\InK}[3]{\MATHIDN{In}_{#2}({#1, #3})}
+
+
+
+\newcommand{\PIn}[2]{\MATHIDN{PIn}_{#2}({#1})}
+\newcommand{\PInK}[3]{\MATHIDN{PIn}_{#2}({#1, #3})}
+\newcommand{\POut}[3]{\MATHIDN{POut}_{#2}({#1, #3})}
+
+\newcommand{\DS}{\ensuremath{D}\xspace}     % deadlock subsystem
+\newcommand{\ds}[1]{\ensuremath{\MATHIDN{D}_{#1}}}     % deadlock subsystem
+\newcommand{\dsk}[2]{\ensuremath{\MATHIDN{D}_{#1}^{#2}}}     % generalized deadlock subsystem
+\newcommand{\pdsk}[2]{\ensuremath{\MATHIDN{PD}_{#1}^{#2}}}     % generalized pessimistic deadlock subsystem
+
+
+
+\newcommand{\Mdsk}[2]{\ensuremath{\MATHIDN{M}_{#1}^{#2}}}     % generalized deadlock subsystem
+
+
+
+\newcommand{\lla}[2]{\mbox{$\, \stackrel{#1}{\longrightarrow}_{#2} \,$}}
+
+
+
+\newcommand{\goesto}[1][]{\stackrel{#1}{\rightarrow}}
+\newcommand{\goestog}[1][]{\stackrel{#1}{\rightarrow}}
+
+\newcommand{\la}[1]{\ensuremath{\stackrel{#1}{\rightarrow}}}
+
+
+\newcommand{\Bp}{B_\varphi}
+\newcommand{\vph}{\varphi}
+
+
+\newcommand{\pj}{\raisebox{0.2ex}{$\upharpoonright$}}
+\newcommand{\al}{\alpha}
+
+\newcommand{\Init}{\MATHID{Init}}
+\newcommand{\CInv}{\MATH{\Phi}}
+\newcommand{\IInv}{\MATH{\Psi}}
+\newcommand{\GInv}{\MATH{\Phi}}
+
+
+
+
+\newcommand{\DIS}{\MATHID{DIS}}
+\newcommand{\intr}{\mathit{int}}
+\newcommand{\BD}{\ensuremath{D}\xspace}
+\newcommand{\mpi}{\gamma}
+
+
+%%% supercycle violations
+
+%% global supercycle violation
+\newcommand{\scV}[2]{\ensuremath{\SMATHID{viol}_{\B}(#1,#2)}} % overall supercycle violation 
+\newcommand{\scVd}[3]{\ensuremath{\SMATHID{viol}_{\B}(#1,#3,#2)}} % supercycle violation at depth $d$
+\newcommand{\viol}[3]{\ensuremath{\SMATHID{viol}_{\B}(#1,#3,#2)}} % supercycle violation at depth $d$
+\newcommand{\scViol}[3]{\ensuremath{\SMATHID{viol}_{\B}(#1,#3,#2)}} % supercycle violation at depth $d$
+
+%% local supercycle violation
+\newcommand{\scVL}[4]{\ensuremath{\SMATHID{violLoc}(#1,#2,\dsk{#3}{#4})}} % local supercycle violation condition
+
+\newcommand{\lviol}[5]{\ensuremath{\SMATHID{violLoc}(#1,#3,#2,\dsk{#4}{#5})}} % local supercycle violation condition at depth $d$
+\newcommand{\scVLd}[5]{\ensuremath{\SMATHID{violLoc}(#1,#3,#2,\dsk{#4}{#5})}}  % local supercycle violation condition at depth $d$
+\newcommand{\locScViol}[5]{\ensuremath{\SMATHID{violLoc}(#1,#3,#2,\dsk{#4}{#5})}}  % local supercycle violation condition at depth $d$
+
+
+
+% strong connectedness violation condition
+\newcommand{\scviol}[2]{\ensuremath{\SMATHID{sConnViol}_{\B}(#1,#2)}}
+\newcommand{\connViol}[2]{\ensuremath{\SMATHID{sConnViol}_{\B}(#1,#2)}}
+\newcommand{\lconnViol}[4]{\ensuremath{\SMATHID{sConnViolLoc}(#1,#2,\dsk{#3}{#4})}}
+\newcommand{\locConnViol}[4]{\ensuremath{\SMATHID{sConnViolLoc}(#1,#2,\dsk{#3}{#4})}}
+
+
+% formation violation condition
+\newcommand{\formViol}[2]{\ensuremath{\SMATHID{genViol}_{\B}(#1,#2)}}
+\newcommand{\genViol}[2]{\ensuremath{\SMATHID{genViol}_{\B}(#1,#2)}}
+\newcommand{\locFormViol}[4]{\ensuremath{\SMATHID{genViolLoc}(#1,#2,\dsk{#3}{#4})}}
+\newcommand{\genLocViol}[4]{\ensuremath{\SMATHID{genViolLoc}(#1,#2,\dsk{#3}{#4})}}
+
+
+% pseudocode
+\newcommand{\lviolName}{\ensuremath{\SMATHID{violLoc}}}
+
+
+
+\newcommand{\VA}[4]{\ensuremath{\MATHIDN{V_{#1,#2}[#3,#4]}}}    %violations array
+
+\newcommand{\VV}[5]{\ensuremath{\MATHIDN{V_{\dsk{#1}{#2},#3} [#4 #5]}}}    %sc violations array, #1 is a, #2 is \l, #3 is t_a, #4 is v, #5 is d
+                                                                        % i.e., \VV{a}{\l}{t_a}{v}{d}
+
+\newcommand{\LF}[5]{\ensuremath{\MATHIDN{F_{\dsk{#1}{#2},#3}  [#4,#5]}}}    %loc form violations array, #1 is a, #2 is \l, #3 is t_a, #4 is v, #5 is d
+
+\newcommand{\VN}[2]{\ensuremath{\MATHIDN{V_{#1,#2}}}}    %violations array name
+
+\newcommand{\V}{\ensuremath{\MATHIDN{V}}}
+
+\newcommand{\bU}{\overline{U}}
+\newcommand{\bV}{\overline{V}}
+
+
+% fixpoint
+\newcommand{\lat}[2]{\ensuremath{\CMATHIDN{L}_{#1}({#2})}}           % wait for lattice
+\newcommand{\llat}[3]{\ensuremath{\CMATHIDN{L}_{#3}({#2})}}           % wait for lattice
+%\newcommand{\llat}[3]{\ensuremath{\CMATHIDN{L}_{#1}^{#3}({#2})}}           % wait for lattice
+\newcommand{\ewfg}{\ensuremath{\emptyset}\xspace}                         % empty wait for graph
+\newcommand{\ord}{\sqsubseteq}
+\newcommand{\subg}{\sqsubseteq}  % subgraph
+\newcommand{\meet}{\sqcap}
+\newcommand{\join}{\sqcup}
+\newcommand{\MEET}{\bigsqcap}
+\newcommand{\JOIN}{\bigsqcup}
+
+\newcommand{\SF}[1]{\ensuremath{\CMATHIDN{S}(#1)}}   % fixpoint mapping for supercycles
+\newcommand{\SFs}{\ensuremath{\CMATHIDN{S}}}           % SF symbol with no args
+\newcommand{\VF}[1]{\ensuremath{\CMATHIDN{V}(#1)}}   % fixpoint mapping for supercycle violation
+\newcommand{\VFs}{\ensuremath{\CMATHIDN{V}}}  % VF symbol with no args
+\newcommand{\blocks}[2]{\ensuremath{\MATHIDN{blocks}(#1, #2)}}
+\newcommand{\lfp}[1]{\ensuremath{\MATHIDN{lfp}(#1)}}
+\newcommand{\gfp}[1]{\ensuremath{\MATHIDN{gfp}(#1)}}
+
+
+\newcommand{\lSF}[1]{\ensuremath{\CMATHIDN{SL}(#1)}}   % fixpoint mapping for supercycles
+\newcommand{\lSFs}{\ensuremath{\CMATHIDN{SL}}}           % SF symbol with no args
+\newcommand{\lVF}[1]{\ensuremath{\CMATHIDN{VL}(#1)}}   % fixpoint mapping for supercycle violation
+\newcommand{\lVFs}{\ensuremath{\CMATHIDN{VL}}}  % VF symbol with no args
+\newcommand{\lblocks}[2]{\ensuremath{\MATHIDN{lblocks}(#1, #2)}}
+
+
+
+%%%%% REVISED CONDITION NAMES
+\newcommand{\BC}{\CMATHID{BC}}
+
+\newcommand{\GAO}{\CMATHID{GALT}}      %\newcommand{\GAO}{\CMATHID{GLOBAL\!-\!AND\!-\!OR}}
+\newcommand{\GLin}{\CMATHID{GLIN}}     %{\CMATHID{GLOBAL\!-\!LINEAR}}
+
+\newcommand{\LAO}{\CMATHID{LALT}}      %{\CMATHID{LOCAL\!-\!AND\!-\!OR}}
+\newcommand{\LLin}{\CMATHID{LLIN}}     %{\CMATHID{LOCAL\!-\!LINEAR}}
+
+\newcommand{\DFC}{\GLin}   %\CMATHID{DFC}}
+\newcommand{\LDFC}{\LLin} %\CMATHID{LDFC}}
+
+\newcommand{\ADFC}{\CMATHID{ADFC}}
+\newcommand{\GDFC}{\CMATHID{GDFC}}
+
+\newcommand{\LCDFC}{\CMATHID{LCDFC}}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%% PROCEUDRE NAMES  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\PNAME}[1]{\mbox{\textsc{#1}}}                    % Defines formatting of all algorithm names
+
+\newcommand{\checkLAO}[1]{\PNAME{Lalt}(#1)}                %{\PNAME{checkLocalANDOR}(#1)}
+\newcommand{\checkLAOInt}[1]{\PNAME{LaltInt}(#1)}          %{\PNAME{checkLocalANDORInt}(#1)}
+\newcommand{\checkLAOIntDist}[1]{\PNAME{LaltIntDist}(#1)}  %{\PNAME{checkLocalANDORIntDist}(#1)}
+
+\newcommand{\checkLin}[1]{\PNAME{LLin}(#1)}                %{\PNAME{checkLocalLinear}(#1)}
+%\newcommand{\checkLin}[1]{\PNAME{checkLin}(#1)}                %{\PNAME{checkLocalLinear}(#1)}
+\newcommand{\checkLinInt}[1]{\PNAME{LLinInt}(#1)}          %{\PNAME{checkLocalLinearInt}(#1)}
+%\newcommand{\checkLinInt}[1]{\PNAME{checkLinInt}(#1)}          %{\PNAME{checkLocalLinearInt}(#1)}
+\newcommand{\checkLinIntDist}[1]{\PNAME{LLinIntDist}(#1)}  %{\PNAME{checkLocalLinearIntDist}(#1)}
+%\newcommand{\checkLinIntDist}[1]{\PNAME{checkLinIntDist}(#1)}  %{\PNAME{checkLocalLinearIntDist}(#1)}
+
+\newcommand{\cViol}[1]{\PNAME{compute-local-SC-Violations}(#1)}
+\newcommand{\cLScV}[1]{\PNAME{LocScViol}(#1)}
+
+\newcommand{\cViolD}[1]{\PNAME{compute-local-SC-Violations-Dist}(#1)}
+\newcommand{\cLScVD}[1]{\PNAME{LocScViolDist}(#1)}
+
+\newcommand{\cViolDN}[1]{\PNAME{compute-local-SC-Violations-Dist-Node}(#1)}
+\newcommand{\cViolDIN}[1]{\PNAME{violationsDistInteriorNode}({#1})}
+\newcommand{\cViolDBN}[1]{\PNAME{violationsDistBorderNode}(#1)}
+
+\newcommand{\cLScVDN}[1]{\PNAME{LocScViolDistNode}(#1)}
+
+
+
+\newcommand{\cLFV}[1]{\PNAME{locFormViol}(#1)}
+\newcommand{\cLconnScV}[1]{\PNAME{locSconnScViol}(#1)}
+
+
+%,;lk;op-
+
+\newcommand{\cInitSCFree}[1]{\PNAME{checkInitSupercycleFree}(#1)}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newcommand{\MAIN}{\PNAME{Main}}
+
+\newcommand{\deadlocktool}{\PNAME{LALT-BIP}\xspace}
+\newcommand{\ldfctool}{\PNAME{LDFC-BIP}\xspace}
+\newcommand{\checkDF}[1]{\PNAME{checkDF}(#1)}
+\newcommand{\globDFC}[1]{\PNAME{globDFC}(#1)}
+\newcommand{\locLDFC}[1]{\PNAME{locLDFC}(#1)}
+
+
+
+\newcommand{\locLCDFC}[1]{\PNAME{locLCDFC}(#1)}
+
+\newcommand{\checkInt}[1]{\PNAME{checkInt}(#1)}
+\newcommand{\checkLCDFC}[1]{\PNAME{checkLCDFC}(#1)}
+
+\newcommand{\checkPath}[1]{\PNAME{checkPath}(#1)}
+\newcommand{\checkSC}[1]{\PNAME{checkSC}(#1)}
+
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%% DPHILS EXAMPLE %%%%%%%%%%%%%%%%%
+
+\newcommand{\get}{\MATHID{get}}
+\newcommand{\release}{\MATHID{release}}
+\newcommand{\use}{\MATHID{use}}
+\newcommand{\free}{\MATHID{free}}
+
+\newcommand{\Get}{\MATHID{Get}}
+\newcommand{\Rel}{\MATHID{Rel}}
+
+
+
+%%%%%%%%%%%%%%%%%%%% FORMATTING COMMANDS %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\halfind}{\hspace*{1.5em}}
+\newcommand{\ind}{\hspace*{3.0em}}
+\newcommand{\pind}{\hspace*{3.0em}}
+
+
+\newcommand{\horline}{\rule{\textwidth}{1pt}}
+
+\newcommand{\remove}[1]{}               % remove blocks of text
+
+\newcommand{\intrdef}[1]{\emph{#1\/}}   % emphasize first occurence of technical terms in definitions
+\newcommand{\intrit}[1]{\emph{#1\/}}    % emphasize first occurence of technical terms that occur
+                                        % in-line in the text
+
+\newcommand{\intrb}[1]{\emph{\textbf{{#1\/}}}}
+
+\newcommand{\lbr}{\linebreak}
+
+\newcommand{\emp}{\emph}	
+\newcommand{\empi}[1]{\textit{#1\/}}
+\newcommand{\empb}[1]{\textbf{#1\/}}
+\newcommand{\empbi}[1]{\textbf{\textit{#1\/}}}
+
+\newcommand{\smpage}{\noindent \parbox{\textwidth}}
+
+\newcommand{\intro}{\emph}	
+\newcommand{\introdf}{\emph}	
+
+
+%%%%%%%%%%%%%%%%% GRAPH THEORY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\first}[1]{\MATHID{first}(#1)}
+\newcommand{\last}[1]{\MATHID{last}(#1)}
+
+\newcommand{\depth}[3]{\MATHIDN{depth}_{#2}({#1, #3})}
+
+\newcommand{\idepth}[2]{\MATHIDN{in\_depth}_{#1}({#2})}        %indepth(G,v)
+\newcommand{\odepth}[2]{\MATHIDN{out\_depth}_{#1}({#2})}     %outdepth(G,v)
+
+\newcommand{\widepth}[3]{\MATHIDN{in\_depth}_{#1}({#2, #3})} % indepth(B,s,v) = indepth_{W_B(s)}(v)
+\newcommand{\wodepth}[3]{\MATHIDN{out\_depth}_{#1}({#2, #3})} % outdepth(B,s,v) = outdepth_{W_B(s)}(v)
+
+\newcommand{\noIn}{\ensuremath{\mathit{noIn}}}
+\newcommand{\noOut}{\ensuremath{\mathit{noOut}}}
+
+\newcommand{\pth}[2]{\MATHID{path}_{#1}(#2)}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%% GENERAL MATH SYMBOLS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\ex}{\exists\,}
+\newcommand{\fa}{\forall\,}
+\newcommand{\exs}{\exists\,}
+\newcommand{\fas}{\forall\,}
+\newcommand{\exn}{\exists}    % no space after
+\newcommand{\fan}{\forall}    % no space after
+
+\newcommand{\stt}{~|~}
+
+
+
+
+
+\newcommand{\MAX}{\mathrm{MAX}}
+
+\newcommand{\df}{\triangleq}
+%\newcommand{\df}{\stackrel{\mathit{def}}{=}}
+
+%\newcommand{\AND}{\bigwedge}
+\newcommand{\INT}{\bigcap}
+%\newcommand{\OR}{\bigvee}
+
+\newcommand{\UN}{\bigcup}
+\newcommand{\PA}{/\!/}		% parallel assignment
+
+\newcommand{\ar}{\rightarrow}	% abbreviated rightarrow
+\newcommand{\choice}{\mbox{$[\hspace*{-1.0pt}]$}}
+\renewcommand{\d}{\, : \,}	% separator in quantified formulae
+%\newcommand{\df}{\mbox{$\:\stackrel{\rm df}{=\!\!=}\:$}}
+\newcommand{\ev}{\equiv}
+\newcommand{\ifof}{\Leftrightarrow}	% logical equivalence
+\newcommand{\imp}{\Rightarrow}		% logical implication
+\newcommand{\folf}{\Leftarrow}                 % follows from 
+\newcommand{\ints}{\cap}
+\newcommand{\lra}{\longrightarrow}
+\newcommand{\oneton}{\set{1..n}}
+\newcommand{\pl}{\!\parallel\!}
+%\newcommand{\rng}[2]{[#1\!:\!#2]}	% integer range
+\newcommand{\rng}[2]{\set{#1,\ldots,#2}}	% integer range
+\newcommand{\s}{\mbox{$\hspace{-1pt}-\hspace{-2pt}$}}
+\newcommand{\sat}{\models}
+\newcommand{\spc}{\mbox{\vspace{-0.25in}}}
+\newcommand{\st}{~|~}
+\newcommand{\sub}{\subseteq}
+\newcommand{\tl}[1]{\mbox{$\tilde{#1}$}}% abbreviated tilde
+\newcommand{\un}{\cup}
+%\newcommand{\up}{\mbox{$\hspace{-0.1em}\uparrow\hspace{-0.1em}$}}
+\newcommand{\up}{\pj}
+
+\newcommand{\struct}[2]{\raisebox{-0.1in}{$\stackrel { \displaystyle #1} {\scriptstyle #2}\,$}}
+
+\newcommand{\set}[1]{\{ #1 \}}
+\newcommand{\tpl}[1]{\ensuremath{\lpb #1 \rpb}}
+\newcommand{\lpb}{\langle \hspace{-0.34em} \langle \hspace{-0.34em} \langle}	
+						% left pair bracket
+\newcommand{\rpb}{\rangle \hspace{-0.34em} \rangle \hspace{-0.34em} \rangle}
+						% right pair bracket
+
+\newcommand{\false}{\MATHID{false}}
+\newcommand{\true}{\MATHID{true}}
+
+
+
+\newcommand{\SUM}{\Sigma}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% LIST ENVIRONMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{lst}{\begin{list}	
+                       {}
+                       {\setlength{\topsep}{0em}
+                        \setlength{\itemsep}{0em}
+			\setlength{\leftmargin}{0.3in}
+                        \setlength{\rightmargin}{0em}
+		     }}
+                    {\end{list}}
+
+\newenvironment{blst}{\begin{list}		% bullet list
+                       {$\bullet$}
+                       {\setlength{\topsep}{0em}
+                        \setlength{\itemsep}{0em}
+			\setlength{\leftmargin}{0.25in}
+		     }}
+                    {\end{list}}
+
+\newcounter{levelone}
+\newenvironment{nlst1}{\begin{list}	% 1'st level enumerated list
+                       {\arabic{levelone}.}
+                       {\usecounter{levelone}
+			\setlength{\topsep}{0.2ex}
+                        \setlength{\itemsep}{0.1ex}
+			\setlength{\leftmargin}{0.25in}
+		     }}
+                    {\end{list}}
+
+
+\newcounter{leveltwo}
+\newenvironment{nlst2}{\begin{list}	% 2'nd level enumerated list
+                       {(\alph{leveltwo})}
+                       {\usecounter{leveltwo}
+			\setlength{\topsep}{0em}
+                        \setlength{\itemsep}{0em}
+			\setlength{\leftmargin}{0.4in}
+		     }}
+                    {\end{list}}
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MISC  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\topcase}[2]{\vspace{1.5ex} \noindent \textit{Case} #1: #2.}   
+\newcommand{\scase}[2]{\vspace{1.5ex} \noindent \textit{Subcase} #1: #2.}
+\newcommand{\sscase}[2]{\vspace{1.0ex} \noindent \textit{Subsubcase} #1: #2.}
+
+\newcommand{\cmnt}{\ensuremath{\rhd}}
+
+
+
+%%%%%%%%%%%%%%%%%%%% PSEUDOCODE %%%%%%%%%%%%%%%%%%
+\newcommand{\gts}{\leftarrow}                % assignment
+
+\newcommand{\ttt}{\ensuremath{\mathsf{true}}}
+\newcommand{\fff}{\ensuremath{\mathsf{false}}}
+%\newcommand{\ttt}{\textup{\texttt{tt}}}
+%\newcommand{\fff}{\textup{\texttt{ff}}}
+
+
+
+
+\newcommand{\gt}{\ensuremath{:=}}   % assignment
+
+
+\newcommand{\pseudocode}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\pseudocodensp}[1]{\ensuremath{\mathbf{#1}}}
+
+\newcommand{\pseudocodesp}[1]{\ensuremath{\mathbf{#1}\ }}
+
+%\newcommand{\pseudocode}[1]{\mbox{${\bf #1}$}\xspace}
+
+\newcommand{\IFC}[1]{\pseudocode{if}\ (\ensuremath{#1})}
+\newcommand{\ELSFC}[1]{\pseudocode{else\ if}\ (\ensuremath{#1})}
+\newcommand{\WHILEC}[1]{\pseudocode{while}\ (\ensuremath{#1})}
+%\newcommand{\FORALLC}[1]{\pseudocode{forall}\ (\ensuremath{#1})}
+\newcommand{\FORALLC}[1]{\pseudocode{forall}\ #1}
+\newcommand{\RETURNE}[1]{\pseudocodensp{return}(\ensuremath{#1})}
+\newcommand{\CONTINUE}{\pseudocodensp{continue}}
+\newcommand{\BREAK}{\pseudocodensp{break}}
+
+
+
+\newcommand{\IF}{\pseudocode{if}}
+\newcommand{\WHILE}{\pseudocode{while}}
+\newcommand{\REPEAT}{\pseudocode{repeat}}
+\newcommand{\FOR}{\pseudocode{for}}
+\newcommand{\FI}{\pseudocode{fi}}
+\newcommand{\THEN}{\pseudocode{then}}
+\newcommand{\ELSE}{\pseudocode{else}}
+\newcommand{\ELSF}{\pseudocode{else\ if}}
+\newcommand{\ENDIF}{\pseudocode{endif}}
+\newcommand{\DO}{\pseudocode{do}}
+\newcommand{\OD}{\pseudocode{od}}
+
+\newcommand{\ENDWHILE}{\pseudocode{endwhile}}
+\newcommand{\ENDREPEAT}{\pseudocode{endrepeat}}
+\newcommand{\ENDFOR}{\pseudocode{endfor}}
+
+
+
+\newcommand{\BEGIN}{\pseudocode{begin}}
+\newcommand{\END}{\pseudocode{end}}
+\newcommand{\PROC}{\pseudocode{procedure}}
+\newcommand{\CALL}{\pseudocode{call}}
+\newcommand{\VAL}{\pseudocode{value}}
+\newcommand{\VALRES}{\pseudocode{value\!-\!result}}
+\newcommand{\RES}{\pseudocode{result}}
+\newcommand{\RETURN}{\pseudocode{return}}
+\newcommand{\HALT}{\pseudocode{halt}}
+\newcommand{\DOWNTO}{\pseudocode{downto}}
+\newcommand{\TO}{\pseudocode{to}}
+
+
+%%%%%%%%%%%%%% MACROS FOR NUMBERED LINES IN CODE TABBING ENVIRONMENT %%%%%%%%%%%%%%%%
+
+\newcounter{lctr}
+\newcommand{\as}[1]{\{#1\}}
+
+%% line number on left, body in math mode
+\newcommand{\li}{\addtocounter{lctr}{1}\arabic{lctr}.}
+\newcommand{\lio}[1]{\addtocounter{lctr}{1}\arabic{lctr}.\>\ensuremath{#1}\\}
+\newcommand{\lit}[1]{\addtocounter{lctr}{1}\arabic{lctr}.\>\>\ensuremath{#1}\\}
+\newcommand{\lih}[1]{\addtocounter{lctr}{1}\arabic{lctr}.\>\>\>\ensuremath{#1}\\}
+\newcommand{\lif}[1]{\addtocounter{lctr}{1}\arabic{lctr}.\>\>\>\>\ensuremath{#1}\\}
+
+%%%% 2'nd argument is for a comment
+\newcommand{\lioc}[2]{\addtocounter{lctr}{1}\arabic{lctr}.\>\ensuremath{#1}\`{#2}\\}
+\newcommand{\litc}[2]{\addtocounter{lctr}{1}\arabic{lctr}.\>\>\ensuremath{#1}\`{#2}\\}
+\newcommand{\lihc}[2]{\addtocounter{lctr}{1}\arabic{lctr}.\>\>\>\ensuremath{#1}\`{#2}\\}
+\newcommand{\lifc}[2]{\addtocounter{lctr}{1}\arabic{lctr}.\>\>\>\>\ensuremath{#1}\`{#2}\\}
+\newcommand{\livc}[2]{\addtocounter{lctr}{1}\arabic{lctr}.\>\>\>\>\>\ensuremath{#1}\`{#2}\\}
+
+%%%% 2'nd argument is for a comment, no newline at end (for last line
+%%%% in listing)
+\newcommand{\lion}[1]{\addtocounter{lctr}{1}\arabic{lctr}.\>\ensuremath{#1}}
+\newcommand{\liocn}[2]{\addtocounter{lctr}{1}\arabic{lctr}.\>\ensuremath{#1}\`{#2}}
+
+
+
+
+\usepackage{hyperref}
+\usepackage{xcolor}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.6}
+\definecolor{darkgreen}{rgb}{0.0,0.6,0.0}
+\definecolor{darkred}{rgb}{0.6,0.0,0.0}
+\definecolor{background}{HTML}{EEEEEE}
+
+\usepackage{listings}
+\lstset{ %
+language=C,                % choose the language of the code
+basicstyle=\tiny,       % the size of the fonts that are used for the code
+numberstyle=\tiny,      % the size of the fonts that are used for the line-numbers
+frame=Ltbr,
+rulesep=.4pt,
+mathescape, % Allows escaping to (La)TeX mode within $$,
+stringstyle=\color{redb},
+keywords=[1]{elseif, return, else, int, wire, bool, if, Boolean, do-together, foreach, endfor, endif, while, to, Let},
+keywords=[2]{decl-list, init-list,next-list, wiredef-list, var-st, loc-st, append, assignment},
+showstringspaces = false,
+escapeinside={/*@}{@*/},
+basicstyle=\scriptsize\ttfamily,
+keywordstyle=[2]\color{darkred}\bf,
+keywordstyle=[1]\color{darkblue}\bf,
+commentstyle=\color{darkgreen},
+alsoletter={-},
+captionpos=b, %
+breaklines=true,
+backgroundcolor=\color{background},
+}
+
+\renewcommand{\l}{\ell}
+
+% add break line for theorems and propostions
+\makeatletter
+\renewcommand*{\@opargbegintheorem}[3]{\trivlist
+      \item[\hskip \labelsep{\bfseries #1\ #2}] \textbf{(#3)}\ \itshape}
+\makeatother
+

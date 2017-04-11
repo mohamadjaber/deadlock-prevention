@@ -5,26 +5,6 @@ then there is some finite $\l$ such that
 $\widepth{\B}{\B_i}{t} = \l \lor \wodepth{\B}{\B_i}{t} = \l$.
 
 
-% OMIT THIS AND LEAVE TO ANOTHER PAPER
-% %containing $\B_i$ and all nodes(components and interactions) have distance from $\B_i$ of up to $\l+1$.
-% Then $\widepth{\B}{\B_i}{t} = \l \lor \wodepth{\B}{\B_i}{t} = \l$ can be verified in 
-% the wait-for-graph of 
-% $\ssg{i}{\l+1}$, since we verify either that all wait-for-paths ending in $\B_i$
-% have length $\le \l$, or that 
-% all wait-for-paths starting in $\B_i$ 
-% have length $\le \l$.
-% These conditions can be checked in $\ssg{i}{\l+1}$, since $\ssg{i}{\l+1}$
-% contains every node in a
-% wait-for-path of length $\l+1$ or less and which starts or ends in $\B_i$.
-% %
-% Since $\ssg{i}{\l+1} \sub \ssg{\act}{\l+2}$ for $\B_i \in \cmps{\act}$, we use 
-% $\ssg{\act}{\l+2}$ instead of the set of subsystems 
-% $\set{\ssg{i}{\l+1} : \B_i \in \cmps{\act}}$. 
-% %% DISCUSS tradeoff: one larger $\ssg{a}{\l+2}$ instead of several smaller 
-% %$\ssg{i}{\l+1}?
-% %We leave analysis of the tradeoff between using one larger system
-% %($\ssg{a}{\l+2}$) versus several smaller ones ($\ssg{i}{\l+1}$) to another paper.
-
 
 
 \begin{definition}[$\LLin(\B, Q_0, \act, \l)$] \label{def:ldfc-k}
@@ -81,7 +61,7 @@ The proof of clause (1) is by double implication.
 %%%%%%%%%%%%%%%%%%%%%%%%
 \ul{$\widepth{\B}{\B_i}{s} < 2\l-1$ implies $\widepth{\B'}{\B_i}{s'} < 2\l-1$}:
 %
-Assume $\widepth{\B}{\B_i}{s} < 2\l-1$.
+Assume that $\widepth{\B}{\B_i}{s} < 2\l-1$.
 Let $\pi$ be an arbitrary wait-for path in $\wfg{\B'}{s'}$ that ends in $\B_i$. 
 %
 Since $(\B', Q'_0)$ is a subsystem of $(\B, Q_0)$, by Definition~\ref{def:static:wait-for-graph} and $s' = s \pj B'$,
@@ -97,7 +77,7 @@ Hence $\widepth{\B'}{\B_i}{s'} < 2\l-1$ since $\pi$ was arbitrarily chosen.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \ul{$\widepth{\B'}{\B_i}{s'} < 2\l-1$ implies $\widepth{\B}{\B_i}{s} < 2\l-1$}:
 %
-Assume $\widepth{\B}{\B_i}{s} \ge 2\l-1$. Then there exists a wait-for path $\pi$ in $\wfg{\B}{s}$ such that 
+Assume that $\widepth{\B}{\B_i}{s} \ge 2\l-1$. Then there exists a wait-for path $\pi$ in $\wfg{\B}{s}$ such that 
 $|\pi| \ge 2\l-1$. Let $\rho$ be the prefix of $\pi$ with length $2\l-1$. 
 %
 Since $(\B', Q'_0)$ is based on a superset of $\ssg{a}{2\l}$, and since the distance from $\B_i$ to the border of 

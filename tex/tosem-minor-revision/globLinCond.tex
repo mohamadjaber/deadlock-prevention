@@ -34,7 +34,7 @@ occur.
 %$a$ an interaction of $(B, Q_0)$, \ie $a \in \gamma$.
 $\GLin(B,Q_0,\act)$ holds iff, for every reachable transition $s \goesto[\act] t$ of BIP-system $(\B, Q_0)$, 
 the following holds in state $t$:\\
-  $$\fa \B_i \in \cmps{a}: \widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega.$$
+\ind  $\fa \B_i \in \cmps{a}: \widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega.$\\
 That is, for every component $\B_i$ of $\cmps{\act}$:  either $\B_i$ has finite in-depth, or finite out-depth, in $\wfg{\B}{t}$.
 \end{definition}
 
@@ -71,39 +71,6 @@ therefore cannot be in a strongly connected supercycle.
 
 
 
-\begin{proposition} \label{prop:outdepth-finite-implies-scViol}
-Assume that node $v$ of $\wfg{\B}{t}$ has a finite out-depth of $d$ in $\wfg{\B}{t}$, \ie 
-$\wodepth{\B}{v}{t} = d$. Then $\viol{v}{d}{t}$.  % USED TO BE d+1. CHECK
-\end{proposition}
-%
-\begin{proof}
-Proof is by induction on $d$.\\
-
-\noindent
-\ul{Base case, $d=0$.} Hence by $\wodepth{\B}{v}{t} = 0$ and Definitions~\ref{def:path} and \ref{def:depth},  
-$v$ has no outgoing wait-for-edges in $\wfg{\B}{t}$. Hence $\neg \blocks{v}{\wfg{\B}{t}}$, \ie $v$ is not blocked by the entire set of nodes in 
-$\wfg{\B}{t}$. Hence $\neg \blocks{v}{\compl{\ewfg}}$, since $\wfg{\B}{t} = \compl{\ewfg}$. So by \defn{violFix}, 
-$v \in \VF{\ewfg}$. By \defn{supercycle.violation}, $\scVd{v}{0}{s}$.\\
-
-%OLD Hence by Definition~\ref{def:supercycle.violation}, $\viol{v}{1}{t}$.
-
-\noindent
-\ul{Inductive step, $d > 0$.}
-Let $w$ be an arbitrary successor of $v$, \ie a node $w$ such that $v \ar w \in \wfg{\B}{t}$.
-By Definitions~\ref{def:path} and \ref{def:depth}, $w$ has an out-depth $d'$ that is less than $d$. 
-That is, $\wodepth{\B}{u}{t} = d' < d$.
-By the induction hypothesis applied to $d'$, we obtain $\viol{w}{d'}{t}$, and so $w \in \VFs^{d'} (\ewfg)$ by \defn{supercycle.violation}.
-Hence $w \in \VFs^{d-1} (\ewfg)$, since, by monotonicity of $\VFs$, we have $\VFs^{d'} (\ewfg) \subg \VFs^{d}$ when $d' \le d$.
-Since  $w$ is an arbitrary successor of $v$, it follows that $v$ is only blocked by nodes in $\VFs^{d-1} (\ewfg)$.
-Hence $\neg \blocks{v}{\compl{\VFs^{d-1} (\ewfg)}}$. 
-By \defn{violFix}, $v \in \VF{\VFs^{d-1} (\ewfg)}$, \ie $v \in \VFs^{d} (\ewfg)$.
-By \defn{supercycle.violation}, $\scVd{v}{d}{s}$.
-% OLD Hence by Definition~\ref{def:supercycle.violation}, Clauses~\ref{def:supercycle.violation.component.out} and \ref{def:supercycle.violation.interaction.out}, $\viol{v}{d+1}{t}$.
-\end{proof}
-
-
-
-
 \begin{lemma} \label{lemma:glob-lin-implies-globANDOR} \label{GLinGAO}
 $\fa \act \in \gamma: \GLin(\B, Q_0, \act) \imp \GAO(\B, Q_0, \act)$.  
 \end{lemma}
@@ -121,7 +88,8 @@ By Propositions~\ref{prop:indepth-finite-implies-scViol} and \ref{prop:outdepth-
 \ind \ind  $\fas \B_i \in \cmps{\act}:  \connViol{\B_i}{t} \lor (\ex d \ge 1: \viol{\B_i}{d}{t})$.
 
 \noindent
-Hence by Definition~\ref{def:formation.violation}, \\
+Hence by Definition~\ref{def:formation.violation}, 
+
 \ind For every reachable transition $s \goesto[\act] t$ of $(\B, Q_0)$,\\
 \ind \ind  $\fas \B_i \in \cmps{\act} : \formViol{\B_i}{t}$
 
@@ -162,7 +130,7 @@ $(\B, Q_0)$ is free of local deadlock.
 \end{corollary}
 %
 \begin{proof}
-Immediate from Theorems~\ref{thm:GAO.SC-free-preserving}, \ref{thm:GLin.SC-free-preserving} and Corollary~\ref{cor:SC-free-preserving.deadlock-free}.
+Immediate from Theorems~\ref{thm:GAO.SC-free-preserving}, \ref{thm:GLin.SC-free-preserving}, and Corollary~\ref{cor:SC-free-preserving.deadlock-free}.
 \end{proof}
 
 

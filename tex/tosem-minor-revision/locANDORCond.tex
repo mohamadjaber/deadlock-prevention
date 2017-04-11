@@ -48,12 +48,13 @@ either
     \bn
 
     \item \label{def:sConn.violation.loc:wait-for-out} every wait-for path $\pi$ from $v$ to a border node
-      of $\dsk{a}{\l}$ contains at least one node with a local supercycle violation
+      of $\dsk{a}{\l}$ contains at least one node with a local supercycle violation, \ie $\scVL{w}{t_\act}{\act}{\l}$
 
      or
 
     \item \label{def:sConn.violation.loc:wait-for-in} every wait-for path $\pi'$ from a border node
-      of $\dsk{a}{\l}$ to $v$ contains at least one node with a local supercycle violation
+      of $\dsk{a}{\l}$ to $v$ contains at least one node $w$ with a
+      local supercycle violation,  \ie $\scVL{w}{t_\act}{\act}{\l}$
 
     \en
 
@@ -131,7 +132,8 @@ the local supercycle formation condition implies the global supercycle formation
 \begin{definition}[General local supercycle violation, $\locFormViol{v}{t_\act}{\act}{\l}$]
 \label{def:locFormation.violation}
 Let $v$ be a node of $\dsk{\act}{\l}$.
-Then $\locFormViol{v}{t_\act}{\act}{\l}  \df  (\exs d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l}) \lor \locConnViol{v}{t_\act}{\act}{\l}$.
+Then $\locFormViol{v}{t_\act}{\act}{\l}  \df \scVL{v}{t_\act}{\act}{\l}) \lor \locConnViol{v}{t_\act}{\act}{\l}$.
+%Then $\locFormViol{v}{t_\act}{\act}{\l}  \df  (\exs d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l}) \lor \locConnViol{v}{t_\act}{\act}{\l}$.
 \end{definition}
 %Let $s \goesto[\act] t$ be a reachable transition. If, for every $\B_i \in \cmps{\act}$, 
 %$\formViol{v}{t}$ holds, then $s \goesto[\act] t$ does not introduce a supercycle, \ie if $s$ is

@@ -14,7 +14,8 @@ avoidance, we advocate deadlock prevention: design the system so that deadlocks 
 Deciding deadlock freedom of finite-state concurrent programs is PSPACE-complete, in general
 \cite[chapter 19]{papadimitriou1994computational}. To achieve tractability, we present a criterion
 for deadlock-freedom that is evaluated by model-checking a set of subsystems of the overall
-system. If the subsystems are small, the criterion can be checked quickly, and is sound (if
+system. If the subsystems are small, the criterion can be checked
+quickly. The criterion is sound (if
 true, it implies deadlock-freedom) but not complete (if false, then it yields no information about
 deadlock). If the subsystems are larger, then our criterion becomes more ``accurate'': roughly
 speaking, there is less possibility for the criterion to evaluate to false when the system is
@@ -76,35 +77,10 @@ scheduler~\cite{milner}.  These show that our method compares favorably with exi
 
 
 
-
-% can either make our deadlock freedom check incomplete (sufficient but not necessary), or we can
-% restrict the systems that we check to special cases.  We choose the first option: a system meeting
-% our condition is free of both local and global deadlocks, while a system which fails to meet our
-% condition may or may not be deadlock free.
-
-% We generalize previous works \cite{Att99a,AC05,AE98} by removing the requirement that interaction
-% between processes be expressed pairwise, and also by applying to BIP~\cite{bip06}, a framework from
-% which efficient distributed code can be generated. In contrast, the model of concurrency in
-% \cite{Att99a,AC05,AE98} requires shared memory read-modify-write operations with a large grain of
-% atomicity.
-
-
-% OLD
-% Section~\ref{s:bip} presents BIP.  Section~\ref{s:characterize} characterizes local and global deadlocks as the occurrence of a pattern of wait-for
-% edges called a \emph{supercycle}, and presents some structural properties of supercycles.  Section~\ref{secn:scFormation} considers how a supercyle
-% can be formed, and analyzes the consequences of supercycle formation.  Section~\ref{s:global} presents global conditions for the prevention of the
-% formation of supercycles. Global means that these conditions are evaluated in the entire system.  Section~\ref{s:local} presents local conditions for
-% the prevention of the formation of supercycles. These can be evaluated in (small) subsystems of the overall system, and are obtained by ``projecting''
-% the global conditions onto a subsystem.  Section~\ref{s:results} presents the main soundness and completeness results of the paper, and gives the
-% implication relation among our various conditions for deadlock-freedom.  Section~\ref{s:impl} gives algorithms to evaluate the local conditions, and
-% presents experimental evaluation.  Section~\ref{s:discussion} discusses related work, further work, and concludes.
-
-
-
 Section~\ref{s:bip} presents BIP.  Section~\ref{s:characterize} characterizes local and global deadlocks as the occurrence of a pattern of wait-for
-edges called a \emph{supercycle}, and presents some structural properties of supercycles.  Section~\ref{secn:globalSupercycles} considers ``global''
+edges called a supercycle (see discussion above).   Section~\ref{secn:globalSupercycles} considers ``global''
 supercycles, \ie those that occur in the overall system being considered, characterizes these as the greatest fixpoint of a ``blockng'' operator, and
-gives some of their graph-theoretic properties.  Section~\ref{secn:globalDeadlockFreedom} presents global conditions for the prevention of the
+presents some structural properties of supercycles. Section~\ref{secn:globalDeadlockFreedom} presents global conditions for the prevention of the
 formation of supercycles. Global means that these conditions are evaluated in the entire system.  Section~\ref{secn:localSupercycles} considers
 ``local'' supercycles, \ie those that occur in a given subsystem of the overall system being considered.  These are also characterized as the greatest
 fixpoint of a ``local blocking'' operator, which pessimistically assumers that nodes on the boundary of the subsystem are blocked. This pessimistic

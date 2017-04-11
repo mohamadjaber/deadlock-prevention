@@ -1,9 +1,26 @@
+We characterize a supercycle as a post fixpoint of a ``blocking operator'' $\SFs$, defined below, over the complete boolean lattice formed from the
+subgraphs of \wfg{B}{s}, with $\subg$ (\defn{wsubgraph}) as the ordering.
+%
+Roughly, $\SFs$ maps a subset $\XS$ of the nodes of a wait-for-graph (\ie some subset of the components and interactions in $(\B, Q_0)$)
+to a set of nodes $\YS$ whose execution is blocked by $\XS$. An interaction $\act$ in $\YS$ is blocked by $\XS$ if some participant of $\act$ is in $\XS$ and does
+not enable $\act$. A component $\B_i$  in $\YS$ is blocked by $\XS$ if every interaction that $\B_i$ enables is in $\YS$. In terms of the wait-for-graph, 
+$\act$ is blocked by $\XS$ if there is a wait-for edge from $\act$ to a node in $\XS$, and $\B_i$ is blocked by $\XS$ if every wait-for edge from $\B_i$ is to a
+node in $\XS$. 
+
+Since $\SFs$ is monotone, its greatest fixpoint $\SC$ exists.  If \wfg{B}{s} is supercycle-free, then $\SC$ is the empty wait-for graph \ewfg.
+Otherwise $\SC$ is the largest supercycle in \wfg{B}{s}.  We also define the dual $\VFs$ of $\SFs$, whose least fixpoints are the nodes that are not
+members of any supercycle, and we say that such nodes have a \emph{supercycle violation} . Since \wfg{B}{s} is finite, 
+$\VFs$ is monotone and continuous, and so its least fixpoint can be computed as usual by iterating $\VFs$, starting from \ewfg.
+This provides a method of computing the nodes with supercycle violations, whiich is the basis for our deadlock-freedom criterion.
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{A fixpoint characterization of supercycles}
 \label{secn:supercycle-fixpoint}
 
 \begin{definition}[Set of subgraphs] \label{defn:wsetOfSubgraphs}
-$\wfgS{B}{s} = \set{ W \stt W \subg \wfg{B}{s} }$.
+$\wfgPow{B}{s} = \set{ \XS \stt \XS \subg \wfg{B}{s} }$.
 \end{definition}
 
 
@@ -16,23 +33,23 @@ whose elements are all the subgraphs of
 
 The following proposition follows immediately from the definitions; its proof is left to the reader.
 \begin{proposition} \label{prop:isALattice}
-$\lat{\B}{s} = \tpl{ \wfgS{B}{s}, \subg }$ is a complete boolean lattice as follows:
+$\lat{\B}{s} = \tpl{ \wfgS{B}{s}, \subg }$ is a finite complete boolean lattice as follows:
 \be
 
 \item meet is given by graph intersection: 
-$\US \meet \VS$ consists of the nodes that are present in both $\US$ and $\VS$, together with their induced edges
+$\XS \meet \YS$ consists of the nodes that are present in both $\XS$ and $\YS$, together with their induced edges
 
-\item join is given by graph union: $\US \join \VS$ consists of the nodes and edges that are present in $\US$, or in $\VS$, or in both, together with their
+\item join is given by graph union: $\XS \join \YS$ consists of the nodes and edges that are present in $\XS$, or in $\YS$, or in both, together with their
   induced edges.
  Note that $\join$ is \emph{not} disjoint graph union: 
-it is possible for $\US$ and $\VS$ to have nodes and edges in common. Note also that $\US \join \VS$ may contain edges not present in either $\US$ nor $\VS$,
+it is possible for $\XS$ and $\YS$ to have nodes and edges in common. Note also that $\XS \join \YS$ may contain edges not present in either $\XS$ nor $\YS$,
 since the edges are those induced by  \wfg{B}{s}. 
 
 \item \wfg{B}{s}  is the top element 
 
 \item  the empty wait-for graph, denoted by \ewfg, is the bottom element
 
-\item the complement of $\US$ is \compl{\US} obtained by taking all the nodes of $\US$ that are not in \wfg{B}{s}, together with the induced edges.
+\item the complement \compl{\XS} of $\XS$ is obtained by taking all the nodes of $\XS$ that are not in \wfg{B}{s}, together with the induced edges.
 \ee
 \end{proposition}
 %
@@ -41,23 +58,23 @@ that are induced by \wfg{B}{s}.
 
 
 
-\begin{definition}[$\mathit{blocks}, \SFs, \VFs$] \label{defn:blocks} 
-Let $\US \subg \wfg{B}{s}$ and $\act, B_i$ be nodes in $\wfg{B}{s}$. Then 
-$\blocks{\act}{\US} \df (\ex B_i \in \US : \act \ar B_i \in \wfg{B}{s})$, and 
-$\blocks{\B_i}{\US} \df (\fa \act : \B_i \ar \act \in \wfg{B}{s} \imp \act \in \US)$.
+\begin{definition}[$\mathit{blocks}$] \label{defn:blocks} 
+Let $\XS \subg \wfg{B}{s}$ and $\act, B_i$ be nodes in $\wfg{B}{s}$. Then 
+$\blocks{\act}{\XS} \df (\ex B_i \in \XS : \act \ar B_i \in \wfg{B}{s})$, and 
+$\blocks{\B_i}{\XS} \df (\fa \act : \B_i \ar \act \in \wfg{B}{s} \imp \act \in \XS)$.
 \end{definition}
 
-\begin{definition} \label{defn:scFix} 
+\begin{definition}[$\SFs$]  \label{defn:scFix} 
 Define $\SFs: \wfgS{B}{s} \to \wfgS{B}{s}$ as follows.
-$\SF{\US}$ is the subgraph with nodes $\set{v \stt \blocks{v}{\US} }$, together with their induced edges.
+$\SF{\XS}$ is the subgraph with nodes $\set{v \stt \blocks{v}{\XS} }$, together with their induced edges.
 \end{definition}
 
-\begin{definition} \label{defn:violFix}
+\begin{definition}[$\VFs$]  \label{defn:violFix}
 Define $\VFs: \wfgS{B}{s} \to \wfgS{B}{s}$ as follows.
-$\VF{\US}$ is the subgraph with nodes ${\set{v \stt \neg \blocks{v}{\compl{\US}}}}$, together with their induced edges.
+$\VF{\XS}$ is the subgraph with nodes ${\set{v \stt \neg \blocks{v}{\compl{\XS}}}}$, together with their induced edges.
 \end{definition}
 %
-Hence $\VF{\UU} = \overline{\SF{\overline{\US}}}$, \ie $\VFs$ and $\SFs$ are duals.
+Hence $\VF{\XS} = \overline{\SF{\overline{\XS}}}$, \ie $\VFs$ and $\SFs$ are duals.
 
 \begin{proposition} \label{prop:monotone}
 $\SFs$ and $\VFs$ are monotone and continuous.
@@ -65,18 +82,18 @@ $\SFs$ and $\VFs$ are monotone and continuous.
 %
 \begin{proof}
 % show its monotnoe
-We show first that $\SFs$ is monotonic, \ie $\US \subg \VS \imp \SF{\US} \subg \SF{\VS}$.
-Let $\ndv$ be an arbitrary node in $\SF{\US}$, so that $\blocks{\ndv}{\US}$ holds. There are two cases.\\
+We show first that $\SFs$ is monotone, \ie $\XS \subg \YS \imp \SF{\XS} \subg \SF{\YS}$.
+Let $\ndv$ be an arbitrary node in $\SF{\XS}$, so that $\blocks{\ndv}{\XS}$ holds. There are two cases.\\
 
-\emph{Case of $\ndv$ is an interaction $\act$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $\ex \B_i \in \US  : \act \ar \B_i \sub \wfg{B}{s}$.
-Since $\US \subg \VS$, this same $\B_i$ is also a node of $\VS$, and so  $\ex \B_i \in \VS  : \act \ar \B_i \sub \wfg{B}{s}$. 
-Hence  $\blocks{\act}{\VS}$, and so $\act \in \SF{\VS}$. \\
+\emph{Case of $\ndv$ is an interaction $\act$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $\ex \B_i \in \XS  : \act \ar \B_i \in \wfg{B}{s}$.
+Since $\XS \subg \YS$, this same $\B_i$ is also a node of $\YS$, and so  $\ex \B_i \in \YS  : \act \ar \B_i \in \wfg{B}{s}$. 
+Hence  $\blocks{\act}{\YS}$, and so $\act \in \SF{\YS}$. \\
 
-\emph{Case of $\ndv$ is a component $\B_i$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $(\fa \act : \B_i \ar \act \in \wfg{B}{s} \imp \act \in \US)$.
-Since $\US \subg \VS$, we have  $(\fa \act : \B_i \ar \act \in \wfg{B}{s} \imp \act \in \VS)$. 
-Hence $\blocks{\B_i}{\VS}$, and so $\B_i \in \SF{\VS}$. \\
+\emph{Case of $\ndv$ is a component $\B_i$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $(\fa \act : \B_i \ar \act \in \wfg{B}{s} \imp \act \in \XS)$.
+Since $\XS \subg \YS$, we have  $(\fa \act : \B_i \ar \act \in \wfg{B}{s} \imp \act \in \YS)$. 
+Hence $\blocks{\B_i}{\YS}$, and so $\B_i \in \SF{\YS}$. \\
 
-In both cases, we have $\ndv \in \SF{\VS}$. Since $\ndv$ was chosen arbitrarily from $\SF{\US} $, it follows that $\SF{\US} \subg \SF{\VS}$. Hence
+In both cases, we have $\ndv \in \SF{\YS}$. Since $\ndv$ was chosen arbitrarily from $\SF{\XS} $, it follows that $\SF{\XS} \subg \SF{\YS}$. Hence
 $\SFs$ is monotone.
 %
 Since the dual of a monotone mapping in a complete boolean lattice is also monotone, we have that $\VFs$ is monotone.
@@ -88,16 +105,16 @@ Hence, by the Knaster-Tarski theorem, the least and greatest fixpoints of $\SFs$
 %, and so their greatest and least fixpoints 
 
 \begin{proposition} \label{prop:supercycleGFP}
-Let $\US \subg \wfg{B}{s}$. Then $\US$ is a supercycle in \wfg{B}{s} iff $\US \subg \SF{\US}$.
+Let $\XS \ne \ewfg$ and $\XS \subg \wfg{B}{s}$, \ie $\XS$ is a non-empty subgraph of \wfg{B}{s}. Then $\XS$ is a supercycle in \wfg{B}{s} iff $\XS \subg \SF{\XS}$.
 \end{proposition}
 %
 \begin{proof}
-Let $\US$ be a supercycle in \wfg{B}{s}. By \defn{supercycle}, every node in $\US$ is blocked by $\US$, \ie 
-$(\fa \ndv \in \US: \blocks{\B_i}{\US})$. By \defn{scFix}, $\US \subg \SF{\US}$.
+Let $\XS$ be a supercycle in \wfg{B}{s}. By \defn{supercycle}, every node in $\XS$ is blocked by $\XS$, \ie 
+$(\fa \ndx \in \XS: \blocks{\ndx}{\XS})$. By \defn{scFix}, $\XS \subg \SF{\XS}$.
 %
-Conversely, suppose $\US \subg \SF{\US}$ for some subgraph $\US$ of \wfg{B}{s}. Hence 
-$(\fa \ndv \in \US: \ndv \in \SF{\US})$, so by \defn{scFix}, $(\fa \ndv \in \US: \blocks{\B_i}{\US})$.
-Hence every node in $\US$ is blocked by $\US$, and so $\US$ satisfies \defn{supercycle}, and is therefore a supercycle.
+Conversely, suppose $\XS \subg \SF{\XS}$ for some subgraph $\XS$ of \wfg{B}{s}. Hence 
+$(\fa \ndx \in \XS: \ndx \in \SF{\XS})$, so by \defn{scFix}, $(\fa \ndx \in \XS: \blocks{\ndx}{\XS})$.
+Hence every node in $\XS$ is blocked by $\XS$, and so $\XS$ satisfies \defn{supercycle}, and is therefore a supercycle.
 \end{proof}
 %
 Thus the supercycles of \wfg{B}{s} are exactly the post-fixpoints of $\SFs$. %This implies that the union of two supercycles is also a supercycle. 
@@ -119,7 +136,8 @@ supercycles of \wfg{B}{s}, and so $\SC$ is the join of all these supercycles, an
 Let $\MATHIDN{lfp}, \MATHIDN{gfp}$ denote the least-fixed-point and greatest-fixed-point operators, respectively.
 
 \begin{proposition}  \label{prop:LFPisScViolations}
-Let  $V= \lfp{\VFs}$, \ie $V$ is the least fixpoint of $\VFs$. Then $v \in V$ iff $v$ is not a node in any supercycle of \wfg{B}{s}.    
+$\ndv \in  \lfp{\VFs}$ iff $\ndv$ is not a node in any supercycle of \wfg{B}{s}.    
+%Let  $\VS = \lfp{\VFs}$, \ie $\VS$ is the least fixpoint of $\VFs$. Then $v \in \VS$ iff $v$ is not a node in any supercycle of \wfg{B}{s}.    
 %the nodes of $V$ are exactly the nodes in \wfg{B}{s} that have supercycle violations. 
 \end{proposition}
 %
@@ -127,8 +145,8 @@ Let  $V= \lfp{\VFs}$, \ie $V$ is the least fixpoint of $\VFs$. Then $v \in V$ if
 %Follows from \prop{GFPisLargestSC} are the Park conjugate (dual) fixpoint theorem in complete boolean lattices.
 From the Park conjugate (dual) fixpoint theorem in complete boolean lattices, we have 
 \lfp{\VFs} = \compl{\gfp{\SFs}}.
-By \prop{GFPisLargestSC} , \gfp{\SFs} is the largest supercycle in \wfg{B}{s}. Hence the nodes not in 
-\gfp{\SFs} are exactly the nodes that have supercycle violations. These are exactly the nodes in \lfp{\VFs}.
+By \prop{GFPisLargestSC}, \gfp{\SFs} is the largest supercycle in \wfg{B}{s}. Hence the nodes not in 
+\gfp{\SFs} are exactly the nodes that are not in any supercycle. These are exactly the nodes in \lfp{\VFs}.
 \end{proof}
 
 
@@ -156,8 +174,10 @@ Also, it follows from \prop{LFPisScViolations} that $\scV{v}{s}$ iff there does 
 We say that a node $v$ of \wfg{B}{s} has a \emph{supercycle violation}\footnote{In the sequel, we say ``sc-violation'' rather than ``supercycle violation.''} iff $v$ is not a node in any supercycle of \wfg{B}{s}, 
 \ie iff $\scV{v}{s}$ holds. 
 By \prop{computeLFP}, we can compute $\lfp{\VFs}$ (and therefore $\scV{v}{s}$) by iterating $\VFs$, starting from $\ewfg$, until there is no more change.
-%
-For example, consider Figure~\ref{fig:SCnotCycle}. We have 
+
+\vspace{1ex}
+\textit{Example.} 
+For example, consider \fig{SCnotCycle}. We show the set of ndoes in each $\VFs^{d} (\ewfg)$, as the induced subgraph is easily inferred from \fig{SCnotCycle}.
 $\VFs^{0} (\ewfg) = \ewfg$,
 $\VFs^{1} (\ewfg) = \set{i}$, 
 $\VFs^{2} (\ewfg) = \set{B_6, i}$, 
@@ -165,31 +185,25 @@ $\VFs^{3} (\ewfg) = \set{h, B_6, i}$,
 $\VFs^{4} (\ewfg) = \set{B_5, h, B_6, i}$, 
 $\VFs^{5} (\ewfg) = \set{B_5, h, B_6, i}$, 
 as so $\lfp{\VFs} = \set{B_5, h, B_6, i}$.
+%
+For \fig{cycleOK}, it is each to verify that $\lfp{\VFs}$ is all the nodes in the system, \ie the wait-for graph shown is supercycle-free.
 
-
-%In the sequel, we say sc-violation rather than ``supercycle violation.''  The crucial result is
-%that, if $v$ has a level-$d$ sc-violation, for some $d \ge 1$, then $v$ cannot be a node of a
-%supercycle.
 
 
 
 \begin{definition}[Supercycle membership, $\scyc{\B}{s}{v}$]
 \label{defn:supercycle.membership}
-Let $v$ be a node of $\wfg{\B}{s}$. Then
-$\scyc{\B}{s}{v}$ holds iff there exists a supercycle $SC \sub
-\wfg{\B}{s}$ such that $v \in SC$. 
-%Define $\scyc{\B}{s}{\B_i}$, $\scyc{\B}{s}{\act}$ to mean that $\B_i$,
-%$\act$, respectively, are nodes of a supercycle of $\wfg{\B}{s}$.
+Let $\ndx$ be a node of $\wfg{\B}{s}$. Then $\scyc{\B}{s}{\ndx}$ holds iff there exists a supercycle $\SC \subg \wfg{\B}{s}$ such that
+$\ndx \in \SC$.
 \end{definition}
 
-If a component or interaction is not a node of a supercycle, then we say that it has a
-\emph{SC-violation}, \ie a supercycle-violation.
-%
+
 
 
 
 \begin{proposition} \label{prop:scViol-iff-notInSC}
-$\neg \scyc{\B}{t}{v}$ iff $\scV{v}{t}$ % $(\ex d \ge 1: \viol{v}{d}{t})$.
+Let $\ndx$ be a node of $\wfg{\B}{s}$. Then $\neg \scyc{\B}{s}{\ndx}$ iff $\scV{\ndx}{s}$ % $(\ex d \ge 1: \viol{v}{d}{t})$.
+That is, a node is not in any supercycle iff it has a supercycle violation.
 \end{proposition}
 %
 \begin{proof}
@@ -330,15 +344,12 @@ contrapositive of \clause{sc-membership:act-in}.
 
 Note that \clause{sc-membership:comp-in} cannot be strengthened to an equivalence: if all
 the interactions that wait for a component $\B_i$ are in a supercycle, then $\B_i$ itself may or may
-not be in a supercycle, depending on whether $\B_i$ is waiting for some $\actp$ that is not in a
+not be in a supercycle, depending on whether $\B_i$ is waiting for some other interaction $\actp$ that is not in a
 supercycle.
 %
 Likewise, \clause{sc-membership:act-in} cannot be strengthened to an equivalence: if $\act$
 is in a supercycle, then any component $\B_i$ that waits for $\act$ may or may not be in a 
-supercycle, depending on whether $\B_i$ is waiting for some $\actp$ that is not in a supercycle. 
-
-
-
+supercycle, depending on whether $\B_i$ is waiting for some other interaction $\actp$ that is not in a supercycle. 
 
 While \prop{sc-membership} gives relationships between supercycle membership of a node and both its
 successors and predecessors, nevertheless \defn{supercycle} implies that the ``causality'' of
@@ -373,59 +384,8 @@ Hence in both cases, $\SC$ contains at least two nodes.
 \end{proof}
 
 
-\begin{proposition} \label{prop:supercycle:contains-cycle}
-Every supercycle $\SC$ contains at least one cycle.
-\end{proposition} 
-%
-\prfs{Suppose not. Then $\SC$ is an acyclic supercycle. Hence every node in $\SC$
- has finite out-depth, which contradicts
- Proposition~\ref{prop:supercycle:no-finite-outdegree}. }
-%
-\prf{By contradiction. Suppose that $\SC$ is a supercycle and is also
-  acyclic. Then every path in $\SC$ is simple, and therefore finite.
-  Hence every node in $\SC$ has finite out-depth. By
-  Proposition~\ref{prop:supercycle:no-finite-outdegree}, $\SC$ cannot
-  be a supercycle.}
 
 
-
-\begin{proposition} \label{prop:supercycle:essential-subgraph-of} Let $\B =
-\gamma(\B_1,\dots,\B_n)$ be a composite component and $s$ a state of
-$\B$.  Let $SC$ be a supercycle in $\wfg{\B}{s}$, and let $SC'$ be the
-graph obtained from $SC$ by removing all vertices of finite in-depth
-and their incident edges. Then $SC'$ is also a supercycle in
-$\wfg{\B}{s}$. 
-\end{proposition} 
-%
-% \prfs{
-% By Proposition~\ref{prop:supercycle:contains-cycle}, $\SC'$ is nonempty.
-% Thus $SC'$ satisfies clause (1) of Definition~\ref{def:supercycle}.
-% %
-% Let $v$ be an arbitrary vertex of $\SC'$. Hence $v$ has infinite in-depth, and
-% therefore so do all of $v$'s successors in $\SC$. Hence all of these successors
-% are in $\SC'$. 
-% Hence every vertex $v$ in $SC'$ has successors
-% in $\SC'$ that satisfy clauses (2) and (3) of Definition~\ref{def:supercycle}.
-% }
-%
-\begin{proof}
-A vertex with finite in-depth cannot lie on a cycle in $\SC$.  Hence
-by Proposition~\ref{prop:supercycle:contains-cycle}, $\SC' \neq
-\emptyset$. Thus $\SC'$ satisfies clause (1) of the supercycle
-definition~(\ref{def:supercycle}).
-%
-Let $v$ be an arbitrary vertex of $\SC'$.  Thus $v \in \SC$ and $\idepth{\SC}{v} = \omega$ by definition of $SC'$. Let
-$w$ be an arbitrary successor of $v$ in $\SC$. $\idepth{\SC}{w} = \omega$ by Definition~\ref{def:depth}. Hence
-$w \in \SC'$, by definition of $SC'$.  Furthermore, $w$ is a successor of $v$ in $\SC'$, since $SC'$ consists of
-\emph{all} nodes of $SC$ with infinite in-depth. Hence the successors of $v$ in $\SC'$ are
-the same as the successors of $v$ in $\SC$
-%
-%Thus every vertex $v$ of $\SC'$ is also a vertex of $\SC$, and 
-%
-Now since $\SC$ is a supercycle, every vertex $v$ in $\SC$ has enough successors in $\SC$ to satisfy clauses (2) and (3)
-of the supercycle definition~(\ref{def:supercycle}). It follows that every vertex $v$ in $\SC'$ has enough successors in
-$\SC'$ to satisfy clauses (2) and (3) of the supercycle definition~(\ref{def:supercycle}).  
-\end{proof}
 
 \begin{proposition} \label{prop:supercycle:contains-mssc}
 Every supercycle $\SC$ contains a maximal strongly connected component $\CC$
@@ -434,21 +394,22 @@ such that (1) $\CC$ is itself a supercycle, and (2) there is no wait-for-edge fr
 %
 \begin{proof}
 $\SC$ is a directed graph, and so consider the decomposition of $\SC$
-into its maximal strongly connected components (MSCC). Let $\overline{\SC}$ be the graph resulting
-from replacing each MSCC by a single node. By its construction,  $\overline{\SC}$ is acyclic, and so contains at least one
+into its maximal strongly connected components (MSCC). Let $\mscc{\SC}$ be the graph resulting
+from replacing each MSCC by a single node. By its construction,  $\mscc{\SC}$ is acyclic, and so contains at least one
 node $x$ with no outgoing edges. Let $\CC$ be the MSCC corresponding to $x$. It follows that $\CC$ is nonempty, and
-hence $\CC$ satisfies clause (1) of the supercycle definition~(\ref{def:supercycle}).
-It also follows from the construction of $\CC$ that no node in $\CC$ has a wait-for-edge going to a node outside of
-$\CC$, and so Clause (2) of the Proposition is established.
+hence $\CC$ satisfies clause (1) of \defn{supercycle}.
 
-Let $v$ be an arbitrary node in $\CC$. Since $\CC \sub \SC$, $v$ is a node of $\SC$. Let $w$ be an arbitrary successor of
+Let $v$ be an arbitrary node in $\CC$. Since $\CC \subg \SC$, $v$ is a node of $\SC$. Let $w$ be an arbitrary successor of
 $v$ in $\SC$. Since no node in $\CC$ has an edge going to a node outside of $\CC$, it follows that $w$ is a node of $\CC$.
 Hence $v$ has the same successors in $\CC$ as in $\SC$. 
 Now since $\SC$ is a supercycle, every vertex $v$ in $\SC$ has enough successors in $\SC$ to satisfy clauses (2) and (3)
-of the supercycle definition~(\ref{def:supercycle}). It follows that every vertex $v$ in $\CC$ has enough successors in
-$\CC$ to satisfy clauses (2) and (3) of the supercycle definition~(\ref{def:supercycle}).  
+of \defn{supercycle}. It follows that every vertex $v$ in $\CC$ has enough successors in
+$\CC$ to satisfy clauses (2) and (3) of \defn{supercycle}.  
+%
+Hence, by \defn{supercycle}, $\CC$ is itself a supercycle, and so Clause (1) of the Proposition is established.
 
-Hence, by Definition~\ref{def:supercycle}, $\CC$ is itself a supercycle, and so Clause (1) of the Proposition is established.
+It also follows from the construction of $\CC$ that no node in $\CC$ has a wait-for-edge going to a node outside of
+$\CC$, and so Clause (2) of the Proposition is established.
 \end{proof}
 
 Note also that by Proposition~\ref{prop:supercycle:contains-twoNodes}, $\CC$ contains at least two nodes. Hence $\CC$ is
@@ -500,33 +461,115 @@ Formally, $\odepth{G}{v} = (\MAX\ \pi : \pth{G}{\pi} \land \first{\pi} = v : |\p
 \noindent
 We use $\widepth{\B}{v}{s}$ for $\idepth{\wfg{\B}{s}}{v}$, and also
 $\wodepth{\B}{v}{s}$ for $\odepth{\wfg{\B}{s}}{v}$.
+%
+A node with finite in-depth is not reachable from any non-trivial (\ie consisting of more than one node) MSCC, and a node with finite out-depth cannot
+reach any non-trivial MSCC.
 
 
 
-\begin{proposition} \label{prop:supercycle:no-finite-outdegree}
-\label{prop:supercycle:no-finite-outdepth} A supercycle $SC$
-contains no nodes with finite out-depth.
+
+
+
+
+\begin{proposition} \label{prop:outdepth-finite-implies-scViol}
+Assume that node $v$ of $\wfg{\B}{t}$ has a finite out-depth of $d$ in $\wfg{\B}{t}$, \ie 
+$\wodepth{\B}{v}{t} = d$. Then $\viol{v}{d}{t}$.  % USED TO BE d+1. CHECK
 \end{proposition}
 %
-% \prfs{By contradiction. Let $v$ be a node in $\SC$ with finite out-depth.
-% Hence all outgoing paths from $v$ end in a
-% sink node. By assumption, all atomic components are individually
-% deadlock-free, \ie they always enable at least one interaction. Hence
-% these sink nodes are all interactions, and therefore they violate
-% clause~\ref{clause:supercycle:action-blocked} in Definition~\ref{def:supercycle}.
-% }
+\begin{proof}
+Proof is by induction on $d$.\\
+
+\noindent
+\ul{Base case, $d=0$.} Hence by $\wodepth{\B}{v}{t} = 0$ and Definitions~\ref{def:path} and \ref{def:depth},  
+$v$ has no outgoing wait-for-edges in $\wfg{\B}{t}$. Hence $\neg \blocks{v}{\wfg{\B}{t}}$, \ie $v$ is not blocked by the entire set of nodes in 
+$\wfg{\B}{t}$. Hence $\neg \blocks{v}{\compl{\ewfg}}$, since $\wfg{\B}{t} = \compl{\ewfg}$. So by \defn{violFix}, 
+$v \in \VF{\ewfg}$. By \defn{supercycle.violation}, $\scVd{v}{0}{s}$.\\
+
+%OLD Hence by Definition~\ref{def:supercycle.violation}, $\viol{v}{1}{t}$.
+
+\noindent
+\ul{Inductive step, $d > 0$.}
+Let $w$ be an arbitrary successor of $v$, \ie a node $w$ such that $v \ar w \in \wfg{\B}{t}$.
+By Definitions~\ref{def:path} and \ref{def:depth}, $w$ has an out-depth $d'$ that is less than $d$. 
+That is, $\wodepth{\B}{u}{t} = d' < d$.
+By the induction hypothesis applied to $d'$, we obtain $\viol{w}{d'}{t}$, and so $w \in \VFs^{d'} (\ewfg)$ by \defn{supercycle.violation}.
+Hence $w \in \VFs^{d-1} (\ewfg)$, since, by monotonicity of $\VFs$, we have $\VFs^{d'}(\ewfg) \subg \VFs^{d}(\ewfg)$ when $d' \le d$.
+Since  $w$ is an arbitrary successor of $v$, it follows that $v$ is only blocked by nodes in $\VFs^{d-1} (\ewfg)$.
+Hence $\neg \blocks{v}{\compl{\VFs^{d-1} (\ewfg)}}$. 
+By \defn{violFix}, $v \in \VF{\VFs^{d-1} (\ewfg)}$, \ie $v \in \VFs^{d} (\ewfg)$.
+By \defn{supercycle.violation}, $\scVd{v}{d}{s}$.
+% OLD Hence by Definition~\ref{def:supercycle.violation}, Clauses~\ref{def:supercycle.violation.component.out} and \ref{def:supercycle.violation.interaction.out}, $\viol{v}{d+1}{t}$.
+\end{proof}
+
+
+
+
+
+
+
+
+\begin{corollary} 
+%\label{prop:supercycle:no-finite-outdegree}
+%\label{prop:supercycle:no-finite-outdepth}
+\label{cor:supercycle:no-finite-outdepth}
+A supercycle $\SC$ contains no nodes with finite out-depth.
+\end{corollary}
 %
-\begin{proof} By contradiction. Let $v$ be a node in $\SC$ with finite out-depth.
-Hence by Definition~\ref{def:depth}  all outgoing paths from $v$ are
-simple (and finite), and end in a
-sink node $w$, so $w$ has no outgoing wait-for-edges.
-By assumption, all atomic components are individually
-deadlock-free, \ie they always enable at least one interaction. So if
-$w$ is an atomic component $\B_i$, we have a wait-for-edge $\B_i \ar \act$
-for some interaction $\act$, contradicting the fact that $w$ is a sink node.
-Hence $w$ is some interaction $\act$.
-Since $\act$ has no outgoing edges, it violates
-clause~\ref{def:supercycle.action-blocked} in
-Definition~\ref{def:supercycle}, contradicting the assumption that
-$\SC$ is a supercycle.
+\begin{proof} 
+Let $v$ be a node in $\SC$ with finite out-depth $d$.
+By \prop{outdepth-finite-implies-scViol}, $\scVd{v}{d}{s}$. %$\viol{v}{d}{t}$. 
+By \defn{supercycle.violation}, $\scV{v}{s}$.
+By \prop{scViol-iff-notInSC} $\neg \scyc{\B}{t}{v}$. Hence $v$ cannot be a node of any supercycle, and we have a contradiction.
+% By contradiction. Let $v$ be a node in $\SC$ with finite out-depth.  Hence by Definition~\ref{def:depth} all outgoing paths from $v$ are simple (and
+% finite), and end in a sink node $w$, so $w$ has no outgoing wait-for-edges.  By assumption, all atomic components are individually deadlock-free, \ie
+% they always enable at least one interaction. So if $w$ is an atomic component $\B_i$, we have a wait-for-edge $\B_i \ar \act$ for some interaction
+% $\act$, contradicting the fact that $w$ is a sink node.  Hence $w$ is some interaction $\act$.  Since $\act$ has no outgoing edges, it violates
+% clause~\ref{def:supercycle.action-blocked} in Definition~\ref{def:supercycle}, contradicting the assumption that $\SC$ is a supercycle.
+%
+% Alternatively, observe that, by an easy induction, $v$ has out-depth $d$ implies that $v \in \JOIN_{d \ge 0} \VFs^{d} (\ewfg)$.
+% The proposition then follows by \prop{LFPisScViolations}.
+\end{proof}
+%
+
+
+
+
+
+
+
+\begin{proposition} \label{prop:supercycle:contains-cycle}
+Every supercycle $\SC$ contains at least one cycle.
+\end{proposition} 
+%
+\begin{proof}
+By contradiction. Suppose that $\SC$ is a supercycle and is also acyclic. Then every path in $\SC$ is simple, and therefore finite.  Hence every
+node in $\SC$ has finite out-depth. By \prop{supercycle:no-finite-outdegree}, $\SC$ cannot be a supercycle.
+\end{proof}
+
+
+\begin{proposition} \label{prop:supercycle:essential-subgraph-of} Let $\B =
+\gamma(\B_1,\dots,\B_n)$ be a composite component and $s$ a state of
+$\B$.  Let $SC$ be a supercycle in $\wfg{\B}{s}$, and let $SC'$ be the
+graph obtained from $SC$ by removing all vertices of finite in-depth
+and their incident edges. Then $SC'$ is also a supercycle in
+$\wfg{\B}{s}$. 
+\end{proposition} 
+%
+\begin{proof}
+A vertex with finite in-depth cannot lie on a cycle in $\SC$.  Hence
+by Proposition~\ref{prop:supercycle:contains-cycle}, $\SC' \neq
+\emptyset$. Thus $\SC'$ satisfies clause (1) of the supercycle
+definition~(\ref{def:supercycle}).
+%
+Let $v$ be an arbitrary vertex of $\SC'$.  Thus $v \in \SC$ and $\idepth{\SC}{v} = \omega$ by definition of $SC'$. Let
+$w$ be an arbitrary successor of $v$ in $\SC$. $\idepth{\SC}{w} = \omega$ by Definition~\ref{def:depth}. Hence
+$w \in \SC'$, by definition of $SC'$.  Furthermore, $w$ is a successor of $v$ in $\SC'$, since $SC'$ consists of
+\emph{all} nodes of $SC$ with infinite in-depth. Hence the successors of $v$ in $\SC'$ are
+the same as the successors of $v$ in $\SC$
+%
+%Thus every vertex $v$ of $\SC'$ is also a vertex of $\SC$, and 
+%
+Now since $\SC$ is a supercycle, every vertex $v$ in $\SC$ has enough successors in $\SC$ to satisfy clauses (2) and (3)
+of the supercycle definition~(\ref{def:supercycle}). It follows that every vertex $v$ in $\SC'$ has enough successors in
+$\SC'$ to satisfy clauses (2) and (3) of the supercycle definition~(\ref{def:supercycle}).  
 \end{proof}
