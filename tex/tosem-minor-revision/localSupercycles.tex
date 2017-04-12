@@ -182,7 +182,7 @@ $\llat{\B}{s}{\DS}  = \tpl{ \lwfgS{B}{s}{\DS}  \subg }$
 \begin{definition}[$\mathit{lblocks}$] \label{defn:blocksLoc}
 %Let $U \subg \lwfgS{B}{s}{\act,\l}$ and $a, B_i$ be nodes in $\wfg{B}{s}$. Then 
 Let $U \subg \lwfgS{B}{s}{\DS}$ and $\act, B_i$ be nodes in $\wfg{B}{s}$. Then 
-$\lblocks{\act}{\US} \df (\ex \B_i \in \US : \act \ar \B_i \sub \wfg{B}{s})$ or $\act$ is a border interaction of $\DS$, and 
+$\lblocks{\act}{\US} \df [ (\ex \B_i \in \US : \act \ar \B_i \sub \wfg{B}{s})$ or $\act$ is a border interaction of $\DS$ ], and 
 $\lblocks{\B_i}{\US} \df (\fa \act : \B_i \ar \act \sub\wfg{\B}{s} \imp \act \in \US)$.
 \end{definition}
 
@@ -205,7 +205,28 @@ $\lSFs$ and $\lVFs$ are monotone and continuous.
 \end{proposition}
 %
 \begin{proof}
-.....
+We show first that $\lSFs$ is monotone, \ie $\XS \subg \YS \imp \lSF{\XS} \subg \lSF{\YS}$.
+Let $\ndx$ be an arbitrary node in $\SF{\XS}$, so that $\lblocks{\ndx}{\XS}$ holds. There are three cases.\\
+
+\emph{Case of $\ndx$ is a border interaction of $\DS$}. Then $\lblocks{\ndx}{\YS}$ by \defn{blocksLoc}, and so $\ndx \in  \lSF{\YS}$ by
+\defn{scFixLoc}.\\
+
+\emph{Case of $\ndx$ is a non-border interaction $\act$}. By Definitions~\ref{defn:scFixLoc} and \ref{defn:blocksLoc}, we have
+$\ex \B_i \in \XS  : \act \ar \B_i \in \lwfg{B}{s}{\DS}$.
+Since $\XS \subg \YS$, this same $\B_i$ is also a node of $\YS$, and so  $\ex \B_i \in \YS  : \act \ar \B_i \in \lwfg{B}{s}{\DS}$. 
+Hence  $\lblocks{\act}{\YS}$, and so $\act \in \lSF{\YS}$. \\
+
+\emph{Case of $\ndx$ is a component $\B_i$}. By Definitions~\ref{defn:scFixLoc} and \ref{defn:blocksLoc}, we have
+$(\fa \act : \B_i \ar \act \in \lwfg{B}{s}{\DS} \imp \act \in \XS)$.
+Since $\XS \subg \YS$, we have  $(\fa \act : \B_i \ar \act \in \lwfg{B}{s}{\DS} \imp \act \in \YS)$. 
+Hence $\lblocks{\B_i}{\YS}$, and so $\B_i \in \lSF{\YS}$. \\
+
+In all three cases, we have $\ndx \in \lSF{\YS}$. Since $\ndx$ was chosen arbitrarily from $\lSF{\XS} $, it follows that $\lSF{\XS} \subg \lSF{\YS}$. Hence
+$\lSFs$ is monotone.
+%
+Since the dual of a monotone mapping in a complete boolean lattice is also monotone, we have that $\lVFs$ is monotone.
+%
+Finally, since $\llat{\B}{s}{\DS}$ is finite, it follows that $\lSFs$ and $\lVFs$ are continuous.
 \end{proof}
 
 

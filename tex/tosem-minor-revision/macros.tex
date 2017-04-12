@@ -13,10 +13,10 @@
 %% Equation Environments
 \newcommand{\leqn}[2]{\bs ~~~~~\parbox[t]{4.5in}{#2} \hfill{#1}\bs}
 
-\newcommand{\prf}[1]{\vspace{-1ex} \noindent \textit{Proof.} #1 \hfill{$\Box$}}
+%\newcommand{\prf}[1]{\vspace{-1ex} \noindent \textit{Proof.} #1 \hfill{$\Box$}}
 %\newcommand{\prf}[1]{}
 
-\newcommand{\prfs}[1]{}            % proof sketches
+%\newcommand{\prfs}[1]{}            % proof sketches
 %\newcommand{\prfs}[1]{\vspace{-1ex} \noindent \textit{Proof sketch.} #1 \hfill{$\Box$}}
 
 %\newenvironment{proof}{\vspace{-1.0ex}\textit{Proof.} }	% Proof environment
@@ -223,6 +223,7 @@
 
 \newcommand{\SC}{\ensuremath{\MATHIDN{SC}}}
 \newcommand{\CC}{\ensuremath{\MATHIDN{CC}}}
+\newcommand{\SSC}{\ensuremath{\MATHIDN{SSC}}}
 
 \newcommand{\In}[4]{\MATHID{In}_{#1}(#1, #2, #3)}
 \newcommand{\Out}[4]{\MATHID{Out}_{#1}(#1, #2, #3)}
@@ -394,6 +395,7 @@
 
 \newcommand{\cViol}[1]{\PNAME{compute-local-SC-Violations}(#1)}
 \newcommand{\cLScV}[1]{\PNAME{LocScViol}(#1)}
+\newcommand{\cLFP}[1]{\PNAME{Compute-LFP}(#1)}
 
 \newcommand{\cViolD}[1]{\PNAME{compute-local-SC-Violations-Dist}(#1)}
 \newcommand{\cLScVD}[1]{\PNAME{LocScViolDist}(#1)}

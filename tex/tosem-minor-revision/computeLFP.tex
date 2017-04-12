@@ -1,0 +1,57 @@
+
+To implement our deadlock freedom criteria, we must implement three procedures:
+\bn
+\item \label{task:check-init} Check that all initial states are supercycle-free
+\item \label{task:evaluate-lao} Evaluate $\LAO$
+\item \label{task:evaluate-llin} Evaluate $\LLin$
+\en
+%
+Tasks \ref{task:check-init} and \ref{task:evaluate-lao} require the computation of $\lfp{\lVFs}$.
+
+
+\newcommand{\fpt}{\mathit{fixpoint}}
+\newcommand{\VLA}[5]{\ensuremath{\MATHIDN{V_{\dsk{#1}{#2},#3} [#4 #5]}}}    %sc violations array, #1 is a, #2 is \l, #3 is t_a, #4 is v, #5 is d
+                                                                        % i.e., \VV{a}{\l}{t_a}{v}{d}
+
+\begin{figure}[H]
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:compute-scViol}
+aa\= aa\= aa\= aa\= aa\=\kill
+\cLFP{$\dsk{\act}{\l},t_\act$}\\
+\cmnt\ compute least fixpoint of $\lVF$ in state $t_\act$ of $\dsk{\act}{\l}$\\
+\cmnt\ Precondition: $\fas v \in \dsk{\act}{\l}: \VLA{\act}{\l}{t_\act}{v}{0} = \fff$ \\
+\cmnt\ Postcondition: $\fas v \in \dsk{\act}{\l}: \VLA{\act}{\l}{t_\act}{v}{d}$ 
+$ =
+  \begin{cases}
+    \ttt     & \quad \text{if }  v \in \lVFs^{d} (\ewfg)\\
+    \fff     & \quad \text{otherwise}\\
+  \end{cases}
+$
+\\
+\lio{d \gts 1} 
+\lio{\fpt \gts \ttt} 
+\lio{\WHILE \neg \fpt}
+   \lit{\mbox{invariant: $V$ computed correctly up to $d-1$}} 
+   \lit{\fpt \gts \fff} 
+   \lit{\FORALLC{v \in \dsk{\act}{\l}}}
+      \lih{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
+                          \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act})}}
+          \lifc{\VLA{\act}{\l}{t_\act}{v}{d} \gts \ttt}{\cmnt Base case: interaction with no outgoing wait-for-edges}  
+
+     \lih{\ELSFC{\mbox{$v$ is an interior interaction $\actp$ and } 
+                  (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} :  \VV{\act}{\l}{t_\act}{B_i}{})}}
+          \lif{\VLA{\act}{\l}{t_\act}{v}{d} \gts \ttt}
+     \lih{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
+                  (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : \VV{\act}{\l}{t_\act}{\actp}{})}}
+          \lif{\VLA{\act}{\l}{t_\act}{v}{d} \gts \ttt}
+    \lih{\FI}
+    \lit{\IFC{\neg \VLA{\act}{\l}{t_\act}{v}{d-1} \land \VLA{\act}{\l}{t_\act}{v}{d}} \fpt \gts \fff} 
+  \lit{\ENDFOR}
+\lion{\ENDWHILE} 
+\end{tabbing}
+\vspace{-3ex}
+\caption{Procedure to compute all supercycle-violations in state $t_\act$ of $\dsk{\act}{\l}$}
+\label{fig:computeSCViolateLocDSK}
+\label{fig:computeSCViolateLoc}
+\end{figure}
+

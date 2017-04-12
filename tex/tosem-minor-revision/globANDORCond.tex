@@ -1,6 +1,52 @@
-Our first global condition is the most general possible: simply assert that, after execution of interaction $\act$, some
-$\B_i \in \cmps{\act}$ exhibits a supercycle-violation, as given by $\viol{\B_i}{d}{t}$
-(Definition~\ref{def:supercycle.violation}). 
+%\subsection{General supercycle violation condition}
+
+We formalize violation of string connectedness (Condition~(\ref{conditions:no-strongly-connected} above)
+as follows.
+
+\begin{definition}[Strong connectedness violation, $\connViol{v}{t}$]
+\label{def:sConn.violation}
+ Let $v$ be a node of $\wfg{\B}{t}$.   Then $\connViol{v}{t}$ holds iff there does not exist a 
+strongly connected supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{B}{t}$.
+\end{definition}
+
+
+
+The general supercycle violation condition is then a disjunction of the supercycle violation condition
+and the strong connectedness violation conditions.
+
+
+\begin{definition}[General supercycle violation, $\genViol{v}{t}$]
+\label{def:formation.violation} 
+\label{defn:formation.violation} 
+Let $v$ be a node of $\wfg{\B}{t}$.
+Then 
+$\genViol{v}{t}  \df \scV{v}{t}  \lor \connViol{v}{t}$.
+%$\genViol{v}{t}  \df (\exs d \ge 1: \scViol{v}{d}{t}) \lor \connViol{v}{t}$.
+\end{definition}
+%
+Let $s \goesto[\act] t$ be a reachable transition. If, for every $\B_i \in \cmps{\act}$, $\formViol{v}{t}$ holds, then, as we show below,
+$s \goesto[\act] t$ does not introduce a supercycle, \ie if $s$ is supercycle-free, then so is $t$. As stated above, we formulate below a ``local''
+version of the general condition, which can be evaluated in ``small subsystems'', and so we often avoid state-explosion.
+%
+% THIS IS GIVEN IN PREVIOUS SECTION
+% However, evaluating this condition over all global transitions is subject to state explosion, and so we formulate below a ``local'' version of the
+% general condition, which can be evaluated in ``small subsystems'', and so we often avoid state-explosion. Hence the advantage of the local versions is
+% that they are usually efficiently computable, as we show in the sequel.  We also formulate a ``linear'' condition (both global and local), which is
+% simpler (but ``more incomplete'') than the general condition, and so is easier to evaluate.
+%
+% THIS IS GIVEN IN PREVIOUS SECTION, WITHOUT THE FORMALISM
+We reitrate that $\scV{v}{t}$ implies that $v$ cannot be in a supercycle. Hence, $v$ cannot be in a strongly-connected supercycle.
+Hence $\scV{v}{t} \imp \connViol{v}{t}$, so that 
+$\scV{v}{t}  \lor \connViol{v}{t} \ev  \connViol{v}{t}$.
+We give the formation violation condition in this manner, since 
+the implication does not necessarily hold for the local versions of $\scV{v}{t}$ and $\connViol{v}{t}$
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This discussion leads to the formal definition of $\GAO$: 
+after execution of interaction $\act$, all $\B_i \in \cmps{\act}$ exhibit a general supercycle-violation, as given by $\genViol{\B_i}{t}$ above.
 
 \begin{definition}[$\GAO(\B, Q_0, \act)$] \label{def:global.ANDOR-cond} \label{defn:global.ANDOR-cond} 
 Let $s \goesto[\act] t$ be a reachable transition of $(\B, Q_0)$.
@@ -8,10 +54,8 @@ Then, in $t$, the following holds.
 For every component $\B_i \in \comps{\act}$, %$\B_i$ has a level-$d$ $SC$-violation for some $d$.
 the formation violation condition holds.
 Formally,\\
-\ind  $\fas \B_i \in \comps{\act}, \formViol{\B_i}{t}$.
-%\ind  $\fas \B_i \in \comps{\act}, \exs d \ge 1: \viol{\B_i}{d}{t}$.
+\ind  $\fas \B_i \in \comps{\act}, \genViol{\B_i}{t}$.
 \end{definition}
-%We now show that $\GAO$ is supercycle-freedom preserving.
 
 
 \begin{theorem} \label{thm:GAO.SC-free-preserving}
@@ -19,7 +63,7 @@ $\GAO$ is supercycle-freedom preserving.
 \end{theorem}
 %
 \begin{proof}
-We must establish:
+We establish:
 for every reachable transition $s \la{\act} t$,
 $\wfg{\B}{s}$ is supercycle-free implies that $\wfg{\B}{t}$ is
 supercycle-free. Our proof is by contradiction, so we assume the existence of a reachable transition

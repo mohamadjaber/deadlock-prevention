@@ -4,27 +4,20 @@ we consider the in-depth and out-depth of the components $\B_i \in \cmps{\act}$.
 %
 \begin{itemize}
 
-\item \emph{Case 1} \label{case:finite-in}
-$\B_i$ has finite in-depth in $\wfg{\B}{t}$: then, if $\B_i \in
-\SC$, it can be removed and still leave a supercycle $\SC'$, by
-Proposition~\ref{prop:supercycle:essential-subgraph-of}. Hence 
-$\SC'$ exists in $\wfg{\B}{s}$, and so 
-$\B_i$ is not essential to the creation of a supercycle.
+\item \emph{Case 1} \label{case:finite-in} $\B_i$ has finite in-depth in $\wfg{\B}{t}$: then, if $\B_i \in \SC$, it can be removed and still leave a
+  supercycle $\SC'$, by Proposition~\ref{prop:supercycle:essential-subgraph-of}. Hence $\SC'$ exists in $\wfg{\B}{s}$, and so $\B_i$ is not essential
+  to the creation of a supercycle.
 
-\item \emph{Case 2} \label{case:finite-out}
-$\B_i$ has finite out-depth in $\wfg{\B}{t}$: 
-by Proposition~\ref{prop:supercycle:no-finite-outdegree}, 
-$\B_i$ cannot be part of a supercycle, and so $\SC \sub \wfg{\B}{s}$.
+\item \emph{Case 2} \label{case:finite-out} $\B_i$ has finite out-depth in $\wfg{\B}{t}$: by \cor{supercycle:no-finite-outdepth}, $\B_i$ cannot be
+  part of a supercycle, and so $\SC \subg \wfg{\B}{s}$.
 
-\item \emph{Case 3} \label{case:infinite-both}
-$\B_i$ has infinite in-depth and infinite out-depth in
-$\wfg{\B}{t}$: in this case, $\B_i$ is possibly an essential part of
-$\SC$, \ie $\SC$ was created in going from $s$ to $t$.
+\item \emph{Case 3} \label{case:infinite-both} $\B_i$ has infinite in-depth and infinite out-depth in $\wfg{\B}{t}$: in this case, $\B_i$ is possibly
+  an essential part of $\SC$, \ie $\SC$ was created in going from $s$ to $t$.
 
 \end{itemize}
 We thus impose a condition which guarantees that only 
-Case~1 %~\ref{case:finite-in} 
-or Case~2 %\ref{case:finite-out}
+Case~1 %\ref{case:finite-in}   %labels give section numbers, not list item numbers
+or Case~2 %\ref{case:finite-out} 
 occur. 
 
 
@@ -116,7 +109,7 @@ Follows immediately from Lemma~\ref{lemma:glob-lin-implies-globANDOR} and Theore
 \subsection{Deadlock freedom using global restrictions}
 
 
-\begin{corollary}[Deadlock-freedom via $\GAO, \GLin$] 
+\begin{corollary} [Deadlock-freedom via $\GAO, \GLin$] 
 \label{theorem:global.deadlock-free}
 Assume that
 \bn

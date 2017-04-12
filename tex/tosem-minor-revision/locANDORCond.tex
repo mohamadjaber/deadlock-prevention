@@ -38,7 +38,7 @@ Then, $\locConnViol{v}{t_\act}{\act}{\l}$ holds iff:
 \bn
 
 \item \label{def:sConn.violation.loc:scc}
-there does not exist a nontrivial strongly connected supercycle $SSC$ such that $v \in SSC$ and $SSC \sub WL$, and
+there does not exist a nontrivial strongly connected supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg WL$, and
 
 %\item \label{def:sConn.violation.loc:wait-for-out} every wait-for path $\pi$ from $v$ to a border node
 %  of $\dsk{a}{\l}$ contains at least one node with a local supercycle violation
@@ -76,23 +76,23 @@ Then\\
 \begin{proof}
 By contradiction. Assume there exists a node $v$ in $\dsk{a}{\l}$ such that $\locConnViol{v}{t_\act}{\act}{\l} \land \neg \connViol{v}{t}$.
 By $\neg \connViol{v}{t}$ and Definition~\ref{def:sConn.violation}, there exists a strongly connected
-supercycle $SSC$ such that $v \in SSC$ and $SSC \sub \wfg{B}{t}$. Then, there are two cases:
+supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{B}{t}$. Then, there are two cases:
 %
 \bn
-\item $SSC \sub \wfg{\dsk{a}{\l}}{t_\act}$: let $x$ be any node in $SSC$. Since $x$ is a node in a supercycle, we have by
+\item $\SSC \subg \wfg{\dsk{a}{\l}}{t_\act}$: let $x$ be any node in $\SSC$. Since $x$ is a node in a supercycle, we have by
 %OLD  Proposition~\ref{prop:scViol-implies-notInSC}, that $\neg (\ex d \ge  1: \scViol{x}{d}{t})$. Hence 
   \defn{supercycle.membership} and \prop{scViol-iff-notInSC}, that $\neg (\ex d \ge 1: \scViol{x}{d}{t})$. Hence 
   $(\fa d \ge 1: \neg \scViol{x}{d}{t})$. Hence by Proposition~\ref{prop:locScViol-implies-scViol}, 
   we have $(\fa d \ge 1: \neg \locScViol{x}{d}{t_\act}{\act}{\l})$. Let $L, WL$ be as given in Definition~\ref{def:sConn.violation.loc}.
-  Then $x \in L$, and since $x$ is an arbitrary node of $SSC$, we have $SSC \sub WL$. 
+  Then $x \in L$, and since $x$ is an arbitrary node of $\SSC$, we have $SSC \sub WL$. 
   Thus Clause~\ref{def:sConn.violation.loc:scc} of Definition~\ref{def:sConn.violation.loc} is violated.
 
-\item $SSC \not\sub \wfg{\dsk{a}{\l}}{t_\act}$: then there exists a node $x \in SSC -
-  \dsk{a}{\l}$. Since $v \in SSC$, there must exist a wait-for path $\pi$
+\item $\SSC \not\subg \wfg{\dsk{a}{\l}}{t_\act}$: then there exists a node $x \in \SSC -
+  \dsk{a}{\l}$. Since $v \in \SSC$, there must exist a wait-for path $\pi$
   from $v$ to $x$ and a wait-for path $\pi'$ from $x$ to
   $v$. Since $v \in \dsk{a}{\l}$ and $x \not\in \dsk{a}{\l}$, it
   follows that both $\pi$, $\pi'$  cross a border node of
-  $\dsk{a}{\l}$. Furthermore, since $\pi$, $\pi'$ are part of $SSC$, every node
+  $\dsk{a}{\l}$. Furthermore, since $\pi$, $\pi'$ are part of $\SSC$, every node
   along $\pi$, $\pi'$ is in a supercycle, and so cannot have a supercycle violation.
   By Proposition~\ref{prop:locScViol-implies-scViol}, the nodes on
   $\pi$, $\pi'$  cannot have a local supercycle violation.
