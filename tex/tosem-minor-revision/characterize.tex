@@ -117,6 +117,9 @@ shown solid, and edges from interactions to components are shown dashed.
 \end{figure*}
 
 
+
+
+
 A key principle of the dynamics of the change of wait-for graphs is that 
 wait-for edges not involving some interaction
 $\act$ and its participants $\B_i \in \cmps{\act}$ are unaffected by the execution
@@ -327,6 +330,42 @@ a reachable state $s$ of $(\B', Q'_0)$, such that $\B'$ enables no interaction i
 By Proposition~\ref{prop:supercycle-is-necessary}, $\wfg{\B}{s}$ contains a supercycle.
 \end{proof}
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Subsystem and Supercycle}
+
+We formally discuss {\em local supercycle} in Section~\ref{todo}.
+Our method provides a local version of the supercycle check. 
+For each interaction in the system, the local check computes a subsystem 
+that includes the interaction and other components at a given distance from 
+the interaction. 
+It makes sure none of the subsystem components is involved in a local supercycle. 
+%
+Figure~\ref{todo} illustrates the wait-for-graph of the dining philosopher subsystem 
+corresponding to the $get_0$ interaction with a distance of $1$. 
+The subsystem includes the $get_0$ interaction, 
+components $P_0, F_0,$ and $F_1$ involved in $get_0$, 
+and interactions $rel_0, get_1, rel_1, get_3,$ and $rel_3$ connected to these components. 
+We notice that no component in Figure~\ref{todo} is involved in a supercycle. 
+%
+The local check is sound and not complete, therefore it is pessimistic and considers 
+the border interactions as blocking interactions. 
+The further the distance is increased, the more complete the local check becomes. 
+
+\begin{figure*}[ht]
+  \begin{center}
+   \scalebox{0.4}{\input{figs/wfgDiningInitial-Local.pdf_t}}
+   \caption{Example wait-for-graph for dining philosophers subsystem.}
+   \label{fig:sc}
+  \end{center}
+\end{figure*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
 In the sequel, we say ``deadlock-free'' to mean ``free of local deadlock''.
 %
 We wish to check whether supercycles can be formed or not.
@@ -421,9 +460,6 @@ Similar to the proof of \thm{SC-free-preserving.deadlock-free},  except that, fo
 the transition $s \la{\act} t$, use the  supercycle-freedom preserving restriction $\BC$
 corresponding to $\act$.
 \end{proof}
-
-
-
 
 
 

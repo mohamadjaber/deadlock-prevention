@@ -178,6 +178,8 @@ Formally,\\
 \ind  $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{t_\act}{\act}{\l}$.
 \end{definition}
 %
+
+%
 We showed previously that $\GAO$ implies deadlock-freedom, and so it remains to establish that $\LAO$ implies $\GAO$. 
 
 
@@ -223,7 +225,8 @@ Follows immediately from Lemma~\ref{lemma:loc.ANDOR.implies.glob.AND-OR} and The
 \end{proof}
 
 
-
+Notice that Definition~\ref{def:lao} calls $\locFormViol$ on components, which by definition should be connected to at least one non-border interaction. 
+As such, the trivial local supercycles, i.e., consisting only of border interactions, have no effect on supercycle formation. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t]

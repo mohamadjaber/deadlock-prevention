@@ -148,10 +148,9 @@ that is, $\act \in \SC$ implies $\ex \B_j : \act \ar \B_j \in \wfg{\B}{s} \land 
 \end{definition}
 %where $\act \in SC$ means that $\act$ is a node in $\SC$, etc. 
 %Also, write $SC \sub \wfg{\B}{s}$ when $\SC$ is a subgraph of $\wfg{\B}{s}$.
-Intuitively, $\SC$ is a supercycle iff every node is $\SC$ is bloced from executing by other nodes in $\SC$, and we also pessimistically consider
+Intuitively, $\SC$ is a supercycle iff every node is $\SC$ is blocked from executing by other nodes in $\SC$, and we also pessimistically consider
 a border interaction $\act$ to be blocked, since the subsystem $\DS$ cannot provide information about the participant components of $\act$ that are outside
-of $\DS$. 
-
+of $\DS$. It is important to notice that a local supercycle does not necessary imply a global one. In particular, one or more border interactions necessarly form a local supercycle, yet it is a trivial one and does not imply a global supercycle or a deadlock. 
 
 
 We carry over the defintion of subgraph $\subg$ from \secn{supercycle-fixpoint}, and develop the analogous definitions for an arbitrary subsystem
