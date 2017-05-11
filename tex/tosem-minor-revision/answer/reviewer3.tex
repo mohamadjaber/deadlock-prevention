@@ -67,16 +67,22 @@ The deadlock condition depends highly on those sequences and not on the number o
 %    
 Lastly, our method of constructing a subsystem starts with an interaction and increments the subsystem with a distance $\ell$. 
 Then $\ell$ is incremented in case a supercycle containing a component is found. 
-If not, this implies that the interaction does not cause a deadlock. 
+If not, this implies that the execution of the interaction does not cause a deadlock. 
 The analysis has to cover all interactions; and each maybe with a different termination distance $\ell$. 
-    This differs from the $N_0$ selection approach in~\cite{PuneliTACAS2001}. 
+This differs from the $N_0$ selection approach in~\cite{PuneliTACAS2001}. 
 }
 
 ~
 
 Ariel Cohen, Kedar S. Namjoshi:
 Local Proofs for Global Safety Properties. CAV 2007: 55-67
-
+\answer{
+Similar to our work, this paper produces a global proof using several local proofs. 
+It splits an invariant into local process invariants and produces a proof for each in an incrementally complete manner. 
+The processes here also communicate through shared variables. 
+Our work, proves deadlock freedom one interaction at a time. 
+%
+}
 ~
 
 Parosh Aziz Abdulla, Frédéric Haziza, Lukás Holík:
@@ -84,7 +90,7 @@ All for the Price of Few. VMCAI 2013: 476-495
 
 ~
 
-The following work describes a technique developed by Kurshan that is very similar in spirit to the abstraction done here. In essence, the method cuts "wires" connecting a sub-system to the rest, the wires become pessimistic free inputs.
+The following work describes la technique developed by Kurshan that is very similar in spirit to the abstraction done here. In essence, the method cuts "wires" connecting a sub-system to the rest, the wires become pessimistic free inputs.
 
 ~
 
