@@ -22,6 +22,8 @@ The paper is written carefully and is self-contained, giving all necessary backg
 \begin{enumerate}
 \item It would help a reader to see a simple but non-trivial example of this method at work at the very beginning of the paper. One now has to read through nearly 25 pages before getting to the heart of the local method, described in Section 6 and even further to see the examples used to test the method.
 
+  \answer{The paper illustrated the BIP and the wait-for-graph definitions with the dining philosopher example. We added an illustration of the wait-for-graph of a subsystem directly therein to present the local method as early as possible. } 
+
 \item The analysis of supercycles can, I believe, be considerably simplified.
 
 ~
@@ -36,6 +38,9 @@ The paper is written carefully and is self-contained, giving all necessary backg
 
   I strongly recommend that the authors consider reworking the section to incorporate the simplifications that follow from taking these two observations as fundamental. I found in my reading that keeping these two observations in mind simplified and illuminated much of the subsequent discussion.
 
+    \answer{We thank the reviewer for the very valuable insight. The paper has been majorly rewritten to use fixpoints and that helped simplify the presentation as expected by the reviewer.}
+
+
 \end{enumerate}
 
 \paragraph{Requirements:}
@@ -46,6 +51,26 @@ The paper is written carefully and is self-contained, giving all necessary backg
 
 Amir Pnueli, Sitvanit Ruah, Lenore D. Zuck:
 Automatic Deductive Verification with Invisible Invariants. TACAS 2001: 82-97
+
+\answer{
+The paper discusses a specific type of bounded data parametrized systems with parameter $N$. It argues that for certain assertions $\exist N_0$ such that if 
+the assertion is valid for every $N, 1< N \leq N_0$ then the assertion is valid for any parameter. It also argues that $N_0$ is logarithmic in the number of 
+local states. 
+%    
+The systems discussed communicate by sharing variables and do not synchronize with locks or similar mechanisms. 
+Although the paper gives an example of ``request'' and ``release'' implemented in a spin lock fashion, 
+the concept of deadlock is not directly covered in the $R-$assertions. 
+%
+Our method also differs in that it considers systems that are not necessarily parametrized. 
+For instance, in the resource allocation example, clients may request resources in different sequence orders. 
+The deadlock condition depends highly on those sequences and not on the number of clients, resources, and managers. 
+%    
+Lastly, our method of constructing a subsystem starts with an interaction and increments the subsystem with a distance $\ell$. 
+Then $\ell$ is incremented in case a supercycle containing a component is found. 
+If not, this implies that the interaction does not cause a deadlock. 
+The analysis has to cover all interactions; and each maybe with a different termination distance $\ell$. 
+    This differs from the $N_0$ selection approach in~\cite{PuneliTACAS2001}. 
+}
 
 ~
 
