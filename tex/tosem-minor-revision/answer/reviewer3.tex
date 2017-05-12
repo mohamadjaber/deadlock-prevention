@@ -82,6 +82,25 @@ It splits an invariant into local process invariants and produces a proof for ea
 The processes here also communicate through shared variables. 
 Our work, proves deadlock freedom one interaction at a time. 
 %
+Paper~\cite{CohenCav2007} splits the invariant based on shared and local variables therein.
+We differ in that the deadlock local checks are based on the structure of the BIP 
+interactions, ports, and components. 
+%
+The derived local invariants in~\cite{CohenCav2007} are symbolic over-approximations of the 
+reachable state space. 
+Our method differs in that the local and global checks work on the structure of the 
+wait-for-graphs that are extracted for each interaction. 
+These checks are independent from the 
+transition systems that govern the execution of each component. 
+In contrast, a deadlock invariant in~\cite{CohenCav2007} will have to visit the internals of 
+the processes' transition systems as the locks are expressed in request and release 
+statements invoked therein. 
+Currently, the paper illustrates its techniques using mutual exclusion safety conditions
+(race condition avoidance).
+%
+Similarly the refinement step in~\cite{CohenCav2007} includes refining the 
+over-approximation with predicates reasoning about additional local variables. 
+The refinement step in our work increases the size of the subsystem instead. 
 }
 ~
 
