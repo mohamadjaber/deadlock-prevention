@@ -100,12 +100,33 @@ Currently, the paper illustrates its techniques using mutual exclusion safety co
 %
 Similarly the refinement step in~\cite{CohenCav2007} includes refining the 
 over-approximation with predicates reasoning about additional local variables. 
-The refinement step in our work increases the size of the subsystem instead. 
+The refinement step in our work increases the size of the 
+subsystem instead. 
 }
 ~
 
 Parosh Aziz Abdulla, Frédéric Haziza, Lukás Holík:
 All for the Price of Few. VMCAI 2013: 476-495
+\answer{
+  parametrized systems.
+  linear, ring, tree-like communication topologies between processes. 
+  cut-off points: beyound which the verfication procedure need not to continue
+  view abstraction function:  parameter k: approximates a configuration by the set of all its projection containing at most k processes. 
+  1. forward reachability among  system configurations of size k.
+  2. symbolic forward reachability in the abstract domain of sets of views of size at most k. ==> overapprximation of all views of size up to k on all 
+  reachable configurations (of all size-- reachable configurations). 
+  Crucial to the computation is a bound on the number of processes involved
+  at each state such that the post image (typically infinite)
+  can be computed using successor operations of size (k+\ell) where \ell 
+  is a small constant.
+  This limits the techniques to specific kind of systems that abide by the 
+  characteristic: arrays, rings, trees, and multisets. 
+
+  Interactions in this paper happen through global state rules with order 
+  (<,>) and difference (\not=) relations. 
+  In this paper all parametrized processes have the same states and transition rules, and the main difference across processes is defined by the index
+  of the process. 
+}
 
 ~
 
