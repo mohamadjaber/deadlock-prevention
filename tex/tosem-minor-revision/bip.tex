@@ -301,7 +301,7 @@ Since both clauses of Definition~\ref{def.bip.execution} are satisfied, we concl
 \redbox{
 \begin{example}[Execution Projection]
 Consider the following exection of the dining philosopher example: $\rho= (h,h,h,h,f,f,f,f)$  $\{P_0.get, F_0.use_l, F_1.use_r\}$  $(e,h,h,h,u_l,u_r,f,f)$  $\{P_2.get, F_2.use_l, F_3.use_r\}$ $(e,h,e,h,u_l,u_r,u_l,u_r)$ $\{P_0.release, F_0.free_l, F_1.free_r\}$  $(h,h,e,h,f,f,u_l,u_r)$  $\ldots$, i.e., philosopher $P_0$ and $P_2$ gets their left and right forks, respectively, then $P_0$ releases its left and right forkts. The projection of this execution on the sybsystem defined by subcomponent $\{P_0, P_1, F_0\}$, is equal to:
-$\rho \pj (\{P_0, P_1, F_0\}, Q'_0) = (h,h,f) \, \{P_0.get, F_0.use_l\} \, (e,h,u_l) \, \{P_0.release, F_0.free_l\} \, (h,h,f) \ldots$. In particular, we project the states and interactions with respect to the subcomponent. Notice that, interaction $get_2$ will disapear as its ports do not belgon to the subcomponent.
+$\rho \pj (\{P_0, P_1, F_0\}, Q'_0) = (h,h,f) \, \{P_0.get, F_0.use_l\} \, (e,h,u_l) \, \{P_0.release, F_0.free_l\} \, (h,h,f) \ldots$. In particular, we project the states and interactions with respect to the subcomponent. Notice that, interaction $get_2$ will disapear as its ports do not belong to the subcomponent.
 Clearly,  $\rho \pj (\{P_0, P_1, F_0\}, Q'_0)$ is an execution of $(\{P_0, P_1, F_0\}, Q'_0)$  
 \end{example}
 }
