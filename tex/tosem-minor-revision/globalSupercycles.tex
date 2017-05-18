@@ -16,7 +16,7 @@ This provides a method of computing the nodes with supercycle violations, whiich
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{A fixpoint characterization of supercycles}
+\subsection{\redbox{A fixpoint characterization of supercycles}}
 \label{secn:supercycle-fixpoint}
 
 \begin{definition}[Set of subgraphs] \label{defn:wsetOfSubgraphs}
@@ -49,7 +49,7 @@ since the edges are those induced by  \wfg{B}{s}.
 
 \item  the empty wait-for graph, denoted by \ewfg, is the bottom element
 
-\item the complement \compl{\XS} of $\XS$ is obtained by taking all the nodes of $\XS$ that are not in \wfg{B}{s}, together with the induced edges.
+\item the complement \compl{\XS} of $\XS$ is obtained by taking all the nodes of \wfg{B}{s} that are not in $\XS$, together with the induced edges.
 \ee
 \end{proposition}
 %
@@ -177,7 +177,7 @@ By \prop{computeLFP}, we can compute $\lfp{\VFs}$ (and therefore $\scV{v}{s}$) b
 
 \vspace{1ex}
 \textit{Example.} 
-For example, consider \fig{SCnotCycle}. We show the set of ndoes in each $\VFs^{d} (\ewfg)$, as the induced subgraph is easily inferred from \fig{SCnotCycle}.
+For example, consider \fig{SCnotCycle}. We show the set of nodes in each $\VFs^{d} (\ewfg)$, as the induced subgraph is easily inferred from \fig{SCnotCycle}.
 $\VFs^{0} (\ewfg) = \ewfg$,
 $\VFs^{1} (\ewfg) = \set{i}$, 
 $\VFs^{2} (\ewfg) = \set{B_6, i}$, 
@@ -186,7 +186,7 @@ $\VFs^{4} (\ewfg) = \set{B_5, h, B_6, i}$,
 $\VFs^{5} (\ewfg) = \set{B_5, h, B_6, i}$, 
 as so $\lfp{\VFs} = \set{B_5, h, B_6, i}$.
 %
-For \fig{cycleOK}, it is each to verify that $\lfp{\VFs}$ is all the nodes in the system, \ie the wait-for graph shown is supercycle-free.
+For \fig{cycleOK}, it is easy to verify that $\lfp{\VFs}$ is all the nodes in the system, \ie the wait-for graph shown is supercycle-free.
 
 
 
@@ -543,7 +543,7 @@ Every supercycle $\SC$ contains at least one cycle.
 %
 \begin{proof}
 By contradiction. Suppose that $\SC$ is a supercycle and is also acyclic. Then every path in $\SC$ is simple, and therefore finite.  Hence every
-node in $\SC$ has finite out-depth. By \prop{supercycle:no-finite-outdegree}, $\SC$ cannot be a supercycle.
+node in $\SC$ has finite out-depth. By \prop{prop:outdepth-finite-implies-scViol}, $\SC$ cannot be a supercycle.
 \end{proof}
 
 
