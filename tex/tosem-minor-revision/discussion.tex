@@ -144,7 +144,84 @@ point \LAO coincides with \GAO, which is sound and complete for local deadlock
 (\prop{scViol-iff-notInSC}, \defn{formation.violation}, and \defn{global.ANDOR-cond}).
 
 
+Abstraction methods related to compositional reasoning
+\cite{AbdullaHH13VMCAI,PnueliRZ01TACAS,CohenN09FMSD}
+that target safety properties can be used to to prove
+global deadlock freedom. 
+%
+The work in~\cite{AbdullaHH13VMCAI,PnueliRZ01TACAS,CohenN09FMSD}
+target parametrized systems composed of $N$ communicating processes $P_{\{i\}}$ 
+via over-approximating the reachable state space of a system with 
+arbitrary $N$ with symbolic states from a system of size $K<N$ such that
+if the property holds for the system of size $K$ it holds for any arbitrary $N$.
+%
+Crucial to the work in~\cite{AbdullaHH13VMCAI} is a bound on the number of processes
+involved at each state such that the post image (typically infinite) can be 
+computed using successor operations of size $K+\ell$ where $\ell$ is a small 
+constant. This limits the completeness of the technique to systems with specific
+array, ring and tree like topologies. 
+%
+The work in~\cite{CohenN09FMSD} provides a global proof using 
+several local proofs. 
+It splits a target system invariant into local process invariants across 
+local and shared variables and attempts to prove these invariants. 
+The derived local invariants are symbolic over-approximations of the reachable 
+state space of the system. 
+The abstraction refinement step refines the invariants with predicates reasoning 
+about additional local variables. 
 
+The work in~\cite{PnueliRZ01TACAS} targets a specific type of bounded data 
+parametrized systems with parameter $N$ where $N$ is the number of processes
+where safety is expressed using a specific type of assertions called $R$-assertions.
+The work shows that for a given such system, $\exists N_0$ such that an
+$R-$assertion $\phi$ is preserved by any step of the system for every $N>1$
+iff it is proven valid for every $N\le N_0$. 
+Then the work shows how to handle such systems with model checking and deductive
+reasoning techniques. 
+% 
+The survey paper~\cite{ClarkeKV10Memory} describes several abstraction 
+techniques that use counterexamples to guide the refinement steps. 
+It also describes a localization reduction technique~\cite{Kurshan94} 
+a dependency graph of the variables referenced in the safety property. 
+The first abstraction is the property itself. 
+In case, it passes model checking, then it is a tautology. 
+In case an error track is produced, either the tack is feasible and the property
+fails, or the track is analyzed and linked to 
+a group of blocking variables that could not be assigned to satisfy the track. 
+These variables lead dependency graph paths to active variables that have full 
+assignments in the error track. 
+All these variables consist the next refinement step where the border variables
+are considered free and termed as the free fence. 
+Key to the efficacy of the technique is the choice of the blocking variables
+such that they minimize the free fence at each abstraction step. \\
+Localization refinement is also used synergistically with input 
+reparameterization to attain maximal input reduction in 
+sequential netlists using min-cut analysis 
+in a structural manner~\cite{BaumgartnerM05Charme}. 
+The reduced netlists are then subject to verification using several 
+techniques including decomposing the netlist into several sub-netlists each 
+with a bounded state transition diameter and applying bounded model checking
+~\cite{BaumgartnerK04Date,BaumgartnerKA02CAV} on each sub-netlist. 
+%
+Our work differs from the above techniques in that 
+(1) we do not limit our technique to 
+parametrized systems, 
+(2) we characterize deadlock freedom with a structural supercycle property
+that governs the wait-for-graph of the system interactions, 
+(3) we compute our local systems based on interactions, 
+(4) we establish deadlock freedom by performing the structural super cycle violation
+check for each interaction using its local subsystems,  and
+(5) our technique is complete for BIP systems. 
+In the future, we would like to explore whether the local supercycle violation check
+is enough to prove parametrized systems. 
+We would like to consider characterizing other interesting safety properties with
+similar structural checks in the context of BIP. 
+
+
+%\cite{AbdullaHH13VMCAI}
+%\cite{PnueliRZ01TACAS}
+%\cite{CohenN09FMSD}
+%\cite{ClarkeKV10Memory}
 
 
 
