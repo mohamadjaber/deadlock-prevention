@@ -135,6 +135,44 @@ The following work describes la technique developed by Kurshan that is very simi
 Edmund M. Clarke, Robert P. Kurshan, Helmut Veith:
 The Localization Reduction and Counterexample-Guided Abstraction Refinement. Essays in Memory of Amir Pnueli 2010: 61-71
 
+\answer{
+  The paper \cite{} reviews the abstraction techniques that 
+  use counterexample guided refinements and focus on the early
+  history of the method. 
+  It also discusses some alternatives that are not counterexample
+  based. 
+  The reviewer pointed out to the technique developed by Kurshan that 
+  is described in the paper. 
+  The technique builds a dependency graph for the variables referenced 
+  in the safety property.
+  The technique starts by verifying the property using a model 
+  checker. In case it passes, then the property is a tautaulogy.
+  Otherwise, there is an error track. 
+  A greedy routine attempts to lift the error track to the full design. 
+  In case that fails (no input configuration of the full design 
+  can cause a transition from a reachable state in the abstract design 
+  to the next state of the error track), 
+  a set of blocking variables are identified as the reason for the failure. 
+  These variables lead paths to active variables (variables with full 
+  assignments in the error track) in the dependency graph.
+  The refined abstraction shall now contain the property, the blocking 
+  variables, and the active variables with those variables at the boundary
+  of the dependency graph freed; the latter for the free fence. 
+  This localization refinement continues either to find a liftable counter
+  example, the property passes in some abstraction refinement, or 
+  the computation exhausts resources. 
+  The choice of the blocking variables to minimize the free fence was 
+  key to the efficacy of the routine. 
+
+
+
+  then
+  Our work differs in that it characterizes deadlock with a structural
+  property, defines a local version of the property, and looks for 
+  subsystems that violate that property to declare deadlock freedom. 
+  The refinement is not counterexample based. 
+  %
+}
 
 \item Questions
 
