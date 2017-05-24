@@ -50,26 +50,63 @@ We clarified the meaning by updating the sentence with: "when the port is clear 
 
 \item pg 4, top of page: "we assume that enablement of a port depends only on the
 local state of a component" --- I found this a bit confusing, especially as it related
-to models of the dining philosophers or token passing models.  More specifically, I
-did not follow the reasoning about how one analyzed multi-process systems
-where shared variable interaction was critical to showing deadlock behavior.
+to models of the dining philosophers or token passing models.  
+    
+    
 
 \answer{
-FADI: This needs more elaboration. The guys is a little confused here. We do not 
-address reachability. and he wants an example. We added one. lets tell him that. 
-%
-Local enablement does not imply freedom from deadlock. It only allows to specify enabled interactions. An interaction is enabled if all of its ports are "locally enabled". Moreover, the semantics of a BIP system is defined as an LTS with transitions labeled by interactions, and freedom from deadlock implies that from any reachable state, some interaction is enabled.
+The statement discusses port enablement.  
+A port here is an interface of
+a component to other components. 
+An interaction connects components through ports. 
+An interaction is enabled iff all its ports are enables. 
+A port is enabled iff its component is in a state that enables the port, i.e. 
+the state has an outgoing transition labeled with the port and the predicate
+enabling the port is $true$. 
+For example, state $e$ in component Philosopher enables the $\mathit{release}$
+port. 
+We addressed the issue by moving the description of the atomic component
+example before the confusing statement, and then gave an example of port enablement
+in the confusing statement. 
+}
+
+~ 
+
+More specifically, I
+did not follow the reasoning about how one analyzed multi-process systems
+where shared variable interaction was critical to showing deadlock behavior.
+\answer{
+The paragraph starts by stating that we abstract away from syntax and variables
+therein and analyze interactions, ports, components and states. 
+Deadlock is characterized by the absence of an enabled interaction. 
+This is due to the semantics of BIP where a system executes through interaction
+enablement. 
+Interaction enablement depends on port enablement, and port enablement is a local 
+property of the component containing the port and can be expressed through
+a predicate. 
+In a sense, port and interaction enablements are predicates that abstract 
+syntactic BIP issues away and are enough to characterize deadlock. 
+We address this issue by adding an example after Definition 2.2 that illustrates 
+an interaction since that definition is needed for the discussion of deadlocks. 
 }
 
 ~
-It would be very helpful if in the paper the authors could `work through' the application
-of the local reasoning for both a version of the dinning philosophers and a version
-of a single token ring like protocol where the processes require the token to make
+It would be very helpful if in the paper the authors could `work through' 
+the application
+of the local reasoning for both a version of the dinning philosophers and 
+a version of a single token ring like protocol where the processes require 
+the token to make
 any progress.
+
+\answer{
+We added reference to the example of dining philosophers across some definitions. 
+We hope this helps improve the understanding of the concepts. 
+We did not do the same for the token ring for brevity concerns. 
+}
 
 ~
 
- In the dining philosophers or the token passing model, what do the reduced systems
+In the dining philosophers or the token passing model, what do the reduced systems
 look like? Individual components?  Can you show how the smaller reduced systems
 contain sufficient information about the behavior of the larger system to draw conclusions
 about the reachable state space?

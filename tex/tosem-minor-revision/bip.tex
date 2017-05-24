@@ -22,13 +22,6 @@ $s_i \goesto[p_i]_i t_i$. In this case, $p_i$ is \emph{enabled} in state $s_i$.
 Ports are used for communication between different components, as
 discussed below.}
 
-In practice, we describe the transition system using some syntax, \eg involving variables.  We abstract away from issues
-of syntactic description since we are only interested in enablement of ports and actions. We assume that enablement of a
-port depends only on the local state of a component. In particular, it cannot depend on the state of other
-components. This is a restriction on BIP, and we defer to subsequent work how to lift this restriction.  So, we assume
-the existence of a predicate $\gd{p_i}{i}$ that holds in state $s_i$ of component $\B_i$ iff port $p_i$ is enabled in
-$s_i$, \ie $s_i(\gd{p_i}{i}) = \true \mbox{ iff } s_i \goesto[p_i]_i$.
-
 Figure~\ref{fig:components} shows atomic components for a philosopher $P$
 and a fork $F$ in dining philosophers.
 %
@@ -48,6 +41,25 @@ right philosopher (resp. left philosopher) and so moves back to
 state $f$ (free).
 
 
+In practice, we describe the transition system using some syntax, 
+\eg involving variables.  
+We abstract away from issues of syntactic description since we are only 
+interested in enablement of ports and actions. 
+%
+We assume that enablement of a
+port depends only on the local state of a component. 
+In particular, it cannot depend on the state of other
+components. 
+\redbox{
+For example, state $e$ in atomic component $P$ of Figure~\ref{fig:components} 
+enables port \release~ as there exists a transition from $e$ labeled with
+port \release.} 
+This assumption is a restriction on BIP, and we defer to subsequent work 
+how to lift this restriction.  
+So, we assume the existence of a predicate $\gd{p_i}{i}$ that holds in 
+state $s_i$ of component $\B_i$ iff port $p_i$ is enabled in
+$s_i$, \ie $s_i(\gd{p_i}{i}) = \true \mbox{ iff } s_i \goesto[p_i]_i$.
+
 \begin{definition}[Interaction] For a given system built from a set of $n$ atomic components 
 $\{\B_i = (Q_i, P_i, \goesto_i)\}_{i=1}^n$, we require that their respective sets of ports are
 pairwise disjoint,
@@ -61,6 +73,13 @@ $p_i \in P_i$ for all $i \in I$, where $I \subseteq \set{1..n}$.
 \end{definition}
 
 \noindent
+The Connectors that connect ports in Figure~\ref{fig:diningbip} 
+illustrate interactions. 
+\redbox{
+For example, interaction $a_{001}$ connects ports \get, $\use_l$ and $\use_r$
+from components $P_0$, $F_0$ and $F_1$ and corresponds to 
+philosopher component $P_0$ acquiring both forks and moving to the eating state. }
+%
 Execution of an interaction
 $\act = \{p_i\}_{i \in I}$
 involves all the components which have
@@ -68,7 +87,10 @@ ports in $\act$.
 We denote by $\cmps{\act}$ the
 set of atomic components participating in $\act$, formally:
 $\cmps{\act} = \{\B_i \st p_i \in \act\}$. 
-
+\redbox{
+For example, interaction $a_{001}=\{\get_0, \use_{l0}, \use_{r1}\}$ and 
+involves components $\cmps{a_{001}}=\{P_0, F_0, F_1\}$.
+}
 
 \begin{figure}[t]
   \begin{center}

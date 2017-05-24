@@ -74,4 +74,6 @@
 }}}}
 \put(1486,-9811){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$\free_l$}%
 }}}}
+\put(2401,-6136){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,0}$a_{001}$}%
+}}}}
 \end{picture}%

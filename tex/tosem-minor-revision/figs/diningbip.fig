@@ -1,4 +1,4 @@
-#FIG 3.2  Produced by xfig version 3.2.5b
+#FIG 3.2  Produced by xfig version 3.2.5c
 Landscape
 Center
 Inches
@@ -113,3 +113,4 @@ Single
 4 0 0 50 -1 0 14 0.0000 6 210 855 4885 10650 $\\free_r$\001
 4 0 0 50 -1 0 14 0.0000 6 210 855 1485 7820 $\\free_r$\001
 4 0 0 50 -1 0 14 0.0000 6 210 840 1485 10650 $\\free_l$\001
+4 0 0 50 -1 0 14 0.0000 6 225 1065 2400 6975 $a_{001}$\001
