@@ -1,12 +1,19 @@
 \section{Reviewer 1}
-This work presents the details of a technique to determine whether a multi-process system
-is free from deadlock. In order to avoid the problems of state-explosion in model checking
-multi-component systems, the technique is designed to apply first to smaller sub-systems
-of the larger system.  Freedom from deadlock in the smaller system implies freedom
-from deadlock in the larger system.  If the smaller system is not free from deadlock,
+This work presents the details of a technique to determine whether a multi-process 
+system
+is free from deadlock. In order to avoid the problems of state-explosion in model 
+checking
+multi-component systems, the technique is designed to apply first to smaller 
+sub-systems
+of the larger system. 
+Freedom from deadlock in the smaller system implies freedom
+from deadlock in the larger system.  If the smaller system is not free 
+from deadlock,
 one can expand the model to include more components and perform the check again on
-a larger sub-system, until the point where either the system is shown to satisfy deadlock
-freedom, the entire system is found not to be deadlock free,  or state explosion prevents
+a larger sub-system, until the point where either the system is shown to 
+satisfy deadlock
+freedom, the entire system is found not to be deadlock free,  
+or state explosion prevents
 the further application of model checking.
 
 
@@ -47,8 +54,14 @@ to models of the dining philosophers or token passing models.  More specifically
 did not follow the reasoning about how one analyzed multi-process systems
 where shared variable interaction was critical to showing deadlock behavior.
 
-~
+\answer{
+FADI: This needs more elaboration. The guys is a little confused here. We do not 
+address reachability. and he wants an example. We added one. lets tell him that. 
+%
+Local enablement does not imply freedom from deadlock. It only allows to specify enabled interactions. An interaction is enabled if all of its ports are "locally enabled". Moreover, the semantics of a BIP system is defined as an LTS with transitions labeled by interactions, and freedom from deadlock implies that from any reachable state, some interaction is enabled.
+}
 
+~
 It would be very helpful if in the paper the authors could `work through' the application
 of the local reasoning for both a version of the dinning philosophers and a version
 of a single token ring like protocol where the processes require the token to make
@@ -61,21 +74,33 @@ look like? Individual components?  Can you show how the smaller reduced systems
 contain sufficient information about the behavior of the larger system to draw conclusions
 about the reachable state space?
 
-~
-
 \answer{
-Local enablement does not imply freedom from deadlock. It only allows to specify enabled interactions. An interaction is enabled if all of its ports are "locally enabled". Moreover, the semantics of a BIP system is defined as an LTS with transitions labeled by interactions, and freedom from deadlock implies that from any reachable state, some interaction is enabled.
+  We added to Section 3.3 an illustration of the wait-for-graph for the subsystem
+    corresponding to interaction $get_{0}$ 
+    from the dining philosopher example.
+  We discussed how the wait-for-graph contains the necessary components and 
+    interactions to judge that the execution of the interaction will not result
+    in a deadlock. 
 }
+~
 
 
-\item  definition 2.5. pg 5:  local enablement assumption --- for systems that satisfy
-this assumption, does that imply freedom from deadlock?   Can you comment on how and where
-this definition will be used?  what implications does it have for the systems that satisfy it?
+\item  definition 2.5. pg 5:  local enablement assumption --- for systems 
+  that satisfy
+this assumption, does that imply freedom from deadlock?   
+Can you comment on how and where
+this definition will be used?  what implications does it have for 
+the systems that satisfy it?
 
 ~
 
 \answer{
-...
+The local enablement assumption in Definition 2.5 simply states that a component 
+$B$ in state $s$ enables at least one interaction $a$. 
+However, for $a$ to execute, it requires enablement from all components involved
+in it. That might not be the case as $a$ may be blocked by another component. 
+Therefore the assumption is not enough to guarantee deadlock freedom. 
+We reflected that in the paper directly after the definition.
 }
 
 \item  pg. 6 \& 7, application of proposition 2.13 --- detailing how this proposition works
@@ -83,7 +108,7 @@ on the dining philosophers model and the token passing model would be very helpf
 for understanding the technique.
 
 \answer{
-We added an example that applies proposisition 2.13 on the dining philosopher model. 
+We added an example that applies proposition 2.13 on the dining philosopher model. 
 }
 
 \item pg 7; def. 3.1 and 3.2 --- definition 3.1 of global deadlock seems straightforward, but
@@ -92,7 +117,10 @@ be very useful.  Maybe a small example would help.
 
 ~
 
-\answer{...}
+\answer{
+We added a paragraph to describe the intuition behind definition 3.2 directly
+after the definition. 
+}
 
 ~
 
@@ -101,17 +129,23 @@ intuition as to what this definition is describing --- in particular it was not
 clear to me how to interpret the use of the definition in understanding the
 application on page 32..
 
-  \answer{We added, in Section 3, an illustration of subsystem and local supercycle to present the local method.} 
+\answer{We added, in Section 3, an illustration of subsystem and local 
+supercycle to present the local method.} 
 
 \item  related work: there has been extensive work on compositional reasoning
 technique applied to multi-component systems, both in terms of analyzing
-safety properties, and in terms of analyzing ltl and ctl formulae.  Could you comment
+safety properties, and in terms of analyzing ltl and ctl formulae. 
+Could you comment
 on the relationship of that work to this current submission?
 
+\answer{
+  We added several paragraphs to the related work section to address compositional 
+  reasoning alternatives to safety properties.
+  We referred to papers suggested by reviewer 3, reviewer 1 and other related 
+  papers. 
+}
+
 \end{enumerate}
-
-
-
 
 
 

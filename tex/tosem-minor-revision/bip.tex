@@ -154,9 +154,18 @@ Structurally, this means that there is no local state zero transitions, and ever
 part of at least one interaction. 
 
 \begin{definition}[Local Enablement Assumption] \label{def.bip.local-enablement}
-For every component  $\B_i = (Q_i,P_i,\goesto_i)$, the following holds. In every $s_i \in Q_i$, $\B_i$ enables some
+For every component  $\B_i = (Q_i,P_i,\goesto_i)$, the following holds. 
+  In every $s_i \in Q_i$, $\B_i$ enables some
 interaction $\act$.
 \end{definition}
+
+\redbox{
+Intuitively, component $B_i$ in state $s$ enables at least one interaction $a$. 
+However, $a$ requires enablement from all components involved
+in it to execute. That might not be the case as $a$ may be blocked by another 
+component. 
+Therefore the assumption is not enough to guarantee deadlock freedom. 
+}
 
 \begin{definition}[BIP System]\label{def.bip.system} Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component with transition system $(Q,\gamma,
 \goestog)$, and let $Q_0 \sub Q$ be a set of initial states. Then

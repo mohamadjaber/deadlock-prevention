@@ -28,8 +28,15 @@ Formally:\\
 %and a reachable state $s$ of $(\B, Q_0)$ such that $(\B', Q'_0)$ has no interaction enabled in state $s \pj \B'$.
 \end{definition}
 
-
-
+\redbox{
+  Intuitively, the state space $Q'$ of each susbsystem $\B'$ of $\B$ 
+  overapproximates the state space $Q$ of $\B$. 
+  Consequently, local deadlock freedom in subsystem $\B'$ 
+  requires only those states 
+  that are reachable in $\B$ to enable interactions. 
+  These states $s\in \rstates(B,B_0)$ are captured by their 
+  projections $s\pj \B'$ in $\B'$. 
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
