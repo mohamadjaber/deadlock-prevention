@@ -114,14 +114,13 @@ advantages of both.
 
 
 
-We compared our implementation \deadlocktool to D-Finder 2~\cite{DFinder2}. D-Finder 2
-computes a finite-state abstraction for each component, which it uses
+We compared our implementation \deadlocktool to D-Finder 2~\cite{DFinder2}. 
+D-Finder 2 computes a finite-state abstraction for each component, which it uses
 to compute a global invariant $I$. It then checks if $I$ 
 implies deadlock freedom.  Unlike \deadlocktool, D-Finder 2 
 handles infinite state systems.
 However, \deadlocktool had superior running time for
 dining philosophers and resource controller (both finite-state).
-
 
 All the above methods (except \citeN{AC05}) verify global (and not
 local) deadlock-freedom.  Our method verifies local deadlock-freedom, which subsumes 
@@ -129,7 +128,8 @@ global deadlock-freedom as a special case.
 Also, our approach makes no
 structural restriction at all on the system being checked for deadlock.  Our method checks
 for the absence of supercycles, which are a sound and complete characterization of
-deadlock. Moreover, the \LAO condition is complete \wrt the occurrence of a supercycle wholly
+deadlock. 
+Moreover, the \LAO condition is complete \wrt the occurrence of a supercycle wholly
 within the subsystem being checked, and the \GAO condition is complete
 \wrt freedom from local and global deadlock, as given by
 Theorem~\ref{theorem:gao-is-complete}.
@@ -143,7 +143,23 @@ method can keep checking until the subsystem being checked is the entire system,
 point \LAO coincides with \GAO, which is sound and complete for local deadlock
 (\prop{scViol-iff-notInSC}, \defn{formation.violation}, and \defn{global.ANDOR-cond}).
 
+\redbox{
+The work in \cite{Glabbeek2009} extends CTL* with constructs to 
+support expressing and distinguishing between deadlock, livelock and successfull
+termination. 
+%
+This is key since typically Kripke structures that characterize CTL* formulae
+are total, therefore each state must have at least one transition and deadlock
+can not be modeled.
+The work then translates the extended formulae and the LTS systems they specify
+to Kripke structures where the total restriction is lifted. 
+%
+The work also suggests an alternative method to adapt the translation 
+from LTS systems into Kripke structures by adding a special $s_{\delta}$ state
+that has a self loop transition where this specific state characterizes deadlock. 
+}
 
+\redbox{
 Abstraction methods related to compositional reasoning
 \cite{AbdullaHH13VMCAI,PnueliRZ01TACAS,CohenN09FMSD}
 that target safety properties can be used to to prove
@@ -169,7 +185,9 @@ The derived local invariants are symbolic over-approximations of the reachable
 state space of the system. 
 The abstraction refinement step refines the invariants with predicates reasoning 
 about additional local variables. 
+}
 
+\redbox{
 The work in~\cite{PnueliRZ01TACAS} targets a specific type of bounded data 
 parametrized systems with parameter $N$ where $N$ is the number of processes
 where safety is expressed using a specific type of assertions called $R$-assertions.
@@ -216,6 +234,7 @@ In the future, we would like to explore whether the local supercycle violation c
 is enough to prove parametrized systems. 
 We would like to consider characterizing other interesting safety properties with
 similar structural checks in the context of BIP. 
+}
 
 
 %\cite{AbdullaHH13VMCAI}
