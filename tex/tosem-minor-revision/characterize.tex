@@ -34,8 +34,8 @@ Formally:\\
   Consequently, local deadlock freedom in subsystem $\B'$ 
   requires only those states 
   that are reachable in $\B$ to enable interactions. 
-  These states $s\in \rstates(B,B_0)$ are captured by their 
-  projections $s\pj \B'$ in $\B'$. 
+  These states $s\in \rstates{B,Q_0}$ are captured by their 
+  projections $s\pj \B'$ in $\B'$.  
 }
 
 
@@ -219,7 +219,7 @@ In this case, say that state $s$ is supercycle-free.
 \end{figure*}
 
 
-Figure~\ref{fig:sc} shows an example supercycle (with boldened edges) for the dining philosophers
+Figure~\ref{fig:sc} shows an example supercycle (with edges in bold) for the dining philosophers
 system of Figure~\ref{fig:diningSpectrum}.
 $P_0$ waits for (enables) a single interaction, $\Get_0$. 
 $\Get_0$ waits for (is disabled by) fork $F_0$, which waits for interaction $\Rel_0$.
@@ -228,7 +228,7 @@ and $F_0$ is in $u_l$. This state is not reachable from the initial state.
 
 
 Figure~\ref{fig:SCnotCycle} shows an example of a supercycle that is not a simple cycle. 
-The ``essential'' part of the supercycle, consisting of components $B_1, B_2,B_3$, and their actions $a,b,c,d$, is boldened. 
+The ``essential'' part of the supercycle, consisting of components $B_1, B_2,B_3$, and their actions $a,b,c,d$, is in bold. 
 The supercycle can be extended to contain $B_4$, but neither $B_5$ nor $B_6$: $B_6$ is enabled, and $B_5$ has is ready to execute $h$, which waits
 only for $B_6$.
 %

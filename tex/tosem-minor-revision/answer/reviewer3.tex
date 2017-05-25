@@ -22,6 +22,8 @@ The paper is written carefully and is self-contained, giving all necessary backg
 \begin{enumerate}
 \item It would help a reader to see a simple but non-trivial example of this method at work at the very beginning of the paper. One now has to read through nearly 25 pages before getting to the heart of the local method, described in Section 6 and even further to see the examples used to test the method.
 
+~
+
   \answer{The paper illustrated the BIP and the wait-for-graph definitions with the dining philosopher example. We added an illustration of the wait-for-graph of a subsystem directly therein to present the local method as early as possible. } 
 
 \item The analysis of supercycles can, I believe, be considerably simplified.
@@ -37,6 +39,8 @@ The paper is written carefully and is self-contained, giving all necessary backg
 ~
 
 I strongly recommend that the authors consider reworking the section to incorporate the simplifications that follow from taking these two observations as fundamental. I found in my reading that keeping these two observations in mind simplified and illuminated much of the subsequent discussion.
+
+~
 
     \answer{We thank the reviewer for the very valuable insight. The paper has been majorly rewritten to use fixpoints and that helped simplify the presentation as expected by the reviewer.}
 \end{enumerate}
@@ -179,6 +183,8 @@ The Localization Reduction and Counterexample-Guided Abstraction Refinement. Ess
 %  %
 %}
 
+~
+
 \answer{
   We thank the reviewer for bringing the following papers on 
   safety property model checking to our attention. 
@@ -272,13 +278,19 @@ for all N? This would seem to require some use of symmetry in i
 combination with local analysis, as is done in the three papers on i
 invariant generation listed above.
 
+\answer{
+In the paper, we introduce behavioral restriction condition per interaction (Definition 3.11). Then,   in Theorem 3.13, we introduce deadlock-freedom via supercycle-freedom preserving restriction by checking behavioral restriction on every interaction. Therefore, if the system is symmetry, it is sufficient to check behavioral restriction condition only on the interactions that are not structurally symmetric.  
+}
+
 
 \item Typos
 
 
 "boldened" ... not sure that is a word.
 
+"beither" $\rightarrow$ either
+
 ~
 
-"beither" $\rightarrow$ either
+\done
 \end{enumerate}

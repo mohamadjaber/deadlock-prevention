@@ -38,11 +38,15 @@ questions about deadlock freedom.  E.g.
 Can you comment on the use of those logics in the setting of detecting deadlocks in
 BIP?
 
+~
+
 \answer{
   We added a paragraph in the related work section to discuss the paper.
 }
 
 \item  pg 3, second para from bottom: what does `irrelevant' mean in this context?
+
+~
 
 \answer{
 We clarified the meaning by updating the sentence with: "when the port is clear from the context or not needed, we drop it on the transition and write". 
@@ -52,8 +56,8 @@ We clarified the meaning by updating the sentence with: "when the port is clear 
 local state of a component" --- I found this a bit confusing, especially as it related
 to models of the dining philosophers or token passing models.  
     
+    ~
     
-
 \answer{
 The statement discusses port enablement.  
 A port here is an interface of
@@ -75,6 +79,9 @@ in the confusing statement.
 More specifically, I
 did not follow the reasoning about how one analyzed multi-process systems
 where shared variable interaction was critical to showing deadlock behavior.
+
+~
+
 \answer{
 The paragraph starts by stating that we abstract away from syntax and variables
 therein and analyze interactions, ports, components and states. 
@@ -91,12 +98,16 @@ an interaction since that definition is needed for the discussion of deadlocks.
 }
 
 ~
+
+
 It would be very helpful if in the paper the authors could `work through' 
 the application
 of the local reasoning for both a version of the dinning philosophers and 
 a version of a single token ring like protocol where the processes require 
 the token to make
 any progress.
+
+~
 
 \answer{
 We added reference to the example of dining philosophers across some definitions. 
@@ -110,6 +121,8 @@ In the dining philosophers or the token passing model, what do the reduced syste
 look like? Individual components?  Can you show how the smaller reduced systems
 contain sufficient information about the behavior of the larger system to draw conclusions
 about the reachable state space?
+
+~
 
 \answer{
   We added to Section 3.3 an illustration of the wait-for-graph for the subsystem
@@ -144,6 +157,8 @@ We reflected that in the paper directly after the definition.
 on the dining philosophers model and the token passing model would be very helpful
 for understanding the technique.
 
+~
+
 \answer{
 We added an example that applies proposition 2.13 on the dining philosopher model. 
 }
@@ -166,6 +181,8 @@ intuition as to what this definition is describing --- in particular it was not
 clear to me how to interpret the use of the definition in understanding the
 application on page 32..
 
+~
+
 \answer{We added, in Section 3, an illustration of subsystem and local 
 supercycle to present the local method.} 
 
@@ -174,6 +191,8 @@ technique applied to multi-component systems, both in terms of analyzing
 safety properties, and in terms of analyzing ltl and ctl formulae. 
 Could you comment
 on the relationship of that work to this current submission?
+
+~
 
 \answer{
   We added several paragraphs to the related work section to address compositional 
