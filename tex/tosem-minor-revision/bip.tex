@@ -72,10 +72,9 @@ system. When we write $\act = \{p_i\}_{i \in I}$, we assume that
 $p_i \in P_i$ for all $i \in I$, where $I \subseteq \set{1..n}$.
 \end{definition}
 
-\noindent
-The Connectors that connect ports in Figure~\ref{fig:diningbip} 
+
+\redbox{The Connectors that connect ports in Figure~\ref{fig:diningbip} 
 illustrate interactions. 
-\redbox{
 For example, interaction $a_{001}$ connects ports \get, $\use_l$ and $\use_r$
 from components $P_0$, $F_0$ and $F_1$ and corresponds to 
 philosopher component $P_0$ acquiring both forks and moving to the eating state. }
@@ -142,12 +141,17 @@ unchanged.
 %$\cmps{\act} = \{\B_i \st p_i \in \act\}$. 
 %Given a component $\B_i$, we denote by $A_i$ the
 %interactions that $\B_i$ participates in, formally: $A_i = \set{a \st P_i \ints a \ne \emptyset}$.
+\begin{example}[Composite Component]
 Figure \ref{fig:diningbip} shows a composite component consisting of
 four philosophers and the four forks between them. Each philosopher
 and its two neighboring forks share two interactions: 
 $\Get = \set{\get, \use_l, \use_r}$ in which the philosopher obtains the forks, and 
 $\Rel = \set{\release, \free_l, \free_r}$ in which the philosopher releases the forks.
+\end{example}
 
+\redbox{
+Note that interactions are the only means of inter-component communication and synchronization in BIP. 
+}
 
 \begin{definition}[Interaction enablement]\label{def.bip.enablement} 
 An atomic component $\B_i = (Q_i,P_i,\goesto_i)$ enables a port $p_i \in P_i$ in state $s_i$ iff $s_i \goesto[p_i]_i$.
@@ -166,7 +170,7 @@ iff every $\B_i \in \cmps{\act}$ enables $\act$ in $s_i$.
 \end{definition}
 %
 The definition of  interaction enablement is a consequence of 
-Definition~\ref{def.bip.composition}.
+Definition~\ref{def.bip.composition}. 
 Interaction $\act$ being enabled in state $s$ means that executing
 $\act$ is one of the possible transitions that can be taken from $s$.
 
@@ -174,20 +178,18 @@ To avoid pathological cases of deadlock due solely to a single component refusin
 we assume that every component always enables at least one interaction.
 Structurally, this means that there is no local state zero transitions, and every port labeling a transition is 
 part of at least one interaction. 
+\redbox{
+Intuitively, component $B_i$ in state $s$ must enable at least one interaction $a$. 
+However, $a$ requires enablement from all components involved
+in it to execute. That might not be the case as $a$ may be blocked by another 
+component. Therefore the assumption is not enough to guarantee deadlock freedom. 
+}
 
 \begin{definition}[Local Enablement Assumption] \label{def.bip.local-enablement}
 For every component  $\B_i = (Q_i,P_i,\goesto_i)$, the following holds. 
   In every $s_i \in Q_i$, $\B_i$ enables some
 interaction $\act$.
 \end{definition}
-
-\redbox{
-Intuitively, component $B_i$ in state $s$ enables at least one interaction $a$. 
-However, $a$ requires enablement from all components involved
-in it to execute. That might not be the case as $a$ may be blocked by another 
-component. 
-Therefore the assumption is not enough to guarantee deadlock freedom. 
-}
 
 \begin{definition}[BIP System]\label{def.bip.system} Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component with transition system $(Q,\gamma,
 \goestog)$, and let $Q_0 \sub Q$ be a set of initial states. Then
@@ -331,9 +333,12 @@ Since both clauses of Definition~\ref{def.bip.execution} are satisfied, we concl
 
 \redbox{
 \begin{example}[Execution Projection]
-Consider the following exection of the dining philosopher example: $\rho= (h,h,h,h,f,f,f,f)$  $\{P_0.get, F_0.use_l, F_1.use_r\}$  $(e,h,h,h,u_l,u_r,f,f)$  $\{P_2.get, F_2.use_l, F_3.use_r\}$ $(e,h,e,h,u_l,u_r,u_l,u_r)$ $\{P_0.release, F_0.free_l, F_1.free_r\}$  $(h,h,e,h,f,f,u_l,u_r)$  $\ldots$, i.e., philosopher $P_0$ and $P_2$ gets their left and right forks, respectively, then $P_0$ releases its left and right forkts. The projection of this execution on the sybsystem defined by subcomponent $\{P_0, P_1, F_0\}$, is equal to:
-$\rho \pj (\{P_0, P_1, F_0\}, Q'_0) = (h,h,f) \, \{P_0.get, F_0.use_l\} \, (e,h,u_l) \, \{P_0.release, F_0.free_l\} \, (h,h,f) \ldots$. In particular, we project the states and interactions with respect to the subcomponent. Notice that, interaction $get_2$ will disapear as its ports do not belong to the subcomponent.
-Clearly,  $\rho \pj (\{P_0, P_1, F_0\}, Q'_0)$ is an execution of $(\{P_0, P_1, F_0\}, Q'_0)$  
+Let the initial state be $(h,h,h,h,f,f,f,f)$, i.e., all philosophers are hungry and all forks are free. Also, $\{P_0.get, F_0.use_l, F_1.use_r\}$ (resp.  $\{P_2.get, F_2.use_l, F_3.use_r\}$) is the interaction in which $P_0$ (resp. $P_2$) picks up both forks, and $\{P_0.release, F_0.free_l, F_1.free_r\}$ is the interaction in which $P_2$ releases both forks. 
+Consider the following execution: $\rho= (h,h,h,h,f,f,f,f)$  $\{P_0.get, F_0.use_l, F_1.use_r\}$  $(e,h,h,h,u_l,u_r,f,f)$  $\{P_2.get, F_2.use_l, F_3.use_r\}$ $(e,h,e,h,u_l,u_r,u_l,u_r)$ $\{P_0.release, F_0.free_l, F_1.free_r\}$  $(h,h,e,h,f,f,u_l,u_r)$  \ldots
+%, i.e., philosopher $P_0$ and $P_2$ gets their left and right forks, respectively, then $P_0$ releases its left and right forks. 
+The projection of this execution on the sybsystem defined by subcomponent $\{P_0, P_1, F_0\}$, is equal to:
+$\rho \pj (\{P_0, P_1, F_0\}, Q'_0) = (h,h,f) \, \{P_0.get, F_0.use_l\} \, (e,h,u_l) \, \{P_0.release, F_0.free_l\} \, (h,h,f) \ldots$. In particular, we project the states and interactions with respect to the subcomponent. Notice that, interaction $Get_2$ will disappear as its ports do not belong to the subcomponent.
+Clearly,  $\rho \pj (\{P_0, P_1, F_0\}, Q'_0)$ is an execution of $(\{P_0, P_1, F_0\}, Q'_0)$. 
 \end{example}
 }
 

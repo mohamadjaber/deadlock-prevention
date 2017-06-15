@@ -166,7 +166,7 @@ that target safety properties can be used to to prove
 global deadlock freedom. 
 %
 The work in~\cite{AbdullaHH13VMCAI,PnueliRZ01TACAS,CohenN09FMSD}
-target parametrized systems composed of $N$ communicating processes $P_{\{i\}}$ 
+targets parametrized systems composed of $N$ communicating processes $P_{\{i\}}$ 
 via over-approximating the reachable state space of a system with 
 arbitrary $N$ with symbolic states from a system of size $K<N$ such that
 if the property holds for the system of size $K$ it holds for any arbitrary $N$.
@@ -199,8 +199,8 @@ reasoning techniques.
 % 
 The survey paper~\cite{ClarkeKV10Memory} describes several abstraction 
 techniques that use counterexamples to guide the refinement steps. 
-It also describes a localization reduction technique~\cite{Kurshan94} 
-a dependency graph of the variables referenced in the safety property. 
+It also describes a localization reduction technique~\cite{Kurshan94}.
+%a dependency graph of the variables referenced in the safety property. 
 The first abstraction is the property itself. 
 In case, it passes model checking, then it is a tautology. 
 In case an error track is produced, either the tack is feasible and the property
@@ -208,7 +208,7 @@ fails, or the track is analyzed and linked to
 a group of blocking variables that could not be assigned to satisfy the track. 
 These variables lead dependency graph paths to active variables that have full 
 assignments in the error track. 
-All these variables consist the next refinement step where the border variables
+All these variables constitute the next refinement step where the border variables
 are considered free and termed as the free fence. 
 Key to the efficacy of the technique is the choice of the blocking variables
 such that they minimize the free fence at each abstraction step. \\

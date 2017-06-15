@@ -29,13 +29,14 @@ Formally:\\
 \end{definition}
 
 \redbox{
-  Intuitively, the state space $Q'$ of each susbsystem $\B'$ of $\B$ 
-  overapproximates the state space $Q$ of $\B$. 
-  Consequently, local deadlock freedom in subsystem $\B'$ 
-  requires only those states 
-  that are reachable in $\B$ to enable interactions. 
-  These states $s\in \rstates{B,Q_0}$ are captured by their 
-  projections $s\pj \B'$ in $\B'$.  
+Intuitively, every reachable state $s'$ of subsystem $\B'$ (within the context of the overall system $\B$) is a projection of a reachable state $s$ of $\B$, i.e., $s' = s\pj \B'$. Hence, if $s$ enables an interaction $a$ of $\B'$, then so does $s' = s\pj \B'$.
+%  Intuitively, the state space $Q'$ of each susbsystem $\B'$ of $\B$ 
+%  overapproximates the state space $Q$ of $\B$. 
+%  Consequently, local deadlock freedom in subsystem $\B'$ 
+%  requires only those states 
+%  that are reachable in $\B$ to enable interactions. 
+%  These states $s\in \rstates{B,Q_0}$ are captured by their 
+%  projections $s\pj \B'$ in $\B'$.  
 }
 
 
@@ -46,7 +47,7 @@ Formally:\\
 The wait-for graph for a state $s$ is a directed bipartite and-or
 graph which contains as nodes the atomic components $\B_1, \ldots,
 \B_n$, and all the interactions $\gamma$.  Edges in the wait-for-graph
-are from a $\B_i$ to all the interactions that $\B_i$ enables (in $s$),
+are from a component $\B_i$ to all the interactions that $\B_i$ enables (in $s$),
 and from an interaction $a$ to all the components that participate in
 $a$ and which do not enable it (in $s$).
 
@@ -92,7 +93,7 @@ wait-for edge (wait-for path).
 
 \begin{definition}[Subgraph of a wait-for graph] \label{defn:wsubgraph}
 $\US$ is a subgraph of $\wfg{\B}{s}$ iff the nodes of $\US$ are a subset of the nodes of $\wfg{\B}{s}$ and the edges of $\US$ are the induced edges from 
-$\wfg{\B}{s}$, \ie if $u,v$ are nodes of $\US$ and $u \ar v$ is en edge of $\wfg{\B}{s}$, then $u \ar v$ is en edge of $\US$.
+$\wfg{\B}{s}$, \ie if $u,v$ are nodes of $\US$ and $u \ar v$ is an edge of $\wfg{\B}{s}$, then $u \ar v$ is en edge of $\US$.
 Write $\US \subg \wfg{\B}{s}$ when $\US$ is a subgraph of $\wfg{\B}{s}$, and extend the definition of $\subg$ to subgraphs of $\wfg{\B}{s}$ in the obvious
 manner, so that $\US \subg \VS$ means that $\US$ is a subgraph of $\VS$.
 \end{definition}
@@ -111,13 +112,13 @@ Likewise use $v \in \US$, $e \in \US$, where $\US$ is a subgraph of $\wfg{\B}{s}
 
 Consider the dining philosophers system given in Figure~\ref{fig:diningSpectrum}.
 Figure~\ref{fig:wfg0} shows its wait-for-graph in its sole initial state.  Figure~\ref{fig:wfg1}
-shows the wait-for-graph after execution of $\get_0$.  Edges from components to interactions are
+shows the wait-for-graph after execution of $\Get_0$.  Edges from components to interactions are
 shown solid, and edges from interactions to components are shown dashed.
 
 \begin{figure*}[ht]
   \begin{center}
       \subfigure[Wait-for-graph in initial state.]{\label{fig:wfg0}\scalebox{0.4}{\input{figs/wfgDiningInitial.pdf_t}}} \quad
-      \subfigure[Wait-for-graph after execution of $\get_0$.]{\label{fig:wfg1}\scalebox{0.4}{\input{figs/wfgDining1.pdf_t}}} 
+      \subfigure[Wait-for-graph after execution of $\Get_0$.]{\label{fig:wfg1}\scalebox{0.4}{\input{figs/wfgDining1.pdf_t}}} 
       \caption{Example wait-for-graphs for dining philosophers system of Figure~\ref{fig:diningSpectrum}.}
        \label{fig:wfg}
   \end{center}
@@ -229,7 +230,7 @@ and $F_0$ is in $u_l$. This state is not reachable from the initial state.
 
 Figure~\ref{fig:SCnotCycle} shows an example of a supercycle that is not a simple cycle. 
 The ``essential'' part of the supercycle, consisting of components $B_1, B_2,B_3$, and their actions $a,b,c,d$, is in bold. 
-The supercycle can be extended to contain $B_4$, but neither $B_5$ nor $B_6$: $B_6$ is enabled, and $B_5$ has is ready to execute $h$, which waits
+The supercycle can be extended to contain $B_4$, but neither $B_5$ nor $B_6$: $B_6$ is enabled, and $B_5$ is ready to execute $h$, which waits
 only for $B_6$.
 %
 \begin{figure}[ht]
@@ -350,10 +351,10 @@ the interaction.
 It makes sure none of the subsystem components is involved in a local supercycle. 
 %
 Figure~\ref{fig:sc-local-dining} illustrates the wait-for-graph of the dining philosopher subsystem 
-corresponding to the $get_0$ interaction with a distance of $1$. 
-The subsystem includes the $get_0$ interaction, 
-components $P_0, F_0,$ and $F_1$ involved in $get_0$, 
-and interactions $rel_0, get_1, rel_1, get_3,$ and $rel_3$ connected to these components. 
+corresponding to the $\Get_0$ interaction with a distance of $1$. 
+The subsystem includes the $\Get_0$ interaction, 
+components $P_0, F_0,$ and $F_1$ involved in $\Get_0$, 
+and interactions $\Rel_0, \Get_1,\Rel_1, \Get_3,$ and $\Rel_3$ connected to these components. 
 We notice that no component in Figure~\ref{fig:sc-local-dining} is involved in a supercycle. 
 %
 The local check is sound and not complete, therefore it is pessimistic and considers 

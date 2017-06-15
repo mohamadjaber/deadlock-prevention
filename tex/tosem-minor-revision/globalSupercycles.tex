@@ -9,7 +9,7 @@ node in $\XS$.
 
 Since $\SFs$ is monotone, its greatest fixpoint $\SC$ exists.  If \wfg{B}{s} is supercycle-free, then $\SC$ is the empty wait-for graph \ewfg.
 Otherwise $\SC$ is the largest supercycle in \wfg{B}{s}.  We also define the dual $\VFs$ of $\SFs$, whose least fixpoints are the nodes that are not
-members of any supercycle, and we say that such nodes have a \emph{supercycle violation} . Since \wfg{B}{s} is finite, 
+members of any supercycle, and we say that such nodes have a \emph{supercycle violation}. Since \wfg{B}{s} is finite, 
 $\VFs$ is monotone and continuous, and so its least fixpoint can be computed as usual by iterating $\VFs$, starting from \ewfg.
 This provides a method of computing the nodes with supercycle violations, whiich is the basis for our deadlock-freedom criterion.
 
@@ -126,7 +126,7 @@ Let $\SC$ be the greatest fixpoint of $\SFs$. Then either
 \end{proposition}
 %
 \begin{proof}
-By the Knaster-Tarski theorem, the greaterst fixpoint is the join of all the post-fixpoints. 
+By the Knaster-Tarski theorem, the greatest fixpoint is the join of all the post-fixpoints. 
 If \wfg{B}{s} is supercycle-free, then by \prop{supercycleGFP}, the set of post-fixpoints of $\SFs$ is empty. 
 Hence $\SC = \ewfg$.
 If \wfg{B}{s} contains supercycles, then by \prop{supercycleGFP},  the set of post-fixpoints of $\SFs$ is exactly the set of 
@@ -288,7 +288,7 @@ $\scyc{\B}{s}{\B_i} \imp (\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})
 Now assume $(\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$, and let 
 $\SC$ be the join of all the supercycles containing all the $\act \in \succs{\B}{s}{\B_i}$. 
 By \prop{supercycle:union}, $\SC \subg \wfg{B}{s}$ is a supercycle.
-Let $\SC'$ be $\SC$ with $\B_i \ar \act$ added, for all 
+Let $\SC'$ be $\SC$ with edge $\B_i \ar \act$ added, for all 
 $\act \in \succs{\B}{s}{\B_i}$.
 Then $\SC'$ is a supercycle by 
 \defn{supercycle}, and also $\SC' \subg \wfg{B}{s}$. Hence $\scyc{\B}{s}{\act}$.
@@ -543,7 +543,7 @@ Every supercycle $\SC$ contains at least one cycle.
 %
 \begin{proof}
 By contradiction. Suppose that $\SC$ is a supercycle and is also acyclic. Then every path in $\SC$ is simple, and therefore finite.  Hence every
-node in $\SC$ has finite out-depth. By \prop{prop:outdepth-finite-implies-scViol}, $\SC$ cannot be a supercycle.
+node in $\SC$ has finite out-depth. By \prop{outdepth-finite-implies-scViol}, $\SC$ cannot be a supercycle.
 \end{proof}
 
 

@@ -63,7 +63,7 @@ The statement discusses port enablement.
 A port here is an interface of
 a component to other components. 
 An interaction connects components through ports. 
-An interaction is enabled iff all its ports are enables. 
+An interaction is enabled iff all its ports are enabled. 
 A port is enabled iff its component is in a state that enables the port, i.e. 
 the state has an outgoing transition labeled with the port and the predicate
 enabling the port is $true$. 
@@ -84,7 +84,7 @@ where shared variable interaction was critical to showing deadlock behavior.
 
 \answer{
 The paragraph starts by stating that we abstract away from syntax and variables
-therein and analyze interactions, ports, components and states. 
+therein and analyze interactions, ports, components and states. Note also that interactions are the only means of inter-component communication and synchronization in BIP (we clarified this in the paper).  
 Deadlock is characterized by the absence of an enabled interaction. 
 This is due to the semantics of BIP where a system executes through interaction
 enablement. 
@@ -110,7 +110,7 @@ any progress.
 ~
 
 \answer{
-We added reference to the example of dining philosophers across some definitions. 
+We added references to the example of dining philosophers to several definitions. 
 We hope this helps improve the understanding of the concepts. 
 We did not do the same for the token ring for brevity concerns. 
 }
@@ -125,8 +125,8 @@ about the reachable state space?
 ~
 
 \answer{
-  We added to Section 3.3 an illustration of the wait-for-graph for the subsystem
-    corresponding to interaction $get_{0}$ 
+  We added to Section 3.3 an illustration of the wait-for-graph for a subsystem
+    corresponding to interaction $Get_{0}$ 
     from the dining philosopher example.
   We discussed how the wait-for-graph contains the necessary components and 
     interactions to judge that the execution of the interaction will not result
@@ -183,7 +183,7 @@ application on page 32..
 
 ~
 
-\answer{We added, in Section 3, an illustration of subsystem and local 
+\answer{We added, in Section 3 (Figure 6), an illustration of subsystem and local 
 supercycle to present the local method.} 
 
 \item  related work: there has been extensive work on compositional reasoning

@@ -24,7 +24,7 @@ The paper is written carefully and is self-contained, giving all necessary backg
 
 ~
 
-  \answer{The paper illustrated the BIP and the wait-for-graph definitions with the dining philosopher example. We added an illustration of the wait-for-graph of a subsystem directly therein to present the local method as early as possible. } 
+  \answer{The paper illustrated the BIP and the wait-for-graph definitions with the dining philosopher example. We added an illustration (Figure 6) of the wait-for-graph of a subsystem directly therein to present the local method as early as possible. } 
 
 \item The analysis of supercycles can, I believe, be considerably simplified.
 
@@ -42,7 +42,7 @@ I strongly recommend that the authors consider reworking the section to incorpor
 
 ~
 
-    \answer{We thank the reviewer for the very valuable insight. The paper has been majorly rewritten to use fixpoints and that helped simplify the presentation as expected by the reviewer.}
+    \answer{We thank the reviewer for the very valuable insight. The paper has been significantly rewritten to use fixpoints and that helped simplify the presentation as expected by the reviewer.}
 \end{enumerate}
 
 \paragraph{Requirements:}
@@ -278,8 +278,10 @@ for all N? This would seem to require some use of symmetry in i
 combination with local analysis, as is done in the three papers on i
 invariant generation listed above.
 
+~
+
 \answer{
-In the paper, we introduce behavioral restriction condition per interaction (Definition 3.11). Then,   in Theorem 3.13, we introduce deadlock-freedom via supercycle-freedom preserving restriction by checking behavioral restriction on every interaction. Therefore, if the system is symmetry, it is sufficient to check behavioral restriction condition only on the interactions that are not structurally symmetric.  
+In the paper, we introduce behavioral restriction condition per interaction (Definition 3.11). Then,   in Theorem 3.13, we introduce deadlock-freedom via supercycle-freedom preserving restriction by checking behavioral restriction on every interaction. Therefore, if the system is symmetry, it is sufficient to check one representative of each symmetry class. 
 }
 
 
@@ -292,5 +294,5 @@ In the paper, we introduce behavioral restriction condition per interaction (Def
 
 ~
 
-\done
+\answer{The paper has been modified according to your comments.}
 \end{enumerate}

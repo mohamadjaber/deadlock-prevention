@@ -79,7 +79,7 @@ Since $s' = s \pj \B'$, we have $s' \pj i = s \pj i$. Hence
 $s \pj i (\gd{\act}{\B_i}) = s' \pj i (\gd{\act}{\B_i})$.
 By Definition~\ref{def:static:wait-for-graph}, 
 $a \ar \B_i \in \wfg{\B'}{s'}$ iff $s' \pj i (\gd{\act}{\B_i}) = \false$.
-Putting together these three equalities gives us clause (1).
+Putting together these three equalities gives us Clause (1).
 
 By Definition~\ref{def:static:wait-for-graph},
 $\B_i \ar \act \in \wfg{\B}{s}$ iff 
@@ -115,7 +115,7 @@ Write $\lwfg{B}{s}{\DS}$ for $\wfg{B}{s} \pj \DS$.
 We now develop a local version of the sequence of defnitions and propositions given in \secn{supercycle-fixpoint}.  Local means that they apply to any
 subsystem $(\B', Q'_0)$ of $(\B, Q_0)$. A subsystem has, in general, border nodes, \ie those nodes with a neighbor outside of the
 subsystem. The supercycle membership of these nodes cannot be determined with certainty, by inspecting just the subsystem.
-Hence we pessimistically assum that bordernodes are in a supercycle. When false, this assumption may produce a false negative, and so we sacrifice
+Hence we pessimistically assume that border nodes are in a supercycle. When false, this assumption may produce a false negative, and so we sacrifice
 completeness of our deadlock-freedom criterion. We do however, avoid false positives (that may result if we assume a border node is not in a supercycle when in fact it
 is), and so we maintain soundness of our criterion. 
 
@@ -180,7 +180,7 @@ $\llat{\B}{s}{\DS}  = \tpl{ \lwfgS{B}{s}{\DS}  \subg }$
 \begin{definition}[$\mathit{lblocks}$] \label{defn:blocksLoc}
 %Let $U \subg \lwfgS{B}{s}{\act,\l}$ and $a, B_i$ be nodes in $\wfg{B}{s}$. Then 
 Let $U \subg \lwfgS{B}{s}{\DS}$ and $\act, B_i$ be nodes in $\wfg{B}{s}$. Then 
-$\lblocks{\act}{\US} \df [ (\ex \B_i \in \US : \act \ar \B_i \sub \wfg{B}{s})$ or $\act$ is a border interaction of $\DS$ ], and 
+$\lblocks{\act}{\US} \df [ (\ex \B_i \in \US : \act \ar \B_i \sub \wfg{B}{s})$ or $\act$ is a border interaction of $\DS$ $]$, and 
 $\lblocks{\B_i}{\US} \df (\fa \act : \B_i \ar \act \sub\wfg{\B}{s} \imp \act \in \US)$.
 \end{definition}
 
@@ -217,10 +217,9 @@ Hence  $\lblocks{\act}{\YS}$, and so $\act \in \lSF{\YS}$. \\
 \emph{Case of $\ndx$ is a component $\B_i$}. By Definitions~\ref{defn:scFixLoc} and \ref{defn:blocksLoc}, we have
 $(\fa \act : \B_i \ar \act \in \lwfg{B}{s}{\DS} \imp \act \in \XS)$.
 Since $\XS \subg \YS$, we have  $(\fa \act : \B_i \ar \act \in \lwfg{B}{s}{\DS} \imp \act \in \YS)$. 
-Hence $\lblocks{\B_i}{\YS}$, and so $\B_i \in \lSF{\YS}$. \\
+Hence, $\lblocks{\B_i}{\YS}$, and so $\B_i \in \lSF{\YS}$. \\
 
-In all three cases, we have $\ndx \in \lSF{\YS}$. Since $\ndx$ was chosen arbitrarily from $\lSF{\XS} $, it follows that $\lSF{\XS} \subg \lSF{\YS}$. Hence
-$\lSFs$ is monotone.
+In all three cases, we have $\ndx \in \lSF{\YS}$. Since $\ndx$ was chosen arbitrarily from $\lSF{\XS} $, it follows that $\lSF{\XS} \subg \lSF{\YS}$. Hence, $\lSFs$ is monotone.
 %
 Since the dual of a monotone mapping in a complete boolean lattice is also monotone, we have that $\lVFs$ is monotone.
 %
