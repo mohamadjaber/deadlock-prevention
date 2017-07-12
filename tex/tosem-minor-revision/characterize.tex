@@ -346,12 +346,12 @@ By Proposition~\ref{prop:supercycle-is-necessary}, $\wfg{\B}{s}$ contains a supe
 We formally discuss {\em local supercycle} in Section~\ref{secn:localSupercycles}.
 Our method provides a local version of the supercycle check. 
 For each interaction in the system, the local check computes a subsystem 
-that includes the interaction and other components at a given distance from 
+that includes the interaction and other components at a given ``distance'' from 
 the interaction. 
 It makes sure none of the subsystem components is involved in a local supercycle. 
 %
 Figure~\ref{fig:sc-local-dining} illustrates the wait-for-graph of the dining philosopher subsystem 
-corresponding to the $\Get_0$ interaction with a distance of $1$. 
+corresponding to the $\Get_0$ interaction with a distance of $1$, i.e., its components and their interactions. 
 The subsystem includes the $\Get_0$ interaction, 
 components $P_0, F_0,$ and $F_1$ involved in $\Get_0$, 
 and interactions $\Rel_0, \Get_1,\Rel_1, \Get_3,$ and $\Rel_3$ connected to these components. 

@@ -54,8 +54,8 @@ components.
 For example, state $e$ in atomic component $P$ of Figure~\ref{fig:components} 
 enables port \release~ as there exists a transition from $e$ labeled with
 port \release.} 
-This assumption is a restriction on BIP, and we defer to subsequent work 
-how to lift this restriction.  
+%This assumption is a restriction on BIP, and we defer to subsequent work 
+%how to lift this restriction.  
 So, we assume the existence of a predicate $\gd{p_i}{i}$ that holds in 
 state $s_i$ of component $\B_i$ iff port $p_i$ is enabled in
 $s_i$, \ie $s_i(\gd{p_i}{i}) = \true \mbox{ iff } s_i \goesto[p_i]_i$.
@@ -176,7 +176,8 @@ $\act$ is one of the possible transitions that can be taken from $s$.
 
 To avoid pathological cases of deadlock due solely to a single component refusing to enable any interaction at all, 
 we assume that every component always enables at least one interaction.
-Structurally, this means that there is no local state zero transitions, and every port labeling a transition is 
+Structurally, this means that there is no local state with zero transitions, 
+and every port labeling a transition is 
 part of at least one interaction. 
 \redbox{
 Intuitively, component $B_i$ in state $s$ must enable at least one interaction $a$. 
