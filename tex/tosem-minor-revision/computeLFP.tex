@@ -7,12 +7,12 @@
 
 \begin{figure}[H]
 \setcounter{lctr}{0}
-\begin{tabbing}\label{alg:compute-scViol}
+\begin{tabbing}\label{alg:compute-lfp}
 aa\= aa\= aa\= aa\= aa\=\kill
 \cLFP{$\dsk{\act}{\l},t_\act$}\\
 \cmnt\ compute least fixpoint of $\lVF$ in state $t_\act$ of $\dsk{\act}{\l}$\\
-\cmnt\ Precondition: $\fas v \in \dsk{\act}{\l}: \VLA{\act}{\l}{t_\act}{v}{0} = \fff$ \\
-\cmnt\ Postcondition: $\fas v \in \dsk{\act}{\l}: \VLA{\act}{\l}{t_\act}{v}{d}$ 
+\cmnt\ Precondition: $\fas v \in \dsk{\act}{\l}: V[v] = \fff$ \\
+\cmnt\ Postcondition: $\fas v \in \dsk{\act}{\l}: V[v]$ 
 $ =
   \begin{cases}
     \ttt     & \quad \text{if }  v \in \lVFs^{d} (\ewfg)\\
@@ -20,30 +20,29 @@ $ =
   \end{cases}
 $
 \\
-\lio{d \gts 1} 
-\lio{\fpt \gts \ttt} 
-\lio{\WHILE \neg \fpt}
-   \lit{\mbox{invariant: $V$ computed correctly up to $d-1$}} 
-   \lit{\fpt \gts \fff} 
-   \lit{\FORALLC{v \in \dsk{\act}{\l}}}
+\lio{\fpt \gts \fff} 
+\lio{\WHILE~\neg \fpt}
+   \lit{\fpt \gts \ttt} 
+   \lit{\FORALLC{v \in \dsk{\act}{\l} \land \neg V[v] }}
       \lih{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
                           \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act})}}
-          \lifc{\VLA{\act}{\l}{t_\act}{v}{d} \gts \ttt}{\cmnt Base case: interaction with no outgoing wait-for-edges}  
-
+          \lifc{ V[v] \gts \ttt}{\cmnt interaction with no outgoing wait-for-edges}  
+          \lif{\fpt \gts \fff} 
      \lih{\ELSFC{\mbox{$v$ is an interior interaction $\actp$ and } 
-                  (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} :  \VV{\act}{\l}{t_\act}{B_i}{})}}
-          \lif{\VLA{\act}{\l}{t_\act}{v}{d} \gts \ttt}
+     (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} :  V[B_i] )}}
+                  \lif{ V[v] \gts \ttt}
+                  \lif{\fpt \gts \fff} 
      \lih{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
-                  (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : \VV{\act}{\l}{t_\act}{\actp}{})}}
-          \lif{\VLA{\act}{\l}{t_\act}{v}{d} \gts \ttt}
+     (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : V[\actp] )}}
+                  \lif{ V[v] \gts \ttt}
+                  \lif{\fpt \gts \fff} 
     \lih{\FI}
-    \lit{\IFC{\neg \VLA{\act}{\l}{t_\act}{v}{d-1} \land \VLA{\act}{\l}{t_\act}{v}{d}} \fpt \gts \fff} 
   \lit{\ENDFOR}
-\lion{\ENDWHILE} 
+\lio{\ENDWHILE} 
+\lion{\RETURNE{V}}
 \end{tabbing}
 \vspace{-3ex}
 \caption{Procedure to compute all supercycle-violations in state $t_\act$ of $\dsk{\act}{\l}$}
-\label{fig:computeSCViolateLocDSK}
-\label{fig:computeSCViolateLoc}
+\label{fig:algcomputeLFP}
 \end{figure}
 
