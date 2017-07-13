@@ -6,15 +6,33 @@ To implement our deadlock freedom criteria, we must implement three procedures:
 \en
 %
 Tasks \ref{task:check-init} and \ref{task:evaluate-lao} require the computation of $\lfp{\lVFs}$.
+\fig{algcomputeLFP} presents an algorithm that computes
+$\lfp{\lVFs}$. Its correctness follows immediately from \defn{blocksLoc} and \defn{violFixLoc}.
 
-\subsection{Computing the least fixpoint of $\lVFs$}
+
+%\subsection{Computing the least fixpoint of $\lVFs$}
    \label{secn:computeLFP}
    \input{computeLFP}
 
 
-   \subsection{Checking that initial states are supercycle-free}
+\thm{local.deadlock-free} requires that all initial states be supercycle-free. 
+We assume that the number of initial states is small, so that we can check each explicitly. 
+\fig{checkInitSCFree}  presents an algorithm that checks if a
+given state is supercycle-free.
+
+% \subsection{Checking that initial states are supercycle-free}
    \label{s:initSCFree}
    \input{initSCFree}
+
+
+
+
+
+
+
+
+
+
 
    \subsection{Implementation of the Linear Condition}
    \label{s:implLin}

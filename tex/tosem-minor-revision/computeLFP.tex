@@ -8,11 +8,11 @@
 \begin{figure}[H]
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:compute-lfp}
-aa\= aa\= aa\= aa\= aa\=\kill
+aaa\= aa\= aa\= aa\= aa\=\kill
 \cLFP{$\dsk{\act}{\l},t_\act$}\\
-\cmnt\ compute least fixpoint of $\lVF$ in state $t_\act$ of $\dsk{\act}{\l}$\\
-\cmnt\ Precondition: $\fas v \in \dsk{\act}{\l}: V[v] = \fff$ \\
-\cmnt\ Postcondition: $\fas v \in \dsk{\act}{\l}: V[v]$ 
+\cmnt\ compute least fixpoint of $\lVF$ in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lfp{\lVFs} = \UN_{d \ge 0} \lVFs^{d} (\ewfg)$.\\
+%\cmnt\ Precondition: $\fas v \in \dsk{\act}{\l}: V[v] = \fff$ \\
+\cmnt\ postcondition: returns array $V$ such that $\fas v \in \dsk{\act}{\l}: V[v]$ 
 $ =
   \begin{cases}
     \ttt     & \quad \text{if }  v \in \lVFs^{d} (\ewfg)\\
@@ -20,8 +20,11 @@ $ =
   \end{cases}
 $
 \\
+\lio{\FORALLC{v \in  \dsk{\act}{\l}}}
+   \lit{V[v] \gts \fff}
 \lio{\fpt \gts \fff} 
 \lio{\WHILE~\neg \fpt}
+   \lit{\mbox{\cmnt loop invariant: on the $i$'th iteration, $V[v] \equiv  v \in \UN_{0 \le d \le i} \lVFs^{d} (\ewfg)$}}
    \lit{\fpt \gts \ttt} 
    \lit{\FORALLC{v \in \dsk{\act}{\l} \land \neg V[v] }}
       \lih{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
@@ -41,7 +44,6 @@ $
 \lio{\ENDWHILE} 
 \lion{\RETURNE{V}}
 \end{tabbing}
-\vspace{-3ex}
 \caption{Procedure to compute all supercycle-violations in state $t_\act$ of $\dsk{\act}{\l}$}
 \label{fig:algcomputeLFP}
 \end{figure}

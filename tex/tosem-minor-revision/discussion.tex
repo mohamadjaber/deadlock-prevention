@@ -144,19 +144,22 @@ point \LAO coincides with \GAO, which is sound and complete for local deadlock
 (\prop{scViol-iff-notInSC}, \defn{formation.violation}, and \defn{global.ANDOR-cond}).
 
 \redbox{
-\citeN{Glabbeek2009} extends CTL* with constructs to 
-support expressing and distinguishing between deadlock, livelock and successfull
+\citeN{Glabbeek2009} extends \CTLS with constructs to 
+support expressing and distinguishing between deadlock, livelock, and successfull
 termination. 
 %
-This is key since typically Kripke structures, which  characterize CTL* formulae
-are total, therefore each state must have at least one transition and deadlock
-can not be modeled.
-The work then translates the extended formulae and the LTS systems they specify
-to Kripke structures where the total restriction is lifted. 
+This is key since the standard semantics of \CTLS requires that Kripke
+structures be total, \ie every state has at least one outgoing
+transition, and so deadlock cannot be modeled.
 %
-The work also suggests an alternative method to adapt the translation 
-from LTS systems into Kripke structures by adding a special $s_{\delta}$ state
-that has a self loop transition where this specific state characterizes deadlock. 
+They provide a semantics for \CTLS in which deadlock, livelock, and successfull
+termination can all be distinguished.
+% They then translate the extended formulae and the LTS systems they specify
+% to Kripke structures where the total restriction is lifted. 
+% %
+% The work also suggests an alternative method to adapt the translation 
+% from LTS systems into Kripke structures by adding a special $s_{\delta}$ state
+% that has a self loop transition where this specific state characterizes deadlock. 
 }
 
 \redbox{
@@ -165,19 +168,19 @@ Abstraction methods related to compositional reasoning
 that target safety properties can be used to prove
 global deadlock freedom. 
 %
-The work in~\cite{AbdullaHH13VMCAI,PnueliRZ01TACAS,CohenN09FMSD}
-targets parametrized systems composed of $N$ communicating processes $P_{\{i\}}$ 
-via over-approximating the reachable state space of a system with 
-arbitrary $N$ with symbolic states from a system of size $K<N$ such that
-if the property holds for the system of size $K$ it holds for any arbitrary $N$.
+The aforementioned papers %works in~\cite{AbdullaHH13VMCAI,PnueliRZ01TACAS,CohenN09FMSD}
+target parametrized systems composed of $N$ communicating processes $P_{\{i\}}$.
+They over-approximate the reachable state space of a system with 
+$N$ processes, using symbolic states from a system of size $K<N$.
+If the property holds for the system of size $K$, then it holds for any arbitrary $N$.
 %
-Crucial to the work in~\cite{AbdullaHH13VMCAI} is a bound on the number of processes
-involved at each state such that the post image (typically infinite) can be 
+Crucial to~\cite{AbdullaHH13VMCAI} is a bound on the number of processes
+involved at each state, such that the post image (typically infinite) can be 
 computed using successor operations of size $K+\ell$ where $\ell$ is a small 
 constant. This limits the completeness of the technique to systems with specific
-array, ring and tree like topologies. 
+array, ring, and tree like topologies. 
 %
-The work in~\cite{CohenN09FMSD} provides a global proof using 
+\citeN{CohenN09FMSD} provides a global proof using 
 several local proofs. 
 It splits a target system invariant into local process invariants across 
 local and shared variables and attempts to prove these invariants. 
@@ -188,13 +191,14 @@ about additional local variables.
 }
 
 \redbox{
-The work in~\cite{PnueliRZ01TACAS} targets a specific type of bounded data 
-parametrized systems with parameter $N$ where $N$ is the number of processes
+\citeN{PnueliRZ01TACAS} targets a specific type of bounded data 
+parametrized systems with parameter $N$, where $N$ is the number of
+processes, and 
 where safety is expressed using a specific type of assertions called $R$-assertions.
-The work shows that for a given such system, $\exists N_0$ such that an
+They show that for a given such system, $\exists N_0$ such that an
 $R-$assertion $\phi$ is preserved by any step of the system for every $N>1$
 iff it is proven valid for every $N\le N_0$. 
-Then the work shows how to handle such systems with model checking and deductive
+They show how to handle such systems with model checking and deductive
 reasoning techniques. 
 % 
 The survey paper~\cite{ClarkeKV10Memory} describes several abstraction 
@@ -202,7 +206,7 @@ techniques that use counterexamples to guide the refinement steps.
 It also describes a localization reduction technique~\cite{Kurshan94}.
 %a dependency graph of the variables referenced in the safety property. 
 The first abstraction is the property itself. 
-In case, it passes model checking, then it is a tautology. 
+In case, it passes model checking, then it is a tautology. %????????????????????????????????????????????
 In case an error track is produced, either the tack is feasible and the property
 fails, or the track is analyzed and linked to 
 a group of blocking variables that could not be assigned to satisfy the track. 
@@ -227,11 +231,11 @@ parametrized systems,
 (2) we characterize deadlock freedom with a structural supercycle property
 that governs the wait-for-graph of the system interactions, 
 (3) we compute our local systems based on interactions, 
-(4) we establish deadlock freedom by performing the structural super cycle violation
+(4) we establish deadlock freedom by performing the structural supercycle violation
 check for each interaction using its local subsystems,  and
 (5) our technique is complete for BIP systems. 
 In the future, we would like to explore whether the local supercycle violation check
-is enough to prove parametrized systems. 
+is enough to prove deadlock-freedom of parametrized systems. 
 We would like to consider characterizing other interesting safety properties with
 similar structural checks in the context of BIP. 
 }

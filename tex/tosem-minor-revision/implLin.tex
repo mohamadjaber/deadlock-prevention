@@ -21,7 +21,7 @@ Definition~\ref{def:ldfc-k}.
 \begin{figure}[H]
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:check-df}
-mm\= mm\= mm\= \kill
+aaa\= aa\= aa\= \kill
 \checkLin{$\B, Q_0$},  where $\B \df \gamma(\B_1,\dots,\B_n)$\\
 \lio{\FORALLC{\mbox{interactions $\act \in \gamma$}}}
    \lit{\IFC{\checkLinInt{\B, Q_0, \act} = \fff}\ \RETURNE{\fff} \ \FI}
@@ -31,7 +31,7 @@ mm\= mm\= mm\= \kill
 
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:checkInt}
-mm\= mm\= mm\= \kill
+aaa \= aa\= aa\= \kill
 \checkLinInt{$\B, Q_0, \act$},  where $\B \df \gamma(\B_1,\dots,\B_n), \act \in \gamma$\\
 \cmnt\ check $(\ex \l > 0: \LLin(\B, Q_0, \act, \l))$\\
 \lioc{\l \gts 1;}{\cmnt\ start with $\l = 1$}
@@ -45,7 +45,7 @@ mm\= mm\= mm\= \kill
 \setcounter{lctr}{0}
 \begin{tabbing}
 \label{alg:eval-ldfc}
-mm\= mm\= mm\= \kill
+aaa\= aa\= aa\= \kill
 \checkLinIntDist{$\B, Q_0, \act, \l$}\\
 \lio{\FORALLC{\mbox{reachable transitions $s_\act \goesto[\act] t_\act$ of $\dsk{\act}{\l}$}}}
    \lit{\IFC{\neg(\fa \B_i \in \cmps{\act}:  \widepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l - 1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l -1)}}

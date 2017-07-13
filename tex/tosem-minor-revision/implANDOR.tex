@@ -62,7 +62,7 @@ aa\= aa\= aa\= \kill
 
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:check.LAO.Int}
-aa\= aa\= aa\= \kill
+aaa\= aa\= aa\= \kill
 \checkLAOInt{$\B, Q_0, \act$},  where $\B \df \gamma(\B_1,\dots,\B_n), \act \in \gamma$\\
 \cmnt\ returns $\ttt$ iff $(\ex \l > 0: \LAO(B, Q_0, \act, \l))$\\
 \lioc{\l \gts 1;}{\cmnt\ start with $\l = 1$}
@@ -76,7 +76,7 @@ aa\= aa\= aa\= \kill
 \setcounter{lctr}{0}
 \begin{tabbing}
 \label{alg:eval-ldfc}
-aa\= aa\= aa\= aa\= aa\=\kill
+aaa\= aa\= aa\= aa\= aa\=\kill
 \checkLAOIntDist{$\B, Q_0, \act, \l$}\\
 \cmnt\ returns $\ttt$ iff $\LAO(\B, Q_0, \act, \l)$\\
 \lio{\FORALLC{\mbox{reachable transitions $s_\act \goesto[\act] t_\act$ of $\dsk{\act}{\l}$}}}
@@ -94,20 +94,20 @@ aa\= aa\= aa\= aa\= aa\=\kill
 \setcounter{lctr}{0}
 \begin{tabbing}
 \label{alg:computeLocForm}
-aa\= aa\= aa\= aa\= aa\=\kill
+aaa\= aa\= aa\= aa\= aa\=\kill
 \cLFV{$B_i, V, \dsk{\act}{\l},t_\act$}\\
-\cmnt returns true iff $\locFormViol{B_i}{t_\act}{\act}{\l}$ holds (Definition~\ref{def:locFormation.violation})\\
-\cmnt \ie $B_i$ has a local supercycle formation violation in state $t_\act$ of subsystem $\dsk{\act}{\l}$\\
+\cmnt\ returns true iff $\locFormViol{B_i}{t_\act}{\act}{\l}$ holds (Definition~\ref{def:locFormation.violation})\\
+\cmnt\ \ie $B_i$ has a local supercycle formation violation in state $t_\act$ of subsystem $\dsk{\act}{\l}$\\
 \lio{\RETURNE{V[B_i] \, \vee \, \mbox{\cLconnScV{$B_i,\dsk{\act}{\l},t_\act$}}}}
 \end{tabbing}
 
 
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:compute-scViol}
-aa\= aa\= aa\= aa\= aa\=\kill
+aaa\= aa\= aa\= aa\= aa\=\kill
 \cLconnScV{$B_i, \dsk{\act}{\l},t_\act$}\\
-\cmnt returns true iff $\locConnViol{B_i}{t_\act}{\act}{\l}$ holds (Definition~\ref{def:sConn.violation.loc})\\
-\cmnt \ie $B_i$ has a local strong connectedness supercycle formation violation in state $t_\act$ of subsystem $\dsk{\act}{\l}$\\
+\cmnt\ returns true iff $\locConnViol{B_i}{t_\act}{\act}{\l}$ holds (Definition~\ref{def:sConn.violation.loc})\\
+\cmnt\ \ie $B_i$ has a local strong connectedness supercycle formation violation in state $t_\act$ of subsystem $\dsk{\act}{\l}$\\
 %\cmnt\ compute local supercycle violations in state $t_\act$ of $\dsk{\act}{\l}$\\
 %\cmnt\ Postcondition: $\fas v \in \set{\B_1,\ldots,\B_n} \un \gamma, d' = 1,\ldots,dd: \VV{\act}{\l}{t_\act}{v}{d'} = \lviol{v}{d'}{t_\act}{\act}{\l}$\\
 \lio{\mbox{remove all nodes with local supercycle violation}}
@@ -124,8 +124,6 @@ aa\= aa\= aa\= aa\= aa\=\kill
 
 \liocn{\RETURNE{\fff}}{\cmnt  Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.border} does not hold}
 \end{tabbing}
-
-\vspace{-3ex}
 
 \caption{Pseudocode for the implementation of the local AND-OR condition.}
 \label{fig:impl.locANDOR}
