@@ -67,11 +67,13 @@ An interaction is enabled iff all its ports are enabled.
 A port is enabled iff its component is in a state that enables the port, i.e. 
 the state has an outgoing transition labeled with the port and the predicate
 enabling the port is $true$. 
-For example, state $e$ in component Philosopher enables the $\mathit{release}$
+For example, state $e$ in component Philosopher enables the $\mathit{put}$
 port. 
-We addressed the issue by moving the description of the atomic component
+We addressed the issue by rewriting the confusing statement to
+emphasize that port enablement is a local property of a component, not
+depending on other components. We also moved the description of the atomic component
 example before the confusing statement, and then gave an example of port enablement
-in the confusing statement. 
+in the confusing statement.
 }
 
 ~ 
@@ -82,20 +84,13 @@ where shared variable interaction was critical to showing deadlock behavior.
 
 ~
 
-\answer{
-The paragraph starts by stating that we abstract away from syntax and variables
-therein and analyze interactions, ports, components and states. Note also that interactions are the only means of inter-component communication and synchronization in BIP (we clarified this in the paper).  
-Deadlock is characterized by the absence of an enabled interaction. 
-This is due to the semantics of BIP where a system executes through interaction
-enablement. 
-Interaction enablement depends on port enablement, and port enablement is a local 
-property of the component containing the port and can be expressed through
-a predicate. 
-In a sense, port and interaction enablements are predicates that abstract 
-syntactic BIP issues away and are enough to characterize deadlock. 
-We address this issue by adding an example after Definition 2.2 that illustrates 
-an interaction since that definition is needed for the discussion of deadlocks. 
-}
+\answer{ The paragraph starts by stating that BIP does not have shared variables, and that we abstract away from syntax and variables therein and
+  analyze interactions, ports, components and states. Note also that interactions are the only means of inter-component communication and
+  synchronization in BIP (we clarified this in the paper).  Deadlock is characterized by the absence of an enabled interaction.  This is due to the
+  semantics of BIP where a system executes through interaction enablement.  Interaction enablement depends on port enablement, and port enablement is
+  a local property of the component containing the port and can be expressed through a predicate.  In a sense, port and interaction enablements are
+  predicates that abstract syntactic BIP issues away and are enough to characterize deadlock.  We address this issue by adding an example after
+  Definition 2.2 that illustrates an interaction since that definition is needed for the discussion of deadlocks.  }
 
 ~
 
@@ -126,7 +121,7 @@ about the reachable state space?
 
 \answer{
   We added to Section 3.3 an illustration of the wait-for-graph for a subsystem
-    corresponding to interaction $Get_{0}$ 
+    corresponding to interaction $Grab_{0}$ 
     from the dining philosopher example.
   We discussed how the wait-for-graph contains the necessary components and 
     interactions to judge that the execution of the interaction will not result

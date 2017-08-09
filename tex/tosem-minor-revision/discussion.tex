@@ -145,14 +145,14 @@ point \LAO coincides with \GAO, which is sound and complete for local deadlock
 
 \redbox{
 The work of \citeN{Glabbeek2009} extends \CTLS with constructs to 
-support expressing and distinguishing between deadlock, livelock, and successfull
+support expressing and distinguishing between deadlock, livelock, and successful
 termination. 
 %
 This is key since the standard semantics of \CTLS requires that Kripke
 structures be total, \ie every state has at least one outgoing
 transition, and so deadlock cannot be modeled.
 %
-They provide a semantics for \CTLS in which deadlock, livelock, and successfull
+They provide a semantics for \CTLS in which deadlock, livelock, and successful
 termination can all be distinguished.
 % They then translate the extended formulae and the LTS systems they specify
 % to Kripke structures where the total restriction is lifted. 
@@ -169,7 +169,8 @@ that target safety properties can be used to prove
 global deadlock freedom. 
 %
 The aforementioned papers %works in~\cite{AbdullaHH13VMCAI,PnueliRZ01TACAS,CohenN09FMSD}
-target parametrized systems composed of $N$ communicating processes $P_{\{i\}}$.
+target parametrized systems composed of $N$ communicating processes
+$P_{i}, 1 \le i \le N$.
 They over-approximate the reachable state space of a system with 
 $N$ processes, using symbolic states from a system of size $K<N$.
 If the property holds for the system of size $K$, then it holds for any arbitrary $N$.
@@ -207,36 +208,36 @@ It also describes a localization reduction technique~\cite{Kurshan94}.
 %a dependency graph of the variables referenced in the safety property. 
 The first abstraction is the property itself. 
 %%In case, it passes model checking, then it  is a tautology. %????????????????????????????????????????????
-If the model check fails, then an error track is produced, and either the tack is feasible and the property
+If the model check fails, then an error ``track'' is produced, and either the track is feasible and the property
 fails, or the track is analyzed and linked to 
 a group of blocking variables that could not be assigned to satisfy the track. 
-The blocking variables lead dependency graph paths to active variables that have full 
+The blocking variables lead, via dependency graph paths, to active variables that have full 
 assignments in the error track. 
-All these variables constitute the next refinement step where the border variables
-are considered free and termed as the free fence. 
-Key to the efficacy of the technique is the choice of the blocking variables
-such that they minimize the free fence at each abstraction step. 
+All these variables constitute the next refinement step, where the border variables
+are considered free and are called the ``free fence''. 
+Key to the efficacy of the technique is the choice of the blocking variables,
+so that they minimize the free fence at each abstraction step. 
 Localization refinement is also used synergistically with input 
-reparameterization to attain maximal input reduction in 
-sequential netlists using min-cut analysis 
+re-parameterization, to attain maximal input reduction in 
+sequential netlists, using min-cut analysis 
 in a structural manner~\cite{BaumgartnerM05Charme}. 
 The reduced netlists are then subject to verification using several 
-techniques including decomposing the netlist into several sub-netlists each 
-with a bounded state transition diameter and applying bounded model checking
-~\cite{BaumgartnerK04Date,BaumgartnerKA02CAV} on each sub-netlist. 
+techniques, including decomposing the netlist into several sub-netlists, each 
+with a bounded state transition diameter, and then applying bounded model checking
+~\cite{BaumgartnerK04Date,BaumgartnerKA02CAV} to each sub-netlist. 
 %
 Our work differs from the above techniques in that 
 (1) we do not limit our technique to 
 parametrized systems, 
 (2) we characterize deadlock freedom with a structural supercycle property
 that governs the wait-for-graph of the system interactions, 
-(3) we compute our local systems based on interactions, 
+(3) we compute our local subsystems based on interactions, 
 (4) we establish deadlock freedom by performing the structural supercycle violation
 check for each interaction using its local subsystems,  and
 (5) our technique is complete for BIP systems. 
 In the future, we would like to explore whether the local supercycle violation check
 is enough to prove deadlock-freedom of parametrized systems. 
-We would like to consider characterizing other interesting safety properties with
+We would also like to consider characterizing other interesting safety properties with
 similar structural checks in the context of BIP. 
 }
 

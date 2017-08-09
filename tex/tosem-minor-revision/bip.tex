@@ -36,25 +36,17 @@ the right philosopher (resp. left philosopher) and so moves back to state $f$ (f
 %
 
 
-
-In practice, we describe the transition system using some syntax, 
-\eg involving variables.  
-We abstract away from issues of syntactic description since we are only 
-interested in enablement of ports and actions. 
-%
-We assume that enablement of a
-port depends only on the local state of a component. 
-In particular, it cannot depend on the state of other
-components. 
 \redbox{
-For example, state $e_i$ in atomic component $\Phl_i$ of Figure~\ref{fig:components} 
-enables port $\putt_i$ as there exists a transition from $e_i$ labeled with
-port $\putt_i$.} 
-%This assumption is a restriction on BIP, and we defer to subsequent work 
-%how to lift this restriction.  
-So, we assume the existence of a predicate $\gd{p_i}{i}$ that holds in 
-state $s_i$ of component $\B_i$ iff port $p_i$ is enabled in
-$s_i$, \ie $s_i(\gd{p_i}{i}) = \true \mbox{ iff } s_i \goesto[p_i]_i$.
+In practice, we describe the transition system using some syntax, \eg involving local variables (BIP does not have shared variables).  We abstract
+away from issues of syntactic description since we are only interested in enablement of ports and actions.
+%
+In BIP, the enablement of a port depends only on the local state of a component.  In particular, it cannot depend on the state of other components.
+For example, state $e_i$ in atomic component $\Phl_i$ of Figure~\ref{fig:components} enables port $\putt_i$ as there exists a transition from
+  $e_i$ labeled with port $\putt_i$.
+%This assumption is a restriction on BIP, and we defer to subsequent work how to lift this restriction.  
+Hence, there exists a predicate $\gd{p_i}{i}$ that holds in state $s_i$ of component $\B_i$ iff port $p_i$ is enabled in $s_i$, \ie
+$s_i(\gd{p_i}{i}) = \true \mbox{ iff } s_i \goesto[p_i]_i$.
+}
 
 \begin{definition}[Interaction] For a given system built from a set of $n$ atomic components 
 $\{\B_i = (Q_i, P_i, \goesto_i)\}_{i=1}^n$, we require that their respective sets of ports are
@@ -346,7 +338,7 @@ $(e_0,h_1,e_2,h_3,u_0^\l,u_1^r,u_2^\l,u_3^r)$
 $\{\putt_0, \free_0^\l, \free_1^r\}$  
 $(h_0,h_1,e_2,h_3,f_0,f_1,u_2^\l,u_3^r)$  \ldots
 %, i.e., philosopher $P_0$ and $P_2$ gets their left and right forks, respectively, then $P_0$ releases its left and right forks. 
-The projection of this execution on the sybsystem defined by subcomponent $\{\Phl_0, \Phl_1, F_0\}$, is equal to:
+The projection of this execution on the subsystem defined by subcomponent $\{\Phl_0, \Phl_1, F_0\}$, is equal to:
 $\rho \pj (\{\Phl_0, \Phl_1, F_0\}, Q'_0) = (h_0,h_1,f_0) \, \{\get_0, \use_0^\l\} \, (e_0,h_1,u_0^\l) \, \{\putt_0, \free_0^\l\} \, (h_0,h_1,f_0) \ldots$
 In particular, we project the states and interactions with respect to the subcomponent. Notice that, interaction $\Grab_2$ will disappear as its ports do not belong to the subcomponent.
 Clearly,  $\rho \pj (\{\Phl_0, \Phl_1, F_0\}, Q'_0)$ is an execution of $(\{\Phl_0, \Phl_1, F_0\}, Q'_0)$. 
