@@ -452,14 +452,17 @@
 
 %%%%%%%%%%%%%%%%%%%% DPHILS EXAMPLE %%%%%%%%%%%%%%%%%
 
-\newcommand{\get}{\MATHID{get}}
-\newcommand{\release}{\MATHID{release}}
-\newcommand{\use}{\MATHID{use}}
-\newcommand{\free}{\MATHID{free}}
+\newcommand{\get}{\MATHID{get}} % phil gets fork
+\newcommand{\putt}{\MATHID{put}}  % phil puts fork down
+\newcommand{\release}{\MATHID{put}}
+\newcommand{\use}{\MATHID{use}}    % fork is used
+\newcommand{\free}{\MATHID{free}}    % fork is freed
 
-\newcommand{\Get}{\MATHID{Get}}
-\newcommand{\Rel}{\MATHID{Rel}}
+\newcommand{\Get}{\MATHID{Grab}} %redundant   
+\newcommand{\Grab}{\MATHID{Grab}}   % Grab fork interaction
+\newcommand{\Rel}{\MATHID{Rel}}     % Release fork interaction
 
+\newcommand{\Phl}{\MATHID{Ph}}     % philosopher
 
 
 %%%%%%%%%%%%%%%%%%%% FORMATTING COMMANDS %%%%%%%%%%%%%%%%%%%%%%%%%%%

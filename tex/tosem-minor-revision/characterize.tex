@@ -222,16 +222,15 @@ In this case, say that state $s$ is supercycle-free.
 
 Figure~\ref{fig:sc} shows an example supercycle (with edges in bold) for the dining philosophers
 system of Figure~\ref{fig:diningSpectrum}.
-$P_0$ waits for (enables) a single interaction, $\Get_0$. 
-$\Get_0$ waits for (is disabled by) fork $F_0$, which waits for interaction $\Rel_0$.
-$\Rel_0$ in turn waits for $P_0$. However, this supercycle occurs in a state where $P_0$ is in $h$
-and $F_0$ is in $u_l$. This state is not reachable from the initial state. 
+$\Phl_0$ waits for (enables) a single interaction, $\Grab_0$. 
+$\Grab_0$ waits for (is disabled by) fork $F_0$, which waits for interaction $\Rel_0$.
+$\Rel_0$ in turn waits for $\Phl_0$. However, this supercycle occurs when $\Phl_0$ is in state $h_0$
+and $F_0$ is in state $u_0^\l$. This state is not reachable from the initial state. 
 
 
-Figure~\ref{fig:SCnotCycle} shows an example of a supercycle that is not a simple cycle. 
-The ``essential'' part of the supercycle, consisting of components $B_1, B_2,B_3$, and their actions $a,b,c,d$, is in bold. 
-The supercycle can be extended to contain $B_4$, but neither $B_5$ nor $B_6$: $B_6$ is enabled, and $B_5$ is ready to execute $h$, which waits
-only for $B_6$.
+Figure~\ref{fig:SCnotCycle} shows an example of a supercycle that is not a simple cycle.  The ``essential'' part of the supercycle, consisting of
+components $B_1, B_2,B_3$, and their interactions $a,b,c,d$, is in bold.  The supercycle can be extended to contain $B_4$, but neither $B_5$ nor
+$B_6$: $B_6$ is enabled, and $B_5$ is ready to execute the interaction $h$, which waits only for $B_6$.
 %
 \begin{figure}[ht]
 \begin{center}
@@ -342,7 +341,7 @@ By Proposition~\ref{prop:supercycle-is-necessary}, $\wfg{\B}{s}$ contains a supe
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{\redbox{Subsystem and Supercycle}}
+\subsection{\redbox{Subsystems and Supercycles}}
 We formally discuss {\em local supercycle} in Section~\ref{secn:localSupercycles}.
 Our method provides a local version of the supercycle check. 
 For each interaction in the system, the local check computes a subsystem 
@@ -351,14 +350,14 @@ the interaction.
 It makes sure none of the subsystem components is involved in a local supercycle. 
 %
 Figure~\ref{fig:sc-local-dining} illustrates the wait-for-graph of the dining philosopher subsystem 
-corresponding to the $\Get_0$ interaction with a distance of $1$, i.e., its components and their interactions. 
-The subsystem includes the $\Get_0$ interaction, 
-components $P_0, F_0,$ and $F_1$ involved in $\Get_0$, 
-and interactions $\Rel_0, \Get_1,\Rel_1, \Get_3,$ and $\Rel_3$ connected to these components. 
+corresponding to the $\Grab_0$ interaction with a distance of $1$, i.e., its components and their interactions. 
+The subsystem includes the $\Grab_0$ interaction, 
+components $\Phl_0, F_0,$ and $F_1$ involved in $\Grab_0$, 
+and interactions $\Rel_0, \Grab_1,\Rel_1, \Grab_3,$ and $\Rel_3$ connected to these components. 
 We notice that no component in Figure~\ref{fig:sc-local-dining} is involved in a supercycle. 
 %
 The local check is sound and not complete, therefore it is pessimistic and considers 
-the border interactions as blocking interactions. 
+the border interactions (underlined in the figure)   as blocking interactions. 
 The further the distance is increased, the more complete the local check becomes. 
 
 \begin{figure*}[ht]

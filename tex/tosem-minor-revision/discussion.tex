@@ -1,5 +1,5 @@
 
-\subsection{Related work.} 
+%\subsection{Related work} 
 The notions of wait-for-graph and supercycle \cite{AC05,AE98}
 were initially defined for a shared memory program
 $P = P_1 \pl \cdots \pl P_K$ in \emph{pairwise normal form} \cite{Att16a,Att16b}: a binary
@@ -144,7 +144,7 @@ point \LAO coincides with \GAO, which is sound and complete for local deadlock
 (\prop{scViol-iff-notInSC}, \defn{formation.violation}, and \defn{global.ANDOR-cond}).
 
 \redbox{
-\citeN{Glabbeek2009} extends \CTLS with constructs to 
+The work of \citeN{Glabbeek2009} extends \CTLS with constructs to 
 support expressing and distinguishing between deadlock, livelock, and successfull
 termination. 
 %
@@ -210,7 +210,7 @@ The first abstraction is the property itself.
 If the model check fails, then an error track is produced, and either the tack is feasible and the property
 fails, or the track is analyzed and linked to 
 a group of blocking variables that could not be assigned to satisfy the track. 
-These variables lead dependency graph paths to active variables that have full 
+The blocking variables lead dependency graph paths to active variables that have full 
 assignments in the error track. 
 All these variables constitute the next refinement step where the border variables
 are considered free and termed as the free fence. 
@@ -289,7 +289,7 @@ Hence, our methods are applicable to other formalisms such as CSP, CCS, I/O Auto
 \end{itemize}
 
 
-\subsection{Further work.} 
+\subsection{Further work} 
 Our implementation uses explicit state enumeration. % to evaluate $\LDFC(a, \l)$.
 Using BDD's may improve the running time 
 when $\LAO(B, Q_0, a, \l)$ holds only for large $\l$.
