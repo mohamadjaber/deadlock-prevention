@@ -16,7 +16,7 @@ $\goesto_i\, \subseteq Q_i \times P_i \times Q_i$ is a set of {\em possible tran
 
 \redbox{
 For states $s_i, t_i \in Q_i$ and port $p_i \in P_i$, write $s_i  \goesto[p_i]_i t_i$, iff
-$(s_i,p_i,t_i) \in\,\goesto_i$. When $p_i$ is clear from the context or not needed, we drop it on the transition and write $s_i \goesto_i t_i$. Similarly, $s_i \goesto[p_i]_i$ means that there
+$(s_i,p_i,t_i) \in\,\goesto_i$. When $p_i$ is clear from the context or not needed, we drop it from the transition and write $s_i \goesto_i t_i$. Similarly, $s_i \goesto[p_i]_i$ means that there
 exists $t_i \in Q_i$ such that
 $s_i \goesto[p_i]_i t_i$. In this case, $p_i$ is \emph{enabled} in state $s_i$.
 Ports are used for communication between different components, as
@@ -27,12 +27,12 @@ Figure~\ref{fig:components} shows atomic components for a philosopher $\Phl_i$ a
 A philosopher $\Phl_i$ that is hungry (in state $h_i$) can eat by executing $\get_i$ (to get its forks) and moving to state $e_i$ (eating). From $e_i$,
 $\Phl_i$ releases its forks by executing $\putt_i$ (to put down its forks) and moving back to $h_i$.
 %
-Adding the thinking state does not change the deadlock behaviour of the system, since the thinking to hungry transition is internal to $P$, and so we
+Adding the thinking state does not change the deadlock behaviour of the system, since the thinking to hungry transition is internal to $\Phl_i$, and so we
 omit it.
 %
-A fork $F_i$ is taken by either: (1) the left philosopher (transition $\get_i^\l$) and so moves to state $u_i^\l$ (used by left philosopher), or (2) the
-right philosopher (transition $\get_i^r$) and so moves to state $u_i^r$ (used by right philosopher). From state $u_i^r$ (resp. $u_i^\l$), $F_i$ is released by
-the right philosopher (resp. left philosopher) and so moves back to state $f$ (free).
+A fork $F_i$ is taken by either: (1) the left philosopher (transition $\use_i^\l$) and so moves to state $u_i^\l$ (used by left philosopher), or (2) the
+right philosopher (transition $\use_i^r$) and so moves to state $u_i^r$ (used by right philosopher). From state $u_i^r$ (resp. $u_i^\l$), $F_i$ is released by
+the right philosopher (resp. left philosopher) and so moves back to state $f_i$ (free).
 %
 
 
@@ -76,7 +76,7 @@ $\act = \{p_i\}_{i \in I}$
 involves all the components which have
 ports in $\act$.  
 We denote by $\cmps{\act}$ the
-set of atomic components participating in $\act$, formally:
+set of atomic components participating in $\act$. Formally,
 $\cmps{\act} = \{\B_i \st p_i \in \act\}$. 
 
 \begin{figure}[t]
@@ -150,14 +150,17 @@ $\B_i$ enables interaction $\act$ in state $s_i$ iff $s_i \goesto[p_i]_i$, where
 That is, $\B_i$ enables $\act$ in state $s_i$ iff $\B_i$ enables port $\act \ints P_i$ in state $s_i$. 
 
 Recall that $\gd{p_i}{i}$ denotes the enablement condition for port $p_i$ in component $\B_i$, that is, $\gd{p_i}{i}$ holds iff
-$s_i$ is the current state of $\B_i$ and $s_i \goesto[p_i]_i$.
+$s_i \goesto[p_i]_i$, where $s_i$ is the current state of $\B_i$.
 Let $\gd{\act}{i}$ denote the enablement condition for interaction $\act$ in
 component $\B_i$, that is,  $\gd{\act}{i} = \gd{p_i}{i}$ where $\set{p_i} = \act \ints P_i$.  
 %$\gd{a}{i}$ holds iff the current state of $\B_i$ is an $s_i$ such that $s_i \goesto[p_i]_i$.
 
-Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component, and let $s =
-\tpl{s_1,\ldots,s_n}$ be a state of $\B$.  Then $\B$ enables $\act$ in $s$
-iff every $\B_i \in \cmps{\act}$ enables $\act$ in $s_i$.  
+Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component, let
+$s = \tpl{s_1,\ldots,s_n}$ be a state of $\B$,
+and let $\act = \{p_i\}_{i\in I}$ be an interaction of $B$.
+Then $\B$ enables $\act$ in $s$
+iff every $\B_i \in \cmps{\act}$ enables $\act$ in $s_i$, \ie iff
+$\AND_{i \in I} \gd{p_i}{i}$ holds in $s$.
 \end{definition}
 %
 The definition of  interaction enablement is a consequence of 
@@ -323,11 +326,26 @@ $\rho \pj (\B', Q'_0)$  is $s'_0$, and $s'_0 \in Q'_0$ was shown above, so we es
 Since both clauses of Definition~\ref{def.bip.execution} are satisfied, we conclude that $\rho \pj (\B', Q'_0)$ is an execution of $(\B', Q'_0)$.
 \end{proof}
 
+
+\begin{corollary} \label{cor.bip.reachability} \label{cor:bip.reachability}
+Let $(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$, and let $P'$ be the port set of $(\B', Q'_0)$.
+Let $s$ be a reachable state of $(\B, Q_0)$. Then $s \pj \B'$ is a reachable state of  $(\B',Q'_0)$. Let $s \la{\act} t$ be
+a reachable transition of $(\B, Q_0)$, and let $\act \ints P'$ be an interaction of
+ $(\B', Q'_0)$. Then  $s \pj \B' \la{\act \ints P'} t \pj \B'$ is a reachable transition of $(\B', Q'_0)$.
+\end{corollary}
+%
+\begin{proof}
+Immediate corollary of Proposition~\ref{prop.bip.execution.projection}.
+\end{proof}
+
+
+
 \redbox{
 \begin{example}[Execution Projection]
-Let the initial state be $(h_0,h_1,h_2,h_3,f_0,f_1,f_2,f_3)$, i.e., all philosophers are hungry and all forks are free. 
+In the dining philosophers example of Figure~\ref{fig:components},
+let the (single) initial state be $(h_0,h_1,h_2,h_3,f_0,f_1,f_2,f_3)$, i.e., all philosophers are hungry and all forks are free. 
 Also, $\Grab_0 = \set{\get_0, use_0^\l, use_1^r}$ (resp.  $\Grab_2 = \set{\get_2, use_2^\l, use_3^r}$) is the interaction in which $\Phl_0$ 
-(resp. $\Phl_2$) picks up both forks, and $\Rel_0=\set{\putt_0, \free_0^\l, free_1^r}$ is the interaction in which $\Phl_2$ releases both forks. 
+(resp. $\Phl_2$) picks up both forks, and $\Rel_0=\set{\putt_0, \free_0^\l, free_1^r}$ is the interaction in which $\Phl_0$ releases both forks. 
 Consider the following execution: 
 $\rho = 
 (h_0,h_1,h_2,h_3,f_0,f_1,f_2,f_3)$
@@ -340,21 +358,11 @@ $(h_0,h_1,e_2,h_3,f_0,f_1,u_2^\l,u_3^r) \cdots$.
 %, i.e., philosopher $P_0$ and $P_2$ gets their left and right forks, respectively, then $P_0$ releases its left and right forks. 
 The projection of this execution on the subsystem defined by subcomponent $\{\Phl_0, \Phl_1, F_0\}$, is equal to:
 $\rho \pj (\{\Phl_0, \Phl_1, F_0\}, Q'_0) = (h_0,h_1,f_0) \, \{\get_0, \use_0^\l\} \, (e_0,h_1,u_0^\l) \, \{\putt_0, \free_0^\l\} \, (h_0,h_1,f_0) \cdots$.
-In particular, we project the states and interactions with respect to the subcomponent. Notice that, interaction $\Grab_2$ will disappear as its ports do not belong to the subcomponent.
+In particular, we project the states and interactions with respect to the subcomponent. Notice that interaction $\Grab_2$ will disappear as its ports do not belong to the subcomponent.
 Clearly,  $\rho \pj (\{\Phl_0, \Phl_1, F_0\}, Q'_0)$ is an execution of $(\{\Phl_0, \Phl_1, F_0\}, Q'_0)$. 
 \end{example}
 }
 
-\begin{corollary} \label{cor.bip.reachability} \label{cor:bip.reachability}
-Let $(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$, and let $P'$ be the port set of $(\B', Q'_0)$.
-Let $s$ be a reachable state of $(\B, Q_0)$. Then $s \pj \B'$ is a reachable state of  $(\B',Q'_0)$. Let $s \la{\act} t$ be
-a reachable transition of $(\B, Q_0)$, and let $\act \ints P'$ be an interaction of
- $(\B', Q'_0)$. Then  $s \pj \B' \la{\act \ints P'} t \pj \B'$ is a reachable transition of $(\B', Q'_0)$.
-\end{corollary}
-%
-\begin{proof}
-Immediate corollary of Proposition~\ref{prop.bip.execution.projection}.
-\end{proof}
 
 
 

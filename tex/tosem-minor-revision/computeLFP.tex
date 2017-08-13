@@ -10,12 +10,12 @@
 \begin{tabbing}\label{alg:compute-lfp}
 aaa\= aa\= aa\= aa\= aa\=\kill
 \cLFP{$\dsk{\act}{\l},t_\act$}\\
-\cmnt\ compute least fixpoint of $\lVF$ in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lfp{\lVFs} = \UN_{d \ge 0} \lVFs^{d} (\ewfg)$.\\
+\cmnt\ compute least fixpoint of $\lVFs$ in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lfp{\lVFs} = \UN_{d \ge 0} \lVFs^{d} (\ewfg)$.\\
 %\cmnt\ Precondition: $\fas v \in \dsk{\act}{\l}: V[v] = \fff$ \\
 \cmnt\ postcondition: returns array $V$ such that $\fas v \in \dsk{\act}{\l}: V[v]$ 
 $ =
   \begin{cases}
-    \ttt     & \quad \text{if }  v \in \lVFs^{d} (\ewfg)\\
+    \ttt     & \quad \text{if }  v \in \lfp{\lVFs}\\
     \fff     & \quad \text{otherwise}\\
   \end{cases}
 $
@@ -33,11 +33,11 @@ $
           \lif{\fpt \gts \fff} 
      \lih{\ELSFC{\mbox{$v$ is an interior interaction $\actp$ and } 
      (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} :  V[B_i] )}}
-                  \lif{ V[v] \gts \ttt}
+                  \lifc{V[v] \gts \ttt}{\cmnt all outgoing wait-for-edges go to violating nodes}
                   \lif{\fpt \gts \fff} 
      \lih{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
      (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : V[\actp] )}}
-                  \lif{ V[v] \gts \ttt}
+                  \lifc{V[v] \gts \ttt}{\cmnt some outgoing wait-for-edge goes to a violating node}
                   \lif{\fpt \gts \fff} 
     \lih{\FI}
   \lit{\ENDFOR}

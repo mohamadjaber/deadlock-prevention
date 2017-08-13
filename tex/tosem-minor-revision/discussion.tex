@@ -144,15 +144,18 @@ point \LAO coincides with \GAO, which is sound and complete for local deadlock
 (\prop{scViol-iff-notInSC}, \defn{formation.violation}, and \defn{global.ANDOR-cond}).
 
 \redbox{
-The work of \citeN{Glabbeek2009} extends \CTLS with constructs to 
+Related to methods that specifically check for deadlock-freedom are methods that check for general
+safety properties, \eg using abstraction and compositional reasoning.
+%
+The work of \citeN{Glabbeek2009} extends $\CTLS$ with constructs to 
 support expressing and distinguishing between deadlock, livelock, and successful
 termination. 
 %
-This is key since the standard semantics of \CTLS requires that Kripke
+This is key since the standard semantics of $\CTLS$ requires that Kripke
 structures be total, \ie every state has at least one outgoing
 transition, and so deadlock cannot be modeled.
 %
-They provide a semantics for \CTLS in which deadlock, livelock, and successful
+They provide a semantics for $\CTLS$ in which deadlock, livelock, and successful
 termination can all be distinguished.
 % They then translate the extended formulae and the LTS systems they specify
 % to Kripke structures where the total restriction is lifted. 

@@ -165,11 +165,12 @@ By \prop{monotone}, $\VFs$ is continuous. Follows by standard results, \eg see t
 \label{def:supercycle-violation}
 \label{def:supercycle.violation}
 \label{defn:supercycle.violation}
+Let $\ndv$ be a node of $\wfg{\B}{s}$. Define
 $\scV{v}{s} \df v \in \lfp{\VFs}$ and 
 $\scVd{v}{d}{s} \df v \in \VFs^{d} (\ewfg)$.
 \end{definition}
 %
-It immediately follows that $\scV{v}{s}$ iff  $(\ex d \ge 0: \scVd{v}{d}{s})$.
+It immediately follows that $\scV{v}{s}$ iff  $(\ex d \ge 1: \scVd{v}{d}{s})$.
 Also, it follows from \prop{LFPisScViolations} that $\scV{v}{s}$ iff there does not exist $\SC$ such that $\SC$ is a supercycle and $v \in SC$.
 We say that a node $v$ of \wfg{B}{s} has a \emph{supercycle violation}\footnote{In the sequel, we say ``sc-violation'' rather than ``supercycle violation.''} iff $v$ is not a node in any supercycle of \wfg{B}{s}, 
 \ie iff $\scV{v}{s}$ holds. 
@@ -193,8 +194,8 @@ For \fig{cycleOK}, it is easy to verify that $\lfp{\VFs}$ is all the nodes in th
 
 \begin{definition}[Supercycle membership, $\scyc{\B}{s}{v}$]
 \label{defn:supercycle.membership}
-Let $\ndx$ be a node of $\wfg{\B}{s}$. Then $\scyc{\B}{s}{\ndx}$ holds iff there exists a supercycle $\SC \subg \wfg{\B}{s}$ such that
-$\ndx \in \SC$.
+Let $\ndv$ be a node of $\wfg{\B}{s}$. Then $\scyc{\B}{s}{\ndv}$ holds iff there exists a supercycle $\SC \subg \wfg{\B}{s}$ such that
+$\ndv \in \SC$.
 \end{definition}
 
 
@@ -202,7 +203,7 @@ $\ndx \in \SC$.
 
 
 \begin{proposition} \label{prop:scViol-iff-notInSC}
-Let $\ndx$ be a node of $\wfg{\B}{s}$. Then $\neg \scyc{\B}{s}{\ndx}$ iff $\scV{\ndx}{s}$ % $(\ex d \ge 1: \viol{v}{d}{t})$.
+Let $\ndv$ be a node of $\wfg{\B}{s}$. Then $\neg \scyc{\B}{s}{\ndv}$ iff $\scV{\ndv}{s}$ % $(\ex d \ge 1: \viol{v}{d}{t})$.
 That is, a node is not in any supercycle iff it has a supercycle violation.
 \end{proposition}
 %

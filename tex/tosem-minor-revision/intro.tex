@@ -36,7 +36,7 @@ occurrence of a wait-for cycle, \eg as stated by \citeN{AGR16}, discussion of re
 work:
 \begin{quote}
 All these methods were designed, to some extent, around the principle that under reasonable
-assumptions about the system, any deadlock state would contain a proper cycle of un-granted requests.
+assumptions about the system, any deadlock state would contain a proper cycle of ungranted requests.
 \end{quote}
 In a model of concurrency which includes choice of actions
 (\eg BIP, CSP, I/O automata, CCS), a wait-for cycle is an \emph{incomplete} characterization of
@@ -69,7 +69,8 @@ We therefore have the best of both worlds: early stopping, and
 therefore efficient verification of deadlock-freedom, in many cases,
 together with theoretical completeness.
 %
-Our criterion is, to the best of our knowledge, the first criterion that is sound \emph{and complete} for local and global deadlock-freedom in
+Our criterion is, to the best of our knowledge, the first criterion that is sound \emph{and complete} 
+for global and \emph{local} deadlock-freedom in
 concurrent programs with nondeterministic local choice, \ie a process can nondeterministically choose among enabled actions.
 
 We present experimental results for dining philosophers and for a multi token-based resource allocation system, which generalizes Milner's token based
