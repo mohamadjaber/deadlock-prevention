@@ -1,3 +1,6 @@
+For the rest of the paper, let $\B$ denote an arbitrary fixed BIP system, which
+we use in all definitions, theorems etc.
+
 We characterize a supercycle as a post fixpoint of a ``blocking operator'' $\SFs$, defined below, over the complete boolean lattice formed from the
 subgraphs of \wfg{B}{s}, with $\subg$ (\defn{wsubgraph}) as the ordering.
 %
@@ -20,12 +23,12 @@ This provides a method of computing the nodes with supercycle violations, whiich
 \label{secn:supercycle-fixpoint}
 
 \begin{definition}[Set of subgraphs] \label{defn:wsetOfSubgraphs}
-$\wfgPow{B}{s} = \set{ \XS \stt \XS \subg \wfg{B}{s} }$.
+$\wfgPow{\B}{s} = \set{ \XS \stt \XS \subg \wfg{\B}{s} }$.
 \end{definition}
 
 
 \begin{definition}[Wait-for lattice] \label{defn:wflattice}
-Define the partially ordered set $\lat{\B}{s} = \tpl{ \wfgS{B}{s}, \subg }$ %\tpl{ \wfg{B}{s}, \ewfg, \subg }$
+Define the partially ordered set $\lat{\B}{s} = \tpl{ \wfgS{\B}{s}, \subg }$ %\tpl{ \wfg{B}{s}, \ewfg, \subg }$
 whose elements are all the subgraphs of 
 \wfg{B}{s}, and where  $U \subg V$ is as in \defn{wsubgraph}.   
 %iff $U$ is a subgraph of $V$, \ie $\ord$ is the ``is a subgraph of'' order relation.
@@ -33,7 +36,7 @@ whose elements are all the subgraphs of
 
 The following proposition follows immediately from the definitions; its proof is left to the reader.
 \begin{proposition} \label{prop:isALattice}
-$\lat{\B}{s} = \tpl{ \wfgS{B}{s}, \subg }$ is a finite complete boolean lattice as follows:
+$\lat{\B}{s} = \tpl{ \wfgS{\B}{s}, \subg }$ is a finite complete boolean lattice as follows:
 \be
 
 \item meet is given by graph intersection: 
@@ -43,38 +46,47 @@ $\XS \meet \YS$ consists of the nodes that are present in both $\XS$ and $\YS$, 
   induced edges.
  Note that $\join$ is \emph{not} disjoint graph union: 
 it is possible for $\XS$ and $\YS$ to have nodes and edges in common. Note also that $\XS \join \YS$ may contain edges not present in either $\XS$ nor $\YS$,
-since the edges are those induced by  \wfg{B}{s}. 
+since the edges are those induced by  \wfg{\B}{s}. 
 
-\item \wfg{B}{s}  is the top element 
+\item \wfg{\B}{s}  is the top element 
 
 \item  the empty wait-for graph, denoted by \ewfg, is the bottom element
 
-\item the complement \compl{\XS} of $\XS$ is obtained by taking all the nodes of \wfg{B}{s} that are not in $\XS$, together with the induced edges.
+\item the complement \compl{\XS} of $\XS$ is obtained by taking all the nodes of \wfg{\B}{s} that are not in $\XS$, together with the induced edges.
 \ee
 \end{proposition}
 %
 As noted, $\join, \meet$ and complement are determined entirely by the sets of nodes in the relevant subgraphs. The resulting edges are always those
-that are induced by \wfg{B}{s}.
+that are induced by \wfg{\B}{s}.
 
 
 
 \begin{definition}[$\mathit{blocks}$] \label{defn:blocks} 
-Let $\XS \subg \wfg{B}{s}$ and $\act, B_i$ be nodes in $\wfg{B}{s}$. Then 
-$\blocks{\act}{\XS} \df (\ex B_i \in \XS : \act \ar B_i \in \wfg{B}{s})$, and 
-$\blocks{\B_i}{\XS} \df (\fa \act : \B_i \ar \act \in \wfg{B}{s} \imp \act \in \XS)$.
+Let $\XS \subg \wfg{\B}{s}$ and $\act, \B_i$ be nodes in $\wfg{\B}{s}$. Then 
+$\blocks{\act}{\XS} \df (\ex \B_i \in \XS : \act \ar \B_i \in \wfg{\B}{s})$, and 
+$\blocks{\B_i}{\XS} \df (\fa \act : \B_i \ar \act \in \wfg{\B}{s} \imp \act \in \XS)$.
 \end{definition}
 
 \begin{definition}[$\SFs$]  \label{defn:scFix} 
-Define $\SFs: \wfgS{B}{s} \to \wfgS{B}{s}$ as follows.
+Define $\SFs: \wfgS{\B}{s} \to \wfgS{\B}{s}$ as follows.
 $\SF{\XS}$ is the subgraph with nodes $\set{v \stt \blocks{v}{\XS} }$, together with their induced edges.
 \end{definition}
 
 \begin{definition}[$\VFs$]  \label{defn:violFix}
-Define $\VFs: \wfgS{B}{s} \to \wfgS{B}{s}$ as follows.
-$\VF{\XS}$ is the subgraph with nodes ${\set{v \stt \neg \blocks{v}{\compl{\XS}}}}$, together with their induced edges.
+Define $\VFs: \wfgS{\B}{s} \to \wfgS{\B}{s}$ as follows.
+$\VF{\XS}$ is the subgraph with nodes
+$\set{v \stt \neg \blocks{v}{\compl{\XS}}}$, together with their induced edges.
 \end{definition}
 %
 Hence $\VF{\XS} = \overline{\SF{\overline{\XS}}}$, \ie $\VFs$ and $\SFs$ are duals.
+Note that $\SFs$ and $\VFs$ are defined given a particular BIP system 
+$\B$ and a particular state $s$ of $\B$. Hence we should really write 
+$\SFs_{\B,s}(\XS)$, $\VFs_{\B,s}(\XS)$ to indicate this functional dependence. We
+omit these extra subscripts to avoid notational clutter, noting that
+$\B$ is a fixed BIP system (see beginning of section), and that we will always make explicit
+the particular state $s$ that is intended.
+
+
 
 \begin{proposition} \label{prop:monotone}
 $\SFs$ and $\VFs$ are monotone and continuous.
@@ -149,14 +161,18 @@ By \prop{GFPisLargestSC}, \gfp{\SFs} is the largest supercycle in \wfg{B}{s}. He
 \gfp{\SFs} are exactly the nodes that are not in any supercycle. These are exactly the nodes in \lfp{\VFs}.
 \end{proof}
 
+Define $\VFi{\XS}{1} = \VF{\XS}$, and for $d > 1$, 
+$\VFi{\XS}{d} = \VFi{\VF{\XS}}{d-1}$, \ie a superscript indicates functional iteration
+of $\VFs$. Note that 
+$\VFi{\ewfg}{d} \subg \VFi{\ewfg}{d'}$ when $d \le d'$, since $\VFs$ is monotone.
 
 \begin{proposition}  \label{prop:computeLFP}
-$\lfp{\VFs} = \JOIN_{d \ge 0} \VFs^{d} (\ewfg)$.
+$\lfp{\VFs} = \JOIN_{d \ge 1} \VFi{\ewfg}{d}$.
 \end{proposition}
 %
 \begin{proof}
 By \prop{monotone}, $\VFs$ is continuous. Follows by standard results, \eg see the CPO fixpoint theorem I in 
-\cite{DP02}.
+\citeN{DP02}.
 \end{proof}
 
 
@@ -167,7 +183,10 @@ By \prop{monotone}, $\VFs$ is continuous. Follows by standard results, \eg see t
 \label{defn:supercycle.violation}
 Let $\ndv$ be a node of $\wfg{\B}{s}$. Define
 $\scV{v}{s} \df v \in \lfp{\VFs}$ and 
-$\scVd{v}{d}{s} \df v \in \VFs^{d} (\ewfg)$.
+$\scVd{v}{d}{s} \df v \in \VFs^{d} (\ewfg)$.\footnote{Note that
+we abuse notation by overloading $\SMATHID{viol}$, but no ambiguity arises since the two versions have
+different parameter lists.}
+
 \end{definition}
 %
 It immediately follows that $\scV{v}{s}$ iff  $(\ex d \ge 1: \scVd{v}{d}{s})$.
@@ -473,7 +492,7 @@ reach any non-trivial MSCC.
 
 
 \begin{proposition} \label{prop:outdepth-finite-implies-scViol}
-Assume that node $v$ of $\wfg{\B}{t}$ has a finite out-depth of $d$ in $\wfg{\B}{t}$, \ie 
+Assume that node $v$ of $\wfg{\B}{t}$ has a finite out-depth of $d \ge 1$ in $\wfg{\B}{t}$, \ie 
 $\wodepth{\B}{v}{t} = d$. Then $\viol{v}{d}{t}$.  % USED TO BE d+1. CHECK
 \end{proposition}
 %

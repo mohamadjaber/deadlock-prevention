@@ -122,7 +122,8 @@ is), and so we maintain soundness of our criterion.
 
 \begin{definition}[Local supercycle]
 \label{defn:supercycleLoc} 
-Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component and $s$ be a state of $\B$.
+Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component, $s$ be a state of $\B$, and $\DS$ a subsystem
+of $\B$.
 A subgraph $\SC$ of  $\lwfg{B}{s}{\DS}$ is a supercycle in $\lwfg{B}{s}{\DS}$ if and only if all of the following hold:
 \begin{nlst1}
    \item $\SC$ is nonempty, \ie contains at least one node,
@@ -178,25 +179,41 @@ $\llat{\B}{s}{\DS}  = \tpl{ \lwfgS{B}{s}{\DS}  \subg }$
 \end{proposition}
 
 \begin{definition}[$\mathit{lblocks}$] \label{defn:blocksLoc}
-%Let $U \subg \lwfgS{B}{s}{\act,\l}$ and $a, B_i$ be nodes in $\wfg{B}{s}$. Then 
-Let $U \subg \lwfgS{B}{s}{\DS}$ and $\act, B_i$ be nodes in $\wfg{B}{s}$. Then 
-$\lblocks{\act}{\US} \df [ (\ex \B_i \in \US : \act \ar \B_i \sub \wfg{B}{s})$ or $\act$ is a border interaction of $\DS$ $]$, and 
-$\lblocks{\B_i}{\US} \df (\fa \act : \B_i \ar \act \sub\wfg{\B}{s} \imp \act \in \US)$.
+Let $\XS \subg \lwfg{\B}{s}{\DS}$ and $\act, B_i$ be nodes in $\wfg{\B}{s}$. Then 
+$\lblocks{\act}{\XS} \df
+[ (\ex \B_i \in \XS : \act \ar \B_i \sub \wfg{\B}{s}
+   \mbox{ or $\act$ is a border interaction of $\DS$} ]$, and 
+$\lblocks{\B_i}{\XS} \df (\fa \act : \B_i \ar \act \sub\wfg{\B}{s} \imp \act \in \XS)$.
 \end{definition}
+Hence a border interaction $\act$ is pessimistically considered to be always blocked, since
+the subsystem $\DS$ does not contain enough information about the enablement of $\act$.
+A non-border interaction $\act$ is (as usual) blocked by a set of nodes $\XS$ if some participant $\B_i$ of 
+$\act$ is in $\XS$, and $\B_i$ does not enable $\act$.
+A component $\B_i$ is blocked by $\XS$ if all of the interactions that $\B_i$ enables are in $\XS$.
 
 
 \begin{definition}[$\lSFs$] \label{defn:scFixLoc}
 %Define $\lSFs:  \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
 Define $\lSFs:  \lwfgS{B}{s}{\DS}  \to  \lwfgS{B}{s}{\DS}$ as follows.
-$\lSF{\US}$ is the subgraph with nodes $\set{\ndv \stt \lblocks{\ndv}{\US} }$, together with their induced edges.
+$\lSF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \lblocks{\ndv}{\XS} }$, together with their induced edges.
 \end{definition}
 
 \begin{definition}[$\lVFs$] \label{defn:violFixLoc}
 %Define $\lVFs: \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
 Define $\lVFs: \lwfgS{B}{s}{\DS}  \to  \lwfgS{B}{s}{\DS}$ as follows.
-$\lVF{\US}$ is the subgraph with nodes $\set{\ndv \stt \neg \lblocks{\ndv}{\compl{\US}} }$, together with their induced edges, 
-where we take the complement $\compl{\US}$ with respect to $\DS$.
+$\lVF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \neg \lblocks{\ndv}{\compl{\XS}} }$, together with their induced edges, 
+where we take the complement $\compl{\XS}$ with respect to $\DS$.
 \end{definition}
+
+Hence $\lVF{\XS} = \overline{\lSF{\overline{\XS}}}$, \ie $\lVFs$ and $\lSFs$ are duals.
+Note that (as for $\SFs$ and $\VFs$) $\lSFs$ and $\lVFs$ are defined given a particular
+subsystem $\DS$ of the system 
+$\B$, and a particular state $s$ of $\DS$. We will always make explicit the particulr
+subsystem and state that $\lVFs$ and $\lSFs$ ae defined over.
+
+
+
+
 
 \begin{proposition} \label{prop:monotoneLoc}
 $\lSFs$ and $\lVFs$ are monotone and continuous.
@@ -204,22 +221,22 @@ $\lSFs$ and $\lVFs$ are monotone and continuous.
 %
 \begin{proof}
 We show first that $\lSFs$ is monotone, \ie $\XS \subg \YS \imp \lSF{\XS} \subg \lSF{\YS}$.
-Let $\ndx$ be an arbitrary node in $\SF{\XS}$, so that $\lblocks{\ndx}{\XS}$ holds. There are three cases.\\
+Let $\ndv$ be an arbitrary node in $\SF{\XS}$, so that $\lblocks{\ndv}{\XS}$ holds. There are three cases.\\
 
-\emph{Case of $\ndx$ is a border interaction of $\DS$}. Then $\lblocks{\ndx}{\YS}$ by \defn{blocksLoc}, and so $\ndx \in  \lSF{\YS}$ by
+\emph{Case of $\ndv$ is a border interaction of $\DS$}. Then $\lblocks{\ndv}{\YS}$ by \defn{blocksLoc}, and so $\ndv \in  \lSF{\YS}$ by
 \defn{scFixLoc}.\\
 
-\emph{Case of $\ndx$ is a non-border interaction $\act$}. By Definitions~\ref{defn:scFixLoc} and \ref{defn:blocksLoc}, we have
+\emph{Case of $\ndv$ is a non-border interaction $\act$}. By Definitions~\ref{defn:scFixLoc} and \ref{defn:blocksLoc}, we have
 $\ex \B_i \in \XS  : \act \ar \B_i \in \lwfg{B}{s}{\DS}$.
 Since $\XS \subg \YS$, this same $\B_i$ is also a node of $\YS$, and so  $\ex \B_i \in \YS  : \act \ar \B_i \in \lwfg{B}{s}{\DS}$. 
 Hence  $\lblocks{\act}{\YS}$, and so $\act \in \lSF{\YS}$. \\
 
-\emph{Case of $\ndx$ is a component $\B_i$}. By Definitions~\ref{defn:scFixLoc} and \ref{defn:blocksLoc}, we have
-$(\fa \act : \B_i \ar \act \in \lwfg{B}{s}{\DS} \imp \act \in \XS)$.
+\emph{Case of $\ndv$ is a component $\B_i$}. By Definitions~\ref{defn:scFixLoc} and \ref{defn:blocksLoc}, we have
+$(\fa \act : \B_i \ar \act \in \lwfg{\B}{s}{\DS} \imp \act \in \XS)$.
 Since $\XS \subg \YS$, we have  $(\fa \act : \B_i \ar \act \in \lwfg{B}{s}{\DS} \imp \act \in \YS)$. 
 Hence, $\lblocks{\B_i}{\YS}$, and so $\B_i \in \lSF{\YS}$. \\
 
-In all three cases, we have $\ndx \in \lSF{\YS}$. Since $\ndx$ was chosen arbitrarily from $\lSF{\XS} $, it follows that $\lSF{\XS} \subg \lSF{\YS}$. Hence, $\lSFs$ is monotone.
+In all three cases, we have $\ndv \in \lSF{\YS}$. Since $\ndv$ was chosen arbitrarily from $\lSF{\XS} $, it follows that $\lSF{\XS} \subg \lSF{\YS}$. Hence, $\lSFs$ is monotone.
 %
 Since the dual of a monotone mapping in a complete boolean lattice is also monotone, we have that $\lVFs$ is monotone.
 %
@@ -230,16 +247,16 @@ Finally, since $\llat{\B}{s}{\DS}$ is finite, it follows that $\lSFs$ and $\lVFs
 
 
 \begin{proposition} \label{prop:locGFP} \label{prop:supercycleGFPLoc}
-Let $\XS \ne \ewfg$ and $\XS \subg \lwfg{B}{s}{\DS}$, \ie $\XS$ is a non-empty subgraph of $\lwfg{B}{s}{\DS}$.
-Then, $\XS$ is a local supercycle in $\lwfg{B}{s}{\DS}$ iff $\XS \subg \lSF{\XS}$.
+Let $\XS \ne \ewfg$ and $\XS \subg \lwfg{B}{s}{\DS}$, \ie $\XS$ is a non-empty subgraph of $\lwfg{\B}{s}{\DS}$.
+Then, $\XS$ is a local supercycle in $\lwfg{\B}{s}{\DS}$ iff $\XS \subg \lSF{\XS}$.
 \end{proposition}
 %
 \begin{proof}
 Let $\XS$ be a local supercycle in $\lwfg{B}{s}{\DS}$. By \defn{supercycleLoc}, every node in $\XS$ is blocked by $\XS$ or is a border interaction, \ie 
-$(\fa \ndv \in \XS: \lblocks{\B_i}{\XS})$. By \defn{scFix}, $\XS \subg \SF{\XS}$.
+$(\fa \ndx \in \XS: \lblocks{\ndx}{\XS})$. By \defn{scFix}, $\XS \subg \SF{\XS}$.
 
-Conversely, suppose $\XS \subg \SF{\XS}$ for some subgraph $\XS$ of $\lwfgS{B}{s}{\DS}$. Hence 
-$(\fa \ndv \in \XS: \ndv \in \SF{\XS})$, so by \defn{scFixLoc}, $(\fa \ndv \in \XS: \lblocks{\B_i}{\XS})$.
+Conversely, suppose $\XS \subg \SF{\XS}$ for some subgraph $\XS$ of $\lwfg{B}{s}{\DS}$. Hence 
+$(\fa \ndx \in \XS: \ndx \in \SF{\XS})$, so by \defn{scFixLoc}, $(\fa \ndx \in \XS: \lblocks{\ndx}{\XS})$.
 Hence every node in $\XS$ is blocked by $\XS$ or is a border interaction, and so $\XS$ satisfies \defn{supercycleLoc}, and is therefore a local supercycle.
 \end{proof}
 
@@ -286,14 +303,14 @@ $v$ is not a node in any local supercycle of $\lwfgS{B}{s}{\DS}$.
 %Follows from \prop{GFPisLargestSC} are the Park conjugate (dual) fixpoint theorem in complete boolean lattices.
 From the Park conjugate (dual) fixpoint theorem in complete boolean lattices, we have 
 \lfp{\VFs} = \compl{\gfp{\SFs}}.
-By \prop{GFPisLargestSC} , \gfp{\SFs} is the largest local supercycle in \wfg{B}{s}. Hence the nodes not in 
+By \prop{GFPisLargestSC}, \gfp{\SFs} is the largest local supercycle in \wfg{B}{s}. Hence the nodes not in 
 \gfp{\SFs} are exactly the nodes that have local supercycle violations. These are exactly the nodes in \lfp{\VFs}.
 \end{proof}
 
 
 
 \begin{proposition} \label{prop:computeLocLFP}
-$\lfp{\lVFs} = \JOIN_{d \ge 0} \lVFs^{d} (\ewfg)$.
+$\lfp{\lVFs} = \JOIN_{d \ge 1} \lVFs^{d} (\ewfg)$.
 \end{proposition}
 %
 \begin{proof}
@@ -319,11 +336,13 @@ We define the predicate $\lviol{v}{d}{t}{\act}{\l}$ to hold iff node $v$ in $\wf
 \label{defn:supercycle.violation.local}
 Let $t_\act$ be a state of $\dsk{\act}{\l}$ and $v$ be a node of $\dsk{\act}{\l}$.
 Define 
-$\scVL{v}{t_\act}{\act}{\l} \df v \in \JOIN_{d \ge 0} \lVFs^{d} (\ewfg)$, and 
+$\scVL{v}{t_\act}{\act}{\l} \df v \in \lfp{\lVFs}$,
+%\JOIN_{d \ge 0} \lVFs^{d} (\ewfg),
+and 
 $\scVLd{v}{d}{t_\act}{\act}{\l} \df v \in \lVFs^{d} (\ewfg)$.
 \end{definition}
-Hence $\scVL{v}{t_\act}{\act}{\l} \ev (\ex d \ge 1: \scVLd{v}{d}{t_\act}{\act}{\l})$, noting that 
-$\lVFs^{0} (\ewfg) = \ewfg$.
+Hence $\scVL{v}{t_\act}{\act}{\l} \ev (\ex d \ge 1: \scVLd{v}{d}{t_\act}{\act}{\l})$.
+%, noting that $\lVFs^{0} (\ewfg) = \ewfg$.
 
 
 We now show that a local supercycle-violation implies (global) supercycle-violation.
@@ -331,25 +350,26 @@ We now show that a local supercycle-violation implies (global) supercycle-violat
 \begin{proposition}
 \label{prop:lV-subg-V}
 (a) Let $\XS \subg \lwfg{B}{s}{\DS}$. Then $\lVF{\XS} \subg \VF{\XS}$.\\
-(b) $\lVFs^{d} (\ewfg) \subg \VFs^{d} (\ewfg)$.
+(b) Let $d \ge 1$. Then $\lVFs^{d} (\ewfg) \subg \VFs^{d} (\ewfg)$.
 \end{proposition}
 %
 \begin{proof}
-For (a), let $\ndx \in \lVF{\XS}$. By \defn{violFixLoc}, $\neg \lblocks{\ndx}{\complL{\XS}}$.
-Now $\ndx$ is either an interaction $\act$ or a component $\B_i$. 
+For (a), let $\ndv \in \lVF{\XS}$. By \defn{violFixLoc}, $\neg \lblocks{\ndv}{\complL{\XS}}$.
+Now $\ndv$ is either an interaction $\act$ or a component $\B_i$. 
 
-By \defn{blocksLoc}, if $\ndx$ is an interaction $\act$, then it is not a border interaction, and furthermore there is no
-component $\B_i \in \complL{\XS}$ such that $\act \ar \B_i \in \lwfg{B}{s}{\DS}$. 
-Since $\complL{\XS} \subg \compl{\XS}$, we conclude $\neg \blocks{\ndx}{\compl{\XS}}$, and so $\ndx \in \VF{\XS}$.
+By \defn{blocksLoc}, if $\ndv$ is an interaction $\act$, then it is not a border interaction, and furthermore there is no
+component $\B_i \in \complL{\XS}$ such that $\act \ar \B_i \in \lwfg{\B}{s}{\DS}$. 
+Since $\complL{\XS} \subg \compl{\XS}$, we conclude $\neg \blocks{\ndv}{\compl{\XS}}$, and so $\ndv \in \VF{\XS}$.
 
-By \defn{blocksLoc}, if $\ndx$ is a component $\B_i$, then there exists an interaction $\act$ such that 
-$\B_i \ar \act \in \lwfg{B}{s}{\DS}$ and $\act \not\in \complL{\XS}$. Hence $\act \in \XS$, and so $\act \not\in \compl{\XS}$.
-Hence  $\neg \blocks{\ndx}{\compl{\XS}}$, and so $\ndx \in \VF{\XS}$.
+By \defn{blocksLoc}, if $\ndv$ is a component $\B_i$, then there exists an interaction $\act$ such that 
+$\B_i \ar \act \in \lwfg{\B}{s}{\DS}$ and $\act \not\in \complL{\XS}$. Hence $\act \in \XS$, and so $\act \not\in \compl{\XS}$.
+Hence  $\neg \blocks{\ndv}{\compl{\XS}}$, and so $\ndv \in \VF{\XS}$.
 
-In both cases, the arbitrary element $\ndx$ of $\lVF{\XS}$ is also an element of $\VF{\XS}$, and so $\lVF{\XS} \subg \VF{\XS}$.
+In both cases, the arbitrary element $\ndv$ of $\lVF{\XS}$ is also an element of $\VF{\XS}$, and so $\lVF{\XS} \subg \VF{\XS}$.
 
-We establish (b) by induction on $d$. The base case is $d=0$, for which $\lVFs^{d} (\ewfg) = \VFs^{d} (\ewfg) = \ewfg$.
-For the induction step, $d > 0$, we have the induction hypothesis $\lVFs^{d-1} (\ewfg) \subg \VFs^{d-1} (\ewfg)$. 
+We establish (b) by induction on $d$. The base case is $d=1$, which is given by (a).
+%$d=0$, for which $\lVFs^{d} (\ewfg) = \VFs^{d} (\ewfg) = \ewfg$.
+For the induction step, $d > 1$, we have the induction hypothesis $\lVFs^{d-1} (\ewfg) \subg \VFs^{d-1} (\ewfg)$. 
 Hence $\lVF{\lVFs^{d-1} (\ewfg)} \subg \lVF{\VFs^{d-1} (\ewfg)}$ since $\lVFs$ is monotone.
 By (a) $\lVF{\VFs^{d-1} (\ewfg)} \subg \VF{\VFs^{d-1} (\ewfg)}$. 
 Hence  $\lVF{\lVFs^{d-1} (\ewfg)} \subg \VF{\VFs^{d-1} (\ewfg)}$, \ie
@@ -363,12 +383,14 @@ Hence  $\lVF{\lVFs^{d-1} (\ewfg)} \subg \VF{\VFs^{d-1} (\ewfg)}$, \ie
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
 For all interactions $\act \in \gamma$, and $\l \ge 1$, let $t_\act = t \pj \dsk{\act}{\l}$.
 Then\\
-\ind $\fa d \ge 1: \locScViol{\ndx}{d}{t_\act}{\act}{\l} \imp \scViol{v}{d}{t}$.
+\ind (a) $\fa d \ge 1: \scVLd{\ndv}{d}{t_\act}{\act}{\l} \imp \scVd{v}{d}{t}$, and\\
+\ind (b) $\scVL{\ndv}{t_\act}{\act}{\l} \imp \scV{v}{t}$.
 \end{proposition}
 %
 \begin{proof}
-Assume $\locScViol{\ndx}{d}{t_\act}{\act}{\l}$.
-By \defn{supercycle.violation.local},  $\ndx  \in \lVFs^{d} (\ewfg)$.
-By \prop{lV-subg-V},  $\ndx  \in \VFs^{d} (\ewfg)$.
-By \defn{supercycle.violation}, $\scVd{\ndx}{d}{s}$.
+For (a), assume $\scVLd{\ndv}{d}{t_\act}{\act}{\l}$.
+By \defn{supercycle.violation.local},  $\ndv \in \lVFs^{d} (\ewfg)$.
+By \prop{lV-subg-V},  $\ndv  \in \VFs^{d} (\ewfg)$.
+By \defn{supercycle.violation}, $\scVd{\ndv}{d}{s}$.
+(b) followd from (a) and definitions .....
 \end{proof}
