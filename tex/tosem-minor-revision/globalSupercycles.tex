@@ -188,8 +188,21 @@ we abuse notation by overloading $\SMATHID{viol}$, but no ambiguity arises since
 different parameter lists.}
 
 \end{definition}
+
+\begin{proposition}
+\label{prop:globViol-equiv-globViolDist}
+$\scV{\ndv}{s}$ iff  $(\ex d \ge 1: \scVd{\ndv}{d}{s})$.
+%$\scVL{v}{t_\act}{\act}{\l} \ev (\ex d \ge 1: \scVLd{v}{d}{t_\act}{\act}{\l})$.
+\end{proposition}
 %
-It immediately follows that $\scV{v}{s}$ iff  $(\ex d \ge 1: \scVd{v}{d}{s})$.
+\begin{proof}
+By \defn{supercycle.violation}, $\scV{\ndv}{s} \ev \ndv \in \lfp{\VFs}$.
+By \prop{computeLFP}, $\ndv \in \lfp{\VFs} \ev v \in \JOIN_{d \ge 1} \VFi{\ewfg}{d}$.
+By \defn{supercycle.violation}, $\fa d \ge 1: (\scVd{v}{d}{s} \ev v \in \VFs^{d} (\ewfg))$.
+Chaining these equivalences establishes the proposition.
+\end{proof}
+
+%It immediately follows that $\scV{v}{s}$ iff  $(\ex d \ge 1: \scVd{v}{d}{s})$.
 Also, it follows from \prop{LFPisScViolations} that $\scV{v}{s}$ iff there does not exist $\SC$ such that $\SC$ is a supercycle and $v \in SC$.
 We say that a node $v$ of \wfg{B}{s} has a \emph{supercycle violation}\footnote{In the sequel, we say ``sc-violation'' rather than ``supercycle violation.''} iff $v$ is not a node in any supercycle of \wfg{B}{s}, 
 \ie iff $\scV{v}{s}$ holds. 

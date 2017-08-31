@@ -30,11 +30,11 @@ We now present the local version of the strong connectedness violation condition
 
 Let $L$ be the nodes of $\wfg{\dsk{a}{\l}}{t_\act}$ that have no local
 supercycle violation, \ie $L = \set{v \stt v \in \dsk{a}{\l} \land \neg (\ex d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l}) }$.
-Let $v$ be an arbitrary node in $L$. 
+%
 Let $WL = \wfg{\dsk{a}{\l}}{t_\act} \pj L$, \ie $WL$ is the subgraph of $\wfg{\dsk{a}{\l}}{t_\act}$ consisting of the
 nodes in $L$, and the edges between those nodes that are also edges in $\wfg{\dsk{a}{\l}}{t_\act}$.
 
-Then, $\locConnViol{v}{t_\act}{\act}{\l}$ holds iff:
+Let $v$ be an arbitrary node in $L$.  Then, $\locConnViol{v}{t_\act}{\act}{\l}$ holds iff:
 \bn
 
 \item \label{def:sConn.violation.loc:scc}

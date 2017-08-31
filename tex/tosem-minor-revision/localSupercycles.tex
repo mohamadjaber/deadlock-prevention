@@ -338,11 +338,23 @@ Let $t_\act$ be a state of $\dsk{\act}{\l}$ and $v$ be a node of $\dsk{\act}{\l}
 Define 
 $\scVL{v}{t_\act}{\act}{\l} \df v \in \lfp{\lVFs}$,
 %\JOIN_{d \ge 0} \lVFs^{d} (\ewfg),
-and 
-$\scVLd{v}{d}{t_\act}{\act}{\l} \df v \in \lVFs^{d} (\ewfg)$.
+and, for $d \ge 1$, $\scVLd{v}{d}{t_\act}{\act}{\l} \df v \in \lVFs^{d} (\ewfg)$.
 \end{definition}
-Hence $\scVL{v}{t_\act}{\act}{\l} \ev (\ex d \ge 1: \scVLd{v}{d}{t_\act}{\act}{\l})$.
+
+
 %, noting that $\lVFs^{0} (\ewfg) = \ewfg$.
+
+\begin{proposition}
+\label{prop:locViol-equiv-locViolDist}
+$\scVL{v}{t_\act}{\act}{\l} \ev (\ex d \ge 1: \scVLd{v}{d}{t_\act}{\act}{\l})$.
+\end{proposition}
+%
+\begin{proof}
+By \defn{supercycle.violation.local}, $\scVL{\ndv}{t_\act}{\act}{\l} \ev v \in \lfp{\lVFs}$.
+By \prop{computeLocLFP}, $v \in \lfp{\lVFs} \ev v \in \JOIN_{d \ge 1} \lVFs^{d} (\ewfg)$.
+By \defn{supercycle.violation.local}, $\fa d \ge 1: (\scVLd{v}{d}{t_\act}{\act}{\l} \ev v \in \lVFs^{d} (\ewfg))$.
+Chaining these equivalences establishes the proposition.
+\end{proof}
 
 
 We now show that a local supercycle-violation implies (global) supercycle-violation.
@@ -383,14 +395,17 @@ Hence  $\lVF{\lVFs^{d-1} (\ewfg)} \subg \VF{\VFs^{d-1} (\ewfg)}$, \ie
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
 For all interactions $\act \in \gamma$, and $\l \ge 1$, let $t_\act = t \pj \dsk{\act}{\l}$.
 Then\\
-\ind (a) $\fa d \ge 1: \scVLd{\ndv}{d}{t_\act}{\act}{\l} \imp \scVd{v}{d}{t}$, and\\
+\ind (a) $\fa d \ge 1:  (\scVLd{\ndv}{d}{t_\act}{\act}{\l} \imp \scVd{v}{d}{t}) $, and\\
 \ind (b) $\scVL{\ndv}{t_\act}{\act}{\l} \imp \scV{v}{t}$.
 \end{proposition}
 %
 \begin{proof}
-For (a), assume $\scVLd{\ndv}{d}{t_\act}{\act}{\l}$.
+For (a), assume $\scVLd{\ndv}{d}{t_\act}{\act}{\l}$ for some arbitrary $d \ge 1$.
 By \defn{supercycle.violation.local},  $\ndv \in \lVFs^{d} (\ewfg)$.
 By \prop{lV-subg-V},  $\ndv  \in \VFs^{d} (\ewfg)$.
-By \defn{supercycle.violation}, $\scVd{\ndv}{d}{s}$.
-(b) followd from (a) and definitions .....
+By \defn{supercycle.violation}, $\scVd{\ndv}{d}{t}$.
+
+For (b), assume $\scVL{\ndv}{t_\act}{\act}{\l}$. By \prop{locViol-equiv-locViolDist},
+$\scVLd{\ndv}{d}{t_\act}{\act}{\l}$ for some $d \ge 1$. By (a), we have $\scVd{v}{d}{t}$.
+By \prop{globViol-equiv-globViolDist}, we have $\scV{v}{t}$.
 \end{proof}
