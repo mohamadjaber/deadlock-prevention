@@ -307,7 +307,12 @@ By \prop{GFPisLargestSC}, \gfp{\SFs} is the largest local supercycle in \wfg{B}{
 \gfp{\SFs} are exactly the nodes that have local supercycle violations. These are exactly the nodes in \lfp{\VFs}.
 \end{proof}
 
-
+Define $\lVFi{\XS}{1} = \lVF{\XS}$, and for $d > 1$, 
+$\lVFi{\XS}{d} = \lVFi{\lVF{\XS}}{d-1}$, \ie a superscript indicates functional iteration
+of $\lVFs$. Note that 
+$\lVFi{\ewfg}{d} \subg \lVFi{\ewfg}{d'}$ when $d \le d'$, since $\lVFs$
+is monotone.
+Hence $\lVFi{\ewfg}{1}, \lVFi{\ewfg}{2}, \ldots$ is a non-decreasing sequence.
 
 \begin{proposition} \label{prop:computeLocLFP}
 $\lfp{\lVFs} = \JOIN_{d \ge 1} \lVFs^{d} (\ewfg)$.

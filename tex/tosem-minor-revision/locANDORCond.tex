@@ -13,32 +13,26 @@ To achieve a local and conservative approximation of
 $\connViol{v}{t}$, we project onto a subsystem.
 
 
-
-
-%\subsubsection{Local supercycle violation condition}
-
-
-
-
-
 \subsubsection{Local strong connectedness condition}
 
 We now present the local version of the strong connectedness violation condition, given above in Definition~\ref{def:sConn.violation}.
 
 \begin{definition}[Local strong connectedness violation, $\locConnViol{v}{t_\act}{\act}{\l}$]
 \label{def:sConn.violation.loc}
+\label{defn:sConn.violation.loc}
 
-Let $L$ be the nodes of $\wfg{\dsk{a}{\l}}{t_\act}$ that have no local
-supercycle violation, \ie $L = \set{v \stt v \in \dsk{a}{\l} \land \neg (\ex d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l}) }$.
+Let $L$ be the nodes of $\wfg{\dsk{a}{\l}}{t_\act}$ that have no local supercycle violation, \ie
+ $L = \set{ \ndv \stt \ndv \in \dsk{a}{\l} \land \neg \scVL{\ndv}{t_\act}{\act}{\l} }$.
+% $L = \set{v \stt v \in \dsk{a}{\l} \land \neg (\ex d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l}) }$.
 %
-Let $WL = \wfg{\dsk{a}{\l}}{t_\act} \pj L$, \ie $WL$ is the subgraph of $\wfg{\dsk{a}{\l}}{t_\act}$ consisting of the
+Let $\WL = \wfg{\dsk{a}{\l}}{t_\act} \pj L$, \ie $\WL$ is the subgraph of $\wfg{\dsk{a}{\l}}{t_\act}$ consisting of the
 nodes in $L$, and the edges between those nodes that are also edges in $\wfg{\dsk{a}{\l}}{t_\act}$.
 
-Let $v$ be an arbitrary node in $L$.  Then, $\locConnViol{v}{t_\act}{\act}{\l}$ holds iff:
+Let $\ndv$ be an arbitrary node in $L$.  Then, $\locConnViol{\ndv}{t_\act}{\act}{\l}$ holds iff:
 \bn
 
 \item \label{def:sConn.violation.loc:scc}
-there does not exist a nontrivial strongly connected supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg WL$, and
+there does not exist a nontrivial strongly connected supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \WL$, and
 
 %\item \label{def:sConn.violation.loc:wait-for-out} every wait-for path $\pi$ from $v$ to a border node
 %  of $\dsk{a}{\l}$ contains at least one node with a local supercycle violation
@@ -47,14 +41,14 @@ there does not exist a nontrivial strongly connected supercycle $\SSC$ such that
 either
     \bn
 
-    \item \label{def:sConn.violation.loc:wait-for-out} every wait-for path $\pi$ from $v$ to a border node
-      of $\dsk{a}{\l}$ contains at least one node with a local supercycle violation, \ie $\scVL{w}{t_\act}{\act}{\l}$
+    \item \label{def:sConn.violation.loc:wait-for-out} every wait-for path $\pi$ from $\ndv$ to a border node
+      of $\dsk{a}{\l}$ contains at least one node $\ndw$ with a local supercycle violation, \ie $\scVL{\ndw}{t_\act}{\act}{\l}$
 
      or
 
     \item \label{def:sConn.violation.loc:wait-for-in} every wait-for path $\pi'$ from a border node
-      of $\dsk{a}{\l}$ to $v$ contains at least one node $w$ with a
-      local supercycle violation,  \ie $\scVL{w}{t_\act}{\act}{\l}$
+      of $\dsk{a}{\l}$ to $\ndv$ contains at least one node $\ndw$ with a
+      local supercycle violation,  \ie $\scVL{\ndw}{t_\act}{\act}{\l}$
 
     \en
 
@@ -68,7 +62,7 @@ We show that the local strong connectedness condition implies the global strong 
 \label{prop:locConnViol-implies-ConnViol}
  \label{prop:locConnViol-implies-connViol}
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
-For all interactions $\act \in \gamma$, and $\l > 0$, let $t_\act = t \pj \dsk{\act}{\l}$.
+For all interactions $\act \in \gamma$, and $\l \ge 1$, let $t_\act = t \pj \dsk{\act}{\l}$ and let $\ndv$ be an arbitrary node in $\dsk{\act}{\l}$.
 Then\\
 \ind $\locConnViol{v}{t_\act}{\act}{\l} \imp \connViol{v}{t}$.
 \end{proposition}
@@ -80,11 +74,10 @@ supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{B}{t}$. Then, ther
 %
 \bn
 \item $\SSC \subg \wfg{\dsk{a}{\l}}{t_\act}$: let $x$ be any node in $\SSC$. Since $x$ is a node in a supercycle, we have by
-%OLD  Proposition~\ref{prop:scViol-implies-notInSC}, that $\neg (\ex d \ge  1: \scViol{x}{d}{t})$. Hence 
-  \defn{supercycle.membership} and \prop{scViol-iff-notInSC}, that $\neg (\ex d \ge 1: \scViol{x}{d}{t})$. Hence,
-  $(\fa d \ge 1: \neg \scViol{x}{d}{t})$. Hence, by Proposition~\ref{prop:locScViol-implies-scViol}, 
-  we have $(\fa d \ge 1: \neg \locScViol{x}{d}{t_\act}{\act}{\l})$. Let $L, WL$ be as given in Definition~\ref{def:sConn.violation.loc}.
-  Then $x \in L$, and since $x$ is an arbitrary node of $\SSC$, we have $SSC \sub WL$. 
+  \defn{supercycle.membership} and \prop{scViol-iff-notInSC}, that $\neg \scV{\ndv}{t}$. %Previous: $\neg (\ex d \ge 1: \scViol{x}{d}{t})$. 
+   Hence, by \prop{locScViol-implies-scViol},  we have $\neg \scVL{\ndv}{t_\act}{\act}{\l}$.    %Previous: $(\fa d \ge 1: \neg \locScViol{x}{d}{t_\act}{\act}{\l})$.
+   Let $L, \WL$ be as given in \defn{sConn.violation.loc}.
+  Then $x \in L$, and since $x$ is an arbitrary node of $\SSC$, we have $\SSC \sub \WL$. 
   Thus Clause~\ref{def:sConn.violation.loc:scc} of Definition~\ref{def:sConn.violation.loc} is violated.
 
 \item $\SSC \not\subg \wfg{\dsk{a}{\l}}{t_\act}$: then there exists a node $x \in \SSC -
@@ -120,7 +113,6 @@ Hence, the desired contradiction.
 
 \subsubsection{General local violation condition}
 
-
 We showed above that local supercycle violation implies global supercycle violation, and local
 strong connectedness violation implies global strong connectedness violation.  The general global
 supercycle violation condition is the disjunction of global supercycle violation and global strong
@@ -131,8 +123,9 @@ the local supercycle formation condition implies the global supercycle formation
 
 \begin{definition}[General local supercycle violation, $\locFormViol{v}{t_\act}{\act}{\l}$]
 \label{def:locFormation.violation}
-Let $v$ be a node of $\dsk{\act}{\l}$.
-Then $\locFormViol{v}{t_\act}{\act}{\l}  \df \scVL{v}{t_\act}{\act}{\l}) \lor \locConnViol{v}{t_\act}{\act}{\l}$.
+\label{defn:locFormation.violation}
+Let $\ndv$ be an arbitrary node of $\dsk{\act}{\l}$ and $t_\act$ an arbitrary reachable state of $\dsk{\act}{\l}$.
+Then $\locFormViol{v}{t_\act}{\act}{\l}  \df \scVL{v}{t_\act}{\act}{\l} \lor \locConnViol{v}{t_\act}{\act}{\l}$.
 %Then $\locFormViol{v}{t_\act}{\act}{\l}  \df  (\exs d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l}) \lor \locConnViol{v}{t_\act}{\act}{\l}$.
 \end{definition}
 %Let $s \goesto[\act] t$ be a reachable transition. If, for every $\B_i \in \cmps{\act}$, 
@@ -143,22 +136,25 @@ Then $\locFormViol{v}{t_\act}{\act}{\l}  \df \scVL{v}{t_\act}{\act}{\l}) \lor \l
 \begin{proposition} \label{prop:locFromViol-implies-formViol}
 \label{prop:locformviol-implies-formviol}
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
-For all interactions $\act \in \gamma$, and $\l > 0$, let $t_\act = t \pj \dsk{\act}{\l}$.
+For all interactions $\act \in \gamma$, and $\l \ge 1$, let $t_\act = t \pj \dsk{\act}{\l}$.
+Also let $\ndv$ be an arbitrary node of $\dsk{\act}{\l}$.
 Then\\
 %\ind $\fa d \ge 1: $\locFormViol{v}{t_\act}{\act}{\l}\locFormViol{v}{d}{t_\act}{\act}{\l} \imp \formViol{v}{d}{t}$.
-\ind $ \locFormViol{v}{t_\act}{\act}{\l} \imp \formViol{v}{t}$.
+\ind $ \locFormViol{v}{t_\act}{\act}{\l} \imp \genViol{v}{t}$.
 \end{proposition}
 %
 \begin{proof}
-Assume that $\locFormViol{v}{t_\act}{\act}{\l}$ holds. Then, by Definition~\ref{def:formation.violation}, 
-$(\exs d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l}) \lor \locConnViol{v}{t_\act}{\act}{\l}$.
+Assume that $\locFormViol{v}{t_\act}{\act}{\l}$ holds. Then, by \defn{locFormation.violation},
+$\scVL{v}{t_\act}{\act}{\l} \lor \locConnViol{v}{t_\act}{\act}{\l}$.
+%$(\exs d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l}) \lor \locConnViol{v}{t_\act}{\act}{\l}$.
 We proceed by cases:
 \bn
-\item $(\exs d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l})$: hence $(\exs d \ge 1: \scViol{v}{d}{t})$ by Proposition~\ref{prop:locScViol-implies-scViol}.
-\item $\locConnViol{v}{t_\act}{\act}{\l}$: hence $\connViol{v}{t}$ by Proposition~\ref{prop:locConnViol-implies-connViol}.
+%Previous: \item $(\exs d \ge 1: \locScViol{v}{d}{t_\act}{\act}{\l})$: hence $(\exs d \ge 1: \scViol{v}{d}{t})$ by Proposition~\ref{prop:locScViol-implies-scViol}.
+\item $\scVL{v}{t_\act}{\act}{\l}$: hence $\scV{v}{t}$ by \prop{locScViol-implies-scViol}.
+\item $\locConnViol{v}{t_\act}{\act}{\l}$: hence $\connViol{v}{t}$ by \prop{locConnViol-implies-connViol}.
 \en
-By Definition~\ref{def:formation.violation},  $\formViol{v}{t}  \df (\exs d \ge 1: \scViol{u}{d}{t}) \lor \connViol{v}{t}$.
-Hence we conclude that $\formViol{v}{t}$ holds.
+By \defn{formation.violation},  $\genViol{v}{t}  \df \scV{v}{t}  \lor \connViol{v}{t}$.
+Hence we conclude that $\genViol{v}{t}$ holds.
 \end{proof}
 
 

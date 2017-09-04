@@ -10,41 +10,60 @@
 \begin{tabbing}\label{alg:compute-lfp}
 aaa\= aa\= aa\= aa\= aa\=\kill
 \cLFP{$\dsk{\act}{\l},t_\act$}\\
-\cmnt\ compute least fixpoint of $\lVFs$ in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lfp{\lVFs} = \UN_{d \ge 0} \lVFs^{d} (\ewfg)$.\\
-%\cmnt\ Precondition: $\fas v \in \dsk{\act}{\l}: V[v] = \fff$ \\
-\cmnt\ postcondition: returns array $V$ such that $\fas v \in \dsk{\act}{\l}: V[v]$ 
-$ =
-  \begin{cases}
-    \ttt     & \quad \text{if }  v \in \lfp{\lVFs}\\
-    \fff     & \quad \text{otherwise}\\
-  \end{cases}
-$
-\\
-\lio{\FORALLC{v \in  \dsk{\act}{\l}}}
-   \lit{V[v] \gts \fff}
-\lio{\fpt \gts \fff} 
-\lio{\WHILE~\neg \fpt}
-   \lit{\mbox{\cmnt loop invariant: on the $i$'th iteration, $V[v] \equiv  v \in \UN_{0 \le d \le i} \lVFs^{d} (\ewfg)$}}
-   \lit{\fpt \gts \ttt} 
-   \lit{\FORALLC{v \in \dsk{\act}{\l} \land \neg V[v] }}
-      \lih{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
-                          \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act})}}
-          \lifc{ V[v] \gts \ttt}{\cmnt interaction with no outgoing wait-for-edges}  
-          \lif{\fpt \gts \fff} 
-     \lih{\ELSFC{\mbox{$v$ is an interior interaction $\actp$ and } 
-     (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} :  V[B_i] )}}
-                  \lifc{V[v] \gts \ttt}{\cmnt all outgoing wait-for-edges go to violating nodes}
-                  \lif{\fpt \gts \fff} 
-     \lih{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
-     (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : V[\actp] )}}
-                  \lifc{V[v] \gts \ttt}{\cmnt some outgoing wait-for-edge goes to a violating node}
-                  \lif{\fpt \gts \fff} 
-    \lih{\FI}
-  \lit{\ENDFOR}
-\lio{\ENDWHILE} 
-\lion{\RETURNE{V}}
+\cmnt\ Precondition: $t_\act$ is a state of $\dsk{\act}{\l}$\\
+\cmnt\ Postcondition: returns least fixpoint of $\lVFs$ in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lfp{\lVFs} = \UN_{d \ge 0} \lVFs^{d} (\ewfg)$.\\
+
+\lio{\XS \gts \ewfg}
+
+\lio{\REPEAT}
+   \lit{\mbox{\cmnt loop invariant: on the $i$'th iteration, $\XS \equiv \lVFi{\ewfg}{i} \equiv  v \in \UN_{0 \le d \le i} \lVFi{\ewfg}{d}$}}
+   \lit{\YS \gts \cLFP{\dsk{\act}{\l}, t_\act, \XS}}
+   \lit{\XS \gts \YS}
+   \lit{\UNTIL\ \XS = \YS}
+
+\lion{\RETURNE{\XS}}
 \end{tabbing}
 \caption{Procedure to compute all supercycle-violations in state $t_\act$ of $\dsk{\act}{\l}$}
 \label{fig:algcomputeLFP}
 \end{figure}
 
+
+
+
+
+
+
+
+\begin{figure}[H]
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:compute-lfp}
+aaa\= aa\= aa\= aa\= aa\=\kill
+\cLFP{$\dsk{\act}{\l}, t_\act, \XS$}\\
+\cmnt\ precondition: $t_\act$ is a state of $\dsk{\act}{\l}$ and $X \sub \dsk{\act}{\l}$\\
+\cmnt\ postcondition: returns $\lVF{X}$ in state $t_\act$ of $\dsk{\act}{\l}$,\\
+\\
+\lio{\YS \gts \ewfg}
+
+\lio{\FORALLC{\ndv \in \dsk{\act}{\l}}}
+
+      \lih{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
+                          \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act})}}
+          \lifc{\YS \gts \YS \join \set{\ndv}}{\cmnt interaction with no outgoing wait-for-edges}  
+
+     \lih{\ELSFC{\mbox{$v$ is an interior interaction $\actp$ and } 
+     (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} :  B_i \in \XS )}}
+                  \lifc{\YS \gts \YS \join \set{\ndv}}{\cmnt all outgoing wait-for-edges go to nodes in $\XS$}
+
+     \lih{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
+     (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : \actp \in \XS )}}
+                  \lifc{\YS \gts \YS \join \set{\ndv}}{\cmnt some outgoing wait-for-edge goes to a node in $\XS$}
+
+    \lih{\FI}
+  \lit{\ENDFOR}
+\lion{\RETURNE{\YS}}
+\end{tabbing}
+\caption{Procedure to compute all $\lVF{X}$}
+\label{fig:algcomputeVL}
+\end{figure}
+
+Note that $\YS \gts \YS \join \set{\ndv}$ means ....

@@ -304,6 +304,7 @@
 \newcommand{\connViol}[2]{\ensuremath{\SMATHID{sConnViol}_{\B}(#1,#2)}}
 \newcommand{\lconnViol}[4]{\ensuremath{\SMATHID{sConnViolLoc}(#1,#2,\dsk{#3}{#4})}}
 \newcommand{\locConnViol}[4]{\ensuremath{\SMATHID{sConnViolLoc}(#1,#2,\dsk{#3}{#4})}}
+\newcommand{\WL}{\ensuremath{\MATHID{WL}}}
 
 
 % formation violation condition
@@ -357,7 +358,8 @@
 
 \newcommand{\lSF}[1]{\ensuremath{\CMATHIDN{SL}(#1)}}   % fixpoint mapping for supercycles
 \newcommand{\lSFs}{\ensuremath{\CMATHIDN{SL}}}           % SF symbol with no args
-\newcommand{\lVF}[1]{\ensuremath{\CMATHIDN{VL}(#1)}}   % fixpoint mapping for supercycle violation
+\newcommand{\lVF}[1]{\ensuremath{\CMATHIDN{VL}(#1)}}   % fixpoint mapping for local supercycle violation
+\newcommand{\lVFi}[2]{\ensuremath{\CMATHIDN{VL}^{#2}(#1)}}   % fixpoint mapping for local supercycle violation
 \newcommand{\lVFs}{\ensuremath{\CMATHIDN{VL}}}  % VF symbol with no args
 \newcommand{\lblocks}[2]{\ensuremath{\MATHIDN{lblocks}(#1, #2)}}
 
@@ -401,6 +403,7 @@
 \newcommand{\cViol}[1]{\PNAME{compute-local-SC-Violations}(#1)}
 \newcommand{\cLScV}[1]{\PNAME{LocScViol}(#1)}
 \newcommand{\cLFP}[1]{\PNAME{Compute-LFP}(#1)}
+\newcommand{\cVL}[1]{\PNAME{Compute-VL}(#1)}
 
 \newcommand{\cViolD}[1]{\PNAME{compute-local-SC-Violations-Dist}(#1)}
 \newcommand{\cLScVD}[1]{\PNAME{LocScViolDist}(#1)}
@@ -676,6 +679,7 @@
 \newcommand{\IF}{\pseudocode{if}}
 \newcommand{\WHILE}{\pseudocode{while}}
 \newcommand{\REPEAT}{\pseudocode{repeat}}
+\newcommand{\UNTIL}{\pseudocode{until}}
 \newcommand{\FOR}{\pseudocode{for}}
 \newcommand{\FI}{\pseudocode{fi}}
 \newcommand{\THEN}{\pseudocode{then}}
