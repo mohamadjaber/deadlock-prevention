@@ -19,7 +19,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
    \lit{\mbox{\cmnt loop invariant: on the $i$'th iteration, $\XS \equiv \lVFi{\ewfg}{i} \equiv  v \in \UN_{0 \le d \le i} \lVFi{\ewfg}{d}$}}
    \lit{\YS \gts \cLFP{\dsk{\act}{\l}, t_\act, \XS}}
    \lit{\XS \gts \YS}
-   \lit{\UNTIL\ \XS = \YS}
+\lio{\UNTIL\ \XS = \YS}
 
 \lion{\RETURNE{\XS}}
 \end{tabbing}
@@ -66,4 +66,6 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \label{fig:algcomputeVL}
 \end{figure}
 
-Note that $\YS \gts \YS \join \set{\ndv}$ means ....
+Note that $\YS \join \set{\ndv}$ is the join of the wait-for-subgraph $\YS$ with the 
+wait-for-subgraph $\ndv$ consisting of the single node $\ndv$. Recall
+that the edges of $\YS \join \set{\ndv}$ are induced from $\lwfg{B}{t_\act}{\DS}$.
