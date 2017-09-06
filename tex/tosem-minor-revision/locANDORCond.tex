@@ -70,7 +70,7 @@ Then\\
 \begin{proof}
 By contradiction. Assume there exists a node $v$ in $\dsk{a}{\l}$ such that $\locConnViol{v}{t_\act}{\act}{\l} \land \neg \connViol{v}{t}$.
 By $\neg \connViol{v}{t}$ and Definition~\ref{def:sConn.violation}, there exists a strongly connected
-supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{B}{t}$. Then, there are two cases:
+supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{\B}{t}$. Then, there are two cases:
 %
 \bn
 \item $\SSC \subg \wfg{\dsk{a}{\l}}{t_\act}$: let $x$ be any node in $\SSC$. Since $x$ is a node in a supercycle, we have by
@@ -166,7 +166,7 @@ The actual local condition, \LAO, is given by applying the local supercycle form
 of the subsystem $\dsk{\act}{\l}$ being considered, and to every component $B_i \in \cmps{\act}$.
 
 \begin{definition}[$\LAO(\B, Q_0, \act, \l)$] \label{def:lao}
-Let $\l > 0$, and let $s_\act \goesto[\act] t_\act$ be an arbitrary reachable transition of $\dsk{\act}{\l}$.
+Let $\l \ge 1$, and let $s_\act \goesto[\act] t_\act$ be an arbitrary reachable transition of $\dsk{\act}{\l}$.
 Then, in $t_\act$, the following holds. 
 For every component $\B_i$ of $\cmps{\act}$:  
 $\B_i$ has a supercycle formation violation that can be confirmed within $\dsk{\act}{\l}$.
@@ -183,20 +183,20 @@ We showed previously that $\GAO$ implies deadlock-freedom, and so it remains to 
 \label{lemma:loc.ANDOR.implies.glob.AND-OR}
 \label{LAOGAO}
 Let $\act \in \gamma$ be an interaction of BIP-system $(\B, Q_0)$. Then\\
-\ind $(\ex \l > 0: \LAO(\B, Q_0, \act, \l))$ implies $\GAO(\B, Q_0, \act)$
+\ind $(\ex \l \ge 1: \LAO(\B, Q_0, \act, \l))$ implies $\GAO(\B, Q_0, \act)$
 \end{lemma}
 %
 %\prf{Immediate from Proposition~\ref{prop:locformviol-implies-formviol} and Definitions~\ref{def:global.ANDOR-cond}, \ref{def:lao}.}
 
 \begin{proof}
-Assume $\LAO(\B, Q_0, \act, \l)$ for some $\l > 0$. 
+Assume $\LAO(\B, Q_0, \act, \l)$ for some $\l \ge 1$. 
 %
 Let $s \goesto[\act] t$ be an arbitrary reachable transition of BIP-system $(\B, Q_0)$, and let 
 $s_\act \goesto[\act] t_\act$ be the projection of $s \goesto[\act] t$ onto $\dsk{\act}{\l}$.
 By Corollary~\ref{cor:bip.reachability}, $s_\act \goesto[\act] t_\act$ is a reachable transition of $\dsk{\act}{\l}$.
 
 \noindent
-By Definition~\ref{def:lao}, we have for some $\l > 0$:\\
+By Definition~\ref{def:lao}, we have for some $\l \ge 1$:\\
 \ind for every reachable transition $s_\act \goesto[\act] t_\act$ of $\dsk{\act}{\l}$:\\
 \ind \ind $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{t_\act}{\act}{\l}$.
 %\ind \ind  $\fa \B_i \in \cmps{\act}, \exs d \ge 1: \lviol{\B_i}{d}{t_\act}{\act}{\l}$. 
@@ -204,7 +204,7 @@ By Definition~\ref{def:lao}, we have for some $\l > 0$:\\
 \noindent
 From this and Proposition~\ref{prop:locFromViol-implies-formViol},\\
 \ind for every reachable transition $s \goesto[\act] t$ of  $(\B, Q_0)$:\\ 
-\ind \ind $\fa \B_i \in \cmps{\act} : \formViol{B_i}{t}$
+\ind \ind $\fa \B_i \in \cmps{\act} : \formViol{\B_i}{t}$
 
 \noindent
 Hence, by Definition~\ref{def:global.ANDOR-cond}, $\GAO(\B, Q_0, \act)$ holds.

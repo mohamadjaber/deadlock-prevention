@@ -22,13 +22,11 @@ occur.
 
 
 
-\begin{definition}[$\GLin(B,Q_0,\act)$] \label{def:global:dfc}
-%Let $(B, Q_0)$ be a BIP system, with $B =\gamma(\B_1,\dots,\B_n)$, and 
-%$a$ an interaction of $(B, Q_0)$, \ie $a \in \gamma$.
-$\GLin(B,Q_0,\act)$ holds iff, for every reachable transition $s \goesto[\act] t$ of BIP-system $(\B, Q_0)$, 
-the following holds in state $t$:\\
-\ind  $\fa \B_i \in \cmps{a}: \widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega.$\\
-That is, for every component $\B_i$ of $\cmps{\act}$:  either $\B_i$ has finite in-depth, or finite out-depth, in $\wfg{\B}{t}$.
+\begin{definition}[$\GLin(\B,Q_0,\act)$] \label{def:global:dfc}
+Let $s \goesto[\act] t$ be a reachable transition of $(\B, Q_0)$.
+Then, in $\wfg{\B}{t}$,  every component $\B_i$ of $\cmps{\act}$ either has finite in-depth, or has finite out-depth.
+Formally, \\
+\ind  $\fa \B_i \in \cmps{a}: \widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega.$
 \end{definition}
 
 

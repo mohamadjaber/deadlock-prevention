@@ -101,7 +101,7 @@ eliminating local states and pairs of local states, where action enablement can 
 These checks are formulated as a Boolean formula which is then sent to
 a SAT solver. Their method is able to verify deadlock freedom of
 dining philosophers with a butler, whereas our method timed out, %our method for butler phils
-since the subsystems on which $\LAO(B, Q_0, a, \l)$ is evaluated becomes the entire system.
+since the subsystems on which $\LAO(\B, Q_0, \act, \l)$ is evaluated becomes the entire system.
 On the other hand, our approach succeeded in quickly verifying deadlock-freedom of the resource
 allocation example, whereas the method of 
 %Antonio \etal \cite{AGR16} 
@@ -264,9 +264,9 @@ provide an efficient deadlock-freedom check within a formalism from
 which efficient distributed implementations can be generated
 \cite{BonakdarpourBJQS10b}.  
 
-\item \emph{Locality}: if a component $B_i$ is modified, or is added to an
-  existing system, then $\LAO(B, Q_0, a, \l)$ only has to
-  be re-checked for $B_i$ and components within distance $\l$ of $B_i$.
+\item \emph{Locality}: if a component $\B_i$ is modified, or is added to an
+  existing system, then $\LAO(\B, Q_0, \act, \l)$ only has to
+  be re-checked for $\B_i$ and components within distance $\l$ of $\B_i$.
   A condition whose evaluation considers the entire
   system at once, \eg \cite{AB03,DFinder2,GS03}
   would have to be re-checked for the entire system. 
@@ -296,7 +296,7 @@ Hence, our methods are applicable to other formalisms such as CSP, CCS, I/O Auto
 \subsection{Further work} 
 Our implementation uses explicit state enumeration. % to evaluate $\LDFC(a, \l)$.
 Using BDD's may improve the running time 
-when $\LAO(B, Q_0, a, \l)$ holds only for large $\l$.
+when $\LAO(\B, Q_0, \act, \l)$ holds only for large $\l$.
 Another potential method for improving the running time is to use 
 SAT solving, cf.\ \citeN{AGR16}.
 %
@@ -306,24 +306,24 @@ An enabled port $p$ enables all interactions containing $p$.
 Deadlock-freedom conditions based on ports could exploit
 this interdependence among interaction enablement.
 %
-Our implementation should produce \emph{counterexamples} when a system fails to satisfy $\LAO(B, Q_0, a, \l)$. These can be used to manually modify the system
-to eliminate a possible deadlock.  Also, when $\LAO(B, Q_0, a, \l)$ fails to verify deadlock-freedom, we increment $\l$, in effect extending the
+Our implementation should produce \emph{counterexamples} when a system fails to satisfy $\LAO(\B, Q_0, \act, \l)$. These can be used to manually modify the system
+to eliminate a possible deadlock.  Also, when $\LAO(\B, Q_0, \act, \l)$ fails to verify deadlock-freedom, we increment $\l$, in effect extending the
 subsystem being checked ``in all directions'' away from $a$ (in the structure graph). A counterexample may provide guidance to a more discriminating
 extension, when adds only a few components, so we now consider subsystems whose boundary has varying distance from $a$, in the structure graph. This
 has the benefit that we might verify deadlock freedom using a smaller subsystem than with our current approach.
 %
-\emph{Design rules} for ensuring $\LAO(B, Q_0, a, \l)$ will help users to
+\emph{Design rules} for ensuring $\LAO(\B, Q_0, \act, \l)$ will help users to
 produce deadlock-free systems, and also to interpret counterexamples.
 %
 A \emph{fault} may create a deadlock,  \ie a supercycle, by creating 
 wait-for-edges that would not normally arise.
 Tolerating a fault that creates up to $f$ such spurious wait-for-edges 
 requires that there do not arise during normal
-(fault-free) operation subgraphs of $\wfg{B}{s}$ that can be made into a
+(fault-free) operation subgraphs of $\wfg{\B}{s}$ that can be made into a
 supercycle by adding $f$ edges. 
 We will investigate criteria for preventing formation of such subgraphs.
 %
-Methods for evaluating $\LAO(B, Q_0, a, \l)$ on \emph{infinite state} systems will be
+Methods for evaluating $\LAO(\B, Q_0, \act, \l)$ on \emph{infinite state} systems will be
 devised, \eg, by extracting proof obligations and verifying using SMT solvers.
 %This verifies local deadlock freedom, which, unlike global deadlock freedom,
 %cannot be succinctly expressed in first order logic.

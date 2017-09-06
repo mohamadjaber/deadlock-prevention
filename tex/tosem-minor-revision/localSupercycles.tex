@@ -2,43 +2,28 @@
    \label{s:local.preamble}
 %   \input{locPreamble}
 
-Evaluating the global restrictions $\GAO(B,Q_0,\act)$, $\GLin(B,Q_0,\act)$ requires checking all reachable transitions of
+Evaluating the global restrictions $\GAO(\B,Q_0,\act)$, $\GLin(\B,Q_0,\act)$ requires checking all reachable transitions of
 $(\B, Q_0)$, which is, in general, subject to state-explosion.
 We need restrictions which imply a global restriction, 
 and which can be checked efficiently.
 %
 To this end, we first develop some terminology, and a projection result, for relating the waiting-behavior in a
-subsystem of $(B,Q_0)$ to that in $(B,Q_0)$ overall.
+subsystem of $(\B,Q_0)$ to that in $(\B,Q_0)$ overall.
 
 
 
 \subsection{Projection onto Subsystems}
 \label{s:projection}
 
-%\input{projection}
-
-% \bd[Structure Graph $\sg{\B}$, $\ssg{i}{\l}$, $\ssg{\act}{\l}$] \label{def:structure-graph} The structure
-% graph $\sg{\B}$ of composite component $B = \gamma(\B_1,\dots,\B_n)$ is a
-% bipartite graph whose nodes are the $\B_1, \ldots, \B_n$ and all the
-% $\act \in \gamma$.  There is an edge between $\B_i$ and
-% interaction $\act$ iff $\B_i$ participates in $\act$, \ie $\B_i \in \cmps{\act}$.  Define the
-% \emph{distance} between two nodes to be the number of edges in a shortest path
-% between them.  Let $\ssg{i}{\l}$ ($\ssg{\act}{\l}$ respectively) be the subgraph
-% of $\sg{\B}$ that contains $\B_i$ ($\act$ respectively) and all nodes of $\sg{\B}$
-% that have a distance to $\B_i$ ($\act$ respectively) less than or equal to $\l$.
-% %Let $\ssg{a}{k}$ be the union of $\ssg{i}{k}$ for all $\B_i \in \cmps{\act}$. 
-% \ed
-
-
 \begin{definition}[Structure Graph $\sg{\B}$, $\ssg{\act}{\l}$] \label{def:structure-graph} The structure
-graph $\sg{\B}$ of composite component $B = \gamma(\B_1,\dots,\B_n)$ is a
+graph $\sg{\B}$ of composite component $\B = \gamma(\B_1,\dots,\B_n)$ is a
 bipartite graph whose nodes are the $\B_1, \ldots, \B_n$ and all the
 $\act \in \gamma$.  There is an edge between $\B_i$ and
 interaction $\act$ iff $\B_i$ participates in $\act$, \ie $\B_i \in \cmps{\act}$.  Define the
 \emph{distance} between two nodes to be the number of edges in a shortest path
 between them.  Let $\ssg{\act}{\l}$ be the subgraph
 of $\sg{\B}$ that contains $\act$ and all nodes of $\sg{\B}$
-that have a distance to $\act$ less than or equal to $\l$.
+that have a distance to $\act$ which is less than or equal to $\l$.
 \end{definition}
 
 
@@ -98,15 +83,15 @@ We write $\DS.action = \act$ and $\DS.radius = \l$.
 
 
 \begin{definition}[Projection of a wait-for graph] \label{defn:projWgraph}
-$\wfg{B}{s} \pj \DS$ is the wait-for graph whose nodes are the
+$\wfg{\B}{s} \pj \DS$ is the wait-for graph whose nodes are the
 components and interactions in $\DS$, and whose edges are the induced
-edges from $\wfg{B}{s}$, \ie for nodes $v, w$ of $\wfg{B}{s} \pj \DS$,
-$v \ar w$ is an edge in $\wfg{B}{s} \pj \DS$ iff $v \ar w$ is an edge in $\wfg{B}{s}$.
+edges from $\wfg{\B}{s}$, \ie for nodes $v, w$ of $\wfg{\B}{s} \pj \DS$,
+$v \ar w$ is an edge in $\wfg{\B}{s} \pj \DS$ iff $v \ar w$ is an edge in $\wfg{\B}{s}$.
 
-Write $\lwfg{B}{s}{\DS}$ for $\wfg{B}{s} \pj \DS$.
-Also, if $s_D = s \pj \DS$, then define $\lwfg{B}{s_D}{\DS} \df \wfg{B}{s} \pj \DS$, since $\wfg{B}{s} \pj \DS$ depends only
+Write $\lwfg{B}{s}{\DS}$ for $\wfg{\B}{s} \pj \DS$.
+Also, if $\sD = s \pj \DS$, then define $\lwfg{B}{\sD}{\DS} \df \wfg{\B}{s} \pj \DS$, since $\wfg{\B}{s} \pj \DS$ depends only
 on the projection of state $s$ onto $\DS$.
-%$\lwfg{B}{s}{\act,\l} \df \wfg{B}{s} \pj \dsk{\act}{\l}$.
+%$\lwfg{B}{s}{\act,\l} \df \wfg{\B}{s} \pj \dsk{\act}{\l}$.
 \end{definition}
 
 
@@ -145,14 +130,16 @@ if $\act$ is a node in $\SC$, then, either $\act$ is a border interaction of $\D
       \item there is an edge from $\act$ to $\B_j$ in $\wfg{\B}{s}$, and
       \item there is an edge from $\act$ to $\B_j$ in $\SC$,
       \end{nlst2}
-that is, $\act \in \SC$ implies $\ex \B_j : \act \ar \B_j \in \wfg{\B}{s} \land \act \ar \B_j \in \SC$,
+that is, $\act \in \SC$ implies $\ex \B_j : \act \ar \B_j \in \wfg{\B}{s} \land \act \ar \B_j \in \SC$.
 
 \end{nlst1}
 \end{definition}
 %where $\act \in SC$ means that $\act$ is a node in $\SC$, etc. 
 %Also, write $SC \sub \wfg{\B}{s}$ when $\SC$ is a subgraph of $\wfg{\B}{s}$.
-Intuitively, $\SC$ is a supercycle iff every node is $\SC$ is blocked from executing by other nodes in $\SC$. We pessimistically consider a border interaction $\act$ to be blocked, since the subsystem $\DS$ cannot provide information about the participant components of $\act$ that are outside
-of $\DS$. In particular, one or more border interactions necessarily form a local supercycle. Yet, it is important to notice that a blocked $\act$ does not necessarily imply a global supercyle.
+Intuitively, $\SC$ is a supercycle iff every node in $\SC$ is blocked from executing by other nodes in $\SC$. We pessimistically consider a border
+interaction $\act$ to be blocked, since the subsystem $\DS$ cannot provide information about the participant components of $\act$ that are outside of
+$\DS$. In particular, one or more border interactions necessarily form a local supercycle. Yet, it is important to notice that a blocked border interaction $\act$ does
+not necessarily imply a global supercyle.
 
 
 We carry over the defintion of subgraph $\subg$ from \secn{supercycle-fixpoint}, and develop the analogous definitions for an arbitrary subsystem
@@ -160,32 +147,32 @@ of $\B$.
 
 
 \begin{definition}[Set of subgraphs] \label{defn:wsetOfSubgraphsLoc}
-$\lwfgS{B}{s}{\DS} \df  \set{ \XS \stt \XS \subg \lwfg{B}{s}{\DS} }$.
-%$\lwfgS{B}{s}{\act,\l} \df  \set{ W \stt W \subg \lwfg{B}{s}{\act,\l} }$.
+Let $\sD$ be a state of $\DS$. Then 
+$\lwfgS{B}{\sD}{\DS} \df  \set{ \XS \stt \XS \subg \lwfg{B}{\sD}{\DS} }$.
 \end{definition}
 
 \begin{definition}[Wait-for lattice] \label{defn:wflatticeLoc}
 Define the partially ordered set 
-$\llat{\B}{s}{\DS}  = \tpl{ \lwfgS{B}{s}{\DS}  \subg }$ 
+$\llat{\B}{\sD}{\DS}  = \tpl{ \lwfgS{B}{\sD}{\DS},  \subg }$ 
 %$\llat{\B}{s}{\act,\l}  = \tpl{ \lwfgS{B}{s}{\act,\l}  \subg }$ 
 whose elements are all the subgraphs of 
-\lwfgS{B}{s}{\DS}, and where  $\US \subg \VS$ is as in \defn{wsubgraph}.   
+\lwfgS{B}{\sD}{\DS}, and where  $\US \subg \VS$ is as in \defn{wsubgraph}.   
 %iff $U$ is a subgraph of $V$, \ie $\ord$ is the ``is a subgraph of'' order relation.
 \end{definition}
 
 \begin{proposition} \label{prop:isALatticeLoc}
-$\llat{\B}{s}{\DS}  = \tpl{ \lwfgS{B}{s}{\DS}  \subg }$
+$\llat{\B}{\sD}{\DS}  = \tpl{ \lwfgS{B}{\sD}{\DS},  \subg }$
 %$\llat{\B}{s}{\act,\l}  = \tpl{ \lwfgS{B}{s}{\act,\l}  \subg }$
  is a finite complete boolean lattice, with $\meet$, $\join$, and complementation as in 
-\prop{isALattice}, top element $\lwfgS{B}{s}{\DS}$, and bottom element \ewfg.
+\prop{isALattice}, top element $\lwfgS{B}{\sD}{\DS}$, and bottom element \ewfg.
 \end{proposition}
 
 \begin{definition}[$\mathit{lblocks}$] \label{defn:blocksLoc}
-Let $\XS \subg \lwfg{\B}{s}{\DS}$ and $\act, B_i$ be nodes in $\wfg{\B}{s}$. Then 
+Let $\XS \subg \lwfg{\B}{\sD}{\DS}$ and $\act, \B_i$ be nodes in $\lwfgS{B}{\sD}{\DS}$. Then 
 $\lblocks{\act}{\XS} \df
-[ (\ex \B_i \in \XS : \act \ar \B_i \sub \wfg{\B}{s}
+[ (\ex \B_i \in \XS : \act \ar \B_i \in \lwfgS{B}{\sD}{\DS})
    \mbox{ or $\act$ is a border interaction of $\DS$} ]$, and 
-$\lblocks{\B_i}{\XS} \df (\fa \act : \B_i \ar \act \sub\wfg{\B}{s} \imp \act \in \XS)$.
+$\lblocks{\B_i}{\XS} \df (\fa \act : \B_i \ar \act \in \lwfg{B}{\sD}{\DS} \imp \act \in \XS)$.
 \end{definition}
 Hence a border interaction $\act$ is pessimistically considered to be always blocked, since
 the subsystem $\DS$ does not contain enough information about the enablement of $\act$.
@@ -196,21 +183,21 @@ A component $\B_i$ is blocked by $\XS$ if all of the interactions that $\B_i$ en
 
 \begin{definition}[$\lSFs$] \label{defn:scFixLoc}
 %Define $\lSFs:  \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
-Define $\lSFs:  \lwfgS{B}{s}{\DS}  \to  \lwfgS{B}{s}{\DS}$ as follows.
-$\lSF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \lblocks{\ndv}{\XS} }$, together with their induced edges.
+Define $\lSFs:  \lwfgS{B}{s_D}{\DS}  \to  \lwfgS{B}{s}{\DS}$ as follows.
+$\lSF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \lblocks{\ndv}{\XS} }$, together with the edges induced by \lwfg{B}{\sD}{\DS}.
 \end{definition}
 
 \begin{definition}[$\lVFs$] \label{defn:violFixLoc}
 %Define $\lVFs: \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
 Define $\lVFs: \lwfgS{B}{s}{\DS}  \to  \lwfgS{B}{s}{\DS}$ as follows.
-$\lVF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \neg \lblocks{\ndv}{\compl{\XS}} }$, together with their induced edges, 
+$\lVF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \neg \lblocks{\ndv}{\compl{\XS}} }$, together with the edges induced by \lwfg{B}{\sD}{\DS},
 where we take the complement $\compl{\XS}$ with respect to $\DS$.
 \end{definition}
-
+%
 Hence $\lVF{\XS} = \overline{\lSF{\overline{\XS}}}$, \ie $\lVFs$ and $\lSFs$ are duals.
 Note that (as for $\SFs$ and $\VFs$) $\lSFs$ and $\lVFs$ are defined given a particular
 subsystem $\DS$ of the system 
-$\B$, and a particular state $s$ of $\DS$. We will always make explicit the particulr
+$\B$, and a particular state $s$ of $\DS$. We will always make explicit the particular
 subsystem and state that $\lVFs$ and $\lSFs$ ae defined over.
 
 
@@ -262,11 +249,6 @@ $(\fa \ndx \in \XS: \ndx \in \SF{\XS})$, so by \defn{scFixLoc}, $(\fa \ndx \in \
 Hence every node in $\XS$ is blocked by $\XS$ or is a border interaction, and so $\XS$ satisfies \defn{supercycleLoc}, and is therefore a local supercycle.
 \end{proof}
 
-%\begin{proposition} \label{prop:GFPisLargestLocSC}
-%Let $\UU$ be the greatest fixpoint of $\lSFs$. Then $\UU$ is the union of all border nodes and all supercycles in 
-%$\lwfgS{B}{s}{\DS}$.
-%\end{proposition}
-%
 \begin{proposition} \label{prop:supercycleLoc:union}
 Let $\SC, \SC'$ be local supercycles in $\lwfg{B}{s}{\DS}$. Then $\SC \join \SC'$ is
 a local supercycle in $\lwfg{B}{s}{\DS}$.
@@ -281,8 +263,8 @@ the proposition follows by applying \prop{locGFP} again.
 
 \begin{proposition} \label{prop:GFPisLargestSCLoc}
 Let $\SC$ be the greatest fixpoint of $\lSFs$. Then either
-(a) $\lwfg{B}{s}{\DS}$ \wfg{B}{s} is supercycle-free and $\SC = \ewfg$, or 
-(b) \wfg{B}{s} contains supercycles, and $\SC$ is the largest supercycle in \wfg{B}{s}
+(a) $\lwfg{\B}{\sD}{\DS}$ is supercycle-free and $\SC = \ewfg$, or 
+(b) $\lwfg{\B}{\sD}{\DS}$ contains supercycles, and $\SC$ is the largest supercycle in $\lwfg{\B}{\sD}{\DS}$ 
 \end{proposition}
 %
 \begin{proof}
@@ -290,7 +272,8 @@ By the Knaster-Tarski theorem, the greatest fixpoint is the join of all the post
 If $\lwfg{B}{s}{\DS}$ is supercycle-free, then by \prop{supercycleGFPLoc}, the set of post-fixpoints of $\lSFs$ is empty. 
 Hence $\SC = \ewfg$ (this is possible since there may be no border interactions). %CHECK DEF BORDER INTERACTION
 If $\lwfg{B}{s}{\DS}$ contains supercycles, then by \prop{supercycleGFPLoc},  the set of post-fixpoints of $\lSFs$ is exactly the set of 
-local supercycles of $\lwfg{B}{s}{\DS}$, and so $\SC$ is the join of all these local supercycles, and so $\SC$ is the largest local supercycle in \wfg{B}{s}.
+local supercycles of $\lwfg{B}{s}{\DS}$, and so $\SC$ is the join of all these local supercycles, and so $\SC$ is the largest local supercycle in 
+$\lwfg{\B}{\sD}{\DS}$.
 \end{proof}
 
 
@@ -298,14 +281,14 @@ local supercycles of $\lwfg{B}{s}{\DS}$, and so $\SC$ is the join of all these l
 \begin{proposition} \label{prop:LFPisLocScViolations}
 Let  $\VS= \lfp{\lVFs}$, \ie $\VS$ is the least fixpoint of $\lVFs$. Then $v \in \VS$ iff 
 $v$ is not a node in any local supercycle of $\lwfgS{B}{s}{\DS}$.
-%the nodes of $V$ are exactly the nodes in \wfg{B}{s} that have supercycle violations. 
+%the nodes of $V$ are exactly the nodes in \wfg{\B}{s} that have supercycle violations. 
 \end{proposition}
 %
 \begin{proof}
 %Follows from \prop{GFPisLargestSC} are the Park conjugate (dual) fixpoint theorem in complete boolean lattices.
 From the Park conjugate (dual) fixpoint theorem in complete boolean lattices, we have 
 \lfp{\VFs} = \compl{\gfp{\SFs}}.
-By \prop{GFPisLargestSC}, \gfp{\SFs} is the largest local supercycle in \wfg{B}{s}. Hence the nodes not in 
+By \prop{GFPisLargestSC}, \gfp{\SFs} is the largest local supercycle in \wfg{\B}{s}. Hence the nodes not in 
 \gfp{\SFs} are exactly the nodes that have local supercycle violations. These are exactly the nodes in \lfp{\VFs}.
 \end{proof}
 
@@ -335,9 +318,6 @@ $\lVFs$ is continuous. Follows by standard results, \eg see the CPO fixpoint the
 
 
 
-We define the predicate $\lviol{v}{d}{t}{\act}{\l}$ to hold iff node $v$ in $\wfg{B}{t}$ has a level-$d$ supercycle-violation
-\emph{that can be confirmed within $\dsk{\act}{\l}$}.
-
 \begin{definition}[Local supercycle violation, $\locScViol{v}{d}{t_\act}{\act}{\l}$]
 \label{def:supercycle.violation.local}
 \label{defn:supercycle.violation.local}
@@ -347,9 +327,12 @@ $\scVL{v}{t_\act}{\act}{\l} \df v \in \lfp{\lVFs}$,
 %\JOIN_{d \ge 0} \lVFs^{d} (\ewfg),
 and, for $d \ge 1$, $\scVLd{v}{d}{t_\act}{\act}{\l} \df v \in \lVFs^{d} (\ewfg)$.
 \end{definition}
+$\scVLd{v}{d}{t_\act}{\act}{\l}$ defines a local supercycle violation that can be confirmed within $d$ iterations of $\lVFs$, which we call a
+\emph{level-$d$ local supercycle violation}.
+$\scVL{v}{t_\act}{\act}{\l}$ requires, in general, the entire least fixed point of $\lVFs$.
 
-
-%, noting that $\lVFs^{0} (\ewfg) = \ewfg$.
+%We define the predicate $\lviol{v}{d}{t}{\act}{\l}$ to hold iff node $v$ in $\wfg{\B}{t}$ has a level-$d$ supercycle-violation
+%\emph{that can be confirmed within $\dsk{\act}{\l}$}.
 
 \begin{proposition}
 \label{prop:locViol-equiv-locViolDist}
@@ -400,7 +383,7 @@ Hence  $\lVF{\lVFs^{d-1} (\ewfg)} \subg \VF{\VFs^{d-1} (\ewfg)}$, \ie
 \label{prop:locScViol-implies-scViol}
 \label{prop:lviol-implies-viol}
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
-For all interactions $\act \in \gamma$, and $\l \ge 1$, let $t_\act = t \pj \dsk{\act}{\l}$.
+For all interactions $\act \in \gamma$ and $\l \ge 1$, let $t_\act = t \pj \dsk{\act}{\l}$.
 Then\\
 \ind (a) $\fa d \ge 1:  (\scVLd{\ndv}{d}{t_\act}{\act}{\l} \imp \scVd{v}{d}{t}) $, and\\
 \ind (b) $\scVL{\ndv}{t_\act}{\act}{\l} \imp \scV{v}{t}$.

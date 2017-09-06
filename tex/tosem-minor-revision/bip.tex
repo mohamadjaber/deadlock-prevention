@@ -157,7 +157,7 @@ component $\B_i$, that is,  $\gd{\act}{i} = \gd{p_i}{i}$ where $\set{p_i} = \act
 
 Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component, let
 $s = \tpl{s_1,\ldots,s_n}$ be a state of $\B$,
-and let $\act = \{p_i\}_{i\in I}$ be an interaction of $B$.
+and let $\act = \{p_i\}_{i\in I}$ be an interaction of $\B$.
 Then $\B$ enables $\act$ in $s$
 iff every $\B_i \in \cmps{\act}$ enables $\act$ in $s_i$, \ie iff
 $\AND_{i \in I} \gd{p_i}{i}$ holds in $s$.
@@ -174,7 +174,7 @@ Structurally, this means that there is no local state with zero transitions,
 and every port labeling a transition is 
 part of at least one interaction. 
 \redbox{
-Intuitively, component $B_i$ in state $s$ must enable at least one interaction $a$. 
+Intuitively, component $\B_i$ in state $s$ must enable at least one interaction $a$. 
 However, $a$ requires enablement from all components involved
 in it to execute. That might not be the case as $a$ may be blocked by another 
 component. Therefore the assumption is not enough to guarantee deadlock freedom. 
@@ -211,8 +211,8 @@ $\rstates{\B,Q_0}$ denotes the set of reachable states of $(\B, Q_0)$.
 \end{definition}
 
 
-\begin{definition}[State Projection]\label{def.bip.state.projection} Let $(\B, Q_0)$ be a BIP system where $\B = \gamma(\B_1,\dots,\B_n)$ and let
-$s = \tpl{s_1,\dots,s_n}$ be a state of $(B, Q_0)$. Let $\set{\B_{i_1},\dots,\B_{i_k}} \sub \set{\B_1,\dots,\B_n}$. Then
+\begin{definition}[State projection]\label{def.bip.state.projection} Let $(\B, Q_0)$ be a BIP system where $\B = \gamma(\B_1,\dots,\B_n)$ and let
+$s = \tpl{s_1,\dots,s_n}$ be a state of $(\B, Q_0)$. Let $\set{\B_{i_1},\dots,\B_{i_k}} \sub \set{\B_1,\dots,\B_n}$. Then
 $s \pj \set{\B_{i_1},\dots,\B_{i_k}} \df \tpl{s_{i_1},\dots,s_{i_k}}$. For a single $\B_i$, we write $s \pj \B_i = s_i$.
 %
 We extend state projection to sets of states element-wise.

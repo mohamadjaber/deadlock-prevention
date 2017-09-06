@@ -6,7 +6,7 @@ as follows.
 \begin{definition}[Strong connectedness violation, $\connViol{v}{t}$]
 \label{def:sConn.violation}
  Let $v$ be a node of $\wfg{\B}{t}$.   Then $\connViol{v}{t}$ holds iff there does not exist a 
-strongly connected supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{B}{t}$.
+strongly connected supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{\B}{t}$.
 \end{definition}
 
 
@@ -39,20 +39,14 @@ We reitrate that $\scV{v}{t}$ implies that $v$ cannot be in a supercycle. Hence,
 Hence $\scV{v}{t} \imp \connViol{v}{t}$, so that 
 $\scV{v}{t}  \lor \connViol{v}{t} \ev  \connViol{v}{t}$.
 We give the formation violation condition in this manner, since 
-the implication does not necessarily hold for the local versions of $\scV{v}{t}$ and $\connViol{v}{t}$
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+the implication does not necessarily hold for the local versions of $\scV{v}{t}$ and $\connViol{v}{t}$.
 
 This discussion leads to the formal definition of $\GAO$: 
 after execution of interaction $\act$, all $\B_i \in \cmps{\act}$ exhibit a general supercycle-violation, as given by $\genViol{\B_i}{t}$ above.
 
 \begin{definition}[$\GAO(\B, Q_0, \act)$] \label{def:global.ANDOR-cond} \label{defn:global.ANDOR-cond} 
 Let $s \goesto[\act] t$ be a reachable transition of $(\B, Q_0)$.
-Then, in $t$, the following holds. 
-For every component $\B_i \in \comps{\act}$, %$\B_i$ has a level-$d$ $SC$-violation for some $d$.
-the formation violation condition holds.
+Then, for every component $\B_i \in \comps{\act}$, the formation violation condition holds in state $t$.
 Formally,\\
 \ind  $\fas \B_i \in \comps{\act}, \genViol{\B_i}{t}$.
 \end{definition}
@@ -68,17 +62,17 @@ for every reachable transition $s \la{\act} t$,
 $\wfg{\B}{s}$ is supercycle-free implies that $\wfg{\B}{t}$ is
 supercycle-free. Our proof is by contradiction, so we assume the existence of a reachable transition
 $s \la{\act} t$ such that $\wfg{\B}{s}$ is supercycle-free and $\wfg{\B}{t}$ contains a supercycle.
-
+%
 By Proposition~\ref{prop:supercycle-formation}
  there exists a component $\B_i \in \cmps{\act}$ such that $\B_i$ is in $\CC$, where 
 $\CC$ is a strongly connected supercycle that is a subgraph of $\wfg{\B}{t}$.
-
+%
 Since $\CC$ is a strongly connected supercycle, we have,
  by Definition~\ref{def:sConn.violation}, that $\neg \connViol{\B_i}{t}$ holds.
-
+%
 Since $\CC$ is a supercycle, we have, by Proposition~\ref{prop:scViol-iff-notInSC}, 
-that $\neg \scV{B_i}{t}$ holds. %$\neg (\exs d \ge 1: \scViol{\B_i}{d}{t})$ holds.
-
+that $\neg \scV{\B_i}{t}$ holds. %$\neg (\exs d \ge 1: \scViol{\B_i}{d}{t})$ holds.
+%
 Hence, by Definition~\ref{def:formation.violation}, $\neg \formViol{\B_i}{t}$.
 But, by Definition~\ref{def:global.ANDOR-cond}, we have $\formViol{\B_i}{t}$.
 Hence, we have the desired contradiction, and so the theorem holds.

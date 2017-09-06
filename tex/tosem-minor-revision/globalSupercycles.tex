@@ -1,8 +1,8 @@
 For the rest of the paper, let $\B$ denote an arbitrary fixed BIP system, which
 we use in all definitions, theorems etc.
 
-We characterize a supercycle as a post fixpoint of a ``blocking operator'' $\SFs$, defined below, over the complete boolean lattice formed from the
-subgraphs of \wfg{B}{s}, with $\subg$ (\defn{wsubgraph}) as the ordering.
+We characterize a supercycle as a post-fixpoint of a ``blocking operator'' $\SFs$, defined below, over the complete boolean lattice formed from the
+subgraphs of \wfg{\B}{s}, with $\subg$ (\defn{wsubgraph}) as the ordering.
 %
 Roughly, $\SFs$ maps a subset $\XS$ of the nodes of a wait-for-graph (\ie some subset of the components and interactions in $(\B, Q_0)$)
 to a set of nodes $\YS$ whose execution is blocked by $\XS$. An interaction $\act$ in $\YS$ is blocked by $\XS$ if some participant of $\act$ is in $\XS$ and does
@@ -10,11 +10,11 @@ not enable $\act$. A component $\B_i$  in $\YS$ is blocked by $\XS$ if every int
 $\act$ is blocked by $\XS$ if there is a wait-for edge from $\act$ to a node in $\XS$, and $\B_i$ is blocked by $\XS$ if every wait-for edge from $\B_i$ is to a
 node in $\XS$. 
 
-Since $\SFs$ is monotone, its greatest fixpoint $\SC$ exists.  If \wfg{B}{s} is supercycle-free, then $\SC$ is the empty wait-for graph \ewfg.
-Otherwise $\SC$ is the largest supercycle in \wfg{B}{s}.  We also define the dual $\VFs$ of $\SFs$, whose least fixpoints are the nodes that are not
-members of any supercycle, and we say that such nodes have a \emph{supercycle violation}. Since \wfg{B}{s} is finite, 
-$\VFs$ is monotone and continuous, and so its least fixpoint can be computed as usual by iterating $\VFs$, starting from \ewfg.
-This provides a method of computing the nodes with supercycle violations, whiich is the basis for our deadlock-freedom criterion.
+Since $\SFs$ is monotone, its greatest fixpoint $\SC$ exists.  If \wfg{\B}{s} is supercycle-free, then $\SC$ is the empty wait-for graph \ewfg.
+Otherwise $\SC$ is the largest supercycle in \wfg{\B}{s}.  We also define the dual $\VFs$ of $\SFs$, whose least fixpoints are the nodes that are not
+members of any supercycle, and we say that such nodes have a \emph{supercycle violation}. Since 
+$\VFs$ is monotone and continuous, its least fixpoint can be computed as usual by iterating $\VFs$, starting from \ewfg.
+This provides a method of computing the nodes with supercycle violations, which is the basis for our deadlock-freedom criterion.
 
 
 
@@ -28,9 +28,9 @@ $\wfgPow{\B}{s} = \set{ \XS \stt \XS \subg \wfg{\B}{s} }$.
 
 
 \begin{definition}[Wait-for lattice] \label{defn:wflattice}
-Define the partially ordered set $\lat{\B}{s} = \tpl{ \wfgS{\B}{s}, \subg }$ %\tpl{ \wfg{B}{s}, \ewfg, \subg }$
+Define the partially ordered set $\lat{\B}{s} = \tpl{ \wfgS{\B}{s}, \subg }$ %\tpl{ \wfg{\B}{s}, \ewfg, \subg }$
 whose elements are all the subgraphs of 
-\wfg{B}{s}, and where  $U \subg V$ is as in \defn{wsubgraph}.   
+\wfg{\B}{s}, and where  $U \subg V$ is as in \defn{wsubgraph}.   
 %iff $U$ is a subgraph of $V$, \ie $\ord$ is the ``is a subgraph of'' order relation.
 \end{definition}
 
@@ -40,13 +40,14 @@ $\lat{\B}{s} = \tpl{ \wfgS{\B}{s}, \subg }$ is a finite complete boolean lattice
 \be
 
 \item meet is given by graph intersection: 
-$\XS \meet \YS$ consists of the nodes that are present in both $\XS$ and $\YS$, together with their induced edges
+$\XS \meet \YS$ consists of the nodes that are present in both $\XS$ and $\YS$, together with the edges induced by \wfg{\B}{s}, 
+\ie if $\ndu \in \XS \meet \YS$, $\ndv \in \XS \meet \YS$, and $u \ar v \in  \wfg{\B}{s}$, then $u \ar v \in  \XS \meet \YS$.
 
-\item join is given by graph union: $\XS \join \YS$ consists of the nodes and edges that are present in $\XS$, or in $\YS$, or in both, together with their
-  induced edges.
+\item join is given by graph union: $\XS \join \YS$ consists of the nodes and edges that are present in $\XS$, or in $\YS$, or in both, together with 
+ the edges induced by \wfg{\B}{s}.
  Note that $\join$ is \emph{not} disjoint graph union: 
 it is possible for $\XS$ and $\YS$ to have nodes and edges in common. Note also that $\XS \join \YS$ may contain edges not present in either $\XS$ nor $\YS$,
-since the edges are those induced by  \wfg{\B}{s}. 
+since the edges are those induced by \wfg{\B}{s}. 
 
 \item \wfg{\B}{s}  is the top element 
 
@@ -97,12 +98,12 @@ $\SFs$ and $\VFs$ are monotone and continuous.
 We show first that $\SFs$ is monotone, \ie $\XS \subg \YS \imp \SF{\XS} \subg \SF{\YS}$.
 Let $\ndv$ be an arbitrary node in $\SF{\XS}$, so that $\blocks{\ndv}{\XS}$ holds. There are two cases.\\
 
-\emph{Case of $\ndv$ is an interaction $\act$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $\ex \B_i \in \XS  : \act \ar \B_i \in \wfg{B}{s}$.
-Since $\XS \subg \YS$, this same $\B_i$ is also a node of $\YS$, and so  $\ex \B_i \in \YS  : \act \ar \B_i \in \wfg{B}{s}$. 
+\emph{Case of $\ndv$ is an interaction $\act$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $\ex \B_i \in \XS  : \act \ar \B_i \in \wfg{\B}{s}$.
+Since $\XS \subg \YS$, this same $\B_i$ is also a node of $\YS$, and so  $\ex \B_i \in \YS  : \act \ar \B_i \in \wfg{\B}{s}$. 
 Hence  $\blocks{\act}{\YS}$, and so $\act \in \SF{\YS}$. \\
 
-\emph{Case of $\ndv$ is a component $\B_i$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $(\fa \act : \B_i \ar \act \in \wfg{B}{s} \imp \act \in \XS)$.
-Since $\XS \subg \YS$, we have  $(\fa \act : \B_i \ar \act \in \wfg{B}{s} \imp \act \in \YS)$. 
+\emph{Case of $\ndv$ is a component $\B_i$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $(\fa \act : \B_i \ar \act \in \wfg{\B}{s} \imp \act \in \XS)$.
+Since $\XS \subg \YS$, we have  $(\fa \act : \B_i \ar \act \in \wfg{\B}{s} \imp \act \in \YS)$. 
 Hence $\blocks{\B_i}{\YS}$, and so $\B_i \in \SF{\YS}$. \\
 
 In both cases, we have $\ndv \in \SF{\YS}$. Since $\ndv$ was chosen arbitrarily from $\SF{\XS} $, it follows that $\SF{\XS} \subg \SF{\YS}$. Hence
@@ -117,54 +118,54 @@ Hence, by the Knaster-Tarski theorem, the least and greatest fixpoints of $\SFs$
 %, and so their greatest and least fixpoints 
 
 \begin{proposition} \label{prop:supercycleGFP}
-Let $\XS \ne \ewfg$ and $\XS \subg \wfg{B}{s}$, \ie $\XS$ is a non-empty subgraph of \wfg{B}{s}. Then $\XS$ is a supercycle in \wfg{B}{s} iff $\XS \subg \SF{\XS}$.
+Let $\XS \ne \ewfg$ and $\XS \subg \wfg{\B}{s}$, \ie $\XS$ is a non-empty subgraph of \wfg{\B}{s}. Then $\XS$ is a supercycle in \wfg{\B}{s} iff $\XS \subg \SF{\XS}$.
 \end{proposition}
 %
 \begin{proof}
-Let $\XS$ be a supercycle in \wfg{B}{s}. By \defn{supercycle}, every node in $\XS$ is blocked by $\XS$, \ie 
+Let $\XS$ be a supercycle in \wfg{\B}{s}. By \defn{supercycle}, every node in $\XS$ is blocked by $\XS$, \ie 
 $(\fa \ndx \in \XS: \blocks{\ndx}{\XS})$. By \defn{scFix}, $\XS \subg \SF{\XS}$.
 %
-Conversely, suppose $\XS \subg \SF{\XS}$ for some subgraph $\XS$ of \wfg{B}{s}. Hence 
+Conversely, suppose $\XS \subg \SF{\XS}$ for some subgraph $\XS$ of \wfg{\B}{s}. Hence 
 $(\fa \ndx \in \XS: \ndx \in \SF{\XS})$, so by \defn{scFix}, $(\fa \ndx \in \XS: \blocks{\ndx}{\XS})$.
 Hence every node in $\XS$ is blocked by $\XS$, and so $\XS$ satisfies \defn{supercycle}, and is therefore a supercycle.
 \end{proof}
 %
-Thus the supercycles of \wfg{B}{s} are exactly the post-fixpoints of $\SFs$. %This implies that the union of two supercycles is also a supercycle. 
+Thus the supercycles of \wfg{\B}{s} are exactly the post-fixpoints of $\SFs$. %This implies that the union of two supercycles is also a supercycle. 
 
 \begin{proposition} \label{prop:GFPisLargestSC}
 Let $\SC$ be the greatest fixpoint of $\SFs$. Then either
-(a) \wfg{B}{s} is supercycle-free and $\SC = \ewfg$, or 
-(b) \wfg{B}{s} contains supercycles, and $\SC$ is the largest supercycle in \wfg{B}{s}
+(a) \wfg{\B}{s} is supercycle-free and $\SC = \ewfg$, or 
+(b) \wfg{\B}{s} contains supercycles, and $\SC$ is the largest supercycle in \wfg{\B}{s}
 \end{proposition}
 %
 \begin{proof}
 By the Knaster-Tarski theorem, the greatest fixpoint is the join of all the post-fixpoints. 
-If \wfg{B}{s} is supercycle-free, then by \prop{supercycleGFP}, the set of post-fixpoints of $\SFs$ is empty. 
+If \wfg{\B}{s} is supercycle-free, then by \prop{supercycleGFP}, the set of post-fixpoints of $\SFs$ is empty. 
 Hence $\SC = \ewfg$.
-If \wfg{B}{s} contains supercycles, then by \prop{supercycleGFP},  the set of post-fixpoints of $\SFs$ is exactly the set of 
-supercycles of \wfg{B}{s}, and so $\SC$ is the join of all these supercycles, and so $\SC$ is the largest supercycle in \wfg{B}{s}.
+If \wfg{\B}{s} contains supercycles, then by \prop{supercycleGFP},  the set of post-fixpoints of $\SFs$ is exactly the set of 
+supercycles of \wfg{\B}{s}, and so $\SC$ is the join of all these supercycles, and so $\SC$ is the largest supercycle in \wfg{\B}{s}.
 \end{proof}
 
 Let $\MATHIDN{lfp}, \MATHIDN{gfp}$ denote the least-fixed-point and greatest-fixed-point operators, respectively.
 
 \begin{proposition}  \label{prop:LFPisScViolations}
-$\ndv \in  \lfp{\VFs}$ iff $\ndv$ is not a node in any supercycle of \wfg{B}{s}.    
-%Let  $\VS = \lfp{\VFs}$, \ie $\VS$ is the least fixpoint of $\VFs$. Then $v \in \VS$ iff $v$ is not a node in any supercycle of \wfg{B}{s}.    
-%the nodes of $V$ are exactly the nodes in \wfg{B}{s} that have supercycle violations. 
+$\ndv \in  \lfp{\VFs}$ iff $\ndv$ is not a node in any supercycle of \wfg{\B}{s}.    
+%Let  $\VS = \lfp{\VFs}$, \ie $\VS$ is the least fixpoint of $\VFs$. Then $v \in \VS$ iff $v$ is not a node in any supercycle of \wfg{\B}{s}.    
+%the nodes of $V$ are exactly the nodes in \wfg{\B}{s} that have supercycle violations. 
 \end{proposition}
 %
 \begin{proof}
 %Follows from \prop{GFPisLargestSC} are the Park conjugate (dual) fixpoint theorem in complete boolean lattices.
 From the Park conjugate (dual) fixpoint theorem in complete boolean lattices, we have 
 \lfp{\VFs} = \compl{\gfp{\SFs}}.
-By \prop{GFPisLargestSC}, \gfp{\SFs} is the largest supercycle in \wfg{B}{s}. Hence the nodes not in 
+By \prop{GFPisLargestSC}, \gfp{\SFs} is the largest supercycle in \wfg{\B}{s}. Hence the nodes not in 
 \gfp{\SFs} are exactly the nodes that are not in any supercycle. These are exactly the nodes in \lfp{\VFs}.
 \end{proof}
 
 Define $\VFi{\XS}{1} = \VF{\XS}$, and for $d > 1$, 
 $\VFi{\XS}{d} = \VFi{\VF{\XS}}{d-1}$, \ie a superscript indicates functional iteration
-of $\VFs$. Note that 
-$\VFi{\ewfg}{d} \subg \VFi{\ewfg}{d'}$ when $d \le d'$, since $\VFs$
+of $\VFs$. Also let $\JOIN$ be the ``quantifier'' version of $\join$.
+Note that $\VFi{\ewfg}{d} \subg \VFi{\ewfg}{d'}$ when $d \le d'$, since $\VFs$
 is monotone.
 Hence $\VFi{\ewfg}{1}, \VFi{\ewfg}{2}, \ldots$ is a non-decreasing sequence.
 
@@ -184,11 +185,10 @@ By \prop{monotone}, $\VFs$ is continuous. Follows by standard results, \eg see t
 \label{def:supercycle.violation}
 \label{defn:supercycle.violation}
 Let $\ndv$ be a node of $\wfg{\B}{s}$. Define
-$\scV{v}{s} \df v \in \lfp{\VFs}$ and 
+$\scV{v}{s} \df v \in \lfp{\VFs}$ and, for $d \ge 1$,
 $\scVd{v}{d}{s} \df v \in \VFs^{d} (\ewfg)$.\footnote{Note that
 we abuse notation by overloading $\SMATHID{viol}$, but no ambiguity arises since the two versions have
 different parameter lists.}
-
 \end{definition}
 
 \begin{proposition}
@@ -206,20 +206,23 @@ Chaining these equivalences establishes the proposition.
 
 %It immediately follows that $\scV{v}{s}$ iff  $(\ex d \ge 1: \scVd{v}{d}{s})$.
 Also, it follows from \prop{LFPisScViolations} that $\scV{v}{s}$ iff there does not exist $\SC$ such that $\SC$ is a supercycle and $v \in SC$.
-We say that a node $v$ of \wfg{B}{s} has a \emph{supercycle violation}\footnote{In the sequel, we say ``sc-violation'' rather than ``supercycle violation.''} iff $v$ is not a node in any supercycle of \wfg{B}{s}, 
+We say that a node $v$ of \wfg{\B}{s} has a \emph{supercycle violation}\footnote{In the sequel, we say ``sc-violation'' rather than ``supercycle violation.''} iff $v$ is not a node in any supercycle of \wfg{\B}{s}, 
 \ie iff $\scV{v}{s}$ holds. 
 By \prop{computeLFP}, we can compute $\lfp{\VFs}$ (and therefore $\scV{v}{s}$) by iterating $\VFs$, starting from $\ewfg$, until there is no more change.
+$\scVd{v}{d}{s}$ defines a supercycle violation that can be confirmed within $d$ iterations of $\VFs$, which we call a \emph{level-$d$ supercycle violation}.
+$\scV{v}{s}$ requires, in general, the entire least fixed point of $\VFs$.
+
 
 \vspace{1ex}
 \textit{Example.} 
 For example, consider \fig{SCnotCycle}. We show the set of nodes in each $\VFs^{d} (\ewfg)$, as the induced subgraph is easily inferred from \fig{SCnotCycle}.
 $\VFs^{0} (\ewfg) = \ewfg$,
-$\VFs^{1} (\ewfg) = \set{i}$, 
-$\VFs^{2} (\ewfg) = \set{B_6, i}$, 
-$\VFs^{3} (\ewfg) = \set{h, B_6, i}$, 
-$\VFs^{4} (\ewfg) = \set{B_5, h, B_6, i}$, 
-$\VFs^{5} (\ewfg) = \set{B_5, h, B_6, i}$, 
-as so $\lfp{\VFs} = \set{B_5, h, B_6, i}$.
+$\VFs^{1} (\ewfg) = \set{\acti}$, 
+$\VFs^{2} (\ewfg) = \set{\B_6, \acti}$, 
+$\VFs^{3} (\ewfg) = \set{\acth, \B_6, \acti}$, 
+$\VFs^{4} (\ewfg) = \set{\B_5, \acth, \B_6, \acti}$, 
+$\VFs^{5} (\ewfg) = \set{\B_5, \acth, \B_6, \acti}$, 
+as so $\lfp{\VFs} = \set{\B_5, \acth, \B_6, \acti}$.
 %
 For \fig{cycleOK}, it is easy to verify that $\lfp{\VFs}$ is all the nodes in the system, \ie the wait-for graph shown is supercycle-free.
 
@@ -265,8 +268,8 @@ are central to our deadlock-freedom conditions.
 
 
 \begin{proposition} \label{prop:supercycle:union}
-Let $\SC, \SC'$ be supercycles in $\wfg{B}{s}$. Then $\SC \join \SC'$ is
-a supercycle in $\wfg{B}{s}$.
+Let $\SC, \SC'$ be supercycles in $\wfg{\B}{s}$. Then $\SC \join \SC'$ is
+a supercycle in $\wfg{\B}{s}$.
 \end{proposition}
 %
 \begin{proof}
@@ -314,7 +317,7 @@ We deal with each clause in turn.
 %%%%%%%%%%%%%%%%%%%%%
 \textit{Proof of \clause{sc-membership:comp-out}}.
 %
-Assume $\scyc{\B}{s}{\B_i}$, and let $\SC \subg \wfg{B}{s}$ be the supercycle containing $\B_i$.  Let
+Assume $\scyc{\B}{s}{\B_i}$, and let $\SC \subg \wfg{\B}{s}$ be the supercycle containing $\B_i$.  Let
 $\actp \in \succs{\B}{s}{\B_i}$.  By \defn{supercycle}, \clause{supercycle.component-blocked},
 $\actp \in \SC$.  Hence $(\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
 We conclude
@@ -322,11 +325,11 @@ $\scyc{\B}{s}{\B_i} \imp (\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})
 %
 Now assume $(\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$, and let 
 $\SC$ be the join of all the supercycles containing all the $\act \in \succs{\B}{s}{\B_i}$. 
-By \prop{supercycle:union}, $\SC \subg \wfg{B}{s}$ is a supercycle.
+By \prop{supercycle:union}, $\SC \subg \wfg{\B}{s}$ is a supercycle.
 Let $\SC'$ be $\SC$ with edge $\B_i \ar \act$ added, for all 
 $\act \in \succs{\B}{s}{\B_i}$.
 Then $\SC'$ is a supercycle by 
-\defn{supercycle}, and also $\SC' \subg \wfg{B}{s}$. Hence $\scyc{\B}{s}{\act}$.
+\defn{supercycle}, and also $\SC' \subg \wfg{\B}{s}$. Hence $\scyc{\B}{s}{\act}$.
 We conclude 
 $\scyc{\B}{s}{\B_i} \folf (\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
 
@@ -336,7 +339,7 @@ $\scyc{\B}{s}{\B_i} \folf (\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act}
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \textit{Proof of \clause{sc-membership:comp-in}}.
 %
-Assume $\scyc{\B}{s}{\B_i}$, so that $\SC \subg \wfg{B}{s}$ is the supercycle containing $\B_i$.
+Assume $\scyc{\B}{s}{\B_i}$, so that $\SC \subg \wfg{\B}{s}$ is the supercycle containing $\B_i$.
 Let  $\act \in \preds{\B}{s}{\B_i}$, and let $\SC'$ be $\SC$ with 
 $\act \ar \B_i$ added. Hence $\SC'$ is a supercycle 
 by Definition~\ref{def:supercycle},
@@ -349,16 +352,16 @@ $(\fa \act \in \preds{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
 %%%%%%%%%%%%%%
 \textit{Proof of \clause{sc-membership:act-out}}.
 %
-Assume $\scyc{\B}{s}{\act}$, and let $\SC \subg \wfg{B}{s}$ be the supercycle containing $\act$.  By
+Assume $\scyc{\B}{s}{\act}$, and let $\SC \subg \wfg{\B}{s}$ be the supercycle containing $\act$.  By
 \defn{supercycle}, \clause{supercycle.action-blocked}, there exists a
 $\B_i \in \succs{\B}{s}{\act}$ such that $\B_i \in \SC$.  Hence $\scyc{\B}{s}{\B_i}$.
 We conclude
 $\scyc{\B}{s}{\act} \imp (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
 %
 Now assume $(\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$, and let 
-$\SC \subg \wfg{B}{s}$ be the supercycle containing some $\B_i \in \succs{\B}{s}{\act}$. 
+$\SC \subg \wfg{\B}{s}$ be the supercycle containing some $\B_i \in \succs{\B}{s}{\act}$. 
 Let $\SC'$ be $\SC$ with $\act \ar \B_i$ added. Then $\SC'$ is a supercycle by 
-\defn{supercycle}, and also $\SC' \subg \wfg{B}{s}$. Hence $\scyc{\B}{s}{\act}$.
+\defn{supercycle}, and also $\SC' \subg \wfg{\B}{s}$. Hence $\scyc{\B}{s}{\act}$.
 We conclude 
 $\scyc{\B}{s}{\act} \folf (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i})$.
 
@@ -366,10 +369,10 @@ $\scyc{\B}{s}{\act} \folf (\ex \B_i \in \succs{\B}{s}{\act} : \scyc{\B}{s}{\B_i}
 %%%%%%%%%%%%%%%%%%%%%%%%
 \textit{Proof of \clause{sc-membership:act-in}}.  
 %
-Assume $\neg \scyc{\B}{s}{\act}$, so that $\act$ is not in any supercycle of $\wfg{B}{s}$.
+Assume $\neg \scyc{\B}{s}{\act}$, so that $\act$ is not in any supercycle of $\wfg{\B}{s}$.
 Let $\B_i \in \preds{\B}{s}{\act}$. 
 By \defn{supercycle}, \clause{supercycle.component-blocked}, 
-$\B_i$ cannot be in any supercycle of $\wfg{B}{s}$, since all $\actp \in \succs{\B}{s}{\B_i}$ must
+$\B_i$ cannot be in any supercycle of $\wfg{\B}{s}$, since all $\actp \in \succs{\B}{s}{\B_i}$ must
 also be in the supercycle. Hence $\neg \scyc{\B}{s}{\B_i}$.
 Since $\B_i$ was chosen arbitrarily, we conclude
 $\neg \scyc{\B}{s}{\act} \imp  (\fa \B_i \in \preds{\B}{s}{\act} : \neg \scyc{\B}{s}{\B_i})$, the

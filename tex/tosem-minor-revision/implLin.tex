@@ -6,13 +6,13 @@ Figure~\ref{fig:impl.locLin} presents the pseudocode for our algorithm
 \checkLin{$\B, Q_0$}\ to evaluate $\LLin$.
 %
 \checkLin{$\B, Q_0$}\ iterates over each interaction $\act$ of ($\B,Q_0$), and 
-invokes \checkLinInt{$\B, Q_0, \act$} to evaluate $(\ex \l \ge 1: \LLin(B, Q_0, \act, \l))$.
+invokes \checkLinInt{$\B, Q_0, \act$} to evaluate $(\ex \l \ge 1: \LLin(\B, Q_0, \act, \l))$.
 \checkLinInt{$\B, Q_0, \act$}
-starts with $\l=1$ and increments $\l$ until either $\LLin(B, Q_0, \act, \l)$ is found to hold, or
-$\dsk{\act}{\l}$ has become the entire system and $\LLin(B, Q_0, \act, \l)$ does not hold. In the
-latter case, $\LLin(B, Q_0, \act, \l)$ does not hold for any finite $\l$, and, in practice,
+starts with $\l=1$ and increments $\l$ until either $\LLin(\B, Q_0, \act, \l)$ is found to hold, or
+$\dsk{\act}{\l}$ has become the entire system and $\LLin(\B, Q_0, \act, \l)$ does not hold. In the
+latter case, $\LLin(\B, Q_0, \act, \l)$ does not hold for any finite $\l$, and, in practice,
 computation would halt before $\dsk{\act}{\l}$ had become the entire system, due to exhaustion of
-resources. Evaluation of $\LLin(B, Q_0, \act, \l)$ is done by 
+resources. Evaluation of $\LLin(\B, Q_0, \act, \l)$ is done by 
 \checkLinIntDist{$\B, Q_0, \act, \l$}, which examines every reachable transition
 that executes $a$, and checks that the final state satisfies
 Definition~\ref{def:ldfc-k}. 
@@ -35,10 +35,10 @@ aaa\= aa\= aa\= \kill
 \begin{tabbing}\label{alg:checkInt}
 aaa \= aa\= aa\= \kill
 \checkLinInt{$\B, Q_0, \act$},  where $\B \df \gamma(\B_1,\dots,\B_n), \act \in \gamma$\\
-\cmnt\ check $(\ex \l > 0: \LLin(\B, Q_0, \act, \l))$\\
+\cmnt\ check $(\ex \l \ge 1: \LLin(\B, Q_0, \act, \l))$\\
 \lioc{\l \gts 1;}{\cmnt\ start with $\l = 1$}
 \lio{\WHILEC{\ttt}}
-   \litc{\IFC{\checkLinIntDist{\act, \l} = \ttt}\ \RETURNE{\ttt}\ \FI;}{\cmnt\ success, so return true}
+   \litc{\IFC{\checkLinIntDist{\B, Q_0, \act, \l} = \ttt}\ \RETURNE{\ttt}\ \FI;}{\cmnt\ success, so return true}
    \litc{\IFC{\dsk{\act}{\l} = \gamma(\B_1,\dots,\B_n)}\ \RETURNE{\fff}\ \FI;}{\cmnt\ exhausted all subsystems, return false}
    \litc{\l \gts \l + 1}{\cmnt\ increment $\l$ until success (true) or intractable or failure (false)}
 \lio{\ENDWHILE}
@@ -71,6 +71,6 @@ $\Mdsk{\act}{\l_a}$ is the transition system of
 $\dsk{\act}{\l_a}$, and $|\Mdsk{\act}{\l_a}|$ is the size (number of nodes plus number of edges) of 
 $\Mdsk{\act}{\l_a}$, 
 $|\dsk{\act}{\l_a}|$ is the size of the syntactic description of $\dsk{\act}{\l_a}$, and 
-$\l_a$ is the smallest value of $\l$ for which $\LLin(B, Q_0, \act, \l)$ holds.
+$\l_a$ is the smallest value of $\l$ for which $\LLin(\B, Q_0, \act, \l)$ holds.
 
 

@@ -6,8 +6,8 @@
 \label{def:global.deadlock-free} 
 \label{defn:static:deadlock-free}
 \label{defn:global.deadlock-free} 
-A BIP-system $(\B, Q_0)$ is \emph{free of global deadlock} iff,
-in every reachable state $s$ of $(B, Q_0)$, some interaction $\act$ is enabled.
+A BIP-system $(\B, Q_0)$ is \emph{free of global deadlock} iff 
+in every reachable state $s$ of $(\B, Q_0)$, some interaction $\act$ is enabled.
 Formally, $\fa s \in \rstates{\B,Q_0}, \ex \act : s \enb{\act}{\B}$.
 %% A BIP-system $(\B, Q_0)$ is \emph{global deadlock prone} iff there exists a reachable state
 %% $s$ of $(\B, Q_0)$ in which no interaction $a$ is enabled.
@@ -18,7 +18,7 @@ Formally, $\fa s \in \rstates{\B,Q_0}, \ex \act : s \enb{\act}{\B}$.
 \begin{definition}[Local Deadlock-freedom]
 \label{def:local.deadlock-free} 
 \label{defn:local.deadlock-free} 
-A BIP-system $(\B, Q_0)$ is \emph{free of local deadlock} iff, 
+A BIP-system $(\B, Q_0)$ is \emph{free of local deadlock} iff 
 for every subsystem $(\B', Q'_0)$ of  $(\B, Q_0)$, and every reachable state $s$ of $(\B, Q_0)$,
 $(\B', Q'_0)$ has some interaction enabled in state $s \pj \B'$.
 Formally:\\
@@ -44,12 +44,9 @@ Intuitively, every reachable state $s'$ of subsystem $\B'$ (within the context o
 \subsection{Wait-for graphs}
 \label{secn:wait-for-graphs}
 
-The wait-for graph for a state $s$ is a directed bipartite and-or
-graph which contains as nodes the atomic components $\B_1, \ldots,
-\B_n$, and all the interactions $\gamma$.  Edges in the wait-for-graph
-are from a component $\B_i$ to all the interactions that $\B_i$ enables (in $s$),
-and from an interaction $a$ to all the components that participate in
-$a$ and which do not enable it (in $s$).
+The wait-for graph for a state $s$ is a directed bipartite and-or graph which contains as nodes the atomic components $\B_1, \ldots, \B_n$, and all
+the interactions $\gamma$.  Edges in the wait-for-graph are from a component $\B_i$ to all the interactions that $\B_i$ enables (in $s$), and from an
+interaction $\act$ to all the components that participate in $\act$ and which do not enable it (in $s$).
 
 
 \begin{definition}[Wait-for graph  $\wfg{\B}{s}$]
@@ -74,7 +71,7 @@ The {\em wait-for graph} $\wfg{\B}{s}$ of $s$ is a directed bipartite and-or gra
    which $\B_i$ enables in $s_i$,
 
 \item  \label{def:static:wait-for-graph:edges-action-aut}
-   there is an edge in $\wfg{\B}{s}$ from $a$ to every 
+   there is an edge in $\wfg{\B}{s}$ from $\act$ to every 
    $\B_i$ such that $\B_i \in \cmps{\act}$ and $s_i(\gd{\act}{i}) = \false$, \ie from $\act$ to every component
    $\B_i$ which participates in $\act$ but does not enable it, in state $s_i$.
                   
@@ -93,26 +90,26 @@ wait-for edge (wait-for path).
 
 \begin{definition}[Subgraph of a wait-for graph] \label{defn:wsubgraph}
 $\US$ is a subgraph of $\wfg{\B}{s}$ iff the nodes of $\US$ are a subset of the nodes of $\wfg{\B}{s}$ and the edges of $\US$ are the induced edges from 
-$\wfg{\B}{s}$, \ie if $u,v$ are nodes of $\US$ and $u \ar v$ is an edge of $\wfg{\B}{s}$, then $u \ar v$ is en edge of $\US$.
+$\wfg{\B}{s}$, \ie if $u,v$ are nodes of $\US$ and $u \ar v$ is an edge of $\wfg{\B}{s}$, then $u \ar v$ is an edge of $\US$.
 Write $\US \subg \wfg{\B}{s}$ when $\US$ is a subgraph of $\wfg{\B}{s}$, and extend the definition of $\subg$ to subgraphs of $\wfg{\B}{s}$ in the obvious
 manner, so that $\US \subg \VS$ means that $\US$ is a subgraph of $\VS$.
 \end{definition}
 
 Write $\act \ar \B_i$ ($\B_i \ar \act$ respectively) for a
-wait-for-edge from $\act$ to $\B_i$ ($\B_i$ to $\act$ respectively).  We abuse notation by writing
+wait-for edge from $\act$ to $\B_i$ ($\B_i$ to $\act$ respectively).  We abuse notation by writing
 $v \in \wfg{\B}{s}$ to indicate that $v$ is a node of $\wfg{\B}{s}$, and 
 $e \in \wfg{\B}{s}$ to indicate that $e$ (either $\act \ar \B_i$ or $\B_i \ar \act$) is an edge in
 $\wfg{\B}{s}$. 
 Also $\B_i \ar \act \ar \B'_i \in \wfg{\B}{s}$ for
-$B_i \ar \act \in \wfg{\B}{s} \land \act \ar B'_i \in \wfg{\B}{s}$, \ie for a wait-for path of
+$\B_i \ar \act \in \wfg{\B}{s} \land \act \ar \B'_i \in \wfg{\B}{s}$, \ie for a wait-for path of
 length 2, and similarly for longer wait-for paths.
 Likewise use $v \in \US$, $e \in \US$, where $\US$ is a subgraph of $\wfg{\B}{s}$.
 
 
 
 Consider the dining philosophers system given in Figure~\ref{fig:diningSpectrum}.
-Figure~\ref{fig:wfg0} shows its wait-for-graph in its sole initial state.  Figure~\ref{fig:wfg1}
-shows the wait-for-graph after execution of $\Get_0$.  Edges from components to interactions are
+Figure~\ref{fig:wfg0} shows its wait-for graph in its sole initial state.  Figure~\ref{fig:wfg1}
+shows the wait-for graph after execution of $\Get_0$.  Edges from components to interactions are
 shown solid, and edges from interactions to components are shown dashed.
 
 \begin{figure*}[ht]
@@ -136,7 +133,7 @@ is \emph{$\B_i$-incident} iff $\B_i$ is one of the endpoints of $e$.
 
 
 \begin{proposition}[Wait-for edge preservation] \label{prop:wait-for-edge-preservation}
-Let $s \la{\act} t$ be a transition of composite component $B =
+Let $s \la{\act} t$ be a transition of composite component $\B =
 \gamma(\B_1,\dots,\B_n)$, and let $e$ be a wait-for edge in $\wfg{\B}{s}$
 that is not $\B_i$-incident, for every $\B_i \in \cmps{\act}$. Then $e \in
 \wfg{\B}{s}$ iff $e \in \wfg{\B}{t}$. 
@@ -152,7 +149,7 @@ that is not $\B_i$-incident, for every $\B_i \in \cmps{\act}$. Then $e \in
 \begin{proof}
 Fix $e$ to be an arbitrary wait-for-edge that is not
 $\B_i$-incident. $e$ is either $\B_j \ar b$ or $b \ar \B_j$, for some
-component $\B_j$ of $B$ that is not in $\cmps{\act}$, and an interaction $b$
+component $\B_j$ of $\B$ that is not in $\cmps{\act}$, and an interaction $\actb$
 (different from $\act$) that $\B_j$ participates in.
 %
 Now $s \pj \B_j = t \pj \B_j$, since $s \la{\act} t$ and $\B_j \not\in \cmps{\act}$. Hence $s(\gd{b}{j}) =
@@ -172,7 +169,7 @@ graph-theoretic construct that we call a {\em supercycle}.
 \label{def:supercycle} 
 \label{defn:supercycle} 
 Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component and $s$ be a state of $\B$.
-A subgraph $\SC$ of $\wfg{\B}{s}$ is a supercycle in $\wfg{\B}{s}$ if and only if all of the following hold:
+A subgraph $\SC$ of $\wfg{\B}{s}$ is a \emph{supercycle} in $\wfg{\B}{s}$ if and only if all of the following hold:
 \begin{nlst1}
    \item \label{def:supercycle.nonempty} \label{clause:supercycle.nonempty} 
 $\SC$ is nonempty, \ie contains at least one node,
@@ -193,7 +190,7 @@ if $\act$ is a node in $\SC$, then there exists a $\B_j$ such that:
       \item there is an edge from $\act$ to $\B_j$ in $\wfg{\B}{s}$, and
       \item there is an edge from $\act$ to $\B_j$ in $\SC$,
       \end{nlst2}
-that is, $\act \in \SC$ implies $\ex \B_j : \act \ar \B_j \in \wfg{\B}{s} \land \act \ar \B_j \in \SC$,
+that is, $\act \in \SC$ implies $\ex \B_j : \act \ar \B_j \in \wfg{\B}{s} \land \act \ar \B_j \in \SC$.
 
 \end{nlst1}
 \end{definition}
@@ -229,8 +226,9 @@ and $F_0$ is in state $u_0^\l$. This state is not reachable from the initial sta
 
 
 Figure~\ref{fig:SCnotCycle} shows an example of a supercycle that is not a simple cycle.  The ``essential'' part of the supercycle, consisting of
-components $B_1, B_2,B_3$, and their interactions $a,b,c,d$, is in bold.  The supercycle can be extended to contain $B_4$, but neither $B_5$ nor
-$B_6$: $B_6$ is enabled, and $B_5$ is ready to execute the interaction $h$, which waits only for $B_6$.
+components $\B_1, \B_2, \B_3$, and their interactions $\act, \actb, \actc, \actd$, is in bold.  
+The supercycle can be extended to contain $\B_4$, but neither $\B_5$ nor
+$\B_6$: $\B_6$ is enabled, and $\B_5$ is ready to execute the interaction $\acth$, which waits only for $\B_6$.
 %
 \begin{figure}[ht]
 \begin{center}
@@ -240,7 +238,7 @@ $B_6$: $B_6$ is enabled, and $B_5$ is ready to execute the interaction $h$, whic
 \end{center}
 \end{figure}
 %
-Figure~\ref{fig:cycleOK} shows that deleting the wait-for edge from $d$ to $\B_1$ in \fig{SCnotCycle} results in 
+Figure~\ref{fig:cycleOK} shows that deleting the wait-for edge from $\actd$ to $\B_1$ in \fig{SCnotCycle} results in 
 an example where there is
 a cycle of wait-for-edges, without there being a supercycle. This shows
 that a cycle does not necessarily imply a supercycle, and hence
@@ -271,25 +269,22 @@ from $s$, including $s$ itself.
 \end{proposition}
 %
 \begin{proof}
-Let $\B_i$ be an arbitrary component in $SC$. By Definition~\ref{def:supercycle}, every interaction that $\B_i$ enables
-has a wait-for-edge to some other component $\B_j$ in $\SC$ and so cannot be executed in state $s$. Hence in any
+Let $\B_i$ be an arbitrary component in $\SC$. By Definition~\ref{def:supercycle}, every interaction that $\B_i$ enables
+has a wait-for edge to some other component $\B_j$ in $\SC$ and so cannot be executed in state $s$. Hence in any
 transition from $s$ to another global state $t$, all of the components $\B_i$ in $\SC$ remain in the same local state. 
-Hence $\SC \sub \wfg{\B}{t}$, \ie the same supercycle $\SC$ remains in global state $t$. Repeating this argument from state $t$
-and onwards leads us to conclude that $\SC \sub \wfg{\B}{u}$ for any state $u$ reachable from $s$.
+Hence $\SC \subg \wfg{\B}{t}$, \ie the same supercycle $\SC$ remains in global state $t$. Repeating this argument from state $t$
+and onwards leads us to conclude that $\SC \subg \wfg{\B}{u}$ for any state $u$ reachable from $s$.
 \end{proof}
 
-\prop{static:supercycle-is-necessary} states that the
-existence of a supercycle is necessary for a local deadlock to occur:
-if a set of components, \emph{considered in isolation}, are blocked,
-then there exists a supercycle consisting of exactly those components,
-together with the interactions that each component enables.
+\prop{static:supercycle-is-necessary} states that the existence of a supercycle is necessary for a local deadlock to occur: if a set of components,
+\emph{considered in isolation}, are blocked, then there exists a supercycle consisting of exactly those components, together with the interactions
+that each component enables.
 %
 \begin{proposition}
 \label{prop:static:supercycle-is-necessary} 
 \label{prop:supercycle-is-necessary}
-Let $\B'$ be a subcomponent of $\B$, and
-let $s$ be an arbitrary state of $\B$ such that $\B'$,
-when considered in isolation, has no enabled interaction in state $s \pj \B'$.
+Let $\B'$ be a subcomponent of $\B$, and let $s$ be an arbitrary state of $\B$ such that $\B'$, when considered in isolation, has no enabled
+interaction in state $s \pj \B'$.
 %
 Then, $\wfg{\B}{s}$ contains a supercycle.
 \end{proposition}

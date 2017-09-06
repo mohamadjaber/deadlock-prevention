@@ -13,13 +13,13 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \cmnt\ Precondition: $t_\act$ is a state of $\dsk{\act}{\l}$\\
 \cmnt\ Postcondition: returns least fixpoint of $\lVFs$ in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lfp{\lVFs} = \UN_{d \ge 0} \lVFs^{d} (\ewfg)$.\\
 
-\lio{\XS \gts \ewfg}
+\lio{\XS \gts \ewfg;}
 
 \lio{\REPEAT}
    \lit{\mbox{\cmnt loop invariant: on the $i$'th iteration, $\XS \equiv \lVFi{\ewfg}{i} \equiv  v \in \UN_{0 \le d \le i} \lVFi{\ewfg}{d}$}}
-   \lit{\YS \gts \cLFP{\dsk{\act}{\l}, t_\act, \XS}}
+   \lit{\YS \gts \cVL{\dsk{\act}{\l}, t_\act, \XS}}
    \lit{\XS \gts \YS}
-\lio{\UNTIL\ \XS = \YS}
+\lio{\UNTIL\ \XS = \YS;}
 
 \lion{\RETURNE{\XS}}
 \end{tabbing}
@@ -38,7 +38,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:compute-lfp}
 aaa\= aa\= aa\= aa\= aa\=\kill
-\cLFP{$\dsk{\act}{\l}, t_\act, \XS$}\\
+\cVL{$\dsk{\act}{\l}, t_\act, \XS$}\\
 \cmnt\ precondition: $t_\act$ is a state of $\dsk{\act}{\l}$ and $X \sub \dsk{\act}{\l}$\\
 \cmnt\ postcondition: returns $\lVF{X}$ in state $t_\act$ of $\dsk{\act}{\l}$,\\
 \\
@@ -46,26 +46,30 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 
 \lio{\FORALLC{\ndv \in \dsk{\act}{\l}}}
 
-      \lih{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
+   \lit{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
                           \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act})}}
-          \lifc{\YS \gts \YS \join \set{\ndv}}{\cmnt interaction with no outgoing wait-for-edges}  
+       \lihc{\YS \gts \YS \join \set{\ndv}}{\cmnt interaction with no outgoing wait-for-edges}  
 
-     \lih{\ELSFC{\mbox{$v$ is an interior interaction $\actp$ and } 
+    \lit{\ELSFC{\mbox{$v$ is an interior interaction $\actp$ and } 
      (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\act} :  B_i \in \XS )}}
-                  \lifc{\YS \gts \YS \join \set{\ndv}}{\cmnt all outgoing wait-for-edges go to nodes in $\XS$}
+        \lihc{\YS \gts \YS \join \set{\ndv}}{\cmnt all outgoing wait-for-edges go to nodes in $\XS$}
 
-     \lih{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
+    \lit{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
      (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\act} : \actp \in \XS )}}
-                  \lifc{\YS \gts \YS \join \set{\ndv}}{\cmnt some outgoing wait-for-edge goes to a node in $\XS$}
+         \lihc{\YS \gts \YS \join \set{\ndv}}{\cmnt some outgoing wait-for-edge goes to a node in $\XS$}
 
-    \lih{\FI}
-  \lit{\ENDFOR}
+    \lit{\FI}
+\lio{\ENDFOR;}
 \lion{\RETURNE{\YS}}
 \end{tabbing}
-\caption{Procedure to compute all $\lVF{X}$}
+\caption{Procedure to compute $\lVF{X}$}
 \label{fig:algcomputeVL}
 \end{figure}
 
 Note that $\YS \join \set{\ndv}$ is the join of the wait-for-subgraph $\YS$ with the 
 wait-for-subgraph $\ndv$ consisting of the single node $\ndv$. Recall
 that the edges of $\YS \join \set{\ndv}$ are induced from $\lwfg{B}{t_\act}{\DS}$.
+
+The time complexity of \cVL{$\dsk{\act}{\l}, t_\act, \XS$} is ......
+
+The time complexity of \cLFP{$\dsk{\act}{\l},t_\act$} is ......

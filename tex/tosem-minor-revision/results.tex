@@ -26,8 +26,8 @@ Assume that
       \bn
       \item $\GAO(\B,Q_0,\act)$
       \item $\GLin(\B,Q_0,\act)$
-      \item $\ex \l > 0: \LAO(\B,Q_0,\act,\l)$ 
-      \item $\ex \l > 0: \LLin(\B,Q_0,\act,\l)$ 
+      \item $\ex \l \ge 1: \LAO(\B,Q_0,\act,\l)$ 
+      \item $\ex \l \ge 1: \LLin(\B,Q_0,\act,\l)$ 
       \en
 \en
 Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free, and so 
@@ -58,7 +58,7 @@ $s \goesto[\act] t$ be a reachable transition of $(\B, Q_0)$.
 Hence $t$ is a reachable state of $(\B,Q_0)$.
 Suppose that $\wfg{\B}{t}$ contains a supercycle $\SC$. Then, by 
 Proposition~\ref{prop:static:supercycle-is-sufficient}, the
-subcomponent $B'$ consisting of all the atomic components $B_i \in \SC$
+subcomponent $\B'$ consisting of all the atomic components $\B_i \in \SC$
 cannot execute a transition from any state reachable from $t$, and so is deadlocked.
 Hence $(\B,Q_0)$ has a local deadlock in reachable state $t$, contrary to assumption.
 Hence $\wfg{\B}{t}$ is supercycle-free.
