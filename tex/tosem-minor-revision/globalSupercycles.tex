@@ -214,8 +214,8 @@ $\scV{v}{s}$ requires, in general, the entire least fixed point of $\VFs$.
 
 
 \vspace{1ex}
-\textit{Example.} 
-For example, consider \fig{SCnotCycle}. We show the set of nodes in each $\VFs^{d} (\ewfg)$, as the induced subgraph is easily inferred from \fig{SCnotCycle}.
+\begin{example}[Supercycle violation]
+For example, consider \fig{SCnotCycle}. We show the set of nodes in each $\VFi{\ewfg}{d}$, as the induced subgraph is easily inferred from \fig{SCnotCycle}.
 $\VFs^{0} (\ewfg) = \ewfg$,
 $\VFs^{1} (\ewfg) = \set{\acti}$, 
 $\VFs^{2} (\ewfg) = \set{\B_6, \acti}$, 
@@ -225,6 +225,31 @@ $\VFs^{5} (\ewfg) = \set{\B_5, \acth, \B_6, \acti}$,
 as so $\lfp{\VFs} = \set{\B_5, \acth, \B_6, \acti}$.
 %
 For \fig{cycleOK}, it is easy to verify that $\lfp{\VFs}$ is all the nodes in the system, \ie the wait-for graph shown is supercycle-free.
+\end{example}
+
+
+\begin{example}[Supercycle violation]
+
+
+
+
+\end{example}
+
+
+\begin{figure*}[ht]
+  \begin{center}
+      \subfigure[Supercycle violations in initial state.]{\label{fig:wfg0}\scalebox{0.35}{\input{figs/scvDiningInitial.pdf_t}}} \quad \quad
+      \subfigure[Supercycle violations after execution of $\Get_0$.]{\label{fig:wfg1}\scalebox{0.35}{\input{figs/scvDining1.pdf_t}}} 
+      \subfigure[Supercycle violations after execution of $\Get_0 \Get_2$.]{\label{fig:wfg1}\scalebox{0.38}{\input{figs/scvDining2.pdf_t}}} \quad
+      \subfigure[Supercycle violations after execution of $\Get_0 \Get_2 \Rel_0$.]{\label{fig:wfg1}\scalebox{0.38}{\input{figs/scvDining3.pdf_t}}} 
+      \caption{Example supercycke violations for dining philosophers system of Figure~\ref{fig:diningSpectrum}.}
+       \label{fig:wfg}
+  \end{center}
+\end{figure*}
+
+
+
+
 
 
 
