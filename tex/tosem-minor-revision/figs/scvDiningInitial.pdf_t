@@ -1,0 +1,29 @@
+\begin{picture}(0,0)%
+\includegraphics{scvDiningInitial.pdf}%
+\end{picture}%
+\setlength{\unitlength}{3947sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(6863,6402)(61,-11332)
+\put(2476,-10111){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Grab_2}, \vlo$}}}}
+\put(1276,-7786){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Grab_3}, \vlo$}}}}
+\put(1276,-8836){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_3}, \vlh$}}}}
+\put(5401,-7711){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Grab_1}, \vlo$}}}}
+\put(5476,-8686){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_1}, \vlh$}}}}
+\put(4426,-10111){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_2}, \vlh$}}}}
+\put(4351,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_0}, \vlh$}}}}
+\put(1126,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{F_0}, \vlt$}}}}
+\put(5926,-10036){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{F_2}, \vlt$}}}}
+\put(6901,-8311){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Phl_1}, \vlt$}}}}
+\put(3526,-11236){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Phl_2}, \vlt$}}}}
+\put(3601,-5161){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Phl_0}, \vlt$}}}}
+\put(1051,-10111){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{F_3}, \vlt$}}}}
+\put(2551,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Grab_0}, \vlo$}}}}
+\put(5926,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{F_1}, \vlt$}}}}
+\put( 76,-8386){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Phl_3}, \vlt$}}}}
+\end{picture}%
