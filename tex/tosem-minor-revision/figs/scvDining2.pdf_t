@@ -10,36 +10,20 @@
   \selectfont}%
 \fi\endgroup%
 \begin{picture}(6863,6402)(61,-11332)
-\put(1051,-10111){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$F_3$}%
-}}}}
-\put(1276,-7786){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,1}$\Grab_3$}%
-}}}}
-\put(1276,-8836){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,1}$\Rel_3$}%
-}}}}
-\put(5401,-7711){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,1}$\Grab_1$}%
-}}}}
-\put(5476,-8686){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,1}$\Rel_1$}%
-}}}}
-\put(5926,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$F_1$}%
-}}}}
-\put(2476,-10111){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,1}$\Grab_2$}%
-}}}}
-\put(2551,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,1}$\Grab_0$}%
-}}}}
-\put(4426,-10111){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,1}$\Rel_2$}%
-}}}}
-\put(4351,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{0,0,1}$\Rel_0$}%
-}}}}
-\put( 76,-8386){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$\Phl_3$}%
-}}}}
-\put(1126,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$F_0$}%
-}}}}
-\put(5926,-10036){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$F_2$}%
-}}}}
-\put(6901,-8311){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$\Phl_1$}%
-}}}}
-\put(3526,-11236){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$\Phl_2$}%
-}}}}
-\put(3601,-5161){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}{\color[rgb]{1,0,0}$\Phl_0$}%
-}}}}
+\put(4351,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_0}, \vlo$}}}}
+\put(1276,-7786){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Grab_3}, \vlh$}}}}
+\put(1276,-8836){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_3}, \vlv$}}}}
+\put(5401,-7711){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Grab_1}, \vlh$}}}}
+\put(5476,-8686){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_1}, \vlv$}}}}
+\put(4426,-10111){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_2}, \vlo$}}}}
+\put( 76,-8386){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Phl_3}, \vlf$}}}}
+\put(1126,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{F_0}, \vlt$}}}}
+\put(5926,-10036){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{F_2}, \vlt$}}}}
+\put(6901,-8311){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Phl_1}, \vlf$}}}}
+\put(3601,-5161){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Phl_0}, \vlt$}}}}
+\put(1051,-10111){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{F_3}, \vlt$}}}}
+\put(2476,-10111){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Grab_2}, \vlh$}}}}
+\put(3526,-11236){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Phl_2}, \vlt$}}}}
+\put(5926,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{F_1}, \vlt$}}}}
+\put(2551,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Grab_0}, \vlh$}}}}
 \end{picture}%

@@ -12,10 +12,9 @@
 \begin{picture}(6863,6402)(61,-11332)
 \put(4351,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_0}, \vlo$}}}}
 \put(1276,-7786){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Grab_3}, \vlh$}}}}
-\put(1276,-8836){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_3}, \vlh$}}}}
+\put(1276,-8836){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_3}, \vlv$}}}}
 \put(5401,-7711){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Grab_1}, \vlh$}}}}
-\put(5476,-8686){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_1}, \vlh$}}}}
-\put(2551,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Grab_0}, \vlo$}}}}
+\put(5476,-8686){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_1}, \vlv$}}}}
 \put(4426,-10111){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_2}, \vlh$}}}}
 \put( 76,-8386){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Phl_3}, \vlf$}}}}
 \put(1126,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{F_0}, \vlt$}}}}
@@ -26,4 +25,5 @@
 \put(2476,-10111){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Grab_2}, \vlo$}}}}
 \put(3526,-11236){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Phl_2}, \vlt$}}}}
 \put(5926,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{F_1}, \vlt$}}}}
+\put(2551,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Grab_0}, \vlh$}}}}
 \end{picture}%
