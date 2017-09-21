@@ -114,7 +114,7 @@ shown solid, and edges from interactions to components are shown dashed.
 
 \begin{figure*}[ht]
   \begin{center}
-      \subfigure[Wait-for-graph in initial state.]{\label{fig:wfg0}\scalebox{0.4}{\input{figs/wfgDiningInitial.pdf_t}}} \quad
+      \subfigure[Wait-for-graph in initial state.]{\label{fig:wfg0}\scalebox{0.4}{\input{figs/wfgDiningInitial.pdf_t}}} \quad \quad
       \subfigure[Wait-for-graph after execution of $\Get_0$.]{\label{fig:wfg1}\scalebox{0.4}{\input{figs/wfgDining1.pdf_t}}} 
       \caption{Example wait-for-graphs for dining philosophers system of Figure~\ref{fig:diningSpectrum}.}
        \label{fig:wfg}
@@ -337,28 +337,26 @@ By Proposition~\ref{prop:supercycle-is-necessary}, $\wfg{\B}{s}$ contains a supe
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{\redbox{Subsystems and Supercycles}}
-We formally discuss {\em local supercycle} in Section~\ref{secn:localSupercycles}.
-Our method provides a local version of the supercycle check. 
-For each interaction in the system, the local check computes a subsystem 
-that includes the interaction and other components at a given ``distance'' from 
-the interaction. 
-It makes sure none of the subsystem components is involved in a local supercycle. 
 %
-Figure~\ref{fig:sc-local-dining} illustrates the wait-for-graph of the dining philosopher subsystem 
-corresponding to the $\Grab_0$ interaction with a distance of $1$, i.e., its components and their interactions. 
-The subsystem includes the $\Grab_0$ interaction, 
-components $\Phl_0, F_0,$ and $F_1$ involved in $\Grab_0$, 
-and interactions $\Rel_0, \Grab_1,\Rel_1, \Grab_3,$ and $\Rel_3$ connected to these components. 
-We notice that no component in Figure~\ref{fig:sc-local-dining} is involved in a supercycle. 
+We formally discuss the notion of \emph{local supercycle} in \secn{localSupercycles}.  Our method provides a local version of the supercycle-freedom check.
+For each interaction in the system, the local check computes a subsystem which includes the interaction and also other components at a given ``distance''
+from the interaction.  It then checks whether any of the subsystem components is involved in a local supercycle.
 %
-The local check is sound and not complete, therefore it is pessimistic and considers 
-the border interactions (underlined in the figure)   as blocking interactions. 
-The further the distance is increased, the more complete the local check becomes. 
+Figure~\ref{fig:sc-local-dining} illustrates the wait-for-graph (in the initial state) of the dining philosopher subsystem corresponding to the
+$\Grab_0$ interaction with a distance of $1$, i.e., its components and their interactions.  The subsystem includes the $\Grab_0$ interaction,
+the components $\Phl_0, F_0,$ and $F_1$ that participate in $\Grab_0$, and the interactions $\Rel_0, \Grab_1,\Rel_1, \Grab_3,$ and $\Rel_3$ which are connected to these
+components.  We notice that no component in Figure~\ref{fig:sc-local-dining} is involved in a supercycle.
+%
+The interactions  $\Grab_1,\Rel_1, \Grab_3,$ and $\Rel_3$ (underlined in the figure) are ``border interactions'', since they have participating components that are outside the subsystem.
+The enablement of border interaction cannot be determined from the subsystem in isolation. Hence, to ensure soundness of our supercycle-freedom check,
+we must assume pessimistically  that the border interactions are not enabled. This pessimism may yield a false negative, thereby causing our check to
+be incomplete. The further the distance is increased, the ``more complete'' the local check becomes, as the local states of the larger subsytem give a
+better overapproximation to the global states of the entire system.
 
 \begin{figure*}[ht]
   \begin{center}
    \scalebox{0.4}{\input{figs/wfgDiningInitial-Local.pdf_t}}
-   \caption{Example wait-for-graph for dining philosophers subsystem.}
+   \caption{Wait-for graph in the intial state of the dining philosophers subsystem for $\Grab_0$ and distance 1.}
    \label{fig:sc-local-dining}
   \end{center}
 \end{figure*}

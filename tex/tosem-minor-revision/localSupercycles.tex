@@ -318,7 +318,7 @@ $\lVFs$ is continuous. Follows by standard results, \eg see the CPO fixpoint the
 
 
 
-\begin{definition}[Local supercycle violation, $\locScViol{v}{d}{t_\act}{\act}{\l}$]
+\begin{definition}[Local supercycle violation, $\scVL{v}{t_\act}{\act}{\l}, \scVLd{v}{d}{t_\act}{\act}{\l}$]
 \label{def:supercycle.violation.local}
 \label{defn:supercycle.violation.local}
 Let $t_\act$ be a state of $\dsk{\act}{\l}$ and $v$ be a node of $\dsk{\act}{\l}$.
@@ -327,9 +327,6 @@ $\scVL{v}{t_\act}{\act}{\l} \df v \in \lfp{\lVFs}$,
 %\JOIN_{d \ge 0} \lVFs^{d} (\ewfg),
 and, for $d \ge 1$, $\scVLd{v}{d}{t_\act}{\act}{\l} \df v \in \lVFs^{d} (\ewfg)$.
 \end{definition}
-$\scVLd{v}{d}{t_\act}{\act}{\l}$ defines a local supercycle violation that can be confirmed within $d$ iterations of $\lVFs$, which we call a
-\emph{level-$d$ local supercycle violation}.
-$\scVL{v}{t_\act}{\act}{\l}$ requires, in general, the entire least fixed point of $\lVFs$.
 
 %We define the predicate $\lviol{v}{d}{t}{\act}{\l}$ to hold iff node $v$ in $\wfg{\B}{t}$ has a level-$d$ supercycle-violation
 %\emph{that can be confirmed within $\dsk{\act}{\l}$}.
@@ -345,9 +342,46 @@ By \prop{computeLocLFP}, $v \in \lfp{\lVFs} \ev v \in \JOIN_{d \ge 1} \lVFs^{d} 
 By \defn{supercycle.violation.local}, $\fa d \ge 1: (\scVLd{v}{d}{t_\act}{\act}{\l} \ev v \in \lVFs^{d} (\ewfg))$.
 Chaining these equivalences establishes the proposition.
 \end{proof}
+%
+$\scVLd{v}{d}{t_\act}{\act}{\l}$ defines a local supercycle violation that can be confirmed within $d$ iterations of $\lVFs$, which we call a
+\emph{level-$d$ local supercycle violation}.
+$\scVL{v}{t_\act}{\act}{\l}$ requires, in general, the entire least fixed point of $\lVFs$.
 
 
-We now show that a local supercycle-violation implies (global) supercycle-violation.
+
+\begin{example}[Local supercycle violations in dining philosophers]
+\label{exm:loc-dphils-viols}
+Figures~\ref{fig:violsLocGrab}, \ref{fig:violsLocGrabGrab}, and \ref{fig:violsLocGrabGrabRel} illustrate local supercycle violations corresponding to
+Figures~\ref{fig:violsGrab}, \ref{fig:violsGrabGrab}, \ref{fig:violsGrabGrabRel} respectively. The subsystem used, in each case, is based on the last interaction
+executed, \ie $\Grab_0$, $\Grab_2$, and $\Rel_0$, respectively, and with a distance of 1 in all cases.
+The border interactions are shown underlined, and 
+for each node $\ndv$ (interaction or component), we include a small positive integer after its name, giving the smallest $d$ such that $v \in \lVFi{\ewfg}{d}$, 
+\ie the local supercycle violation level.
+\end{example}
+
+
+
+\begin{figure*}[ht]
+  \begin{center}
+%      \subfigure[Supercycle violations in initial state.]{\label{fig:violsInitial}\scalebox{0.4}{\input{figs/scvDiningInitial.pdf_t}}} \quad \quad
+      \subfigure[Local supercycle violations after execution of $\Grab_0$.]{\label{fig:violsLocGrab}\scalebox{0.4}{\input{figs/scvLocDining1.pdf_t}}}
+      \quad \quad
+      \subfigure[Local supercycle violations after execution of $\Grab_0; \Grab_2$.]{\label{fig:violsLocGrabGrab}\scalebox{0.4}{\input{figs/scvLocDining2.pdf_t}}} \quad \quad
+      \subfigure[Local supercycle violations after execution of $\Grab_0; \Grab_2; \Rel_0$.]{\label{fig:violsLocGrabGrabRel}\scalebox{0.4}{\input{figs/scvLocDining3.pdf_t}}} 
+      \caption{Example supercycle violations for dining philosophers system of Figure~\ref{fig:diningSpectrum}.}
+       \label{fig:localDphilsViolations}
+  \end{center}
+\end{figure*}
+
+
+
+
+
+
+
+
+
+We now show that a local supercycle violation implies (global) supercycle violation.
 
 \begin{proposition}
 \label{prop:lV-subg-V}

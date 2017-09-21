@@ -1,0 +1,22 @@
+\begin{picture}(0,0)%
+\includegraphics{scvLocDining3.pdf}%
+\end{picture}%
+\setlength{\unitlength}{3947sp}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined%
+\gdef\SetFigFont#1#2#3#4#5{%
+  \reset@font\fontsize{#1}{#2pt}%
+  \fontfamily{#3}\fontseries{#4}\fontshape{#5}%
+  \selectfont}%
+\fi\endgroup%
+\begin{picture}(5671,4002)(806,-8932)
+\put(5926,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{F_1}, \vlt$}}}}
+\put(1276,-7786){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ul{\ac{\Grab_3}}$}}}}
+\put(1276,-8836){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ul{\ac{\Rel_3}}$}}}}
+\put(5401,-7711){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ul{\ac{\Grab_1}}$}}}}
+\put(5476,-8686){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ul{\ac{\Rel_1}}$}}}}
+\put(1126,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{F_0}, \vlt$}}}}
+\put(3601,-5161){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Phl_0}, \vlt$}}}}
+\put(2551,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\Bc{\Grab_0}, \vlo$}}}}
+\put(4351,-6286){\makebox(0,0)[lb]{\smash{{\SetFigFont{14}{16.8}{\rmdefault}{\mddefault}{\updefault}$\ac{\Rel_0}, \vlh$}}}}
+\end{picture}%

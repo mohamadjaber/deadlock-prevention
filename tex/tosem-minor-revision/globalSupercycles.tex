@@ -205,7 +205,7 @@ Chaining these equivalences establishes the proposition.
 \end{proof}
 
 %It immediately follows that $\scV{v}{s}$ iff  $(\ex d \ge 1: \scVd{v}{d}{s})$.
-Also, it follows from \prop{LFPisScViolations} that $\scV{v}{s}$ iff there does not exist $\SC$ such that $\SC$ is a supercycle and $v \in SC$.
+It follows from \prop{LFPisScViolations} that $\scV{v}{s}$ iff there does not exist $\SC$ such that $\SC$ is a supercycle and $v \in SC$.
 We say that a node $v$ of \wfg{\B}{s} has a \emph{supercycle violation}\footnote{In the sequel, we say ``sc-violation'' rather than ``supercycle violation.''} iff $v$ is not a node in any supercycle of \wfg{\B}{s}, 
 \ie iff $\scV{v}{s}$ holds. 
 By \prop{computeLFP}, we can compute $\lfp{\VFs}$ (and therefore $\scV{v}{s}$) by iterating $\VFs$, starting from $\ewfg$, until there is no more change.
@@ -228,8 +228,9 @@ For \fig{cycleOK}, it is easy to verify that $\lfp{\VFs}$ is all the nodes in th
 \end{example}
 
 
-\begin{example}[Supercycle violation]
-Figure~\ref{fig:globalViolations} illustrates supercycle violations in four global states of the dining philosophers system of \fig{diningSpectrum}.
+\begin{example}[Supercycle violations in dining philosophers]
+\label{exm:glob-dphils-viols}
+Figure~\ref{fig:globalDphilsViolations} illustrates supercycle violations in four global states of the dining philosophers system of \fig{diningSpectrum}.
 The states shown are the initial state, and the states resulting after execution of the indicated sequences of interactions.
 For each node $\ndv$ (interaction or component), we include a small positive integer after its name, giving the smallest $d$ such that $v \in \VFi{\ewfg}{d}$.
 \end{example}
@@ -237,12 +238,12 @@ For each node $\ndv$ (interaction or component), we include a small positive int
 
 \begin{figure*}[ht]
   \begin{center}
-      \subfigure[Supercycle violations in initial state.]{\label{fig:violsInitial}\scalebox{0.35}{\input{figs/scvDiningInitial.pdf_t}}} \quad \quad
-      \subfigure[Supercycle violations after execution of $\Grab_0$.]{\label{fig:violsGrab}\scalebox{0.35}{\input{figs/scvDining1.pdf_t}}} 
-      \subfigure[Supercycle violations after execution of $\Grab_0; \Grab_2$.]{\label{fig:violsGrabGrab}\scalebox{0.38}{\input{figs/scvDining2.pdf_t}}} \quad \quad
-      \subfigure[Supercycle violations after execution of $\Grab_0; \Grab_2; \Rel_0$.]{\label{fig:violsGrabGrabRel}\scalebox{0.38}{\input{figs/scvDining3.pdf_t}}} 
+      \subfigure[Supercycle violations in initial state.]{\label{fig:violsInitial}\scalebox{0.4}{\input{figs/scvDiningInitial.pdf_t}}} \quad \quad
+      \subfigure[Supercycle violations after execution of $\Grab_0$.]{\label{fig:violsGrab}\scalebox{0.4}{\input{figs/scvDining1.pdf_t}}} 
+      \subfigure[Supercycle violations after execution of $\Grab_0; \Grab_2$.]{\label{fig:violsGrabGrab}\scalebox{0.4}{\input{figs/scvDining2.pdf_t}}} \quad \quad
+      \subfigure[Supercycle violations after execution of $\Grab_0; \Grab_2; \Rel_0$.]{\label{fig:violsGrabGrabRel}\scalebox{0.4}{\input{figs/scvDining3.pdf_t}}} 
       \caption{Example supercycle violations for dining philosophers system of Figure~\ref{fig:diningSpectrum}.}
-       \label{fig:globalViolations}
+       \label{fig:globalDphilsViolations}
   \end{center}
 \end{figure*}
 
