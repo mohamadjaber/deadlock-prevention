@@ -25,21 +25,23 @@ Definition~\ref{def:ldfc-k}.
 \begin{tabbing}\label{alg:check-df}
 aaa\= aa\= aa\= \kill
 \checkLin{$\B, Q_0$},  where $\B \df \gamma(\B_1,\dots,\B_n)$\\
+\cmnt\ returns $\ttt$ iff $(\fa \act \in \gamma, \ex \l \ge 1: \LLin(\B, Q_0, \act, \l))$\\
 \lio{\FORALLC{\mbox{interactions $\act \in \gamma$}}}
    \lit{\IFC{\checkLinInt{\B, Q_0, \act} = \fff}\ \RETURNE{\fff} \ \FI}
 \lio{\ENDFOR;}
-\liocn{\RETURNE{\ttt}}{\cmnt\ return $\ttt$ if check succeeds for all $\act \in \gamma$}
+\lioc{\RETURNE{\ttt}}{\cmnt\ return $\ttt$ if check succeeds for all $\act \in \gamma$}
 \end{tabbing}
 
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:checkInt}
 aaa \= aa\= aa\= \kill
 \checkLinInt{$\B, Q_0, \act$},  where $\B \df \gamma(\B_1,\dots,\B_n), \act \in \gamma$\\
-\cmnt\ check $(\ex \l \ge 1: \LLin(\B, Q_0, \act, \l))$\\
+\cmnt\ returns $\ttt$ iff $(\ex \l \ge 1: \LLin(\B, Q_0, \act, \l))$\\
 \lioc{\l \gts 1;}{\cmnt\ start with $\l = 1$}
 \lio{\WHILEC{\ttt}}
+%   \lit{\mbox{let $\dsk{\act}{\l} = \dsks{\act}{\l}$}}
    \litc{\IFC{\checkLinIntDist{\B, Q_0, \act, \l} = \ttt}\ \RETURNE{\ttt}\ \FI;}{\cmnt\ success, so return true}
-   \litc{\IFC{\dsk{\act}{\l} = \gamma(\B_1,\dots,\B_n)}\ \RETURNE{\fff}\ \FI;}{\cmnt\ exhausted all subsystems, return false}
+   \litc{\IFC{\dsks{\act}{\l} = \gamma(\B_1,\dots,\B_n)}\ \RETURNE{\fff}\ \FI;}{\cmnt\ exhausted all subsystems, return false}
    \litc{\l \gts \l + 1}{\cmnt\ increment $\l$ until success (true) or intractable or failure (false)}
 \lio{\ENDWHILE}
 \end{tabbing}
@@ -49,8 +51,10 @@ aaa \= aa\= aa\= \kill
 \label{alg:eval-ldfc}
 aaa\= aa\= aa\= \kill
 \checkLinIntDist{$\B, Q_0, \act, \l$}\\
-\lio{\FORALLC{\mbox{reachable transitions $s_\act \goesto[\act] t_\act$ of $\dsk{\act}{\l}$}}}
-   \lit{\IFC{\neg(\fa \B_i \in \cmps{\act}:  \widepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l - 1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\act} < 2\l -1)}}
+\cmnt\ returns $\ttt$ iff $\LLin(\B, Q_0, \act, \l))$\\
+\lio{\mbox{let $\DS = \dsks{\act}{\l}$}}
+\lio{\FORALLC{\mbox{reachable transitions $s_\DS \goesto[\act] t_\DS$ of $\dsk{\act}{\l}$}}}
+   \lit{\IFC{\neg(\fa \B_i \in \cmps{\act}:  \widepth{\dsk{\act}{\l}}{\B_i}{t_\DS} < 2\l - 1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\DS} < 2\l -1)}}
   	\lihc{\RETURNE{\fff}}{\cmnt\ check Definition~\ref{def:ldfc-k}}
   \lit{\FI}
 \lio{\ENDFOR;}
@@ -65,12 +69,12 @@ aaa\= aa\= aa\= \kill
 \end{figure}
 
 \paragraph{Complexity} The running  time of \checkLin{$\B, Q_0$}\ is
-$O(\SUM_{a \in \gamma}\ |\Mdsk{\act}{\l_a}| * |\dsk{\act}{\l_a}|)$,
+$O(\SUM_{\act \in \gamma}\ |\Mdsk{\act}{\l_\act}| * |\dsks{\act}{\l_\act}|)$,
 where 
-$\Mdsk{\act}{\l_a}$ is the transition system of
-$\dsk{\act}{\l_a}$, and $|\Mdsk{\act}{\l_a}|$ is the size (number of nodes plus number of edges) of 
-$\Mdsk{\act}{\l_a}$, 
-$|\dsk{\act}{\l_a}|$ is the size of the syntactic description of $\dsk{\act}{\l_a}$, and 
-$\l_a$ is the smallest value of $\l$ for which $\LLin(\B, Q_0, \act, \l)$ holds.
+$\l_\act$ is the smallest value of $\l$ for which $\LLin(\B, Q_0, \act, \l)$ holds, 
+$\Mdsk{\act}{\l_\act}$ is the transition system of $\dsks{\act}{\l_\act}$, 
+$|\Mdsk{\act}{\l_\act}|$ is the size (number of nodes plus number of edges) of $\Mdsk{\act}{\l_\act}$, and
+$|\dsks{\act}{\l_\act}|$ is the size of the syntactic description of $\dsks{\act}{\l_\act}$.
+
 
 

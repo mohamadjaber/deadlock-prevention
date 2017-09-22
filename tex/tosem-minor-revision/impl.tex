@@ -12,7 +12,81 @@ $\lfp{\lVFs}$. Its correctness follows immediately from \defn{blocksLoc} and \de
 
 %\subsection{Computing the least fixpoint of $\lVFs$}
    \label{secn:computeLFP}
-   \input{computeLFP}
+%   \input{computeLFP}
+
+\newcommand{\fpt}{\mathit{fixpoint}}
+\newcommand{\VLA}[5]{\ensuremath{\MATHIDN{V_{\dsk{#1}{#2},#3} [#4 #5]}}}    %sc violations array, #1 is a, #2 is \l, #3 is t_a, #4 is v, #5 is d
+                                                                        % i.e., \VV{a}{\l}{t_a}{v}{d}
+
+\begin{figure}[H]
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:compute-lfp}
+aaa\= aa\= aa\= aa\= aa\=\kill
+\cLFP{$\dsk{\act}{\l},t_\DS$}\\
+\cmnt\ Precondition: $t_\DS$ is a local state of $\dsk{\act}{\l}$\\
+\cmnt\ Postcondition: returns least fixpoint of $\lVFs$ in state $t_\DS$ of $\dsk{\act}{\l}$, \ie $\lfp{\lVFs} = \UN_{d \ge 0} \lVFs^{d} (\ewfg)$.\\
+
+\lio{\XS \gts \ewfg;}
+
+\lio{\REPEAT}
+   \lit{\mbox{\cmnt loop invariant: on the $i$'th iteration, $\XS \equiv \lVFi{\ewfg}{i} \equiv  v \in \UN_{0 \le d \le i} \lVFi{\ewfg}{d}$}}
+   \lit{\YS \gts \cVL{\dsk{\act}{\l}, t_\DS, \XS}}
+   \lit{\XS \gts \YS}
+\lio{\UNTIL\ \XS = \YS;}
+
+\lion{\RETURNE{\XS}}
+\end{tabbing}
+\caption{Procedure to compute all supercycle-violations in state $t_\DS$ of $\dsk{\act}{\l}$}
+\label{fig:algcomputeLFP}
+\end{figure}
+
+
+
+
+\begin{figure}[H]
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:compute-lfp}
+aaa\= aa\= aa\= aa\= aa\=\kill
+\cVL{$\dsk{\act}{\l}, t_\DS, \XS$}\\
+\cmnt\ precondition: $t_\DS$ is a state of $\dsk{\act}{\l}$ and $X \sub \dsk{\act}{\l}$\\
+\cmnt\ postcondition: returns $\lVF{X}$ in state $t_\DS$ of $\dsk{\act}{\l}$,\\
+\\
+\lio{\mbox{compute $\wfg{\dsk{\act}{\l}}{t_\DS}$}}
+\lio{\YS \gts \ewfg}
+
+\lio{\FORALLC{\ndv \in \dsk{\act}{\l}}}
+
+   \lit{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
+                          \neg (\ex \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\DS})}}
+       \lihc{\YS \gts \YS \join \set{\ndv}}{\cmnt interaction with no outgoing wait-for-edges}  
+
+    \lit{\ELSFC{\mbox{$v$ is an interior interaction $\actp$ and } 
+     (\fa \B_i : \actp \ar \B_i \in \wfg{\dsk{\act}{\l}}{t_\DS} :  B_i \in \XS )}}
+        \lihc{\YS \gts \YS \join \set{\ndv}}{\cmnt all outgoing wait-for-edges go to nodes in $\XS$}
+
+    \lit{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
+     (\ex \actp : \B_i \ar \actp \in \wfg{\dsk{\act}{\l}}{t_\DS} : \actp \in \XS )}}
+         \lihc{\YS \gts \YS \join \set{\ndv}}{\cmnt some outgoing wait-for-edge goes to a node in $\XS$}
+
+    \lit{\FI}
+\lio{\ENDFOR;}
+\lion{\RETURNE{\YS}}
+\end{tabbing}
+\caption{Procedure to compute $\lVF{X}$}
+\label{fig:algcomputeVL}
+\end{figure}
+
+Note that $\YS \join \set{\ndv}$ is the join of the wait-for-subgraph $\YS$ with the 
+wait-for-subgraph $\ndv$ consisting of the single node $\ndv$. Recall
+that the edges of $\YS \join \set{\ndv}$ are induced from $\lwfg{B}{t_\act}{\DS}$.
+
+The time complexity of \cVL{$\dsk{\act}{\l}, t_\act, \XS$} is ......
+
+The time complexity of \cLFP{$\dsk{\act}{\l},t_\act$} is ......
+
+
+
+
 
 
 \thm{local.deadlock-free} requires that all initial states be supercycle-free. 
@@ -22,7 +96,53 @@ given state is supercycle-free.
 
 % \subsection{Checking that initial states are supercycle-free}
    \label{s:initSCFree}
-   \input{initSCFree}
+%   \input{initSCFree}
+
+
+\begin{figure}[ht]
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:compute-scViol}
+aaa\= aa\= aa\= aa\= aa\=\kill
+\cInitSCFree{$Q_0$}\\
+\cmnt\ returns true iff all initial states are supercycle-free\\
+\lio{\FORALLC{s_0 \in Q_0}}
+   \lit{\mbox{compute $\wfg{\B}{s_0}$}}
+   \lit{\US \gets \cLFP{\dsk{\act}{\l},t_\DS}}
+%\mbox{let $U$ be the result of removing from $\wfg{\B}{s_0}$ all nodes $v$ such that $\scV{v}{s_0}$}}
+   \litc{\IFC{U \ne \wfg{\B}{s_0}}\ \THEN\ \RETURNE{\fff}}{\cmnt\ $s_0$ not supercycle-free, so return false}
+\lio{\ENDFOR;}
+\liocn{\RETURNE{\ttt}}{\cmnt all initial states are supercycle-free}
+\end{tabbing}
+\caption{Procedure to check that all initial states are supercycle-free}
+\label{fig:checkInitSCFree}
+\end{figure}
+
+
+\begin{proposition}
+\cInitSCFree{$Q_0$} returns true iff all initial states are supercycle-free.
+\end{proposition}
+%
+\begin{proof}
+Consider the execution of \cInitSCFree{$Q_0$} for an arbitrary $s_0 \in Q_0$.
+
+By its construction, $\US \subg \wfg{\B}{s_0}$.
+Suppose that $\US \ne  \wfg{\B}{s_0}$.
+%OLD By \prop{scViol-iff-notInSC} Proposition~\ref{prop:notInSC-implies-scViol}, $U$ is a supercycle. 
+By Propositions~\ref{prop:scViol-iff-notInSC} and
+\ref{prop:supercycle:union}, the nodes of $\wfg{\B}{s_0}$ that are not in $\US$ constitute a supercycle.
+Hence $s_0$ not supercycle-free, and so false is the correct result in this case.
+
+Now suppose that $\US = \wfg{\B}{s_0}$. Hence every node in $\wfg{\B}{s_0}$ has a supercycle violation, and so
+%OLD by Proposition~\ref{prop:scViol-implies-notInSC}, no node of $\wfg{\B}{s_0}$ can be in a 
+by \prop{scViol-iff-notInSC}, no node of $\wfg{\B}{s_0}$ is in a 
+supercycle. Hence  $\wfg{\B}{s_0}$ does not contain a supercycle, and so
+$s_0$ is supercycle-free.
+Hence the for loop continues on to the next initial state.
+If all initial states are supercycle-free, the for loop terminates, and
+\cInitSCFree{$Q_0$} returns true, as required.
+\end{proof}
+
+
 
 
 

@@ -15,7 +15,7 @@ supercycle-violation can be confirmed.
 
 Evaluation of $\LAO(\B, Q_0, \act, \l)$ is done by 
 \checkLAOIntDist{$\B, Q_0, \act, \l$}, which invokes
-$\cLFP{\dsk{\act}{\l},t_\act}$ to compute the supercycle violations.
+$\cLFP{\dsk{\act}{\l},t_\DS}$ to compute the supercycle violations.
 The pseudocode is a straightforward translation of
 Definitions~\ref{def:sConn.violation.loc} and \ref{def:locFormation.violation}.
 %
@@ -30,13 +30,13 @@ Figure~\ref{fig:summaryProcedures} shows a summary of the procedures.
 \checkLAOInt{$\B, Q_0, \act$} & true iff $(\ex \l \ge 1: \LAO(B, Q_0, \act, \l))$\\ \hline
 \checkLAOIntDist{$\B, Q_0, \act, \l$} &  true iff $\LAO(\B, Q_0, \act, \l)$\\ \hline
 
-\cLFV{$\B_i, \VS, \dsk{\act}{\l}, t_\act$} & true iff $B_i$ has local sc-formation violation \\
-& in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\locFormViol{B_i}{t_\act}{\act}{\l}$ holds\\ \hline
+\cLFV{$\B_i, \VS, \dsk{\act}{\l}, t_\DS$} & true iff $B_i$ has local sc-formation violation \\
+& in state $t_\DS$ of $\dsk{\act}{\l}$, \ie $\locFormViol{B_i}{t_\DS}{\act}{\l}$ holds\\ \hline
 
-\cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, t_\act$} & true iff $B_i$ has local strong connectedness
-                                         violation \\ & in $t_{\act}$,  \ie $\locConnViol{B_i}{t_\act}{\act}{\l}$ holds\\ \hline
+\cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, t_\DS$} & true iff $B_i$ has local strong connectedness
+                                         violation \\ & in $t_{\act}$,  \ie $\locConnViol{B_i}{t_\DS}{\act}{\l}$ holds\\ \hline
 
-\cLFP{$\dsk{\act}{\l},t_\act$} & compute local supercycle violations \\ & in state $t_\act$ of $\dsk{\act}{\l}$, \ie $\lviol{v}{d}{t_\act}{\act}{\l}$ for all $v,d$\\
+\cLFP{$\dsk{\act}{\l},t_\DS$} & compute local supercycle violations \\ & in state $t_\DS$ of $\dsk{\act}{\l}$, \ie $\lviol{v}{d}{t_\DS}{\act}{\l}$ for all $v,d$\\
 \hline
 \end{tabular}
 }
@@ -48,13 +48,15 @@ Figure~\ref{fig:summaryProcedures} shows a summary of the procedures.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
 \paragraph{Complexity} The running  time of \checkLAO{$\B, Q_0$}\ is
-$O(\SUM_{a \in \gamma}\  |\Mdsk{\act}{\l_a}| * |\dsk{\act}{\l_a}|)$, 
+$O(\SUM_{\act \in \gamma}\  |\Mdsk{\act}{\l_\act}| * |\dsks{\act}{\l_\act}|)$, 
 where 
-$\Mdsk{\act}{\l_a}$ is the transition system of
-$\dsk{\act}{\l_a}$, and $|\Mdsk{\act}{\l_a}|$ is the size (number of nodes plus number of edges) of 
-$\Mdsk{\act}{\l_a}$, 
-$|\dsk{\act}{\l_a}|$ is the size of the syntactic description of $\dsk{\act}{\l_a}$, and 
-$\l_a$ is the smallest value of $\l$ for which $\LAO(\B, Q_0, \act, \l)$ holds.
+$\l_\act$ is the smallest value of $\l$ for which $\LAO(\B, Q_0, \act, \l)$ holds, 
+$\Mdsk{\act}{\l_\act}$ is the transition system of $\dsks{\act}{\l_\act}$, 
+$|\Mdsk{\act}{\l_\act}|$ is the size (number of nodes plus number of edges) of $\Mdsk{\act}{\l_\act}$, and
+$|\dsks{\act}{\l_\act}|$ is the size of the syntactic description of $\dsks{\act}{\l_\act}$.
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -78,7 +80,7 @@ aaa\= aa\= aa\= \kill
 \lioc{\l \gts 1;}{\cmnt\ start with $\l = 1$}
 \lio{\WHILEC{\ttt}}
    \litc{\IFC{\checkLAOIntDist{\B, Q_0, \act, \l} = \ttt}\ \RETURNE{\ttt}\ \FI;}{\cmnt\ success, so return true}
-   \litc{\IFC{\dsk{\act}{\l} = \gamma(\B_1,\dots,\B_n)}\ \RETURNE{\fff}\ \FI;}{\cmnt\ exhausted all subsystems, return false}
+   \litc{\IFC{\dsks{\act}{\l} = \gamma(\B_1,\dots,\B_n)}\ \RETURNE{\fff}\ \FI;}{\cmnt\ exhausted all subsystems, return false}
    \litc{\l \gts \l + 1}{\cmnt\ increment $\l$ until success or intractable or failure}
 \lion{\ENDWHILE}
 \end{tabbing}
@@ -89,11 +91,12 @@ aaa\= aa\= aa\= \kill
 aaa\= aa\= aa\= aa\= aa\=\kill
 \checkLAOIntDist{$\B, Q_0, \act, \l$}\\
 \cmnt\ returns $\ttt$ iff $\LAO(\B, Q_0, \act, \l)$\\
-\lio{\FORALLC{\mbox{reachable transitions $s_\act \goesto[\act] t_\act$ of $\dsk{\act}{\l}$}}}
-   \litc{\VS \gets \cLFP{\dsk{\act}{\l},t_\act}}{\cmnt see \fig{algcomputeLFP}}
+\lio{\mbox{let $\DS = \dsks{\act}{\l}$}}
+\lio{\FORALLC{\mbox{reachable transitions $s_\DS \goesto[\act] t_\DS$ of $\dsk{\act}{\l}$}}}
+   \litc{\VS \gets \cLFP{\dsk{\act}{\l},t_\DS}}{\cmnt see \fig{algcomputeLFP}}
    \lit{\FORALLC{\B_i \in \cmps{\act}}}
-      \lihc{\IF\ \neg \cLFV{\B_i, \VS, \dsk{\act}{\l},t_\act}\ \THEN\ \RETURNE{\fff}\ \FI}{\cmnt return $\fff$ if no violation for $\B_i$}
-%         \lifc{\IFC{\neg \LF{\act}{\l}{t_\act}{v}{\l}}\ 
+      \lihc{\IF\ \neg \cLFV{\B_i, \VS, \dsk{\act}{\l},t_\DS}\ \THEN\ \RETURNE{\fff}\ \FI}{\cmnt return $\fff$ if no violation for $\B_i$}
+%         \lifc{\IFC{\neg \LF{\act}{\l}{t_\DS}{v}{\l}}\ 
    \lit{\ENDFOR}
 \lio{\ENDFOR}
 \liocn{\RETURNE{\ttt}}{\cmnt return $\ttt$ if all $\B_i \in \cmps{\act}$ violate local supercycle formation}
@@ -105,22 +108,22 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \begin{tabbing}
 \label{alg:computeLocForm}
 aaa\= aa\= aa\= aa\= aa\=\kill
-\cLFV{$\B_i, \VS, \dsk{\act}{\l},t_\act$}\\
-\cmnt\ returns true iff $\locFormViol{B_i}{t_\act}{\act}{\l}$ holds (Definition~\ref{def:locFormation.violation})\\
-\cmnt\ \ie $\B_i$ has a local supercycle formation violation in state $t_\act$ of subsystem $\dsk{\act}{\l}$\\
-\lion{\RETURNE{\B_i \in \VS \, \lor \, \mbox{\cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, t_\act$}}}}
+\cLFV{$\B_i, \VS, \dsk{\act}{\l},t_\DS$}\\
+\cmnt\ returns true iff $\locFormViol{\B_i}{t_\DS}{\act}{\l}$ holds (Definition~\ref{def:locFormation.violation})\\
+\cmnt\ \ie $\B_i$ has a local supercycle formation violation in state $t_\DS$ of subsystem $\dsk{\act}{\l}$\\
+\lion{\RETURNE{\B_i \in \VS \, \lor \, \mbox{\cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, t_\DS$}}}}
 \end{tabbing}
 
 
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:compute-scViol}
 aaa\= aa\= aa\= aa\= aa\=\kill
-\cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, t_\act$}\\
-\cmnt\ returns true iff $\locConnViol{\B_i}{t_\act}{\act}{\l}$ holds (Definition~\ref{def:sConn.violation.loc})\\
-\cmnt\ \ie $\B_i$ has a local strong connectedness supercycle formation violation in state $t_\act$ of subsystem $\dsk{\act}{\l}$\\
-%\cmnt\ compute local supercycle violations in state $t_\act$ of $\dsk{\act}{\l}$\\
-%\cmnt\ Postcondition: $\fas v \in \set{\B_1,\ldots,\B_n} \un \gamma, d' = 1,\ldots,dd: \VV{\act}{\l}{t_\act}{v}{d'} = \lviol{v}{d'}{t_\act}{\act}{\l}$\\
-\lio{\mbox{remove from $\lwfg{B}{t_\act}{\DS}$ all nodes in $\VS$, \ie with a local supercycle violation}}
+\cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, t_\DS$}\\
+\cmnt\ returns true iff $\locConnViol{\B_i}{t_\DS}{\act}{\l}$ holds (Definition~\ref{def:sConn.violation.loc})\\
+\cmnt\ \ie $\B_i$ has a local strong connectedness supercycle formation violation in state $t_\DS$ of subsystem $\dsk{\act}{\l}$\\
+%\cmnt\ compute local supercycle violations in state $t_\DS$ of $\dsk{\act}{\l}$\\
+%\cmnt\ Postcondition: $\fas v \in \set{\B_1,\ldots,\B_n} \un \gamma, d' = 1,\ldots,dd: \VV{\act}{\l}{t_\DS}{v}{d'} = \lviol{v}{d'}{t_\DS}{\act}{\l}$\\
+\lio{\mbox{remove from $\lwfg{B}{t_\DS}{\DS}$ all nodes in $\VS$, \ie with a local supercycle violation}}
 \lio{\mbox{compute maximal strongly connected components of the resulting wait-for graph}}
 \lio{\FORALLC{\mbox{maximal strongly connected components $C$}}}
    \lit{\mbox{\IF\ $C$ contains a non-trivial strongly connected supercycle which contains $B_i$ as a node \THEN}}

@@ -27,19 +27,19 @@ that have a distance to $\act$ which is less than or equal to $\l$.
 \end{definition}
 
 
-\begin{definition}[Deadlock-checking subsystem, $\dsk{\act}{\l}$] \label{def:dsk}
-Define $\dsk{\act}{\l}$, the \emph{deadlock-checking subsystem for interaction $\act$ and
+\begin{definition}[Deadlock-checking subsystem, $\dsks{\act}{\l}$] \label{def:dsk}
+Define $\dsks{\act}{\l}$, the \emph{deadlock-checking subsystem for interaction $\act$ and
 radius $\l$}, to be the subsystem of $(\B, Q_0)$ based on the set of % depth --> radius
 components in $\ssg{\act}{2\l}$.  % PREVIOUSLY: $\ssg{\act}{\l+2}$.
 \end{definition}
 
-\begin{definition}[Border node, interior node of $\dsk{\act}{\l}$]  \label{def:dsk.border-and internal}
-A node $v$ of $\dsk{\act}{\l}$ is a \emph{border-node} iff it has an
-edge in $\sg{\B}$ to a node outside of $\dsk{\act}{\l}$.
+\begin{definition}[Border node, interior node of $\dsks{\act}{\l}$]  \label{def:dsk.border-and internal}
+A node $v$ of $\dsks{\act}{\l}$ is a \emph{border-node} iff it has an
+edge in $\sg{\B}$ to a node outside of $\dsks{\act}{\l}$.
 If node $v$ of $\dsk{\act}{\l}$ is not a border node, then it is an \emph{internal node}.
 \end{definition}
-Note that all border nodes of  $\dsk{\act}{\l}$ are interactions,
-since $2\l$ is even. Hence all component nodes of $\dsk{\act}{\l}$ are
+Note that all border nodes of  $\dsks{\act}{\l}$ are interactions,
+since $2\l$ is even. Hence all component nodes of $\dsks{\act}{\l}$ are
 interior nodes.
 % TBD: EXPLAIN WHY....
 
@@ -76,7 +76,7 @@ $\B_i \ar \act \in \wfg{\B'}{s'}$ iff $s' \pj i (\gd{\act}{\B_i}) = \true$.
 Putting the above three equalities together gives us clause (2).
 \end{proof}
 
-In the sequel, we fix a particular subsystem $\dsk{\act}{\l}$, which
+In the sequel, we fix a particular subsystem $\dsks{\act}{\l}$, which
 we refer to simply as \DS, with $\act$ and $\l$ being implicit (to
 avoid notational clutter with double-sub/superscripts). 
 We write $\DS.action = \act$ and $\DS.radius = \l$. 
@@ -111,7 +111,7 @@ is), and so we maintain soundness of our criterion.
 \label{defn:supercycleLoc} 
 Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component, $s$ be a state of $\B$, and $\DS$ a subsystem
 of $\B$.
-A subgraph $\SC$ of  $\lwfg{B}{s}{\DS}$ is a supercycle in $\lwfg{B}{s}{\DS}$ if and only if all of the following hold:
+A subgraph $\SC$ of  $\lwfg{B}{s}{\DS}$ is a local supercycle in $\lwfg{B}{s}{\DS}$ if and only if all of the following hold:
 \begin{nlst1}
    \item $\SC$ is nonempty, \ie contains at least one node,
 
@@ -136,13 +136,13 @@ that is, $\act \in \SC$ implies $\ex \B_j : \act \ar \B_j \in \wfg{\B}{s} \land 
 \end{definition}
 %where $\act \in SC$ means that $\act$ is a node in $\SC$, etc. 
 %Also, write $SC \sub \wfg{\B}{s}$ when $\SC$ is a subgraph of $\wfg{\B}{s}$.
-Intuitively, $\SC$ is a supercycle iff every node in $\SC$ is blocked from executing by other nodes in $\SC$. We pessimistically consider a border
+Intuitively, $\SC$ is a supercycle iff every node in $\SC$ is blocked from executing by other nodes in $\SC$, or is a border interaction. We pessimistically consider a border
 interaction $\act$ to be blocked, since the subsystem $\DS$ cannot provide information about the participant components of $\act$ that are outside of
 $\DS$. In particular, one or more border interactions necessarily form a local supercycle. Yet, it is important to notice that a blocked border interaction $\act$ does
 not necessarily imply a global supercyle.
 
 
-We carry over the defintion of subgraph $\subg$ from \secn{supercycle-fixpoint}, and develop the analogous definitions for an arbitrary subsystem
+We carry over the defintion of subgraph $\subg$ from \secn{supercycle-fixpoint}, and develop the analogous definitions for an arbitrary subsystem \DS
 of $\B$.
 
 
@@ -318,14 +318,14 @@ $\lVFs$ is continuous. Follows by standard results, \eg see the CPO fixpoint the
 
 
 
-\begin{definition}[Local supercycle violation, $\scVL{v}{t_\act}{\act}{\l}, \scVLd{v}{d}{t_\act}{\act}{\l}$]
+\begin{definition}[Local supercycle violation, $\scVL{v}{t_\DS}{\act}{\l}, \scVLd{v}{d}{t_\DS}{\act}{\l}$]
 \label{def:supercycle.violation.local}
 \label{defn:supercycle.violation.local}
-Let $t_\act$ be a state of $\dsk{\act}{\l}$ and $v$ be a node of $\dsk{\act}{\l}$.
+Let $t_\DS$ be a state of $\dsk{\act}{\l}$ and $v$ be a node of $\dsk{\act}{\l}$.
 Define 
-$\scVL{v}{t_\act}{\act}{\l} \df v \in \lfp{\lVFs}$,
+$\scVL{v}{t_\DS}{\act}{\l} \df v \in \lfp{\lVFs}$,
 %\JOIN_{d \ge 0} \lVFs^{d} (\ewfg),
-and, for $d \ge 1$, $\scVLd{v}{d}{t_\act}{\act}{\l} \df v \in \lVFs^{d} (\ewfg)$.
+and, for $d \ge 1$, $\scVLd{v}{d}{t_\DS}{\act}{\l} \df v \in \lVFs^{d} (\ewfg)$.
 \end{definition}
 
 %We define the predicate $\lviol{v}{d}{t}{\act}{\l}$ to hold iff node $v$ in $\wfg{\B}{t}$ has a level-$d$ supercycle-violation
@@ -333,19 +333,19 @@ and, for $d \ge 1$, $\scVLd{v}{d}{t_\act}{\act}{\l} \df v \in \lVFs^{d} (\ewfg)$
 
 \begin{proposition}
 \label{prop:locViol-equiv-locViolDist}
-$\scVL{v}{t_\act}{\act}{\l} \ev (\ex d \ge 1: \scVLd{v}{d}{t_\act}{\act}{\l})$.
+$\scVL{v}{t_\DS}{\act}{\l} \ev (\ex d \ge 1: \scVLd{v}{d}{t_\DS}{\act}{\l})$.
 \end{proposition}
 %
 \begin{proof}
-By \defn{supercycle.violation.local}, $\scVL{\ndv}{t_\act}{\act}{\l} \ev v \in \lfp{\lVFs}$.
+By \defn{supercycle.violation.local}, $\scVL{\ndv}{t_\DS}{\act}{\l} \ev v \in \lfp{\lVFs}$.
 By \prop{computeLocLFP}, $v \in \lfp{\lVFs} \ev v \in \JOIN_{d \ge 1} \lVFs^{d} (\ewfg)$.
-By \defn{supercycle.violation.local}, $\fa d \ge 1: (\scVLd{v}{d}{t_\act}{\act}{\l} \ev v \in \lVFs^{d} (\ewfg))$.
+By \defn{supercycle.violation.local}, $\fa d \ge 1: (\scVLd{v}{d}{t_\DS}{\act}{\l} \ev v \in \lVFs^{d} (\ewfg))$.
 Chaining these equivalences establishes the proposition.
 \end{proof}
 %
-$\scVLd{v}{d}{t_\act}{\act}{\l}$ defines a local supercycle violation that can be confirmed within $d$ iterations of $\lVFs$, which we call a
+$\scVLd{v}{d}{t_\DS}{\act}{\l}$ defines a local supercycle violation that can be confirmed within $d$ iterations of $\lVFs$, which we call a
 \emph{level-$d$ local supercycle violation}.
-$\scVL{v}{t_\act}{\act}{\l}$ requires, in general, the entire least fixed point of $\lVFs$.
+$\scVL{v}{t_\DS}{\act}{\l}$ requires, in general, the entire least fixed point of $\lVFs$.
 
 
 
@@ -417,19 +417,19 @@ Hence  $\lVF{\lVFs^{d-1} (\ewfg)} \subg \VF{\VFs^{d-1} (\ewfg)}$, \ie
 \label{prop:locScViol-implies-scViol}
 \label{prop:lviol-implies-viol}
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
-For all interactions $\act \in \gamma$ and $\l \ge 1$, let $t_\act = t \pj \dsk{\act}{\l}$.
+For all interactions $\act \in \gamma$ and $\l \ge 1$, let $\DS = \dsks{\act}{\l}$ and $t_\DS = t \pj \dsk{\act}{\l}$.
 Then\\
-\ind (a) $\fa d \ge 1:  (\scVLd{\ndv}{d}{t_\act}{\act}{\l} \imp \scVd{v}{d}{t}) $, and\\
-\ind (b) $\scVL{\ndv}{t_\act}{\act}{\l} \imp \scV{v}{t}$.
+\ind (a) $\fa d \ge 1:  (\scVLd{\ndv}{d}{t_\DS}{\act}{\l} \imp \scVd{v}{d}{t}) $, and\\
+\ind (b) $\scVL{\ndv}{t_\DS}{\act}{\l} \imp \scV{v}{t}$.
 \end{proposition}
 %
 \begin{proof}
-For (a), assume $\scVLd{\ndv}{d}{t_\act}{\act}{\l}$ for some arbitrary $d \ge 1$.
+For (a), assume $\scVLd{\ndv}{d}{t_\DS}{\act}{\l}$ for some arbitrary $d \ge 1$.
 By \defn{supercycle.violation.local},  $\ndv \in \lVFs^{d} (\ewfg)$.
 By \prop{lV-subg-V},  $\ndv  \in \VFs^{d} (\ewfg)$.
 By \defn{supercycle.violation}, $\scVd{\ndv}{d}{t}$.
 
-For (b), assume $\scVL{\ndv}{t_\act}{\act}{\l}$. By \prop{locViol-equiv-locViolDist},
-$\scVLd{\ndv}{d}{t_\act}{\act}{\l}$ for some $d \ge 1$. By (a), we have $\scVd{v}{d}{t}$.
+For (b), assume $\scVL{\ndv}{t_\DS}{\act}{\l}$. By \prop{locViol-equiv-locViolDist},
+$\scVLd{\ndv}{d}{t_\DS}{\act}{\l}$ for some $d \ge 1$. By (a), we have $\scVd{v}{d}{t}$.
 By \prop{globViol-equiv-globViolDist}, we have $\scV{v}{t}$.
 \end{proof}
