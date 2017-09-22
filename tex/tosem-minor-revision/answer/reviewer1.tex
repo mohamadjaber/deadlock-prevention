@@ -78,7 +78,7 @@ in the confusing statement.
 
 ~ 
 
-More specifically, I
+\item More specifically, I
 did not follow the reasoning about how one analyzed multi-process systems
 where shared variable interaction was critical to showing deadlock behavior.
 
@@ -95,7 +95,7 @@ where shared variable interaction was critical to showing deadlock behavior.
 ~
 
 
-It would be very helpful if in the paper the authors could `work through' 
+\item It would be very helpful if in the paper the authors could `work through' 
 the application
 of the local reasoning for both a version of the dinning philosophers and 
 a version of a single token ring like protocol where the processes require 
@@ -104,15 +104,37 @@ any progress.
 
 ~
 
-\answer{
-We added references to the example of dining philosophers to several definitions. 
-We hope this helps improve the understanding of the concepts. 
-We did not do the same for the token ring for brevity concerns. 
+\answer{Figure 7 shows how deadlock-freedom (ie supercycle
+   violation) is computed for the global dining philosophers system of
+   4 philosophers.  Figure 8 then gives the local version of this
+   computation, which shows how supercycle violation in a small
+   subsystem of the dining philosophers example is computed.
+We also referred to the dining philosphers example in several definitions.
+ We hope this helps improve the understanding of the concepts. 
+ We did not do the same for the token ring for brevity concerns. 
 }
+
+
+% \answer{Figure 7 shows how deadlock-freedom (ie supercycle
+%   violation) is computed for the global dining philosophers system of
+%   4 philosophers.  Figure 8 then gives the local version of this
+%   computation, which shows how supercycle violation in a small
+%   subsystem of the dining philosophers example is computed.
+
+% We also added references to the example of dining philosophers to several definitions. 
+
+% We hope this helps improve the understanding of the concepts. 
+% We did not do the same for the token ring for brevity concerns. }
+
+
+
+
+
+
 
 ~
 
-In the dining philosophers or the token passing model, what do the reduced systems
+\item In the dining philosophers or the token passing model, what do the reduced systems
 look like? Individual components?  Can you show how the smaller reduced systems
 contain sufficient information about the behavior of the larger system to draw conclusions
 about the reachable state space?
@@ -126,6 +148,8 @@ about the reachable state space?
   We discussed how the wait-for-graph contains the necessary components and 
     interactions to judge that the execution of the interaction will not result
     in a deadlock. 
+See also Figure 8, which shows several reduced systems for the Dining
+Philosophers example.
 }
 ~
 
