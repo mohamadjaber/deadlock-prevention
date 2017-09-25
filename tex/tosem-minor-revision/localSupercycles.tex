@@ -15,6 +15,57 @@ subsystem of $(\B,Q_0)$ to that in $(\B,Q_0)$ overall.
 \subsection{Projection onto Subsystems}
 \label{s:projection}
 
+\begin{definition}[Projection of a wait-for graph] \label{defn:projWgraph}
+Let $(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$. 
+$\wfg{\B}{s} \pj \B'$ is the wait-for graph whose nodes are the
+components and interactions in $\B'$, and whose edges are the induced
+edges from $\wfg{\B}{s}$, \ie for nodes $v, w$ of $\wfg{\B}{s} \pj \B'$,
+$v \ar w$ is an edge in $\wfg{\B}{s} \pj \B'$ iff $v \ar w$ is an edge in $\wfg{\B}{s}$.
+
+Write $\lwfg{\B}{s}{\B'}$ for $\wfg{\B}{s} \pj \B'$.
+Also, if $s' = s \pj \B'$, then define
+$\lwfg{\B}{s'}{\B'} \df \wfg{\B}{s} \pj \B'$, since $\wfg{\B}{s} \pj \B'$ depends only
+on the projection of state $s$ onto $\B'$.
+%$\lwfg{B}{s}{\act,\l} \df \wfg{\B}{s} \pj \dsk{\act}{\l}$.
+\end{definition}
+
+
+
+\begin{proposition}[Wait-for edge projection] \label{prop:edge-projection}
+%Let $(B, Q_0)$ be a BIP system, and 
+Let $(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$. Let $s$ be a state of
+$(\B, Q_0)$, and $s' = s \pj \B'$.  Let $\act$ be an interaction of
+$(\B', Q'_0)$, and $\B_i \in \cmps{\act}$ be an atomic component of
+$(\B', Q'_0)$.  Then (1) $\act \ar \B_i \in \wfg{\B}{s}$ iff
+$\act \ar \B_i \in \wfg{\B'}{s'}$, and (2)
+$\B_i \ar \act \in \wfg{\B}{s}$ iff $\B_i \ar \act \in \wfg{\B'}{s'}$.
+\end{proposition}
+%
+% \prfs{
+% Since $s' = s \pj \B'$, all port enablement conditions of components in $\B'$ have the same value in $s$ and in
+% $s'$. The proposition then follows by straightforward application of Definition~\ref{def:static:wait-for-graph}.
+%}
+\begin{proof}
+By Definition~\ref{def:static:wait-for-graph}, $\act \ar \B_i \in \wfg{\B}{s}$ iff $s \pj i (\gd{\act}{\B_i}) = \false$.
+Since $s' = s \pj \B'$, we have $s' \pj i = s \pj i$. Hence
+$s \pj i (\gd{\act}{\B_i}) = s' \pj i (\gd{\act}{\B_i})$.
+By Definition~\ref{def:static:wait-for-graph}, 
+$a \ar \B_i \in \wfg{\B'}{s'}$ iff $s' \pj i (\gd{\act}{\B_i}) = \false$.
+Putting together these three equalities gives us Clause (1).
+
+By Definition~\ref{def:static:wait-for-graph},
+$\B_i \ar \act \in \wfg{\B}{s}$ iff 
+$s \pj i (\gd{\act}{\B_i}) = \true$.
+Since $s' = s \pj \B'$, we have $s' \pj i = s \pj i$. Hence
+$s \pj i (\gd{\act}{\B_i}) = s' \pj i (\gd{\act}{\B_i})$.
+By Definition~\ref{def:static:wait-for-graph},
+$\B_i \ar \act \in \wfg{\B'}{s'}$ iff $s' \pj i (\gd{\act}{\B_i}) = \true$.
+Putting the above three equalities together gives us clause (2).
+\end{proof}
+
+
+
+
 \begin{definition}[Structure Graph $\sg{\B}$, $\ssg{\act}{\l}$] \label{def:structure-graph} The structure
 graph $\sg{\B}$ of composite component $\B = \gamma(\B_1,\dots,\B_n)$ is a
 bipartite graph whose nodes are the $\B_1, \ldots, \B_n$ and all the
@@ -44,37 +95,6 @@ interior nodes.
 % TBD: EXPLAIN WHY....
 
 
-\begin{proposition}[Wait-for-edge projection] \label{prop:edge-projection}
-%Let $(B, Q_0)$ be a BIP system, and 
-Let $(\B', Q'_0)$ be a subsystem of
-$(\B, Q_0)$. Let $s$ be a state of $(\B, Q_0)$, and $s' = s \pj \B'$.
-Let $\act$ be an interaction of $(\B', Q'_0)$, and $\B_i \in \cmps{\act}$ be an atomic component of $(\B', Q'_0)$.
-Then 
-(1) $\act \ar \B_i \in \wfg{\B}{s}$ iff $\act \ar \B_i \in \wfg{\B'}{s'}$, and
-(2) $\B_i \ar \act \in \wfg{\B}{s}$ iff $\B_i \ar \act \in \wfg{\B'}{s'}$.
-\end{proposition}
-%
-% \prfs{
-% Since $s' = s \pj \B'$, all port enablement conditions of components in $\B'$ have the same value in $s$ and in
-% $s'$. The proposition then follows by straightforward application of Definition~\ref{def:static:wait-for-graph}.
-%}
-\begin{proof}
-By Definition~\ref{def:static:wait-for-graph}, $\act \ar \B_i \in \wfg{\B}{s}$ iff $s \pj i (\gd{\act}{\B_i}) = \false$.
-Since $s' = s \pj \B'$, we have $s' \pj i = s \pj i$. Hence
-$s \pj i (\gd{\act}{\B_i}) = s' \pj i (\gd{\act}{\B_i})$.
-By Definition~\ref{def:static:wait-for-graph}, 
-$a \ar \B_i \in \wfg{\B'}{s'}$ iff $s' \pj i (\gd{\act}{\B_i}) = \false$.
-Putting together these three equalities gives us Clause (1).
-
-By Definition~\ref{def:static:wait-for-graph},
-$\B_i \ar \act \in \wfg{\B}{s}$ iff 
-$s \pj i (\gd{\act}{\B_i}) = \true$.
-Since $s' = s \pj \B'$, we have $s' \pj i = s \pj i$. Hence
-$s \pj i (\gd{\act}{\B_i}) = s' \pj i (\gd{\act}{\B_i})$.
-By Definition~\ref{def:static:wait-for-graph},
-$\B_i \ar \act \in \wfg{\B'}{s'}$ iff $s' \pj i (\gd{\act}{\B_i}) = \true$.
-Putting the above three equalities together gives us clause (2).
-\end{proof}
 
 In the sequel, we fix a particular subsystem $\dsks{\act}{\l}$, which
 we refer to simply as \DS, with $\act$ and $\l$ being implicit (to
@@ -82,17 +102,6 @@ avoid notational clutter with double-sub/superscripts).
 We write $\DS.action = \act$ and $\DS.radius = \l$. 
 
 
-\begin{definition}[Projection of a wait-for graph] \label{defn:projWgraph}
-$\wfg{\B}{s} \pj \DS$ is the wait-for graph whose nodes are the
-components and interactions in $\DS$, and whose edges are the induced
-edges from $\wfg{\B}{s}$, \ie for nodes $v, w$ of $\wfg{\B}{s} \pj \DS$,
-$v \ar w$ is an edge in $\wfg{\B}{s} \pj \DS$ iff $v \ar w$ is an edge in $\wfg{\B}{s}$.
-
-Write $\lwfg{B}{s}{\DS}$ for $\wfg{\B}{s} \pj \DS$.
-Also, if $\sD = s \pj \DS$, then define $\lwfg{B}{\sD}{\DS} \df \wfg{\B}{s} \pj \DS$, since $\wfg{\B}{s} \pj \DS$ depends only
-on the projection of state $s$ onto $\DS$.
-%$\lwfg{B}{s}{\act,\l} \df \wfg{\B}{s} \pj \dsk{\act}{\l}$.
-\end{definition}
 
 
 %\input{fixpointLoc}
@@ -109,28 +118,30 @@ is), and so we maintain soundness of our criterion.
 
 \begin{definition}[Local supercycle]
 \label{defn:supercycleLoc} 
-Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component, $s$ be a state of $\B$, and $\DS$ a subsystem
-of $\B$.
-A subgraph $\SC$ of  $\lwfg{B}{s}{\DS}$ is a local supercycle in $\lwfg{B}{s}{\DS}$ if and only if all of the following hold:
+Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component, %$s$ be a state of $\B$, and 
+$\DS$ a subsystem of $\B$, and $\sD$ a state of $\DS$. 
+A subgraph $\SC$ of  $\lwfg{\B}{\sD}{\DS}$ is a local supercycle in $\lwfg{\B}{\sD}{\DS}$ if and only if all of the following hold:
 \begin{nlst1}
    \item $\SC$ is nonempty, \ie contains at least one node,
 
    \item if $\B_i$ is a node in $\SC$, then for all interactions $\act$ such that
-there is an edge in $\wfg{\B}{s}$ from $\B_i$ to $\act$:
+there is an edge in $\lwfg{\B}{\sD}{\DS}$ from $\B_i$ to $\act$:
       \begin{nlst2}
       \item $\act$ is a node in $\SC$, and 
       \item there is an edge in $\SC$ from $\B_i$ to $\act$,
       \end{nlst2}
-that is, $\B_i \ar \act \in \wfg{\B}{s}$ implies $\B_i \ar \act \in \SC$,
+that is, $\B_i \ar \act \in \lwfg{\B}{\sD}{\DS}$ implies $\B_i \ar \act \in \SC$,
 
    \item 
 if $\act$ is a node in $\SC$, then, either $\act$ is a border interaction of $\DS$, or  there exists a $\B_j$ such that:
       \begin{nlst2}
       \item $\B_j$  is a node in $\SC$, and
-      \item there is an edge from $\act$ to $\B_j$ in $\wfg{\B}{s}$, and
+      \item there is an edge from $\act$ to $\B_j$ in $\lwfg{\B}{\sD}{\DS}$, and
       \item there is an edge from $\act$ to $\B_j$ in $\SC$,
       \end{nlst2}
-that is, $\act \in \SC$ implies $\ex \B_j : \act \ar \B_j \in \wfg{\B}{s} \land \act \ar \B_j \in \SC$.
+that is, $\act \in \SC$ implies
+$(\ex \B_j : \act \ar \B_j \in \lwfg{\B}{\sD}{\DS} \land \act \ar \B_j \in \SC)$ or
+($\act$ is a border interaction of $\DS$).
 
 \end{nlst1}
 \end{definition}
