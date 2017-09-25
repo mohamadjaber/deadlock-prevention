@@ -109,8 +109,9 @@ Likewise use $v \in \US$, $e \in \US$, where $\US$ is a subgraph of $\wfg{\B}{s}
 
 Consider the dining philosophers system given in Figure~\ref{fig:diningSpectrum}.
 Figure~\ref{fig:wfg0} shows its wait-for graph in its sole initial state.  Figure~\ref{fig:wfg1}
-shows the wait-for graph after execution of $\Get_0$.  Edges from components to interactions are
-shown solid, and edges from interactions to components are shown dashed.
+shows the wait-for graph after execution of $\Get_0$.  
+In all figures of wait-for graphs, we show compnents in \Bc{red}, interactions in \ac{blue}, 
+eges from components to interactions as solid, and edges from interactions to components as dashed.
 
 \begin{figure*}[ht]
   \begin{center}
@@ -297,23 +298,23 @@ Then, $\wfg{\B}{s}$ contains a supercycle.
 % }
 %
 \begin{proof}
-Let $\B_i$ be an arbitrary atomic component in $\B'$, and let $\act_i$ be any interaction that $\B_i$ enables. Since $\B'$ has no
-enabled interaction, it follows that $\act_i$ is not enabled in $\B'$, and
+Let $\B_i$ be an arbitrary atomic component in $\B'$, and let $\act$ be any interaction that $\B_i$ enables. Since $\B'$ has no
+enabled interaction, it follows that $\act$ is not enabled in $\B'$, and
 therefore has a wait-for-edge to some atomic component $\B_j$ in
-$\B'$. Let $SC$ be the subgraph of $\wfg{\B}{s}$ induced by:
+$\B'$. Hence let $\SC$ be the subgraph of $\wfg{\B}{s}$ induced by:
 \bn
 \item the atomic components of $\B'$, 
 \item the interactions $\act$ that each atomic component $\B_i$ enables,
      and the edges $\B_i \ar \act$, and
-\item  the edges $\act \ar \B_j$ from each interaction to some atomic
-     component $\B_j$ in $\B'$ that does not enable $\B_j$.
+\item  the edges $\act \ar \B_j$ from each interaction $\act$ to some atomic
+     component $\B_j$ in $\B'$ that does not enable $\act$.
 \en
-$\SC$ satisfies Definition~\ref {def:supercycle} and so is a supercycle.
+$\SC$ satisfies \defn{supercycle} and so is a supercycle.
 \end{proof}
 
 We consider subcomponent $\B'$ in isolation to avoid other phenomena that prevent interactions from executing, \eg
 conspiracies \cite{AFG93}.  
-Now the converse of Proposition~\ref{prop:supercycle-is-necessary} is that absence of
+Now the contrapositive of Proposition~\ref{prop:supercycle-is-necessary} is that absence of
 supercycles in $\wfg{\B}{s}$ means there is no locally deadlocked subsystem. 
 
 
@@ -326,7 +327,6 @@ $(\B,Q_0)$ is free of local deadlock.
 \end{corollary}
 %
 \begin{proof}
-We establish the contrapositive.
 Suppose that $(\B, Q_0)$ is not free of local deadlock. Then there exists a subsystem $(\B', Q'_0)$ of $(\B, Q_0)$, and
 a reachable state $s$ of $(\B', Q'_0)$, such that $\B'$ enables no interaction in state  $s \pj \B'$.
 By Proposition~\ref{prop:supercycle-is-necessary}, $\wfg{\B}{s}$ contains a supercycle.
@@ -342,10 +342,10 @@ We formally discuss the notion of \emph{local supercycle} in \secn{localSupercyc
 For each interaction in the system, the local check computes a subsystem which includes the interaction and also other components at a given ``distance''
 from the interaction.  It then checks whether any of the subsystem components is involved in a local supercycle.
 %
-Figure~\ref{fig:sc-local-dining} illustrates the wait-for-graph (in the initial state) of the dining philosopher subsystem corresponding to the
+Figure~\ref{fig:sc-local-dining} illustrates the wait-for graph (in the initial state) of the dining philosopher subsystem corresponding to the
 $\Grab_0$ interaction with a distance of $1$, i.e., its components and their interactions.  The subsystem includes the $\Grab_0$ interaction,
-the components $\Phl_0, F_0,$ and $F_1$ that participate in $\Grab_0$, and the interactions $\Rel_0, \Grab_1,\Rel_1, \Grab_3,$ and $\Rel_3$ which are connected to these
-components.  We notice that no component in Figure~\ref{fig:sc-local-dining} is involved in a supercycle.
+the components $\Phl_0, F_0,$ and $F_1$ that participate in $\Grab_0$, and the interactions $\Rel_0, \Grab_1,\Rel_1, \Grab_3,$ and $\Rel_3$ which have
+at least one of these components as participants.  We notice that no component in \fig{sc-local-dining} is involved in a supercycle.
 %
 The interactions  $\Grab_1,\Rel_1, \Grab_3,$ and $\Rel_3$ (underlined in the figure) are ``border interactions'', since they have participating components that are outside the subsystem.
 The enablement of border interaction cannot be determined from the subsystem in isolation. Hence, to ensure soundness of our supercycle-freedom check,
