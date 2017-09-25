@@ -30,7 +30,7 @@ that have a distance to $\act$ which is less than or equal to $\l$.
 \begin{definition}[Deadlock-checking subsystem, $\dsks{\act}{\l}$] \label{def:dsk}
 Define $\dsks{\act}{\l}$, the \emph{deadlock-checking subsystem for interaction $\act$ and
 radius $\l$}, to be the subsystem of $(\B, Q_0)$ based on the set of % depth --> radius
-components in $\ssg{\act}{2\l}$.  % PREVIOUSLY: $\ssg{\act}{\l+2}$.
+components in $\ssg{\act}{2\l}$.  (See \defn{bip.subsystem}).
 \end{definition}
 
 \begin{definition}[Border node, interior node of $\dsks{\act}{\l}$]  \label{def:dsk.border-and internal}
@@ -48,7 +48,7 @@ interior nodes.
 %Let $(B, Q_0)$ be a BIP system, and 
 Let $(\B', Q'_0)$ be a subsystem of
 $(\B, Q_0)$. Let $s$ be a state of $(\B, Q_0)$, and $s' = s \pj \B'$.
-Let $\act$ be an interaction of $(\B', Q'_0)$, and $\B_i \in \cmps{\act}$ an atomic component of $(\B', Q'_0)$.
+Let $\act$ be an interaction of $(\B', Q'_0)$, and $\B_i \in \cmps{\act}$ be an atomic component of $(\B', Q'_0)$.
 Then 
 (1) $\act \ar \B_i \in \wfg{\B}{s}$ iff $\act \ar \B_i \in \wfg{\B'}{s'}$, and
 (2) $\B_i \ar \act \in \wfg{\B}{s}$ iff $\B_i \ar \act \in \wfg{\B'}{s'}$.
