@@ -194,18 +194,24 @@
 
 \newcommand{\power}[1]{\ensuremath{\CMATHIDN{P}(#1)}}   % powerset notation
 
+%% wait for graphs
 \newcommand{\wfg}[2]{\ensuremath{\MATHIDN{W}_{#1}({#2})}}
 %\newcommand{\wfgS}[2]{\ensuremath{\MATHIDN{\widehat{W}}_{#1}({#2})}}  %set of subgraphs of wiat for graph
 \newcommand{\wfgS}[2]{\ensuremath{\power{\wfg{#1}{#2}}}}
 \newcommand{\wfgPow}[2]{\ensuremath{\power{\wfg{#1}{#2}}}}
 
 
-
+%% local wait for graphs
 %\newcommand{\lwfg}[3]{\ensuremath{\MATHIDN{W}_{#1}^{#3}({#2})}}
 \newcommand{\lwfg}[3]{\ensuremath{\MATHIDN{W}_{#3}({#2})}}
 \newcommand{\lwfgS}[3]{\ensuremath{\power{\lwfg{#1}{#2}{#3}}}}
+\newcommand{\lwfgPow}[3]{\ensuremath{\power{\lwfg{#1}{#2}{#3}}}}
+\newcommand{\Adj}{\ensuremath{\mathit{Adj}}} % max length of adjacency list in local wfg of D
+\newcommand{\Fix}{\ensuremath{\mathit{Fix}}} % number of iterations needed by Compute-LFP to reach a fixpoint
+
 
 \newcommand{\sD}{\ensuremath{s_\DS}}   %state of local subsystem
+\newcommand{\tD}{\ensuremath{t_\DS}}   %state of local subsystem
 
 \newcommand{\UU}{\MATHID{U}} %wait for subgraphs
 \newcommand{\US}{\MATHID{U}} % subgraph
@@ -218,9 +224,10 @@
 \newcommand{\ndx}{\MATHID{x}} % node in a wait for graph
 \newcommand{\ndy}{\MATHID{y}} % node in a wait for graph
 
-
+% complement
 \newcommand{\compl}[1]{\ensuremath{\overline{\MATHIDN{#1}}}}
 \newcommand{\complL}[1]{\ensuremath{\widehat{\MATHIDN{#1}}}} % local
+\newcommand{\complLoc}[1]{\ensuremath{\widehat{\MATHIDN{#1}}}} % local 
                                 % complement, widehat is placeholder, come up with something better
 
 
@@ -362,8 +369,10 @@
 
 \newcommand{\SF}[1]{\ensuremath{\CMATHIDN{S}(#1)}}   % fixpoint mapping for supercycles
 \newcommand{\SFs}{\ensuremath{\CMATHIDN{S}}}           % SF symbol with no args
+\newcommand{\SFsymb}{\ensuremath{\CMATHIDN{S}}}           % SF symbol with no args
 \newcommand{\VF}[1]{\ensuremath{\CMATHIDN{V}(#1)}}   % fixpoint mapping for supercycle violation
 \newcommand{\VFs}{\ensuremath{\CMATHIDN{V}}}  % VF symbol with no args
+\newcommand{\VFsymb}{\ensuremath{\CMATHIDN{V}}}  % VF symbol with no args
 \newcommand{\VFi}[2]{\ensuremath{\CMATHIDN{V}^{#2}(#1)}}   % fixpoint mapping for supercycle violation, with superscript for iteration
 \newcommand{\blocks}[2]{\ensuremath{\MATHIDN{blocks}(#1, #2)}}
 \newcommand{\lfp}[1]{\ensuremath{\MATHIDN{lfp}(#1)}}
@@ -562,6 +571,7 @@
 
 \newcommand{\ar}{\rightarrow}	% abbreviated rightarrow
 \newcommand{\choice}{\mbox{$[\hspace*{-1.0pt}]$}}
+\newcommand{\card}[1]{\ensuremath{|#1|}}
 \renewcommand{\d}{\, : \,}	% separator in quantified formulae
 %\newcommand{\df}{\mbox{$\:\stackrel{\rm df}{=\!\!=}\:$}}
 \newcommand{\ev}{\equiv}
@@ -570,6 +580,7 @@
 \newcommand{\folf}{\Leftarrow}                 % follows from 
 \newcommand{\ints}{\cap}
 \newcommand{\lra}{\longrightarrow}
+\newcommand{\mult}{\cdot}
 \newcommand{\oneton}{\set{1..n}}
 \newcommand{\pl}{\!\parallel\!}
 %\newcommand{\rng}[2]{[#1\!:\!#2]}	% integer range

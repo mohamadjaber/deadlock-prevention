@@ -82,15 +82,15 @@ supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{\B}{t}$. Then, the
   \defn{supercycle.membership} and \prop{scViol-iff-notInSC}, that $\neg \scV{\ndv}{t}$. %Previous: $\neg (\ex d \ge 1: \scViol{x}{d}{t})$. 
    Hence, by \prop{locScViol-implies-scViol},  we have $\neg \scVL{\ndv}{t_\DS}{\act}{\l}$.    %Previous: $(\fa d \ge 1: \neg \locScViol{x}{d}{t_\DS}{\act}{\l})$.
    Let $L, \WL$ be as given in \defn{sConn.violation.loc}.
-  Then $x \in L$, and since $x$ is an arbitrary node of $\SSC$, we have $\SSC \sub \WL$. 
+  Then $x \in L$, and since $x$ is an arbitrary node of $\SSC$, we have $\SSC \subg \WL$. 
   Thus Clause~\ref{def:sConn.violation.loc:scc} of Definition~\ref{def:sConn.violation.loc} is violated.
 
-\item $\SSC \not\subg \wfg{\dsk{a}{\l}}{t_\DS}$: then there exists a node $x \in \SSC -
-  \dsk{a}{\l}$. Since $v \in \SSC$, there must exist a wait-for path $\pi$
+\item $\SSC \not\subg \wfg{\dsk{a}{\l}}{t_\DS}$: then there exists a node $x \in \SSC - \wfg{\dsk{a}{\l}}{t_\DS}$.
+  Since $v \in \SSC$, there must exist a wait-for path $\pi$
   from $v$ to $x$ and a wait-for path $\pi'$ from $x$ to
   $v$. Since $v \in \dsk{a}{\l}$ and $x \not\in \dsk{a}{\l}$, it
   follows that both $\pi$, $\pi'$  cross a border node of
-  $\dsk{a}{\l}$. Furthermore, since $\pi$, $\pi'$ are part of $\SSC$, every node
+  $\dsk{a}{\l}$. Furthermore, since $\pi$, $\pi'$ are paths in $\SSC$, every node
   along $\pi$, $\pi'$ is in a supercycle, and so cannot have a supercycle violation.
   By Proposition~\ref{prop:locScViol-implies-scViol}, the nodes on
   $\pi$, $\pi'$  cannot have a local supercycle violation.
@@ -129,9 +129,8 @@ the local supercycle formation condition implies the global supercycle formation
 \begin{definition}[General local supercycle violation, $\locFormViol{v}{t_\DS}{\act}{\l}$]
 \label{def:locFormation.violation}
 \label{defn:locFormation.violation}
-Let $\ndv$ be an arbitrary node of $\dsk{\act}{\l}$ and $t_\DS$ an arbitrary reachable state of $\dsk{\act}{\l}$.
+Let $\ndv$ be an arbitrary node of $\dsk{\act}{\l}$ and $t_\DS$ be an arbitrary reachable state of $\dsk{\act}{\l}$.
 Then $\locFormViol{v}{t_\DS}{\act}{\l}  \df \scVL{v}{t_\DS}{\act}{\l} \lor \locConnViol{v}{t_\DS}{\act}{\l}$.
-%Then $\locFormViol{v}{t_\DS}{\act}{\l}  \df  (\exs d \ge 1: \locScViol{v}{d}{t_\DS}{\act}{\l}) \lor \locConnViol{v}{t_\DS}{\act}{\l}$.
 \end{definition}
 %Let $s \goesto[\act] t$ be a reachable transition. If, for every $\B_i \in \cmps{\act}$, 
 %$\formViol{v}{t}$ holds, then $s \goesto[\act] t$ does not introduce a supercycle, \ie if $s$ is
@@ -151,7 +150,6 @@ Then\\
 \begin{proof}
 Assume that $\locFormViol{v}{t_\DS}{\act}{\l}$ holds. Then, by \defn{locFormation.violation},
 $\scVL{v}{t_\DS}{\act}{\l} \lor \locConnViol{v}{t_\DS}{\act}{\l}$.
-%$(\exs d \ge 1: \locScViol{v}{d}{t_\DS}{\act}{\l}) \lor \locConnViol{v}{t_\DS}{\act}{\l}$.
 We proceed by cases:
 \bn
 %Previous: \item $(\exs d \ge 1: \locScViol{v}{d}{t_\DS}{\act}{\l})$: hence $(\exs d \ge 1: \scViol{v}{d}{t})$ by Proposition~\ref{prop:locScViol-implies-scViol}.

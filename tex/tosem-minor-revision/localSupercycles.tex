@@ -167,7 +167,7 @@ Define the partially ordered set
 $\llat{\B}{\sD}{\DS}  = \tpl{ \lwfgS{B}{\sD}{\DS},  \subg }$ 
 %$\llat{\B}{s}{\act,\l}  = \tpl{ \lwfgS{B}{s}{\act,\l}  \subg }$ 
 whose elements are all the subgraphs of 
-\lwfgS{B}{\sD}{\DS}, and where  $\US \subg \VS$ is as in \defn{wsubgraph}.   
+\lwfg{B}{\sD}{\DS}, and where  $\US \subg \VS$ is as in \defn{wsubgraph}.   
 %iff $U$ is a subgraph of $V$, \ie $\ord$ is the ``is a subgraph of'' order relation.
 \end{definition}
 
@@ -175,7 +175,7 @@ whose elements are all the subgraphs of
 $\llat{\B}{\sD}{\DS}  = \tpl{ \lwfgS{B}{\sD}{\DS},  \subg }$
 %$\llat{\B}{s}{\act,\l}  = \tpl{ \lwfgS{B}{s}{\act,\l}  \subg }$
  is a finite complete boolean lattice, with $\meet$, $\join$, and complementation as in 
-\prop{isALattice}, top element $\lwfgS{B}{\sD}{\DS}$, and bottom element \ewfg.
+\prop{isALattice}, top element $\lwfg{B}{\sD}{\DS}$, and bottom element \ewfg.
 \end{proposition}
 
 \begin{definition}[$\mathit{lblocks}$] \label{defn:blocksLoc}
@@ -194,21 +194,21 @@ A component $\B_i$ is blocked by $\XS$ if all of the interactions that $\B_i$ en
 
 \begin{definition}[$\lSFs$] \label{defn:scFixLoc}
 %Define $\lSFs:  \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
-Define $\lSFs:  \lwfgS{B}{s_D}{\DS}  \to  \lwfgS{B}{s}{\DS}$ as follows.
+Define $\lSFs:  \lwfgS{B}{\sD}{\DS}  \to  \lwfgS{B}{\sD}{\DS}$ as follows.
 $\lSF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \lblocks{\ndv}{\XS} }$, together with the edges induced by \lwfg{B}{\sD}{\DS}.
 \end{definition}
 
 \begin{definition}[$\lVFs$] \label{defn:violFixLoc}
 %Define $\lVFs: \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
-Define $\lVFs: \lwfgS{B}{s}{\DS}  \to  \lwfgS{B}{s}{\DS}$ as follows.
-$\lVF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \neg \lblocks{\ndv}{\compl{\XS}} }$, together with the edges induced by \lwfg{B}{\sD}{\DS},
-where we take the complement $\compl{\XS}$ with respect to $\DS$.
+Define $\lVFs: \lwfgS{B}{\sD}{\DS}  \to  \lwfgS{B}{\sD}{\DS}$ as follows.
+$\lVF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \neg \lblocks{\ndv}{\complLoc{\XS}} }$, together with the edges induced by \lwfg{B}{\sD}{\DS},
+where we take the complement $\complLoc{\XS}$ with respect to $\DS$.
 \end{definition}
 %
-Hence $\lVF{\XS} = \overline{\lSF{\overline{\XS}}}$, \ie $\lVFs$ and $\lSFs$ are duals.
+Hence $\lVF{\XS} = \complLoc{\lSF{\complLoc{\XS}}}$, \ie $\lVFs$ and $\lSFs$ are duals.
 Note that (as for $\SFs$ and $\VFs$) $\lSFs$ and $\lVFs$ are defined given a particular
 subsystem $\DS$ of the system 
-$\B$, and a particular state $s$ of $\DS$. We will always make explicit the particular
+$\B$, and a particular state $\sD$ of $\DS$. We will always make explicit the particular
 subsystem and state that $\lVFs$ and $\lSFs$ ae defined over.
 
 
@@ -226,21 +226,21 @@ Let $\ndv$ be an arbitrary node in $\SF{\XS}$, so that $\lblocks{\ndv}{\XS}$ hol
 \emph{Case of $\ndv$ is a border interaction of $\DS$}. Then $\lblocks{\ndv}{\YS}$ by \defn{blocksLoc}, and so $\ndv \in  \lSF{\YS}$ by
 \defn{scFixLoc}.\\
 
-\emph{Case of $\ndv$ is a non-border interaction $\act$}. By Definitions~\ref{defn:scFixLoc} and \ref{defn:blocksLoc}, we have
-$\ex \B_i \in \XS  : \act \ar \B_i \in \lwfg{B}{s}{\DS}$.
-Since $\XS \subg \YS$, this same $\B_i$ is also a node of $\YS$, and so  $\ex \B_i \in \YS  : \act \ar \B_i \in \lwfg{B}{s}{\DS}$. 
+\emph{Case of $\ndv$ is a non-border interaction $\act$}. By Definitions~\ref{defn:blocksLoc} and \ref{defn:scFixLoc}, we have
+$\ex \B_i \in \XS  : \act \ar \B_i \in \lwfg{B}{\sD}{\DS}$.
+Since $\XS \subg \YS$, this same $\B_i$ is also a node of $\YS$, and so  $\ex \B_i \in \YS  : \act \ar \B_i \in \lwfg{B}{\sD}{\DS}$. 
 Hence  $\lblocks{\act}{\YS}$, and so $\act \in \lSF{\YS}$. \\
 
-\emph{Case of $\ndv$ is a component $\B_i$}. By Definitions~\ref{defn:scFixLoc} and \ref{defn:blocksLoc}, we have
-$(\fa \act : \B_i \ar \act \in \lwfg{\B}{s}{\DS} \imp \act \in \XS)$.
-Since $\XS \subg \YS$, we have  $(\fa \act : \B_i \ar \act \in \lwfg{B}{s}{\DS} \imp \act \in \YS)$. 
+\emph{Case of $\ndv$ is a component $\B_i$}. By Definitions~\ref{defn:blocksLoc} and \ref{defn:scFixLoc}, we have
+$(\fa \act : \B_i \ar \act \in \lwfg{\B}{\sD}{\DS} \imp \act \in \XS)$.
+Since $\XS \subg \YS$, we have  $(\fa \act : \B_i \ar \act \in \lwfg{B}{\sD}{\DS} \imp \act \in \YS)$. 
 Hence, $\lblocks{\B_i}{\YS}$, and so $\B_i \in \lSF{\YS}$. \\
 
 In all three cases, we have $\ndv \in \lSF{\YS}$. Since $\ndv$ was chosen arbitrarily from $\lSF{\XS} $, it follows that $\lSF{\XS} \subg \lSF{\YS}$. Hence, $\lSFs$ is monotone.
 %
 Since the dual of a monotone mapping in a complete boolean lattice is also monotone, we have that $\lVFs$ is monotone.
 %
-Finally, since $\llat{\B}{s}{\DS}$ is finite, it follows that $\lSFs$ and $\lVFs$ are continuous.
+Finally, since $\llat{\B}{\sD}{\DS}$ is finite, it follows that $\lSFs$ and $\lVFs$ are continuous.
 \end{proof}
 
 
@@ -298,7 +298,7 @@ $v$ is not a node in any local supercycle of $\lwfgS{B}{s}{\DS}$.
 \begin{proof}
 %Follows from \prop{GFPisLargestSC} are the Park conjugate (dual) fixpoint theorem in complete boolean lattices.
 From the Park conjugate (dual) fixpoint theorem in complete boolean lattices, we have 
-\lfp{\VFs} = \compl{\gfp{\SFs}}.
+\lfp{\VFs} = \complLoc{\gfp{\SFs}}.
 By \prop{GFPisLargestSC}, \gfp{\SFs} is the largest local supercycle in \wfg{\B}{s}. Hence the nodes not in 
 \gfp{\SFs} are exactly the nodes that have local supercycle violations. These are exactly the nodes in \lfp{\VFs}.
 \end{proof}
