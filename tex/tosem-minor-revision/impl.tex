@@ -24,12 +24,13 @@ $\lfp{\lVFs}$. Its correctness follows immediately from \defn{blocksLoc} and \de
 aaa\= aa\= aa\= aa\= aa\=\kill
 \cLFP{$\dsk{\act}{\l},\tD$}\\
 \cmnt\ Precondition: $\tD$ is a state of $\dsk{\act}{\l}$\\
-\cmnt\ Postcondition: returns least fixpoint of $\lVFs$ in state $t_\DS$ of $\dsk{\act}{\l}$, \ie $\lfp{\lVFs} = \UN_{d \ge 0} \lVFs^{d} (\ewfg)$.\\
+\cmnt\ Postcondition: returns least fixpoint of $\lVFsymb_{\tD}$ \ie $\lfp{\lVFsymb_{\tD}} = \JOIN_{d \ge 1} \lVFsi{\tD}{\ewfg}{d}$.\\
+%in state $t_\DS$ of $\dsk{\act}{\l}$, \ie $\lfp{\lVFs} = \UN_{d \ge 0} \lVFs^{d} (\ewfg)$.\\
 
 \lio{\XS \gts \ewfg;}
 
 \lio{\REPEAT}
-   \lit{\mbox{\cmnt loop invariant: on the $i$'th iteration, $\XS \equiv \lVFi{\ewfg}{i} \equiv  v \in \UN_{0 \le d \le i} \lVFi{\ewfg}{d}$}}
+   \lit{\mbox{\cmnt loop invariant: at end of $i$'th iteration, $\XS = \lVFi{\ewfg}{i} =  v \in \JOIN_{1 \le d \le i} \lVFsi{\tD}{\ewfg}{d}$}}
    \lit{\YS \gts \cVL{\dsk{\act}{\l}, t_\DS, \XS}}
    \lit{\XS \gts \YS}
 \lio{\UNTIL\ \XS = \YS;}
@@ -47,9 +48,9 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:compute-lfp}
 aaa\= aa\= aa\= aa\= aa\=\kill
-\cVL{$\dsk{\act}{\l}, t_\DS, \XS$}\\
+\cVL{$\dsk{\act}{\l}, \tD, \XS$}\\
 \cmnt\ precondition: $\tD$ is a state of $\dsk{\act}{\l}$ and $X \subg \lwfg{\B}{\tD}{\dsk{\act}{\l}}$\\
-\cmnt\ postcondition: returns $\lVF{X}$ in state $t_\DS$ of $\dsk{\act}{\l}$,\\
+\cmnt\ postcondition: returns $\lVFs{\tD}{X}$\\ %  in state $t_\DS$ of $\dsk{\act}{\l}$,\\
 \\
 \lio{\mbox{compute $\lwfg{\B}{\tD}{\dsk{\act}{\l}}$}}
 \lio{\YS \gts \ewfg}

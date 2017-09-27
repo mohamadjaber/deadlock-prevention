@@ -73,108 +73,104 @@ Define $\SFsymb: \wfgS{\B}{s} \to \wfgS{\B}{s}$ as follows.
 $\SF{\XS}$ is the subgraph with nodes $\set{v \stt \blocks{v}{\XS} }$, together with their induced edges.
 \end{definition}
 
-\begin{definition}[$\VFsymb$]  \label{defn:violFix}
-Define $\VFsymb: \wfgS{\B}{s} \to \wfgS{\B}{s}$ as follows.
-$\VF{\XS}$ is the subgraph with nodes
+\begin{definition}[$\VFsymb_s$]  \label{defn:violFix}
+Define $\VFsymb_s: \wfgS{\B}{s} \to \wfgS{\B}{s}$ as follows.
+$\VFs{s}{\XS}$ is the subgraph with nodes
 $\set{v \stt \neg \blocks{v}{\compl{\XS}}}$, together with their induced edges.
 \end{definition}
 %
-Hence $\VF{\XS} = \overline{\SF{\overline{\XS}}}$, \ie $\VFsymb$ and $\SFsymb$ are duals.
-Note that $\SFsymb$ and $\VFsymb$ are defined given a particular BIP system 
+Hence $\VFs{s}{\XS} = \overline{\SFs{S}{\overline{\XS}}}$, \ie $\VFsymb_s$ and $\SFsymb_s$ are duals.
+Note that $\SFsymb_s$ and $\VFsymb_s$ are defined given both a particular BIP system 
 $\B$ and a particular state $s$ of $\B$. Hence we should really write 
-$\SFsymb_{\B,s}(\XS)$, $\VFsymb_{\B,s}(\XS)$ to indicate this functional dependence. We
-omit these extra subscripts to avoid notational clutter, noting that
-$\B$ is a fixed BIP system (see beginning of section), and that we will always make explicit
-the particular state $s$ that is intended.
-
+$\SFsymb_{\B,s}(\XS)$, $\VFsymb_{\B,s}(\XS)$ to indicate this functional dependence. 
+Since however, 
+$\B$ is a fixed BIP system (see beginning of section), we omit the $\B$ subscript to avoid notational clutter.
+In giving examples, we usually omit the subscript for the state, since the state will be implicitly given by the example.
 
 
 \begin{proposition} \label{prop:monotone}
-$\SFsymb$ and $\VFsymb$ are monotone and continuous.
+$\SFsymb_s$ and $\VFsymb_s$ are monotone and continuous.
 \end{proposition}
 %
 \begin{proof}
 % show its monotnoe
-We show first that $\SFsymb$ is monotone, \ie $\XS \subg \YS \imp \SF{\XS} \subg \SF{\YS}$.
-Let $\ndv$ be an arbitrary node in $\SF{\XS}$, so that $\blocks{\ndv}{\XS}$ holds. There are two cases.\\
+We show first that $\SFsymb_s$ is monotone, \ie $\XS \subg \YS \imp \SFs{s}{\XS} \subg \SFs{s}{\YS}$.
+Let $\ndv$ be an arbitrary node in $\SFs{s}{\XS}$, so that $\blocks{\ndv}{\XS}$ holds. There are two cases.\\
 
 \emph{Case of $\ndv$ is an interaction $\act$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $\ex \B_i \in \XS  : \act \ar \B_i \in \wfg{\B}{s}$.
 Since $\XS \subg \YS$, this same $\B_i$ is also a node of $\YS$, and so  $\ex \B_i \in \YS  : \act \ar \B_i \in \wfg{\B}{s}$. 
-Hence  $\blocks{\act}{\YS}$, and so $\act \in \SF{\YS}$. \\
+Hence  $\blocks{\act}{\YS}$, and so $\act \in \SFs{s}{\YS}$. \\
 
 \emph{Case of $\ndv$ is a component $\B_i$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $(\fa \act : \B_i \ar \act \in \wfg{\B}{s} \imp \act \in \XS)$.
 Since $\XS \subg \YS$, we have  $(\fa \act : \B_i \ar \act \in \wfg{\B}{s} \imp \act \in \YS)$. 
-Hence $\blocks{\B_i}{\YS}$, and so $\B_i \in \SF{\YS}$. \\
+Hence $\blocks{\B_i}{\YS}$, and so $\B_i \in \SFs{s}{\YS}$. \\
 
-In both cases, we have $\ndv \in \SF{\YS}$. Since $\ndv$ was chosen arbitrarily from $\SF{\XS} $, it follows that $\SF{\XS} \subg \SF{\YS}$. Hence
-$\SFsymb$ is monotone.
+In both cases, we have $\ndv \in \SFs{s}{\YS}$. Since $\ndv$ was chosen arbitrarily from $\SFs{s}{\XS} $, it follows that $\SFs{s}{\XS} \subg \SFs{s}{\YS}$. Hence
+$\SFsymb_s$ is monotone.
 %
-Since the dual of a monotone mapping in a complete boolean lattice is also monotone, we have that $\VFsymb$ is monotone.
+Since the dual of a monotone mapping in a complete boolean lattice is also monotone, we have that $\VFsymb_s$ is monotone.
 %
-Finally, since $\lat{\B}{s}$ is finite, it follows that $\SFsymb$ and $\VFsymb$ are continuous.
+Finally, since $\lat{\B}{s}$ is finite, it follows that $\SFsymb_s$ and $\VFsymb_s$ are continuous.
 \end{proof}
 
-Hence, by the Knaster-Tarski theorem, the least and greatest fixpoints of $\SFsymb$ and $\VFsymb$ exist.
+Hence, by the Knaster-Tarski theorem, the least and greatest fixpoints of $\SFsymb_s$ and $\VFsymb_s$ exist.
 %, and so their greatest and least fixpoints 
 
 \begin{proposition} \label{prop:supercycleGFP}
-Let $\XS \ne \ewfg$ and $\XS \subg \wfg{\B}{s}$, \ie $\XS$ is a non-empty subgraph of \wfg{\B}{s}. Then $\XS$ is a supercycle in \wfg{\B}{s} iff $\XS \subg \SF{\XS}$.
+Let $\XS \ne \ewfg$ and $\XS \subg \wfg{\B}{s}$, \ie $\XS$ is a non-empty subgraph of \wfg{\B}{s}. Then $\XS$ is a supercycle in \wfg{\B}{s} iff $\XS \subg \SFs{s}{\XS}$.
 \end{proposition}
 %
 \begin{proof}
 Let $\XS$ be a supercycle in \wfg{\B}{s}. By \defn{supercycle}, every node in $\XS$ is blocked by $\XS$, \ie 
-$(\fa \ndx \in \XS: \blocks{\ndx}{\XS})$. By \defn{scFix}, $\XS \subg \SF{\XS}$.
+$(\fa \ndx \in \XS: \blocks{\ndx}{\XS})$. By \defn{scFix}, $\XS \subg \SFs{s}{\XS}$.
 %
-Conversely, suppose $\XS \subg \SF{\XS}$ for some subgraph $\XS$ of \wfg{\B}{s}. Hence 
-$(\fa \ndx \in \XS: \ndx \in \SF{\XS})$, so by \defn{scFix}, $(\fa \ndx \in \XS: \blocks{\ndx}{\XS})$.
+Conversely, suppose $\XS \subg \SFs{s}{\XS}$ for some subgraph $\XS$ of \wfg{\B}{s}. Hence 
+$(\fa \ndx \in \XS: \ndx \in \SFs{s}{\XS})$, so by \defn{scFix}, $(\fa \ndx \in \XS: \blocks{\ndx}{\XS})$.
 Hence every node in $\XS$ is blocked by $\XS$, and so $\XS$ satisfies \defn{supercycle}, and is therefore a supercycle.
 \end{proof}
 %
 Thus the supercycles of \wfg{\B}{s} are exactly the post-fixpoints of $\SFsymb$. %This implies that the union of two supercycles is also a supercycle. 
 
 \begin{proposition} \label{prop:GFPisLargestSC}
-Let $\SC$ be the greatest fixpoint of $\SFsymb$. Then either
+Let $\SC$ be the greatest fixpoint of $\SFsymb_s$. Then either
 (a) \wfg{\B}{s} is supercycle-free and $\SC = \ewfg$, or 
 (b) \wfg{\B}{s} contains supercycles, and $\SC$ is the largest supercycle in \wfg{\B}{s}
 \end{proposition}
 %
 \begin{proof}
 By the Knaster-Tarski theorem, the greatest fixpoint is the join of all the post-fixpoints. 
-If \wfg{\B}{s} is supercycle-free, then by \prop{supercycleGFP}, the set of post-fixpoints of $\SFsymb$ is empty. 
+If \wfg{\B}{s} is supercycle-free, then by \prop{supercycleGFP}, the set of post-fixpoints of $\SFsymb_s$ is empty. 
 Hence $\SC = \ewfg$.
-If \wfg{\B}{s} contains supercycles, then by \prop{supercycleGFP},  the set of post-fixpoints of $\SFsymb$ is exactly the set of 
+If \wfg{\B}{s} contains supercycles, then by \prop{supercycleGFP},  the set of post-fixpoints of $\SFsymb_s$ is exactly the set of 
 supercycles of \wfg{\B}{s}, and so $\SC$ is the join of all these supercycles, and so $\SC$ is the largest supercycle in \wfg{\B}{s}.
 \end{proof}
 
 Let $\MATHIDN{lfp}, \MATHIDN{gfp}$ denote the least-fixed-point and greatest-fixed-point operators, respectively.
 
 \begin{proposition}  \label{prop:LFPisScViolations}
-$\ndv \in  \lfp{\VFsymb}$ iff $\ndv$ is not a node in any supercycle of \wfg{\B}{s}.    
-%Let  $\VS = \lfp{\VFsymb}$, \ie $\VS$ is the least fixpoint of $\VFsymb$. Then $v \in \VS$ iff $v$ is not a node in any supercycle of \wfg{\B}{s}.    
-%the nodes of $V$ are exactly the nodes in \wfg{\B}{s} that have supercycle violations. 
+$\ndv \in  \lfp{\VFsymb_s}$ iff $\ndv$ is not a node in any supercycle of \wfg{\B}{s}.    
 \end{proposition}
 %
 \begin{proof}
-%Follows from \prop{GFPisLargestSC} are the Park conjugate (dual) fixpoint theorem in complete boolean lattices.
 From the Park conjugate (dual) fixpoint theorem in complete boolean lattices, we have 
-\lfp{\VFsymb} = \compl{\gfp{\SFsymb}}.
-By \prop{GFPisLargestSC}, \gfp{\SFsymb} is the largest supercycle in \wfg{\B}{s}. Hence the nodes not in 
-\gfp{\SFsymb} are exactly the nodes that are not in any supercycle. These are exactly the nodes in \lfp{\VFsymb}.
+\lfp{\VFsymb_s} = \compl{\gfp{\SFsymb_s}}.
+By \prop{GFPisLargestSC}, \gfp{\SFsymb_s} is the largest supercycle in \wfg{\B}{s}. Hence the nodes not in 
+\gfp{\SFsymb_s} are exactly the nodes that are not in any supercycle. These are exactly the nodes in \lfp{\VFsymb_s}.
 \end{proof}
 
-Define $\VFi{\XS}{1} = \VF{\XS}$, and for $d > 1$, 
-$\VFi{\XS}{d} = \VFi{\VF{\XS}}{d-1}$, \ie a superscript indicates functional iteration
+Define $\VFsi{s}{\XS}{1} = \VFs{s}{\XS}$, and for $d > 1$, 
+$\VFsi{s}{\XS}{d} = \VFsi{s}{\VF{\XS}}{d-1}$, \ie a superscript indicates functional iteration
 of $\VFsymb$. Also let $\JOIN$ be the ``quantifier'' version of $\join$.
-Note that $\VFi{\ewfg}{d} \subg \VFi{\ewfg}{d'}$ when $d \le d'$, since $\VFsymb$
+Note that $\VFsi{s}{\ewfg}{d} \subg \VFsi{s}{\ewfg}{d'}$ when $d \le d'$, since $\VFsymb$
 is monotone.
-Hence $\VFi{\ewfg}{1}, \VFi{\ewfg}{2}, \ldots$ is a non-decreasing sequence.
+Hence $\VFsi{s}{\ewfg}{1}, \VFsi{s}{\ewfg}{2}, \ldots$ is a non-decreasing sequence.
 
 \begin{proposition}  \label{prop:computeLFP}
-$\lfp{\VFsymb} = \JOIN_{d \ge 1} \VFi{\ewfg}{d}$.
+$\lfp{\VFsymb_s} = \JOIN_{d \ge 1} \VFsi{s}{\ewfg}{d}$.
 \end{proposition}
 %
 \begin{proof}
-By \prop{monotone}, $\VFsymb$ is continuous. Follows by standard results, \eg see the CPO fixpoint theorem I in 
+By \prop{monotone}, $\VFsymb_s$ is continuous. Follows by standard results, \eg see the CPO fixpoint theorem I in 
 \citeN{DP02}.
 \end{proof}
 
@@ -185,8 +181,8 @@ By \prop{monotone}, $\VFsymb$ is continuous. Follows by standard results, \eg se
 \label{def:supercycle.violation}
 \label{defn:supercycle.violation}
 Let $\ndv$ be a node of $\wfg{\B}{s}$. Define
-$\scV{v}{s} \df v \in \lfp{\VFsymb}$ and, for $d \ge 1$,
-$\scVd{v}{d}{s} \df v \in \VFsymb^{d} (\ewfg)$.\footnote{Note that
+$\scV{v}{s} \df v \in \lfp{\VFsymb_s}$ and, for $d \ge 1$,
+$\scVd{v}{d}{s} \df v \in \VFsi{s}{\ewfg}{d}$.\footnote{Note that
 we abuse notation by overloading $\SMATHID{viol}$, but no ambiguity arises since the two versions have
 different parameter lists.}
 \end{definition}
@@ -194,34 +190,32 @@ different parameter lists.}
 \begin{proposition}
 \label{prop:globViol-equiv-globViolDist}
 $\scV{\ndv}{s}$ iff  $(\ex d \ge 1: \scVd{\ndv}{d}{s})$.
-%$\scVL{v}{t_\act}{\act}{\l} \ev (\ex d \ge 1: \scVLd{v}{d}{t_\act}{\act}{\l})$.
 \end{proposition}
 %
 \begin{proof}
-By \defn{supercycle.violation}, $\scV{\ndv}{s} \ev \ndv \in \lfp{\VFsymb}$.
-By \prop{computeLFP}, $\ndv \in \lfp{\VFsymb} \ev v \in \JOIN_{d \ge 1} \VFi{\ewfg}{d}$.
-By \defn{supercycle.violation}, $\fa d \ge 1: (\scVd{v}{d}{s} \ev v \in \VFsymb^{d} (\ewfg))$.
+By \defn{supercycle.violation}, $\scV{\ndv}{s} \ev \ndv \in \lfp{\VFsymb_s}$.
+By \prop{computeLFP}, $\ndv \in \lfp{\VFsymb_s} \ev v \in \JOIN_{d \ge 1} \VFsi{s}{\ewfg}{d}$.
+By \defn{supercycle.violation}, $\fa d \ge 1: (\scVd{v}{d}{s} \ev v \in \VFsi{s}{\ewfg}{d}$.
 Chaining these equivalences establishes the proposition.
 \end{proof}
 
-%It immediately follows that $\scV{v}{s}$ iff  $(\ex d \ge 1: \scVd{v}{d}{s})$.
 It follows from \prop{LFPisScViolations} that $\scV{v}{s}$ iff there does not exist $\SC$ such that $\SC$ is a supercycle and $v \in SC$.
 We say that a node $v$ of \wfg{\B}{s} has a \emph{supercycle violation}\footnote{In the sequel, we say ``sc-violation'' rather than ``supercycle violation.''} iff $v$ is not a node in any supercycle of \wfg{\B}{s}, 
 \ie iff $\scV{v}{s}$ holds. 
-By \prop{computeLFP}, we can compute $\lfp{\VFsymb}$ (and therefore $\scV{v}{s}$) by iterating $\VFsymb$, starting from $\ewfg$, until there is no more change.
-$\scVd{v}{d}{s}$ defines a supercycle violation that can be confirmed within $d$ iterations of $\VFsymb$, which we call a \emph{level-$d$ supercycle violation}.
-$\scV{v}{s}$ requires, in general, the entire least fixed point of $\VFsymb$.
+By \prop{computeLFP}, we can compute $\lfp{\VFsymb_s}$ (and therefore $\scV{v}{s}$) by iterating $\VFsymb_s$, starting from $\ewfg$, until there is no more change.
+$\scVd{v}{d}{s}$ defines a supercycle violation that can be confirmed within $d$ iterations of $\VFsymb_s$, which we call a \emph{level-$d$ supercycle violation}.
+$\scV{v}{s}$ requires, in general, the entire least fixed point of $\VFsymb_s$.
 
 
 \vspace{1ex}
 \begin{example}[Supercycle violation]
-For example, consider \fig{SCnotCycle}. We show the set of nodes in each $\VFi{\ewfg}{d}$, since the induced subgraph is easily inferred from \fig{SCnotCycle}.
+For example, consider the wait-for graph in \fig{SCnotCycle}. We show the set of nodes in each $\VFi{\ewfg}{d}$, since the induced subgraph is easily inferred from \fig{SCnotCycle}.
 %$\VFsymb^{0} (\ewfg) = \ewfg$,
-$\VFsymb^{1} (\ewfg) = \set{\acti}$, 
-$\VFsymb^{2} (\ewfg) = \set{\B_6, \acti}$, 
-$\VFsymb^{3} (\ewfg) = \set{\acth, \B_6, \acti}$, 
-$\VFsymb^{4} (\ewfg) = \set{\B_5, \acth, \B_6, \acti}$, 
-$\VFsymb^{5} (\ewfg) = \set{\B_5, \acth, \B_6, \acti}$, 
+$\VFi{\ewfg}{1}  = \set{\acti}$, 
+$\VFi{\ewfg}{2} = \set{\B_6, \acti}$, 
+$\VFi{\ewfg}{3}  = \set{\acth, \B_6, \acti}$, 
+$\VFi{\ewfg}{4}  = \set{\B_5, \acth, \B_6, \acti}$, 
+$\VFi{\ewfg}{5}  = \set{\B_5, \acth, \B_6, \acti}$, 
 as so $\lfp{\VFsymb} = \set{\B_5, \acth, \B_6, \acti}$.
 %
 For \fig{cycleOK}, it is easy to verify that $\lfp{\VFsymb}$ consists of all the nodes in the system, \ie the wait-for graph shown is supercycle-free.
@@ -548,7 +542,7 @@ Proof is by induction on $d$.\\
 \ul{Base case, $d=0$.} Hence by $\wodepth{\B}{v}{s} = 0$ and Definitions~\ref{def:path} and \ref{def:depth},  
 $v$ has no outgoing wait-for-edges in $\wfg{\B}{s}$. Hence $\neg \blocks{v}{\wfg{\B}{s}}$, \ie $v$ is not blocked by the entire set of nodes in 
 $\wfg{\B}{s}$. Hence $\neg \blocks{v}{\compl{\ewfg}}$, since $\wfg{\B}{s} = \compl{\ewfg}$. So by \defn{violFix}, 
-$v \in \VF{\ewfg}$. By \defn{supercycle.violation}, $\scVd{v}{0}{s}$.\\
+$v \in \VFs{s}{\ewfg}$. By \defn{supercycle.violation}, $\scVd{v}{0}{s}$.\\
 
 %OLD Hence by Definition~\ref{def:supercycle.violation}, $\viol{v}{1}{t}$.
 
@@ -557,11 +551,12 @@ $v \in \VF{\ewfg}$. By \defn{supercycle.violation}, $\scVd{v}{0}{s}$.\\
 Let $w$ be an arbitrary successor of $v$, \ie a node $w$ such that $v \ar w \in \wfg{\B}{s}$.
 By Definitions~\ref{def:path} and \ref{def:depth}, $w$ has an out-depth $d'$ that is less than $d$. 
 That is, $\wodepth{\B}{u}{s} = d' < d$.
-By the induction hypothesis applied to $d'$, we obtain $\viol{w}{d'}{s}$, and so $w \in \VFsymb^{d'} (\ewfg)$ by \defn{supercycle.violation}.
-Hence $w \in \VFsymb^{d-1} (\ewfg)$, since, by monotonicity of $\VFsymb$, we have $\VFsymb^{d'}(\ewfg) \subg \VFsymb^{d}(\ewfg)$ when $d' \le d$.
-Since  $w$ is an arbitrary successor of $v$, it follows that $v$ is only blocked by nodes in $\VFsymb^{d-1} (\ewfg)$.
-Hence $\neg \blocks{v}{\compl{\VFsymb^{d-1} (\ewfg)}}$. 
-By \defn{violFix}, $v \in \VF{\VFsymb^{d-1} (\ewfg)}$, \ie $v \in \VFsymb^{d} (\ewfg)$.
+By the induction hypothesis applied to $d'$, we obtain $\viol{w}{d'}{s}$, and so $w \in \VFsi{s}{\ewfg}{d'}$ by \defn{supercycle.violation}.
+Hence $w \in \VFsi{s}{\ewfg}{d-1}$, since, by monotonicity of $\VFsymb_s$, we have 
+$ \VFsi{s}{\ewfg}{d'} \subg  \VFsi{s}{\ewfg}{d}$ when $d' \le d$.
+Since  $w$ is an arbitrary successor of $v$, it follows that $v$ is only blocked by nodes in $\VFsi{s}{\ewfg}{d-1}$.
+Hence $\neg \blocks{v}{\compl{ \VFsi{s}{\ewfg}{d-1} } }$.
+By \defn{violFix}, $v \in \VFs{s}{\VFsi{s}{\ewfg}{d-1}}$, \ie $v \in  \VFsi{s}{\ewfg}{d}$.
 By \defn{supercycle.violation}, $\scVd{v}{d}{s}$.
 % OLD Hence by Definition~\ref{def:supercycle.violation}, Clauses~\ref{def:supercycle.violation.component.out} and \ref{def:supercycle.violation.interaction.out}, $\viol{v}{d+1}{t}$.
 \end{proof}
@@ -585,17 +580,8 @@ Let $v$ be a node in $\SC$ with finite out-depth $d$.
 By \prop{outdepth-finite-implies-scViol}, $\scVd{v}{d}{s}$. %$\viol{v}{d}{t}$. 
 By \defn{supercycle.violation}, $\scV{v}{s}$.
 By \prop{scViol-iff-notInSC} $\neg \scyc{\B}{t}{v}$. Hence $v$ cannot be a node of any supercycle, and we have a contradiction.
-% By contradiction. Let $v$ be a node in $\SC$ with finite out-depth.  Hence by Definition~\ref{def:depth} all outgoing paths from $v$ are simple (and
-% finite), and end in a sink node $w$, so $w$ has no outgoing wait-for-edges.  By assumption, all atomic components are individually deadlock-free, \ie
-% they always enable at least one interaction. So if $w$ is an atomic component $\B_i$, we have a wait-for-edge $\B_i \ar \act$ for some interaction
-% $\act$, contradicting the fact that $w$ is a sink node.  Hence $w$ is some interaction $\act$.  Since $\act$ has no outgoing edges, it violates
-% clause~\ref{def:supercycle.action-blocked} in Definition~\ref{def:supercycle}, contradicting the assumption that $\SC$ is a supercycle.
-%
-% Alternatively, observe that, by an easy induction, $v$ has out-depth
-% $d$ implies that $v \in \JOIN_{d \ge 0} \VFsymb^{d} (\ewfg)$.
-% The proposition then follows by \prop{LFPisScViolations}.
 \end{proof}
-%
+
 
 
 
@@ -615,9 +601,9 @@ node in $\SC$ has finite out-depth. By \prop{outdepth-finite-implies-scViol}, $\
 
 \begin{proposition} \label{prop:supercycle:essential-subgraph-of} Let $\B =
 \gamma(\B_1,\dots,\B_n)$ be a composite component and $s$ a state of
-$\B$.  Let $SC$ be a supercycle in $\wfg{\B}{s}$, and let $SC'$ be the
+$\B$.  Let $\SC$ be a supercycle in $\wfg{\B}{s}$, and let $\SC'$ be the
 graph obtained from $SC$ by removing all vertices of finite in-depth
-and their incident edges. Then $SC'$ is also a supercycle in
+and their incident edges. Then $\SC'$ is also a supercycle in
 $\wfg{\B}{s}$. 
 \end{proposition} 
 %
