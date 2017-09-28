@@ -110,27 +110,37 @@ Note that $\YS \join \set{\ndv}$ is the join of the wait-for-subgraph $\YS$ with
 wait-for-subgraph $\ndv$ consisting of the single node $\ndv$. Recall
 that the edges of $\YS \join \set{\ndv}$ are induced from $\lwfg{B}{t_\act}{\DS}$.
 
-The time complexity of \cVL{$\DS, \sD, \XS$} is 
-$O(\card{\lwfg{\B}{\sD}{\DS}} + \card{\DS} \mult \Adj)$
-where
-$\card{\lwfg{\B}{\sD}{\DS}}$ is the size (number of nodes plus number of edges) of $\lwfg{\B}{\sD}{\DS}$,
-$\card{\DS}$ is the number of component and interactions in $\dsk{\act}{\l}$, which is also the number of nodes in $\lwfg{\B}{\tD}{\DS}$,
-and
-$\Adj$ is the largest outdegree (\ie length of longest adjacency list) of $\lwfg{\B}{\tD}{\DS}$.
 
-The time complexity of \cLFP{$\DS, \sD$} is then $O(\Fix \mult (\card{\lwfg{\B}{\sD}{\DS}} + \card{\DS} \mult \Adj))$
-where $\Fix$ is the number of iterations that  \cLFP{$\DS, \sD$} takes to reach a fixpoint. In the worst case, 
-$\Fix$ is $O(\card{\lwfg{\B}{\sD}{\DS}})$.
+Let 
+$\Adj_v$ be the outdegree of $\ndv$ in $\lwfg{\B}{\tD}{\DS}$,
+$nodes(\DS)$ be the number of componets and interactions in $\DS$, \ie the number of nodes in $\lwfg{\B}{\sD}{\DS}$ and
+$\card{\DS}$ be the size of the syntactic description of $\DS$.
+%$\card{\lwfg{\B}{\sD}{\DS}}$ is the size (number of nodes plus number of edges) of $\lwfg{\B}{\sD}{\DS}$,
+%$\card{\DS}$ is the number of component and interactions in $\dsk{\act}{\l}$, which is also the number of nodes in $\lwfg{\B}{\tD}{\DS}$,
+%
+We assume that membership in $\XS$ and $\YS$ can be determined in constant time, \eg by using boolean arrays, and that evaluation of 
+transition guards in components takes time proportional to the length of the guards.
+%
+Then, the time complexity of \cLBL{$\ndv, \dsk{\act}{\l}, \sD, \XS$} is $O(\Adj_\ndv)$.
+%
+Hence the time complexity of \cVL{$\DS, \sD, \XS$} is 
+$O(\card{\DS} + \lwfg{\B}{\tD}{\DS})$, since each edge in $\lwfg{\B}{\tD}{\DS}$ is examined at most once, over all calls of \cLBL{$\ndv, \dsk{\act}{\l}, \sD, \XS$}.
+Since $\lwfg{\B}{\tD}{\DS}$ is $O(\card{\DS})$, this is just $O(\card{\DS}$.
+%
+%The time complexity of \cLFP{$\DS, \sD$} is then $O(\Fix \mult (\card{\lwfg{\B}{\sD}{\DS}} + \card{\DS} \mult \Adj))$
+The time complexity of \cLFP{$\DS, \sD$} is then $O(\Fix \mult \card{\DS})$
+where $\Fix$ is the number of iterations that  \cLFP{$\DS, \sD$} takes to reach a fixpoint.
+$\Fix$ is $O(nodes(\DS))$, since each iteration either adds a node or reaches the least fixpoint.
+Thus the time complexity of  \cLFP{$\DS, \sD$} is $O(nodes(\DS) \mult \card{\DS})$.
+%
 
-This analysis assumes that membership in $\XS$ and $\YS$ can be determined in constant time, \eg by using boolean arrays.
 
 
 
 
 \thm{local.deadlock-free} requires that all initial states be supercycle-free. 
 We assume that the number of initial states is small, so that we can check each explicitly. 
-\fig{checkInitSCFree}  presents an algorithm that checks if a
-given state is supercycle-free.
+\fig{checkInitSCFree}  presents an algorithm that checks if a given state is supercycle-free.
 
 % \subsection{Checking that initial states are supercycle-free}
    \label{s:initSCFree}
@@ -180,17 +190,24 @@ If all initial states are supercycle-free, the for loop terminates, and
 \cInitSCFree{$Q_0$} returns true, as required.
 \end{proof}
 
-The time complexity of \cInitSCFree{$Q_0$} is
-%$O(\card{Q_0} \mult \Fix \mult (\card{\wfg{\B}{s_0}} + \card{\B} \mult \Adj)$
-$O(\SUM_{s_0 \in Q_0} \Fix(s_0) \mult (\card{\wfg{\B}{s_0}} + \card{\B} \mult \Adj)$
-where
-%$\card{Q_0}$ is the number of states in $Q_0$, \ie the number of initial states,
-$\card{\wfg{\B}{s_0}}$ is the size (number of nodes plus number of edges) of $\wfg{\B}{s_0}$,
-$\card{\B}$ is the number of component and interactions in $\B$, which is also the number of nodes in $\wfg{\B}{s_0}$,
-and
-$\Adj$ is the largest outdegree (\ie length of longest adjacency list) of $\wfg{\B}{s_0}$, and 
-$\Fix(s_0)$ is the  number of iterations that  \cLFP{$\B, s_0$} takes to reach a fixpoint. In the worst case, 
-$\Fix(s_0)$ is $O(\card{\wfg{\B}{s_0}})$.
+
+Let
+%$\card{\wfg{\B}{s_0}}$ be the size (number of nodes plus number of edges) of $\wfg{\B}{s_0}$,
+$\card{\B}$ be the size of the syntactic description of $\B$ 
+$nodes(\B)$ be the number of components and interactions in $\B$, which is also the number of nodes in $\wfg{\B}{s_0}$, and
+$\card{Q_0}$ be the number of states in $Q_0$, \ie the number of initial states,
+%$\Adj$ is the largest outdegree (\ie length of longest adjacency list) of $\wfg{\B}{s_0}$, and 
+%$\Fix(s_0)$ is the  number of iterations that  \cLFP{$\B, s_0$} takes to reach a fixpoint.
+%
+Then time complexity of \cInitSCFree{$Q_0$} is 
+$O(\card{Q_0} \mult nodes(\B) \mult \card{\B})$.
+
+%$\Fix(s_0)$ is $O(nodes(\B))$ since each iteration either adds at least one node or reaches a fixpoint.
+%Hence we have a running time of $O(\SUM_{s_0 \in Q_0}  (\card{\wfg{\B}{s_0}}^2 + \card{\B} \mult \Adj)$
+
+
+
+
 
 
 
@@ -269,14 +286,20 @@ aaa\= aa\= aa\= \kill
 \label{fig:implementation-checkDF}
 \end{figure}
 
-\paragraph{Complexity} The running  time of \checkLin{$\B, Q_0$}\ is
-$O(\SUM_{\act \in \gamma}\ |\Mdsk{\act}{\l_\act}| * |\dsks{\act}{\l_\act}|)$,
-where 
-$\l_\act$ is the smallest value of $\l$ for which $\LLin(\B, Q_0, \act, \l)$ holds, 
-$\Mdsk{\act}{\l_\act}$ is the transition system of $\dsks{\act}{\l_\act}$, 
-$|\Mdsk{\act}{\l_\act}|$ is the size (number of nodes plus number of edges) of $\Mdsk{\act}{\l_\act}$, and
-$|\dsks{\act}{\l_\act}|$ is the size of the syntactic description of $\dsks{\act}{\l_\act}$.
-
+\paragraph{Complexity} 
+Let 
+$\l_\act$ be the smallest value of $\l$ for which $\LLin(\B, Q_0, \act, \l)$ holds, 
+$\Mdsk{\act}{\l}$ be the transition system of $\dsks{\act}{\l}$, 
+$|\Mdsk{\act}{\l}|$ be the size (number of nodes plus number of edges) of $\Mdsk{\act}{\l}$, and
+$|\dsks{\act}{\l_\act}|$ be the size of the syntactic description of $\dsks{\act}{\l_\act}$.
+%
+Then the running  time of \checkLinIntDist{$\B, Q_0, \act, \l$} is $O( |\Mdsk{\act}{\l}| \mult |\dsks{\act}{\l}|)$, since 
+$\lwfg{\B}{\sD}{\DS}$ has size in $O(|\dsks{\act}{\l}|)$, and computing in-depth and out-depth in 
+$\lwfg{\B}{\sD}{\DS}$ can be done in linear time using depth-first graph search.
+%
+The running  time of \checkLinInt{$\B, Q_0, \act$}, is $O( \SUM_{1 \le \l \le \l_\act}   |\Mdsk{\act}{\l}| \mult |\dsks{\act}{\l}|)$.
+The running  time of \checkLin{$\B, Q_0$}\ is
+$O(\SUM_{\act \in \gamma}    \SUM_{1 \le \l \le \l_\act}   \    |\Mdsk{\act}{\l}| * |\dsks{\act}{\l}|)$.
 
 
 
@@ -334,15 +357,34 @@ Figure~\ref{fig:summaryProcedures} shows a summary of the procedures.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
-\paragraph{Complexity} The running  time of \checkLAO{$\B, Q_0$}\ is
+\paragraph{Complexity} 
+Let 
+$\l_\act$ be the smallest value of $\l$ for which  $\LAO(\B, Q_0, \act, \l)$ holds, 
+$\Mdsk{\act}{\l}$ be the transition system of $\dsks{\act}{\l}$, 
+$|\Mdsk{\act}{\l}|$ be the size (number of nodes plus number of edges) of $\Mdsk{\act}{\l}$, and
+$|\dsks{\act}{\l_\act}|$ be the size of the syntactic description of $\dsks{\act}{\l_\act}$.
+%
+The running time of \cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, \sD$} is $O(nodes(\DS) \mult \card{\DS})$, since maximal strongly conected components
+are computable inlieanr time using Kosaraju;'s algorithm, and the wait-fir paths from $\B_i$ to the border can be checked in lear time bny first
+removing all nodes with supercycle violations, and then checking if such paths remain.....
+
+
+
+
+The running  time of \checkLAO{$\B, Q_0$}\ is
 $O(\SUM_{\act \in \gamma}\  |\Mdsk{\act}{\l_\act}| * |\dsks{\act}{\l_\act}|)$, 
 where 
 $\l_\act$ is the smallest value of $\l$ for which $\LAO(\B, Q_0, \act, \l)$ holds, 
 $\Mdsk{\act}{\l_\act}$ is the transition system of $\dsks{\act}{\l_\act}$, 
 $|\Mdsk{\act}{\l_\act}|$ is the size (number of nodes plus number of edges) of $\Mdsk{\act}{\l_\act}$, and
 $|\dsks{\act}{\l_\act}|$ is the size of the syntactic description of $\dsks{\act}{\l_\act}$.
+%
 
 
+The running time of \cLFV{$\B_i, \VS, \dsk{\act}{\l}, \sD$} is 
+The running time of \checkLAOIntDist{$\B, Q_0, \act, \l$} is
+The running time of \checkLAOInt{$\B, Q_0, \act$} is 
+The running time of \checkLAO{$\B, Q_0$} is 
 
 
 
