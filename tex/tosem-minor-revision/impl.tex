@@ -5,9 +5,9 @@ To implement our deadlock freedom criteria, we must:
 \item \label{task:evaluate-llin} Evaluate $\LLin$
 \en
 %
-Tasks \ref{task:check-init} and \ref{task:evaluate-lao} require the computation of $\lfp{\lVFs}$.
+Tasks \ref{task:check-init} and \ref{task:evaluate-lao} require the computation of $\lfp{\lVFsymb_{\sD}}$.
 \fig{algcomputeLFP} presents an algorithm that computes
-$\lfp{\lVFs}$. Its correctness follows immediately from \defn{blocksLoc} and \defn{violFixLoc}.
+$\lfp{\lVFsymb_{\sD}}$. Its correctness follows immediately from \defn{blocksLoc} and \defn{violFixLoc}.
 
 
 %\subsection{Computing the least fixpoint of $\lVFs$}
@@ -22,22 +22,22 @@ $\lfp{\lVFs}$. Its correctness follows immediately from \defn{blocksLoc} and \de
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:compute-lfp}
 aaa\= aa\= aa\= aa\= aa\=\kill
-\cLFP{$\dsk{\act}{\l},\tD$}\\
-\cmnt\ Precondition: $\tD$ is a state of $\dsk{\act}{\l}$\\
-\cmnt\ Postcondition: returns least fixpoint of $\lVFsymb_{\tD}$ \ie $\lfp{\lVFsymb_{\tD}} = \JOIN_{d \ge 1} \lVFsi{\tD}{\ewfg}{d}$.\\
+\cLFP{$\dsk{\act}{\l},\sD$}\\
+\cmnt\ Precondition: $\sD$ is a state of $\dsk{\act}{\l}$\\
+\cmnt\ Postcondition: returns least fixpoint of $\lVFsymb_{\sD}$ \ie $\lfp{\lVFsymb_{\sD}} = \JOIN_{d \ge 1} \lVFsi{\sD}{\ewfg}{d}$.\\
 %in state $t_\DS$ of $\dsk{\act}{\l}$, \ie $\lfp{\lVFs} = \UN_{d \ge 0} \lVFs^{d} (\ewfg)$.\\
 
 \lio{\XS \gts \ewfg;}
 
 \lio{\REPEAT}
-   \lit{\mbox{\cmnt loop invariant: at end of $i$'th iteration, $\XS = \lVFi{\ewfg}{i} =  v \in \JOIN_{1 \le d \le i} \lVFsi{\tD}{\ewfg}{d}$}}
-   \lit{\YS \gts \cVL{\dsk{\act}{\l}, t_\DS, \XS}}
+   \lit{\mbox{\cmnt loop invariant: at end of $i$'th iteration, $\XS = \lVFsi{\sD}{\ewfg}{i} =  \JOIN_{1 \le d \le i} \lVFsi{\sD}{\ewfg}{d}$}}
+   \lit{\YS \gts \cVL{\dsk{\act}{\l}, \sD, \XS}}
    \lit{\XS \gts \YS}
 \lio{\UNTIL\ \XS = \YS;}
 
 \lion{\RETURNE{\XS}}
 \end{tabbing}
-\caption{Procedure to compute all supercycle-violations in state $t_\DS$ of $\dsk{\act}{\l}$}
+\caption{Procedure to compute all supercycle-violations in state $\sD$ of $\dsk{\act}{\l}$}
 \label{fig:algcomputeLFP}
 \end{figure}
 
@@ -48,50 +48,79 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:compute-lfp}
 aaa\= aa\= aa\= aa\= aa\=\kill
-\cVL{$\dsk{\act}{\l}, \tD, \XS$}\\
-\cmnt\ precondition: $\tD$ is a state of $\dsk{\act}{\l}$ and $X \subg \lwfg{\B}{\tD}{\dsk{\act}{\l}}$\\
-\cmnt\ postcondition: returns $\lVFs{\tD}{X}$\\ %  in state $t_\DS$ of $\dsk{\act}{\l}$,\\
+\cVL{$\dsk{\act}{\l}, \sD, \XS$}\\
+\cmnt\ precondition: $\sD$ is a state of $\dsk{\act}{\l}$ and $X \subg \lwfg{\B}{\sD}{\dsk{\act}{\l}}$\\
+\cmnt\ postcondition: returns $\lVFs{\sD}{X}$\\ %  in state $t_\DS$ of $\dsk{\act}{\l}$,\\
 \\
-\lio{\mbox{compute $\lwfg{\B}{\tD}{\dsk{\act}{\l}}$}}
+\lio{\mbox{compute $\lwfg{\B}{\sD}{\dsk{\act}{\l}}$}}
 \lio{\YS \gts \ewfg}
 
-\lio{\FORALLC{\ndv \in \dsk{\act}{\l}}}
+\lio{\FORALLC{\ndv \in \lwfg{\B}{\sD}{\DS}}}
 
-   \lit{\IFC{\mbox{$v$ is an interior interaction $\actp$ and } 
-                          \neg (\ex \B_i : \actp \ar \B_i \in \lwfg{\B}{\tD}{\dsk{\act}{\l}})}}
-       \lihc{\YS \gts \YS \join \set{\ndv}}{\cmnt interaction with no outgoing wait-for-edges}  
+   \lit{\IFC{\neg \cLBL{$\ndv, \DS, \sD, \complLoc{\XS}$}}}
+       \lihc{\YS \gts \YS \join \set{\ndv}}{\cmnt satisfies \defn{violFixLoc}}
 
-    \lit{\ELSFC{\mbox{$v$ is an interior interaction $\actp$ and } 
-     (\fa \B_i : \actp \ar \B_i \in \lwfg{\B}{\tD}{\dsk{\act}{\l}}  :  B_i \in \XS )}}
-        \lihc{\YS \gts \YS \join \set{\ndv}}{\cmnt all outgoing wait-for-edges go to nodes in $\XS$}
-
-    \lit{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
-     (\ex \actp : \B_i \ar \actp \in \lwfg{\B}{\tD}{\dsk{\act}{\l}}  : \actp \in \XS )}}
-         \lihc{\YS \gts \YS \join \set{\ndv}}{\cmnt some outgoing wait-for-edge goes to a node in $\XS$}
-
-    \lit{\FI}
 \lio{\ENDFOR;}
 \lion{\RETURNE{\YS}}
 \end{tabbing}
-\caption{Procedure to compute $\lVF{X}$}
+\caption{Procedure to compute $\lVFs{\sD}{X}$}
 \label{fig:algcomputeVL}
 \end{figure}
+
+
+
+\begin{figure}[H]
+\setcounter{lctr}{0}
+\begin{tabbing}\label{alg:compute-lfp}
+aaa\= aa\= aa\= aa\= aa\=\kill
+\cLBL{$\ndv, \dsk{\act}{\l}, \sD, \XS$}\\
+\cmnt\ precondition: $\sD$ is a state of $\dsk{\act}{\l}$, $X \subg \lwfg{\B}{\sD}{\dsk{\act}{\l}}$, and $\ndv \in \lwfg{\B}{\sD}{\DS}$\\
+\cmnt\ postcondition: returns  $\lblocks{\sD}{\ndv}{X}$\\
+
+
+   \lit{\IFC{\mbox{$v$ is an border interaction $\act$ and } 
+                          \neg (\ex \B_i : \act \ar \B_i \in \lwfg{\B}{\sD}{\DS})}}
+       \lihc{\RETURNE{\true}}{\cmnt border interaction pessimistically assumed to be blocked}
+
+    \lit{\ELSFC{\mbox{$v$ is an interior interaction $\act$ and } 
+                        (\ex \B_i : \act \ar \B_i \in \lwfg{\B}{\sD}{\DS}  :  \B_i \in \XS )}}
+        \lihc{\RETURNE{\true}}{\cmnt some outgoing wait-for edge goes to a component in $\XS$}
+
+    \lit{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
+                          (\fa \act : \B_i \ar \act \in \lwfg{\B}{\sD}{\DS}  : \act \in \XS )}}
+         \lihc{\RETURNE{\true}}{\cmnt all outgoing wait-for edges go to an interaction in $\XS$}
+
+    \lit{\ELSE}
+         \lihc{\RETURNE{\false}}{\cmnt all cases for blocking do not hold, cf.~\defn{blocksLoc}}
+
+    \lit{\FI}
+\end{tabbing}
+\caption{Procedure to compute $\lblocks{\sD}{\ndv}{X}$}
+\label{fig:algcomputeLBL}
+\end{figure}
+
+
+
+
+
+
+
 
 Note that $\YS \join \set{\ndv}$ is the join of the wait-for-subgraph $\YS$ with the 
 wait-for-subgraph $\ndv$ consisting of the single node $\ndv$. Recall
 that the edges of $\YS \join \set{\ndv}$ are induced from $\lwfg{B}{t_\act}{\DS}$.
 
-The time complexity of \cVL{$\DS, \tD, \XS$} is 
-$O(\card{\lwfg{\B}{\tD}{\DS}} + \card{\DS} \mult \Adj)$
+The time complexity of \cVL{$\DS, \sD, \XS$} is 
+$O(\card{\lwfg{\B}{\sD}{\DS}} + \card{\DS} \mult \Adj)$
 where
-$\card{\lwfg{\B}{\tD}{\DS}}$ is the size (number of nodes plus number of edges) of $\lwfg{\B}{\tD}{\DS}$,
+$\card{\lwfg{\B}{\sD}{\DS}}$ is the size (number of nodes plus number of edges) of $\lwfg{\B}{\sD}{\DS}$,
 $\card{\DS}$ is the number of component and interactions in $\dsk{\act}{\l}$, which is also the number of nodes in $\lwfg{\B}{\tD}{\DS}$,
 and
 $\Adj$ is the largest outdegree (\ie length of longest adjacency list) of $\lwfg{\B}{\tD}{\DS}$.
 
-The time complexity of \cLFP{$\DS, \tD$} is then $O(\Fix \mult (\card{\lwfg{\B}{\tD}{\DS}} + \card{\DS} \mult \Adj))$
-where $\Fix$ is the number of iterations that  \cLFP{$\DS, \tD$} takes to reach a fixpoint. In the worst case, 
-$\Fix$ is $O(\card{\lwfg{\B}{\tD}{\DS}})$.
+The time complexity of \cLFP{$\DS, \sD$} is then $O(\Fix \mult (\card{\lwfg{\B}{\sD}{\DS}} + \card{\DS} \mult \Adj))$
+where $\Fix$ is the number of iterations that  \cLFP{$\DS, \sD$} takes to reach a fixpoint. In the worst case, 
+$\Fix$ is $O(\card{\lwfg{\B}{\sD}{\DS}})$.
 
 This analysis assumes that membership in $\XS$ and $\YS$ can be determined in constant time, \eg by using boolean arrays.
 
@@ -225,8 +254,8 @@ aaa\= aa\= aa\= \kill
 \checkLinIntDist{$\B, Q_0, \act, \l$}\\
 \cmnt\ returns $\ttt$ iff $\LLin(\B, Q_0, \act, \l))$\\
 \lio{\mbox{let $\DS = \dsks{\act}{\l}$}}
-\lio{\FORALLC{\mbox{reachable transitions $s_\DS \goesto[\act] t_\DS$ of $\dsk{\act}{\l}$}}}
-   \lit{\IFC{\neg(\fa \B_i \in \cmps{\act}:  \widepth{\dsk{\act}{\l}}{\B_i}{t_\DS} < 2\l - 1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\DS} < 2\l -1)}}
+\lio{\FORALLC{\mbox{reachable transitions $\tD \goesto[\act] \sD$ of $\DS$}}}
+   \lit{\IFC{\neg(\fa \B_i \in \cmps{\act}:  \widepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l - 1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l -1)}}
   	\lihc{\RETURNE{\fff}}{\cmnt\ check Definition~\ref{def:ldfc-k}}
   \lit{\FI}
 \lio{\ENDFOR;}
@@ -288,13 +317,13 @@ Figure~\ref{fig:summaryProcedures} shows a summary of the procedures.
 \checkLAOInt{$\B, Q_0, \act$} & true iff $(\ex \l \ge 1: \LAO(B, Q_0, \act, \l))$\\ \hline
 \checkLAOIntDist{$\B, Q_0, \act, \l$} &  true iff $\LAO(\B, Q_0, \act, \l)$\\ \hline
 
-\cLFV{$\B_i, \VS, \dsk{\act}{\l}, t_\DS$} & true iff $B_i$ has local sc-formation violation \\
-& in state $t_\DS$ of $\dsk{\act}{\l}$, \ie $\locFormViol{B_i}{t_\DS}{\act}{\l}$ holds\\ \hline
+\cLFV{$\B_i, \VS, \dsk{\act}{\l}, \sD$} & true iff $B_i$ has local sc-formation violation \\
+& in state $\sD$ of $\dsk{\act}{\l}$, \ie $\locFormViol{B_i}{\sD}{\act}{\l}$ holds\\ \hline
 
-\cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, t_\DS$} & true iff $B_i$ has local strong connectedness
-                                         violation \\ & in $t_{\act}$,  \ie $\locConnViol{B_i}{t_\DS}{\act}{\l}$ holds\\ \hline
+\cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, \sD$} & true iff $B_i$ has local strong connectedness
+                                         violation \\ & in $t_{\act}$,  \ie $\locConnViol{B_i}{\sD}{\act}{\l}$ holds\\ \hline
 
-\cLFP{$\dsk{\act}{\l},t_\DS$} & compute local supercycle violations \\ & in state $t_\DS$ of $\dsk{\act}{\l}$, \ie $\lviol{v}{d}{t_\DS}{\act}{\l}$ for all $v,d$\\
+\cLFP{$\dsk{\act}{\l},\sD$} & compute local supercycle violations \\ & in state $\sD$ of $\dsk{\act}{\l}$, \ie $\lviol{v}{d}{\sD}{\act}{\l}$ for all $v,d$\\
 \hline
 \end{tabular}
 }
@@ -350,10 +379,10 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \checkLAOIntDist{$\B, Q_0, \act, \l$}\\
 \cmnt\ returns $\ttt$ iff $\LAO(\B, Q_0, \act, \l)$\\
 \lio{\mbox{let $\DS = \dsks{\act}{\l}$}}
-\lio{\FORALLC{\mbox{reachable transitions $s_\DS \goesto[\act] t_\DS$ of $\dsk{\act}{\l}$}}}
-   \litc{\VS \gets \cLFP{\dsk{\act}{\l},t_\DS}}{\cmnt see \fig{algcomputeLFP}}
+\lio{\FORALLC{\mbox{reachable transitions $\tD \goesto[\act] \sD$ of $\dsk{\act}{\l}$}}}
+   \litc{\VS \gets \cLFP{\dsk{\act}{\l},\sD}}{\cmnt see \fig{algcomputeLFP}}
    \lit{\FORALLC{\B_i \in \cmps{\act}}}
-      \lihc{\IF\ \neg \cLFV{\B_i, \VS, \dsk{\act}{\l},t_\DS}\ \THEN\ \RETURNE{\fff}\ \FI}{\cmnt return $\fff$ if no violation for $\B_i$}
+      \lihc{\IF\ \neg \cLFV{\B_i, \VS, \dsk{\act}{\l},\sD}\ \THEN\ \RETURNE{\fff}\ \FI}{\cmnt return $\fff$ if no violation for $\B_i$}
 %         \lifc{\IFC{\neg \LF{\act}{\l}{t_\DS}{v}{\l}}\ 
    \lit{\ENDFOR}
 \lio{\ENDFOR}
@@ -366,22 +395,22 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \begin{tabbing}
 \label{alg:computeLocForm}
 aaa\= aa\= aa\= aa\= aa\=\kill
-\cLFV{$\B_i, \VS, \dsk{\act}{\l},t_\DS$}\\
-\cmnt\ returns true iff $\locFormViol{\B_i}{t_\DS}{\act}{\l}$ holds (Definition~\ref{def:locFormation.violation})\\
-\cmnt\ \ie $\B_i$ has a local supercycle formation violation in state $t_\DS$ of subsystem $\dsk{\act}{\l}$\\
-\lion{\RETURNE{\B_i \in \VS \, \lor \, \mbox{\cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, t_\DS$}}}}
+\cLFV{$\B_i, \VS, \dsk{\act}{\l}, \sD$}\\
+\cmnt\ returns true iff $\locFormViol{\B_i}{\sD}{\act}{\l}$ holds (Definition~\ref{def:locFormation.violation})\\
+\cmnt\ \ie $\B_i$ has a local supercycle formation violation in state $\sD$ of subsystem $\dsk{\act}{\l}$\\
+\lion{\RETURNE{\B_i \in \VS \, \lor \, \mbox{\cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, \sD$}}}}
 \end{tabbing}
 
 
 \setcounter{lctr}{0}
 \begin{tabbing}\label{alg:compute-scViol}
 aaa\= aa\= aa\= aa\= aa\=\kill
-\cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, t_\DS$}\\
-\cmnt\ returns true iff $\locConnViol{\B_i}{t_\DS}{\act}{\l}$ holds (Definition~\ref{def:sConn.violation.loc})\\
-\cmnt\ \ie $\B_i$ has a local strong connectedness supercycle formation violation in state $t_\DS$ of subsystem $\dsk{\act}{\l}$\\
+\cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, \sD$}\\
+\cmnt\ returns true iff $\locConnViol{\B_i}{\sD}{\act}{\l}$ holds (Definition~\ref{def:sConn.violation.loc})\\
+\cmnt\ \ie $\B_i$ has a local strong connectedness supercycle formation violation in state $\sD$ of subsystem $\dsk{\act}{\l}$\\
 %\cmnt\ compute local supercycle violations in state $t_\DS$ of $\dsk{\act}{\l}$\\
 %\cmnt\ Postcondition: $\fas v \in \set{\B_1,\ldots,\B_n} \un \gamma, d' = 1,\ldots,dd: \VV{\act}{\l}{t_\DS}{v}{d'} = \lviol{v}{d'}{t_\DS}{\act}{\l}$\\
-\lio{\mbox{remove from $\lwfg{B}{t_\DS}{\DS}$ all nodes in $\VS$, \ie with a local supercycle violation}}
+\lio{\mbox{remove from $\lwfg{B}{\sD}{\DS}$ all nodes in $\VS$, \ie with a local supercycle violation}}
 \lio{\mbox{compute maximal strongly connected components of the resulting wait-for graph}}
 \lio{\FORALLC{\mbox{maximal strongly connected components $C$}}}
    \lit{\mbox{\IF\ $C$ contains a non-trivial strongly connected supercycle which contains $B_i$ as a node \THEN}}

@@ -7,33 +7,32 @@
 
 
 We now seek a local condition, which we evaluate in $\dsk{\act}{\l}$, and which implies \GAO.
-We define local versions of both $\scViol{v}{d}{t}$ and $\connViol{v}{t}$.
+We define local versions of both $\scViol{v}{d}{s}$ and $\connViol{v}{s}$.
 
-To achieve a local and conservative approximation of $\scViol{v}{d}{t}$, we make the ``pessimistic'' assumption that the violation status of border
+To achieve a local and conservative approximation of $\scViol{v}{d}{s}$, we make the ``pessimistic'' assumption that the violation status of border
 nodes of $\dsk{\act}{\l}$ cannot be known, since it depends on nodes outside of $\dsk{\act}{\l}$.  Now, if an internal node $v$ of $\dsk{\act}{\l}$
 can be marked with a level-$d$ \emph{local} sc-violation, by applying \defn{supercycle.violation.local} to $\dsk{\act}{\l}$, and with the
 border nodes marked as non-violating, then it is also the case, as we show below, that $v$ also has a level-$d$ \emph{global} sc-violation, as per \defn{supercycle.violation}.
 
 To achieve a local and conservative approximation of
-$\connViol{v}{t}$, we project onto the subsystem \DS.
+$\connViol{v}{s}$, we project onto the subsystem \DS.
 
 
 \subsubsection{Local strong connectedness condition}
 
 We now present the local version of the strong connectedness violation condition, given above in Definition~\ref{def:sConn.violation}.
 
-\begin{definition}[Local strong connectedness violation, $\locConnViol{v}{t_\DS}{\act}{\l}$]
+\begin{definition}[Local strong connectedness violation, $\locConnViol{v}{\sD}{\act}{\l}$]
 \label{def:sConn.violation.loc}
 \label{defn:sConn.violation.loc}
 
-Let $L$ be the nodes of $\wfg{\dsk{a}{\l}}{t_\DS}$ that have no local supercycle violation, \ie
- $L = \set{ \ndv \stt \ndv \in \dsk{a}{\l} \land \neg \scVL{\ndv}{t_\DS}{\act}{\l} }$.
-% $L = \set{v \stt v \in \dsk{a}{\l} \land \neg (\ex d \ge 1: \locScViol{v}{d}{t_\DS}{\act}{\l}) }$.
+Let $L$ be the nodes of $\wfg{\dsk{a}{\l}}{\sD}$ that have no local supercycle violation, \ie
+ $L = \set{ \ndv \stt \ndv \in \dsk{a}{\l} \land \neg \scVL{\ndv}{\sD}{\act}{\l} }$.
 %
-Let $\WL = \wfg{\dsk{a}{\l}}{t_\DS} \pj L$, \ie $\WL$ is the subgraph of $\wfg{\dsk{a}{\l}}{t_\DS}$ consisting of the
-nodes in $L$, and the edges between those nodes that are also edges in $\wfg{\dsk{a}{\l}}{t_\DS}$.
+Let $\WL = \wfg{\dsk{a}{\l}}{\sD} \pj L$, \ie $\WL$ is the subgraph of $\wfg{\dsk{a}{\l}}{\sD}$ consisting of the
+nodes in $L$, and the edges between those nodes that are also edges in $\wfg{\dsk{a}{\l}}{\sD}$.
 
-Let $\ndv$ be an arbitrary node in $L$.  Then, $\locConnViol{\ndv}{t_\DS}{\act}{\l}$ holds iff:
+Let $\ndv$ be an arbitrary node in $L$.  Then, $\locConnViol{\ndv}{\sD}{\act}{\l}$ holds iff:
 \bn
 
 \item \label{def:sConn.violation.loc:scc}
@@ -47,13 +46,13 @@ either
     \bn
 
     \item \label{def:sConn.violation.loc:wait-for-out} every wait-for path $\pi$ from $\ndv$ to a border node
-      of $\dsk{a}{\l}$ contains at least one node $\ndw$ with a local supercycle violation, \ie $\scVL{\ndw}{t_\DS}{\act}{\l}$,
+      of $\dsk{a}{\l}$ contains at least one node $\ndw$ with a local supercycle violation, \ie $\scVL{\ndw}{\sD}{\act}{\l}$,
 
      or
 
     \item \label{def:sConn.violation.loc:wait-for-in} every wait-for path $\pi'$ from a border node
       of $\dsk{a}{\l}$ to $\ndv$ contains at least one node $\ndw$ with a
-      local supercycle violation,  \ie $\scVL{\ndw}{t_\DS}{\act}{\l}$.
+      local supercycle violation,  \ie $\scVL{\ndw}{\sD}{\act}{\l}$.
 
     \en
 
@@ -67,25 +66,25 @@ We show that the local strong connectedness condition implies the global strong 
 \label{prop:locConnViol-implies-ConnViol}
  \label{prop:locConnViol-implies-connViol}
 Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
-For all interactions $\act \in \gamma$, and $\l \ge 1$, let $\DS = \dsks{\act}{\l}$, $t_\DS = t \pj \dsk{\act}{\l}$, and let $\ndv$ be an arbitrary node in $\dsk{\act}{\l}$.
+For all interactions $\act \in \gamma$, and $\l \ge 1$, let $\DS = \dsks{\act}{\l}$, $\sD = s \pj \dsk{\act}{\l}$, and let $\ndv$ be an arbitrary node in $\dsk{\act}{\l}$.
 Then\\
-\ind $\locConnViol{v}{t_\DS}{\act}{\l} \imp \connViol{v}{t}$.
+\ind $\locConnViol{v}{\sD}{\act}{\l} \imp \connViol{v}{s}$.
 \end{proposition}
 %
 \begin{proof}
-By contradiction. Assume there exists a node $v$ in $\dsk{a}{\l}$ such that $\locConnViol{v}{t_\DS}{\act}{\l} \land \neg \connViol{v}{t}$.
-By $\neg \connViol{v}{t}$ and Definition~\ref{def:sConn.violation}, there exists a strongly connected
-supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{\B}{t}$. Then, there are two cases:
+By contradiction. Assume there exists a node $v$ in $\dsk{a}{\l}$ such that $\locConnViol{v}{\sD}{\act}{\l} \land \neg \connViol{v}{s}$.
+By $\neg \connViol{v}{s}$ and Definition~\ref{def:sConn.violation}, there exists a strongly connected
+supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{\B}{s}$. Then, there are two cases:
 %
 \bn
-\item $\SSC \subg \wfg{\dsk{a}{\l}}{t_\DS}$: let $x$ be any node in $\SSC$. Since $x$ is a node in a supercycle, we have by
-  \defn{supercycle.membership} and \prop{scViol-iff-notInSC}, that $\neg \scV{\ndv}{t}$. %Previous: $\neg (\ex d \ge 1: \scViol{x}{d}{t})$. 
-   Hence, by \prop{locScViol-implies-scViol},  we have $\neg \scVL{\ndv}{t_\DS}{\act}{\l}$.    %Previous: $(\fa d \ge 1: \neg \locScViol{x}{d}{t_\DS}{\act}{\l})$.
+\item $\SSC \subg \wfg{\dsk{a}{\l}}{\sD}$: let $x$ be any node in $\SSC$. Since $x$ is a node in a supercycle, we have by
+  \defn{supercycle.membership} and \prop{scViol-iff-notInSC}, that $\neg \scV{\ndv}{s}$. 
+   Hence, by \prop{locScViol-implies-scViol},  we have $\neg \scVL{\ndv}{\sD}{\act}{\l}$. 
    Let $L, \WL$ be as given in \defn{sConn.violation.loc}.
   Then $x \in L$, and since $x$ is an arbitrary node of $\SSC$, we have $\SSC \subg \WL$. 
   Thus Clause~\ref{def:sConn.violation.loc:scc} of Definition~\ref{def:sConn.violation.loc} is violated.
 
-\item $\SSC \not\subg \wfg{\dsk{a}{\l}}{t_\DS}$: then there exists a node $x \in \SSC - \wfg{\dsk{a}{\l}}{t_\DS}$.
+\item $\SSC \not\subg \wfg{\dsk{a}{\l}}{\sD}$: then there exists a node $x \in \SSC - \wfg{\dsk{a}{\l}}{\sD}$.
   Since $v \in \SSC$, there must exist a wait-for path $\pi$
   from $v$ to $x$ and a wait-for path $\pi'$ from $x$ to
   $v$. Since $v \in \dsk{a}{\l}$ and $x \not\in \dsk{a}{\l}$, it
@@ -100,19 +99,9 @@ supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{\B}{t}$. Then, the
   
 \en
 In both cases,  Definition~\ref{def:sConn.violation.loc} is violated. 
-But  Definition~\ref{def:sConn.violation.loc} must hold, since we have $\locConnViol{v}{t_\DS}{\act}{\l}$. 
+But  Definition~\ref{def:sConn.violation.loc} must hold, since we have $\locConnViol{v}{\sD}{\act}{\l}$. 
 Hence, the desired contradiction.
 \end{proof}
-
-
-% Let $v$ be a node that is in a supercycle of $\wfg{\dsk{a}{\l}}{t_\DS}$, and $t_\DS$ a state of $\dsk{\act}{\l}$.
-% Let $W$ be the result of removing from $\wfg{\dsk{a}{\l}}{t}$ every node $u$ such that 
-% $(\ex d \ge 1: \locScViol{u}{d}{t_\DS}{\act}{\l})$. Let $V$ be the maximal strongly connected component of $W$ that
-% contains $v$. Then $\locConnViol{v}{t_\DS}{\act}{\l}$ holds iff $V$ (by itself) is not a supercycle.
-% For technical convenience, we also define $\locConnViol{v}{t_\DS}{\act}{\l}$ to be false when $(\ex d \ge 1:
-% \locScViol{v}{d}{t_\DS}{\act}{\l})$, \ie when $v$ is not in a supercycle.
-% Hence $\locConnViol{v}{t_\DS}{\act}{\l}$ is always well-defined.
-
 
 
 
@@ -126,38 +115,33 @@ disjunction of local supercycle violation and local strong connectedness violati
 the local supercycle formation condition implies the global supercycle formation condition.
 
 
-\begin{definition}[General local supercycle violation, $\locFormViol{v}{t_\DS}{\act}{\l}$]
+\begin{definition}[General local supercycle violation, $\locFormViol{v}{\sD}{\act}{\l}$]
 \label{def:locFormation.violation}
 \label{defn:locFormation.violation}
-Let $\ndv$ be an arbitrary node of $\dsk{\act}{\l}$ and $t_\DS$ be an arbitrary reachable state of $\dsk{\act}{\l}$.
-Then $\locFormViol{v}{t_\DS}{\act}{\l}  \df \scVL{v}{t_\DS}{\act}{\l} \lor \locConnViol{v}{t_\DS}{\act}{\l}$.
+Let $\ndv$ be an arbitrary node of $\dsk{\act}{\l}$ and $\sD$ be an arbitrary reachable state of $\dsk{\act}{\l}$.
+Then $\locFormViol{v}{\sD}{\act}{\l}  \df \scVL{v}{\sD}{\act}{\l} \lor \locConnViol{v}{\sD}{\act}{\l}$.
 \end{definition}
-%Let $s \goesto[\act] t$ be a reachable transition. If, for every $\B_i \in \cmps{\act}$, 
-%$\formViol{v}{t}$ holds, then $s \goesto[\act] t$ does not introduce a supercycle, \ie if $s$ is
-%supercycle-free, then so is $t$. We establish this in the sequel.
-%
+
 
 \begin{proposition} \label{prop:locFromViol-implies-formViol}
 \label{prop:locformviol-implies-formviol}
-Let $t$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
-For all interactions $\act \in \gamma$, and $\l \ge 1$, let $\DS = \dsks{\act}{\l}$ and $t_\DS = t \pj \dsk{\act}{\l}$.
+Let $s$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
+For all interactions $\act \in \gamma$, and $\l \ge 1$, let $\DS = \dsks{\act}{\l}$ and $\sD = s \pj \dsk{\act}{\l}$.
 Also let $\ndv$ be an arbitrary node of $\dsk{\act}{\l}$.
 Then\\
-%\ind $\fa d \ge 1: $\locFormViol{v}{t_\DS}{\act}{\l}\locFormViol{v}{d}{t_\DS}{\act}{\l} \imp \formViol{v}{d}{t}$.
-\ind $ \locFormViol{v}{t_\DS}{\act}{\l} \imp \genViol{v}{t}$.
+\ind $ \locFormViol{v}{\sD}{\act}{\l} \imp \genViol{v}{s}$.
 \end{proposition}
 %
 \begin{proof}
-Assume that $\locFormViol{v}{t_\DS}{\act}{\l}$ holds. Then, by \defn{locFormation.violation},
-$\scVL{v}{t_\DS}{\act}{\l} \lor \locConnViol{v}{t_\DS}{\act}{\l}$.
+Assume that $\locFormViol{v}{\sD}{\act}{\l}$ holds. Then, by \defn{locFormation.violation},
+$\scVL{v}{\sD}{\act}{\l} \lor \locConnViol{v}{\sD}{\act}{\l}$.
 We proceed by cases:
 \bn
-%Previous: \item $(\exs d \ge 1: \locScViol{v}{d}{t_\DS}{\act}{\l})$: hence $(\exs d \ge 1: \scViol{v}{d}{t})$ by Proposition~\ref{prop:locScViol-implies-scViol}.
-\item $\scVL{v}{t_\DS}{\act}{\l}$: hence $\scV{v}{t}$ by \prop{locScViol-implies-scViol}.
-\item $\locConnViol{v}{t_\DS}{\act}{\l}$: hence $\connViol{v}{t}$ by \prop{locConnViol-implies-connViol}.
+\item $\scVL{v}{\sD}{\act}{\l}$: hence $\scV{v}{s}$ by \prop{locScViol-implies-scViol}.
+\item $\locConnViol{v}{\sD}{\act}{\l}$: hence $\connViol{v}{s}$ by \prop{locConnViol-implies-connViol}.
 \en
-By \defn{formation.violation},  $\genViol{v}{t}  \df \scV{v}{t}  \lor \connViol{v}{t}$.
-Hence we conclude that $\genViol{v}{t}$ holds.
+By \defn{formation.violation},  $\genViol{v}{s}  \df \scV{v}{s}  \lor \connViol{v}{s}$.
+Hence we conclude that $\genViol{v}{s}$ holds.
 \end{proof}
 
 
@@ -169,12 +153,12 @@ The actual local condition, \LAO, is given by applying the local supercycle form
 of the subsystem $\dsk{\act}{\l}$ being considered, and to every component $B_i \in \cmps{\act}$.
 
 \begin{definition}[$\LAO(\B, Q_0, \act, \l)$] \label{def:lao}
-Let $\l \ge 1$, and let $s_\DS \goesto[\act] t_\DS$ be an arbitrary reachable transition of $\dsk{\act}{\l} = \dsks{\act}{\l}$.
-Then, in $t_\DS$, the following holds. 
+Let $\l \ge 1$, and let $\tD \goesto[\act] \sD$ be an arbitrary reachable transition of $\DS = \dsks{\act}{\l}$.
+Then, in $\sD$, the following holds. 
 For every component $\B_i$ of $\cmps{\act}$:  
 $\B_i$ has a supercycle formation violation that can be confirmed within $\dsk{\act}{\l}$.
 Formally,\\
-\ind  $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{t_\DS}{\act}{\l}$.
+\ind  $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{\sD}{\act}{\l}$.
 \end{definition}
 %
 
@@ -189,25 +173,22 @@ Let $\act \in \gamma$ be an interaction of BIP-system $(\B, Q_0)$. Then\\
 \ind $(\ex \l \ge 1: \LAO(\B, Q_0, \act, \l))$ implies $\GAO(\B, Q_0, \act)$
 \end{lemma}
 %
-%\prf{Immediate from Proposition~\ref{prop:locformviol-implies-formviol} and Definitions~\ref{def:global.ANDOR-cond}, \ref{def:lao}.}
-
 \begin{proof}
 Assume $\LAO(\B, Q_0, \act, \l)$ for some $\l \ge 1$. 
 %
-Let $s \goesto[\act] t$ be an arbitrary reachable transition of BIP-system $(\B, Q_0)$, and let 
-$s_\DS \goesto[\act] t_\DS$ be the projection of $s \goesto[\act] t$ onto $\dsk{\act}{\l}$.
-By Corollary~\ref{cor:bip.reachability}, $s_\DS \goesto[\act] t_\DS$ is a reachable transition of $\dsk{\act}{\l}$.
+Let $t \goesto[\act] s$ be an arbitrary reachable transition of BIP-system $(\B, Q_0)$, and let 
+$\tD \goesto[\act] \sD$ be the projection of $t \goesto[\act] s$ onto $\dsk{\act}{\l}$.
+By Corollary~\ref{cor:bip.reachability}, $\tD \goesto[\act] \sD$ is a reachable transition of $\dsk{\act}{\l}$.
 
 \noindent
 By Definition~\ref{def:lao}, we have for some $\l \ge 1$:\\
-\ind for every reachable transition $s_\DS \goesto[\act] t_\DS$ of $\dsk{\act}{\l}$:\\
-\ind \ind $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{t_\DS}{\act}{\l}$.
-%\ind \ind  $\fa \B_i \in \cmps{\act}, \exs d \ge 1: \lviol{\B_i}{d}{t_\DS}{\act}{\l}$. 
+\ind for every reachable transition $\tD \goesto[\act] \sD$ of $\dsk{\act}{\l}$:\\
+\ind \ind $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{\sD}{\act}{\l}$.
 
 \noindent
 From this and Proposition~\ref{prop:locFromViol-implies-formViol},\\
-\ind for every reachable transition $s \goesto[\act] t$ of  $(\B, Q_0)$:\\ 
-\ind \ind $\fa \B_i \in \cmps{\act} : \formViol{\B_i}{t}$
+\ind for every reachable transition $t \goesto[\act] s$ of  $(\B, Q_0)$:\\ 
+\ind \ind $\fa \B_i \in \cmps{\act} : \formViol{\B_i}{s}$
 
 \noindent
 Hence, by Definition~\ref{def:global.ANDOR-cond}, $\GAO(\B, Q_0, \act)$ holds.
@@ -224,7 +205,7 @@ Follows immediately from Lemma~\ref{lemma:loc.ANDOR.implies.glob.AND-OR} and The
 \end{proof}
 
 
-Notice that Definition~\ref{def:lao} calls $\locFormViol{v}{t_\DS}{\act}{\l}$ on components, which by definition should be connected to at least one non-border interaction. 
+Notice that Definition~\ref{def:lao} calls $\locFormViol{v}{\sD}{\act}{\l}$ on components, which by definition should be connected to at least one non-border interaction. 
 As such, the trivial local supercycles, i.e., consisting only of border interactions, have no effect on supercycle formation. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -232,21 +213,21 @@ As such, the trivial local supercycles, i.e., consisting only of border interact
 
 \begin{tabular}{|l|l|}
 \hline
-$\scViol{v}{d}{t}$  & $v$ confirmed at depth $d$ to not be in supercycle\\ 
+$\scViol{v}{d}{s}$  & $v$ confirmed at depth $d$ to not be in supercycle\\ 
               %supercycle violation condition
-$\locScViol{v}{d}{t_\DS}{\act}{\l}$ & $v$ locally determined to not be in a supercycle\\
+$\locScViol{v}{d}{\sD}{\act}{\l}$ & $v$ locally determined to not be in a supercycle\\
               % local supercycle violation condition:
 
-$\connViol{v}{t}$ & $v$ not in a strongly connected supercycle \\
+$\connViol{v}{s}$ & $v$ not in a strongly connected supercycle \\
               %strongly connected supercycle violation: 
 
-$\locConnViol{v}{t_\DS}{\act}{\l}$ & $v$ locally determined to not be in a strongly connected supercycle \\
+$\locConnViol{v}{\sD}{\act}{\l}$ & $v$ locally determined to not be in a strongly connected supercycle \\
                %local strongly connected supercycle violation 
 
-$\formViol{v}{t}$ & $v$ does not contribute to a supercycle\\
+$\formViol{v}{s}$ & $v$ does not contribute to a supercycle\\
                %supercycle formation violation: 
 
-$\locFormViol{v}{t_\DS}{\act}{\l}$ & $v$ locally determined to not contribute to a supercycle\\
+$\locFormViol{v}{\sD}{\act}{\l}$ & $v$ locally determined to not contribute to a supercycle\\
                 %local supercycle formation violation condition
 
 \hline
@@ -272,9 +253,9 @@ $\locFormViol{v}{t_\DS}{\act}{\l}$ & $v$ locally determined to not contribute to
 
 We now formulate a local version of $\GLin$.
 Observe that if
-$\widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$,
+$\widepth{\B}{\B_i}{s} < \omega \lor \wodepth{\B}{\B_i}{s} < \omega$,
 then there is some finite $\l$ such that 
-$\widepth{\B}{\B_i}{t} = \l \lor \wodepth{\B}{\B_i}{t} = \l$.
+$\widepth{\B}{\B_i}{s} = \l \lor \wodepth{\B}{\B_i}{s} = \l$.
 
 
 
@@ -283,13 +264,13 @@ $\widepth{\B}{\B_i}{t} = \l \lor \wodepth{\B}{\B_i}{t} = \l$.
 \label{def:locLinear}
 %Let $(B, Q_0)$ be a BIP system, with $B =\gamma(\B_1,\dots,\B_n)$.
 %Let $a$ be an interaction of $(B, Q_0)$, \ie $a \in \gamma$.
-Let $\l \ge 1$ and $s_\DS \goesto[\act] t_\DS$ be an arbitrary reachable transition of $\DS = \dsks{\act}{\l}$.
-Then, in $t_\DS$, the following holds. 
+Let $\l \ge 1$ and $\tD \goesto[\act] \sD$ be an arbitrary reachable transition of $\DS = \dsks{\act}{\l}$.
+Then, in $\sD$, the following holds. 
 For every component $\B_i$ of $\cmps{\act}$:  
-either $\B_i$ has in-depth less than $2\l - 1$, or out-depth less than $2\l - 1$, in $\wfg{\dsk{\act}{\l}}{t_\DS}$. 
+either $\B_i$ has in-depth less than $2\l - 1$, or out-depth less than $2\l - 1$, in $\wfg{\dsk{\act}{\l}}{\sD}$. 
 Formally,\\
 \ind  $\fa \B_i \in \cmps{\act}: 
-\widepth{\dsk{\act}{\l}}{\B_i}{t_\DS} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\DS} < 2\l-1$.
+\widepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1$.
 \end{definition}
 
 
@@ -298,30 +279,16 @@ To infer deadlock-freedom in $(\B, Q_0)$ by checking $\LLin(\B, Q_0, a, \l)$,
  we show that wait-for behavior in $\B$ ``projects down''
 to any subcomponent $\B'$, and that wait-for behavior in $\B'$ ``projects up'' to $\B$.
 
-% Let $e$ be a wait-for-edge with both endpoints in $B'$. Then if $e$ is
-% present in the wait-for-graph of $B$ for state $s$, then $e$ is also present in the wait-for-graph
-% $B'$ for $s \pj B'$ ($e$ projects down), and vice-versa ($e$ projects up).
-
-%Thus $\wfg{B'}{s \pj B'}$ is a ``projection'' of $\wfg{\B}{s}$ onto $B'$.
-
-
-%\vspace{0.5ex}
-
 Since wait-for-edges project up and down, it follows that wait-for-paths
 project up and down, provided that the subsystem contains the entire wait-for-path.
 
 \begin{proposition}[In-projection, Out-projection] \label{prop:in-out-projection}
-%Let $(B, Q_0)$ be a BIP system, 
 Let $\l \ge 1$, let $\B_i$ be an atomic component of $\B$, and let 
 $(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$ which is based on a superset of $\ssg{a}{2\l}$.
 Let $s$ be a state of $(B, Q_0)$, and $s' = s \pj B'$. Then
 (1) $\widepth{\B}{\B_i}{s} < 2\l-1$ iff $\widepth{\B'}{\B_i}{s'} < 2\l-1$, and
 (2) $\wodepth{\B}{\B_i}{s} < 2\l-1$ iff $\wodepth{\B'}{\B_i}{s'} < 2\l-1$.
 \end{proposition}
-%
-% \prfs{Follows from Definition~\ref{def:depth},
-% Proposition~\ref{prop:edge-projection}, and the observation that $\wfg{\B'}{s'}$
-% contains all wait-for-paths of length $\le \l$ that start or end in $\B_i$.}
 %
 \begin{proof}
 We establish clause (1). The proof of clause (2) is analogous, except we replace paths ending in
@@ -374,34 +341,20 @@ We now show that $\LLin(\B, Q_0, \act, \l)$ implies $\GLin(\B, Q_0, \act)$, whic
 \label{lemma:loc-implies-glob}
 \label{lemma:locLinear-implies-globlinear}
 \label{LLinGLin}
-%Let $(B, Q_0)$ be a BIP system, with $B = \gamma(\B_1,\dots,\B_n)$, and 
 Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
 If $\LLin(\B, Q_0, \act, \l)$ holds for some finite $\l \ge 1$, then $\GLin(\B, Q_0, \act)$ holds.
 \end{lemma}
 %
-%% \prfs{
-%% Let $s \la{\act} t$ be a reachable transition of $(B, Q_0)$ and let 
-%% $s_\DS = s \pj \dsk{\act}{\l}$, $t_\DS = t \pj \dsk{\act}{\l}$.
-%% Then $s_\DS \la{\act} t_\DS$ is a reachable transition of $\dsk{\act}{\l}$ by 
-%% Corollary~\ref{cor.bip.reachability}.
-%% By $\LLin(\B, Q_0, \act, \l)$,
-%% $\widepth{\dsk{\act}{\l}}{\B_i}{t_\DS} \le \l \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\DS} \le \l$.
-%% Hence by Proposition~\ref{prop:in-out-projection},
-%% $\widepth{\B}{\B_i}{t} \le \l \lor \wodepth{\B}{\B_i}{t} \le \l$.
-%% So
-%% $\widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
-%% Hence $\GLin(\B, Q_0, \act)$ holds.}
-%
 \begin{proof}
-Let $s \la{\act} t$ be a reachable transition of $(\B, Q_0)$ and let 
-$\B_i \in \cmps{\act}$, $s_\DS = s \pj \dsk{\act}{\l}$, $t_\DS = t \pj \dsk{\act}{\l}$.
-Then $s_\DS \la{\act} t_\DS$ is a reachable transition of $\DS = \dsks{\act}{\l}$ by Corollary~\ref{cor.bip.reachability}.
+Let $t \la{\act} s$ be a reachable transition of $(\B, Q_0)$ and let 
+$\B_i \in \cmps{\act}$, $\sD = s \pj \dsk{\act}{\l}$, $\tD = t \pj \dsk{\act}{\l}$.
+Then $\tD \la{\act} \sD$ is a reachable transition of $\DS = \dsks{\act}{\l}$ by Corollary~\ref{cor.bip.reachability}.
 By $\LLin(\B, Q_0, \act, \l)$, 
-$\widepth{\dsk{\act}{\l}}{\B_i}{t_\DS} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\DS} < 2\l-1$.
+$\widepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1$.
 Hence by Proposition~\ref{prop:in-out-projection},
-$\widepth{\B}{\B_i}{t} < 2\l-1 \lor \wodepth{\B}{\B_i}{t} < 2\l-1$.
+$\widepth{\B}{\B_i}{s} < 2\l-1 \lor \wodepth{\B}{\B_i}{s} < 2\l-1$.
 So
-$\widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
+$\widepth{\B}{\B_i}{s} < \omega \lor \wodepth{\B}{\B_i}{s} < \omega$.
 Hence $\GLin(\B, Q_0, \act)$.
 \end{proof}
 
@@ -418,7 +371,7 @@ Hence $\GLin(\B, Q_0, \act)$.
 
 \begin{proposition}[Finite out-depth implies local supercycle-violation]
 \label{prop:finOutDepth-Implies-locScViol}
-For $d < \l$: $(\wodepth{\dsk{\act}{\l}}{v}{t_\DS} = d)  \imp \locScViol{v}{d+1}{t_\DS}{\act}{\l}$.
+For $d < \l$: $(\wodepth{\dsk{\act}{\l}}{v}{\sD} = d)  \imp \locScViol{v}{d+1}{\sD}{\act}{\l}$.
 \end{proposition}
 %
 \begin{proof}
@@ -426,13 +379,13 @@ Proof is by induction on $d$.
 
 \vspace{1.0ex}
 \ul{Base case, $d=0$.}
-Then $v$ has no outgoing wait-for edges. Hence $\locScViol{v}{1}{t_\DS}{\act}{\l}$ by Definition~\ref{def:supercycle.violation.local}.
+Then $v$ has no outgoing wait-for edges. Hence $\locScViol{v}{1}{\sD}{\act}{\l}$ by Definition~\ref{def:supercycle.violation.local}.
 
 \vspace{1.0ex}
 \ul{Induction step, $d > 0$.}
-Assume $(\wodepth{\dsk{\act}{\l}}{v}{t_\DS} = d)$. Then, every outgoing wait-for edge of $v$ is to some $v'$ such that 
-$(\wodepth{\dsk{\act}{\l}}{v'}{t_\DS} = d' < d)$. By the induction hypothesis, $\locScViol{v'}{d'+1}{t_\DS}{\act}{\l}$.
-Hence, by Definition~\ref{def:supercycle.violation.local},  $\locScViol{v}{d+1}{t_\DS}{\act}{\l}$.
+Assume $(\wodepth{\dsk{\act}{\l}}{v}{\sD} = d)$. Then, every outgoing wait-for edge of $v$ is to some $v'$ such that 
+$(\wodepth{\dsk{\act}{\l}}{v'}{\sD} = d' < d)$. By the induction hypothesis, $\locScViol{v'}{d'+1}{\sD}{\act}{\l}$.
+Hence, by Definition~\ref{def:supercycle.violation.local},  $\locScViol{v}{d+1}{\sD}{\act}{\l}$.
 \end{proof}
 
 
@@ -445,27 +398,27 @@ Then $\LLin(\B, Q_0, \act, \l)$ implies $\LAO(\B, Q_0, \act, \l)$.
 \end{lemma}
 %
 \begin{proof}
-Assume $\LLin(\B, Q_0, \act, \l)$. Let $s_\DS \goesto[\act] t_\DS$ be an arbitrary reachable transition of $\dsk{\act}{\l}$,
+Assume $\LLin(\B, Q_0, \act, \l)$. Let $\tD \goesto[\act] \sD$ be an arbitrary reachable transition of $\dsk{\act}{\l}$,
 and let $\B_i$ be an arbitrary component of $\cmps{\act}$.
 Then, from Definition~\ref{def:locLinear}, we have:
-  $$\widepth{\dsk{\act}{\l}}{\B_i}{t_\DS} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{t_\DS} < 2\l-1.$$
+  $$\widepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1.$$
 The proof proceeds by two cases. 
 
 \vspace{1.0ex}
-\ul{ $\widepth{\dsk{\act}{\l}}{\B_i}{t_\DS} < 2\l-1$}:
+\ul{ $\widepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1$}:
 Hence $\B_i$ cannot be in a strongly connected supercycle, because $\B_i$ would then lie on at least one wait-for cycle, and so would have infinite
-in-depth. Hence $\locConnViol{\B_i}{t_\DS}{\act}{\l}$ by Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.loc:scc}.
-Hence by Definition~\ref{def:locFormation.violation}, $\locFormViol{\B_i}{t_\DS}{\act}{\l}$.
+in-depth. Hence $\locConnViol{\B_i}{\sD}{\act}{\l}$ by Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.loc:scc}.
+Hence by Definition~\ref{def:locFormation.violation}, $\locFormViol{\B_i}{\sD}{\act}{\l}$.
 
 \vspace{1.0ex}
-\ul{$\wodepth{\dsk{\act}{\l}}{\B_i}{t_\DS} < 2\l-1$}:
-Hence $\wodepth{\dsk{\act}{\l}}{\B_i}{t_\DS} = d$ for some $d < 2\l-1$.
-By Proposition~\ref{prop:finOutDepth-Implies-locScViol}, $\locScViol{\B_i}{d+1}{t_\DS}{\act}{\l}$.
-Hence by Definition~\ref{def:locFormation.violation}, $\locFormViol{\B_i}{t_\DS}{\act}{\l}$.
+\ul{$\wodepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1$}:
+Hence $\wodepth{\dsk{\act}{\l}}{\B_i}{\sD} = d$ for some $d < 2\l-1$.
+By Proposition~\ref{prop:finOutDepth-Implies-locScViol}, $\locScViol{\B_i}{d+1}{\sD}{\act}{\l}$.
+Hence by Definition~\ref{def:locFormation.violation}, $\locFormViol{\B_i}{\sD}{\act}{\l}$.
 
 \noindent
-In both cases, we have $\locFormViol{\B_i}{t_\DS}{\act}{\l}$.
-Since $\B_i$ is an arbitrarily chosen  component of $\cmps{\act}$, we have $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{t_\DS}{\act}{\l}$.
+In both cases, we have $\locFormViol{\B_i}{\sD}{\act}{\l}$.
+Since $\B_i$ is an arbitrarily chosen  component of $\cmps{\act}$, we have $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{\sD}{\act}{\l}$.
 Hence, by Definition~\ref{def:lao}, we conclude $\LAO(\B, Q_0, \act, \l)$.
 \end{proof}
 

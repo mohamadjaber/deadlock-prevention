@@ -178,12 +178,12 @@ $\llat{\B}{\sD}{\DS}  = \tpl{ \lwfgS{B}{\sD}{\DS},  \subg }$
 \prop{isALattice}, top element $\lwfg{B}{\sD}{\DS}$, and bottom element \ewfg.
 \end{proposition}
 
-\begin{definition}[$\mathit{lblocks}$] \label{defn:blocksLoc}
+\begin{definition}[$\mathit{lblocks}_{\sD}$] \label{defn:blocksLoc}
 Let $\XS \subg \lwfg{\B}{\sD}{\DS}$ and $\act, \B_i$ be nodes in $\lwfgS{B}{\sD}{\DS}$. Then 
-$\lblocks{\act}{\XS} \df
+$\lblocks{\sD}{\act}{\XS} \df
 [ (\ex \B_i \in \XS : \act \ar \B_i \in \lwfg{B}{\sD}{\DS})
    \mbox{ or $\act$ is a border interaction of $\DS$} ]$, and 
-$\lblocks{\B_i}{\XS} \df (\fa \act : \B_i \ar \act \in \lwfg{B}{\sD}{\DS} \imp \act \in \XS)$.
+$\lblocks{\sD}{\B_i}{\XS} \df (\fa \act : \B_i \ar \act \in \lwfg{B}{\sD}{\DS} \imp \act \in \XS)$.
 \end{definition}
 Hence a border interaction $\act$ is pessimistically considered to be always blocked, since
 the subsystem $\DS$ does not contain enough information about the enablement of $\act$.
@@ -195,13 +195,13 @@ A component $\B_i$ is blocked by $\XS$ if all of the interactions that $\B_i$ en
 \begin{definition}[$\lSFsymb$] \label{defn:scFixLoc}
 %Define $\lSFsymb:  \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
 Define $\lSFsymb_{\sD}:  \lwfgS{B}{\sD}{\DS}  \to  \lwfgS{B}{\sD}{\DS}$ as follows.
-$\lSF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \lblocks{\ndv}{\XS} }$, together with the edges induced by \lwfg{B}{\sD}{\DS}.
+$\lSF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \lblocks{\sD}{\ndv}{\XS} }$, together with the edges induced by \lwfg{B}{\sD}{\DS}.
 \end{definition}
 
 \begin{definition}[$\lVFsymb$] \label{defn:violFixLoc}
 %Define $\lVFsymb: \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
 Define $\lVFsymb_{\sD}: \lwfgS{B}{\sD}{\DS}  \to  \lwfgS{B}{\sD}{\DS}$ as follows.
-$\lVF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \neg \lblocks{\ndv}{\complLoc{\XS}} }$, together with the edges induced by \lwfg{B}{\sD}{\DS},
+$\lVF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \neg \lblocks{\sD}{\ndv}{\complLoc{\XS}} }$, together with the edges induced by \lwfg{B}{\sD}{\DS},
 where we take the complement $\complLoc{\XS}$ with respect to $\DS$.
 \end{definition}
 %
@@ -219,20 +219,20 @@ $\lSFsymb$ and $\lVFsymb$ are monotone and continuous.
 %
 \begin{proof}
 We show first that $\lSFsymb_{\sD}$ is monotone, \ie $\XS \subg \YS \imp \lSFs{\sD}{\XS} \subg \lSFs{\sD}{\YS}$.
-Let $\ndv$ be an arbitrary node in $\lSFs{\sD}{\XS}$, so that $\lblocks{\ndv}{\XS}$ holds. There are three cases.\\
+Let $\ndv$ be an arbitrary node in $\lSFs{\sD}{\XS}$, so that $\lblocks{\sD}{\ndv}{\XS}$ holds. There are three cases.\\
 
-\emph{Case of $\ndv$ is a border interaction of $\DS$}. Then $\lblocks{\ndv}{\YS}$ by \defn{blocksLoc}, and so $\ndv \in  \lSFs{\sD}{\YS}$ by
+\emph{Case of $\ndv$ is a border interaction of $\DS$}. Then $\lblocks{\sD}{\ndv}{\YS}$ by \defn{blocksLoc}, and so $\ndv \in  \lSFs{\sD}{\YS}$ by
 \defn{scFixLoc}.\\
 
 \emph{Case of $\ndv$ is a non-border interaction $\act$}. By Definitions~\ref{defn:blocksLoc} and \ref{defn:scFixLoc}, we have
 $\ex \B_i \in \XS  : \act \ar \B_i \in \lwfg{B}{\sD}{\DS}$.
 Since $\XS \subg \YS$, this same $\B_i$ is also a node of $\YS$, and so  $\ex \B_i \in \YS  : \act \ar \B_i \in \lwfg{B}{\sD}{\DS}$. 
-Hence  $\lblocks{\act}{\YS}$, and so $\act \in \lSFs{\sD}{\YS}$. \\
+Hence  $\lblocks{\sD}{\act}{\YS}$, and so $\act \in \lSFs{\sD}{\YS}$. \\
 
 \emph{Case of $\ndv$ is a component $\B_i$}. By Definitions~\ref{defn:blocksLoc} and \ref{defn:scFixLoc}, we have
 $(\fa \act : \B_i \ar \act \in \lwfg{\B}{\sD}{\DS} \imp \act \in \XS)$.
 Since $\XS \subg \YS$, we have  $(\fa \act : \B_i \ar \act \in \lwfg{B}{\sD}{\DS} \imp \act \in \YS)$. 
-Hence, $\lblocks{\B_i}{\YS}$, and so $\B_i \in \lSFs{\sD}{\YS}$. \\
+Hence, $\lblocks{\sD}{\B_i}{\YS}$, and so $\B_i \in \lSFs{\sD}{\YS}$. \\
 
 In all three cases, we have $\ndv \in \lSFs{\sD}{\YS}$. Since $\ndv$ was chosen arbitrarily from $\lSFs{\sD}{\XS} $, it follows that
  $\lSFs{\sD}{\XS} \subg \lSFs{\sD}{\YS}$. Hence, $\lSFsymb_{\sD}$ is monotone.
@@ -252,10 +252,10 @@ Then, $\XS$ is a local supercycle in $\lwfg{\B}{\sD}{\DS}$ iff $\XS \subg \lSFs{
 %
 \begin{proof}
 Let $\XS$ be a local supercycle in $\lwfg{B}{\sD}{\DS}$. By \defn{supercycleLoc}, every node in $\XS$ is blocked by $\XS$ or is a border interaction, \ie 
-$(\fa \ndx \in \XS: \lblocks{\ndx}{\XS})$. By \defn{scFix}, $\XS \subg \lSFs{\sD}{\XS}$.
+$(\fa \ndx \in \XS: \lblocks{\sD}{\ndx}{\XS})$. By \defn{scFix}, $\XS \subg \lSFs{\sD}{\XS}$.
 
 Conversely, suppose $\XS \subg \lSFs{\sD}{\XS}$ for some subgraph $\XS$ of $\lwfg{B}{s}{\DS}$. Hence 
-$(\fa \ndx \in \XS: \ndx \in \lSFs{\sD}{\XS})$, so by \defn{scFixLoc}, $(\fa \ndx \in \XS: \lblocks{\ndx}{\XS})$.
+$(\fa \ndx \in \XS: \ndx \in \lSFs{\sD}{\XS})$, so by \defn{scFixLoc}, $(\fa \ndx \in \XS: \lblocks{\sD}{\ndx}{\XS})$.
 Hence every node in $\XS$ is blocked by $\XS$ or is a border interaction, and so $\XS$ satisfies \defn{supercycleLoc}, and is therefore a local supercycle.
 \end{proof}
 
@@ -393,16 +393,16 @@ Let $s$ be a global state of $\B$, and let $\sD = s \pj \DS$.\\
 \end{proposition}
 %
 \begin{proof}
-For (a), let $\ndv \in \lVFs{\sD}{\XS}$. By \defn{violFixLoc}, $\neg \lblocks{\ndv}{\complL{\XS}}$.
+For (a), let $\ndv \in \lVFs{\sD}{\XS}$. By \defn{violFixLoc}, $\neg \lblocks{\sD}{\ndv}{\complL{\XS}}$.
 Now $\ndv$ is either an interaction $\act$ or a component $\B_i$. 
 
 By \defn{blocksLoc}, if $\ndv$ is an interaction $\act$, then it is not a border interaction, and furthermore there is no
 component $\B_i \in \complL{\XS}$ such that $\act \ar \B_i \in \lwfg{\B}{\sD}{\DS}$. 
-Since $\complL{\XS} \subg \compl{\XS}$, we conclude $\neg \blocks{\ndv}{\compl{\XS}}$, and so $\ndv \in \VFs{\sD}{\XS}$.
+Since $\complL{\XS} \subg \compl{\XS}$, we conclude $\neg \blocks{\sD}{\ndv}{\compl{\XS}}$, and so $\ndv \in \VFs{\sD}{\XS}$.
 
 By \defn{blocksLoc}, if $\ndv$ is a component $\B_i$, then there exists an interaction $\act$ such that 
 $\B_i \ar \act \in \lwfg{\B}{\sD}{\DS}$ and $\act \not\in \complL{\XS}$. Hence $\act \in \XS$, and so $\act \not\in \compl{\XS}$.
-Hence  $\neg \blocks{\ndv}{\compl{\XS}}$, and so $\ndv \in \VFs{\sD}{\XS}$.
+Hence  $\neg \blocks{\sD}{\ndv}{\compl{\XS}}$, and so $\ndv \in \VFs{\sD}{\XS}$.
 
 In both cases, the arbitrary element $\ndv$ of $\lVFs{\sD}{\XS}$ is also an element of $\VFs{\sD}{\XS}$, and so 
 $\lVFs{\sD}{\XS} \subg \VFs{s}{\XS}$.

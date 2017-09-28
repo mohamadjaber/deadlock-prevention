@@ -9,41 +9,41 @@ to define a condition that must hold whenever a supercycle is created. Negating 
 
 
 \begin{proposition}[Supercycle formation condition] \label{prop:supercycle-formation}
-Assume that $s \goesto[\act] t$ is a transition of $(\B, Q_0)$, $\wfg{\B}{s}$ is supercycle-free, and that $\wfg{\B}{t}$
-contains a supercycle.  Then, in $\wfg{\B}{t}$, there exists a $\CC$ such that
+Assume that $t \goesto[\act] s$ is a transition of $(\B, Q_0)$, $\wfg{\B}{t}$ is supercycle-free, and that $\wfg{\B}{s}$
+contains a supercycle.  Then, in $\wfg{\B}{s}$, there exists a $\CC$ such that
 \bn
-\item $\CC$ is a subgraph of $\wfg{\B}{t}$, \ie $\CC \subg \wfg{\B}{t}$
+\item $\CC$ is a subgraph of $\wfg{\B}{s}$, \ie $\CC \subg \wfg{\B}{s}$
 \item $\CC$ is strongly connected
 \item $\CC$ is a supercycle
-\item  in $\wfg{\B}{t}$, there is no wait-for edge from a node in $\CC$ to a node outside of $\CC$
+\item  in $\wfg{\B}{s}$, there is no wait-for edge from a node in $\CC$ to a node outside of $\CC$
 \item there exists a component $\B_i \in \cmps{\act}$ such that $\B_i$ is in $\CC$
 \en
 \end{proposition}
 %
 \begin{proof}
-  By assumption, there is a supercycle $\SC$ that is a subgraph of $\wfg{\B}{t}$.  By Proposition~\ref{prop:supercycle:contains-mssc}, $\SC$ contains
-  a subgraph $\CC$ that is strongly connected, is itself a supercycle, and such that there is no wait-for-edge from a node in $\CC$ to a node outside
-  of $\CC$.  This establishes Clauses~1--4.
+By assumption, there is a supercycle $\SC$ that is a subgraph of $\wfg{\B}{s}$.  By Proposition~\ref{prop:supercycle:contains-mssc}, $\SC$ contains
+a subgraph $\CC$ that is strongly connected, is itself a supercycle, and such that there is no wait-for-edge from a node in $\CC$ to a node outside
+of $\CC$.  This establishes Clauses~1--4.
 
 Now suppose $\B_i \not\in \CC$ for every $\B_i \in \cmps{\act}$. Then, no edge in $\CC$ is
 $\B_i$-incident.  Hence, by Proposition~\ref{prop:wait-for-edge-preservation}, every edge in $\CC$
-is an edge in $\wfg{\B}{s}$. Hence $\CC$ is a subgraph of $\wfg{\B}{s}$.
+is an edge in $\wfg{\B}{t}$. Hence $\CC$ is a subgraph of $\wfg{\B}{t}$.
 %
 Now let $v$ be an arbitrary node in $\CC$.
 %
 Suppose $v$ is a component $\B_j$.  By assumption, $\B_j \not\in \cmps{\act}$, and so
 $s \pj \B_j = t \pj \B_j$ by Definition~\ref{def.bip.composition}. Hence $\B_j$ enables the same set
-of interactions in state $s$ as in state $t$. Also, in $\wfg{\B}{t}$, all of $\B_j$'s wait-for edges
-must end in an interaction that is in $\CC$, since $\CC$ is a supercycle in $\wfg{\B}{t}$. Hence the
-same holds in $\wfg{\B}{s}$.
+of interactions in state $t$ as in state $s$. Also, in $\wfg{\B}{s}$, all of $\B_j$'s wait-for edges
+must end in an interaction that is in $\CC$, since $\CC$ is a supercycle in $\wfg{\B}{s}$. Hence the
+same holds in $\wfg{\B}{t}$.
 %
 If $v$ is an interaction, it must also have a wait-for-edge $e'$ to some component $\B_j \in \CC$,
-since $\CC$ is a supercycle in $\wfg{\B}{t}$. Hence this also holds in $\wfg{\B}{s}$.
+since $\CC$ is a supercycle in $\wfg{\B}{s}$. Hence this also holds in $\wfg{\B}{t}$.
 %
 Hence $v$ has enough successors in $\CC$ to satisfy the supercycle definition (\defn{supercycle}).
 %
-We conclude that $\CC$ by itself is a supercycle in $\wfg{\B}{s}$, which contradicts the assumption
-that $\wfg{\B}{s}$ is supercycle-free. Hence, $\B_i \in \CC$ for some $\B_i \in \cmps{\act}$, and so
+We conclude that $\CC$ by itself is a supercycle in $\wfg{\B}{t}$, which contradicts the assumption
+that $\wfg{\B}{t}$ is supercycle-free. Hence, $\B_i \in \CC$ for some $\B_i \in \cmps{\act}$, and so
 Clause~5 is established.  
 \end {proof}
 
@@ -53,8 +53,8 @@ Clause~5 is established.
 The supercycle formation condition (Proposition~\ref{prop:supercycle-formation}) tells us that, when a supercycle $\SC$ is created, some component
 $\B_i$ that participates in the interaction $\act$ whose execution created $\SC$, must be a node of a strongly connected component $\CC$ of $\SC$, and
 moreover $\CC$ is itself a supercycle in its own right. In a sense, $\CC$ is the ``essential'' part of $\SC$.  We use this to formulate a condition
-that prevents the formation of supercycles. For transition $s \goesto[\act] t$, we determine for every component $\B_i \in \cmps{\act}$ whether it is
-possible for $\B_i$ to be a node in a strongly-connected supercycle $\CC$ in $\wfg{\B}{t}$.  There are two ways for $\B_i$ to not be a node in a
+that prevents the formation of supercycles. For transition $t \goesto[\act] s$, we determine for every component $\B_i \in \cmps{\act}$ whether it is
+possible for $\B_i$ to be a node in a strongly-connected supercycle $\CC$ in $\wfg{\B}{s}$.  There are two ways for $\B_i$ to not be a node in a
 strongly-connected supercycle: 
 %
 \bn
@@ -63,7 +63,7 @@ strongly-connected supercycle:
 \en
 %
 Hence, for a BIP system $(\B, Q_0)$, our fundamental criterion for the prevention of supercycles is that, for every reachable transition
-$s \goesto[\act] t$ resulting from execution of $\act$, in the resulting state $t$, every component $\B_i$ of $\act$ must violate at least one of the
+$t \goesto[\act] s$ resulting from execution of $\act$, in the resulting state $s$, every component $\B_i$ of $\act$ must violate at least one of the
 above two conditions.  Condition~(\ref{conditions:no-sc-member}) is just supercycle violation, as in \defn{supercycle.violation}.
 Condition~(\ref{conditions:no-strongly-connected}) is violation with respect to a strongly connnected supercycle, \ie non-membership in a strongly
 connected supercycle. Technically, this is implied by supercycle violation, and so the disjunction of the two conditions is equivalent to 
@@ -74,8 +74,8 @@ For a given BIP system $(\B, Q_0)$ and interaction $\act$, we use $\GAO(\B, Q_0,
 disjunction of Conditions~(\ref{conditions:no-sc-member}) and (\ref{conditions:no-strongly-connected}) above. 
 This criterion is, in a sense, the ``most general'' criterion for supercycle-freedom.
 %
-If $\GAO(\B, Q_0, \act)$ holds, and global state $s$ is supercycle-free, and $s \goesto[\act] t$, then it follows (as we establish below) that global
-state $t$ is also supercycle-free.  So, by requiring (1) that all initial states are supercycle-free, and (2) that $\GAO(\B, Q_0, \act)$ holds for all
+If $\GAO(\B, Q_0, \act)$ holds, global state $t$ is supercycle-free, and $t \goesto[\act] s$, then it follows (as we establish below) that global
+state $s$ is also supercycle-free.  So, by requiring (1) that all initial states are supercycle-free, and (2) that $\GAO(\B, Q_0, \act)$ holds for all
 interactions $\act \in \gamma$, we obtain, by straightforward induction on length of executions, that every reachable state is supercycle-free.
 
 It also follows that any condition which implies $\GAO(\B, Q_0, \act)$ is also sufficient to guarantee  supercycle-freedom, and
@@ -103,22 +103,20 @@ We therefore now have four deadlock-freedom conditions: $\GAO$ (global alternati
    \label{s:global.ANDOR}
 %   \input{globANDORCond}
 
-%\subsection{General supercycle violation condition}
-
 %In this section, the operators $\SFsymb, \VFsymb$ depend on the global state
 %$t$, since we wish to show that the transition $s \goesto[\act] t$
 %does not create a supercycle in state $t$. Hence we write $\SFsymb_t, \VFsymb_t$.
 %
 
-We wish to show that the transition $s \goesto[\act] t$
-does not create a supercycle in state $t$.
+We wish to show that the transition $t \goesto[\act] s$
+does not create a supercycle in state $s$.
 Towards this end, we first formalize violation of strong connectedness
 (Condition~\ref{conditions:no-strongly-connected} above) as follows.
 
-\begin{definition}[Strong connectedness violation, $\connViol{v}{t}$]
+\begin{definition}[Strong connectedness violation, $\connViol{v}{s}$]
 \label{def:sConn.violation}
- Let $v$ be a node of $\wfg{\B}{t}$.   Then $\connViol{v}{t}$ holds iff there does not exist a 
-strongly connected supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{\B}{t}$.
+ Let $v$ be a node of $\wfg{\B}{s}$.   Then $\connViol{v}{s}$ holds iff there does not exist a 
+strongly connected supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{\B}{s}$.
 \end{definition}
 
 
@@ -127,40 +125,31 @@ The general supercycle violation condition is then a disjunction of the supercyc
 and the strong connectedness violation conditions.
 
 
-\begin{definition}[General supercycle violation, $\genViol{v}{t}$]
+\begin{definition}[General supercycle violation, $\genViol{v}{s}$]
 \label{def:formation.violation} 
 \label{defn:formation.violation} 
-Let $v$ be a node of $\wfg{\B}{t}$.
+Let $v$ be a node of $\wfg{\B}{s}$.
 Then 
-$\genViol{v}{t}  \df \scV{v}{t}  \lor \connViol{v}{t}$.
-%$\genViol{v}{t}  \df (\exs d \ge 1: \scViol{v}{d}{t}) \lor \connViol{v}{t}$.
+$\genViol{v}{s}  \df \scV{v}{s}  \lor \connViol{v}{s}$.
 \end{definition}
 %
-Let $s \goesto[\act] t$ be a reachable transition. If, for every $\B_i \in \cmps{\act}$, $\formViol{v}{t}$ holds, then, as we show below,
-$s \goesto[\act] t$ does not introduce a supercycle, \ie if $s$ is supercycle-free, then so is $t$. As stated above, we formulate below a ``local''
+Let $t \goesto[\act] s$ be a reachable transition. If, for every $\B_i \in \cmps{\act}$, $\formViol{v}{s}$ holds, then, as we show below,
+$t \goesto[\act] s$ does not introduce a supercycle, \ie if $t$ is supercycle-free, then so is $s$. As stated above, we formulate below a ``local''
 version of the general condition, which can be evaluated in ``small subsystems'', and so we often avoid state-explosion.
-%
-% THIS IS GIVEN IN PREVIOUS SECTION
-% However, evaluating this condition over all global transitions is subject to state explosion, and so we formulate below a ``local'' version of the
-% general condition, which can be evaluated in ``small subsystems'', and so we often avoid state-explosion. Hence the advantage of the local versions is
-% that they are usually efficiently computable, as we show in the sequel.  We also formulate a ``linear'' condition (both global and local), which is
-% simpler (but ``more incomplete'') than the general condition, and so is easier to evaluate.
-%
-% THIS IS GIVEN IN PREVIOUS SECTION, WITHOUT THE FORMALISM
-We reitrate that $\scV{v}{t}$ implies that $v$ cannot be in a supercycle. Hence, $v$ cannot be in a strongly-connected supercycle.
-Hence $\scV{v}{t} \imp \connViol{v}{t}$, so that 
-$\scV{v}{t}  \lor \connViol{v}{t} \ev  \connViol{v}{t}$.
+We reitrate that $\scV{v}{s}$ implies that $v$ cannot be in a supercycle. Hence, $v$ cannot be in a strongly-connected supercycle.
+Hence $\scV{v}{s} \imp \connViol{v}{s}$, so that 
+$\scV{v}{s}  \lor \connViol{v}{s} \ev  \connViol{v}{s}$.
 We give the formation violation condition in this manner, since 
-the implication does not necessarily hold for the local versions of $\scV{v}{t}$ and $\connViol{v}{t}$.
+the implication does not necessarily hold for the local versions of $\scV{v}{s}$ and $\connViol{v}{s}$.
 
 This discussion leads to the formal definition of $\GAO$: 
-after execution of interaction $\act$, all $\B_i \in \cmps{\act}$ exhibit a general supercycle-violation, as given by $\genViol{\B_i}{t}$ above.
+after execution of interaction $\act$, all $\B_i \in \cmps{\act}$ exhibit a general supercycle-violation, as given by $\genViol{\B_i}{s}$ above.
 
 \begin{definition}[$\GAO(\B, Q_0, \act)$] \label{def:global.ANDOR-cond} \label{defn:global.ANDOR-cond} 
-Let $s \goesto[\act] t$ be a reachable transition of $(\B, Q_0)$.
-Then, for every component $\B_i \in \comps{\act}$, the formation violation condition holds in state $t$.
+Let $t \goesto[\act] s$ be a reachable transition of $(\B, Q_0)$.
+Then, for every component $\B_i \in \comps{\act}$, the formation violation condition holds in state $s$.
 Formally,\\
-\ind  $\fas \B_i \in \comps{\act}, \genViol{\B_i}{t}$.
+\ind  $\fas \B_i \in \comps{\act}, \genViol{\B_i}{s}$.
 \end{definition}
 
 
@@ -170,23 +159,23 @@ $\GAO$ is supercycle-freedom preserving.
 %
 \begin{proof}
 We establish:
-for every reachable transition $s \la{\act} t$,
-$\wfg{\B}{s}$ is supercycle-free implies that $\wfg{\B}{t}$ is
+for every reachable transition $t \la{\act} s$,
+$\wfg{\B}{t}$ is supercycle-free implies that $\wfg{\B}{s}$ is
 supercycle-free. Our proof is by contradiction, so we assume the existence of a reachable transition
-$s \la{\act} t$ such that $\wfg{\B}{s}$ is supercycle-free and $\wfg{\B}{t}$ contains a supercycle.
+$t \la{\act} s$ such that $\wfg{\B}{t}$ is supercycle-free and $\wfg{\B}{s}$ contains a supercycle.
 %
 By Proposition~\ref{prop:supercycle-formation}
  there exists a component $\B_i \in \cmps{\act}$ such that $\B_i$ is in $\CC$, where 
-$\CC$ is a strongly connected supercycle that is a subgraph of $\wfg{\B}{t}$.
+$\CC$ is a strongly connected supercycle that is a subgraph of $\wfg{\B}{s}$.
 %
 Since $\CC$ is a strongly connected supercycle, we have,
- by Definition~\ref{def:sConn.violation}, that $\neg \connViol{\B_i}{t}$ holds.
+ by Definition~\ref{def:sConn.violation}, that $\neg \connViol{\B_i}{s}$ holds.
 %
 Since $\CC$ is a supercycle, we have, by Proposition~\ref{prop:scViol-iff-notInSC}, 
-that $\neg \scV{\B_i}{t}$ holds. %$\neg (\exs d \ge 1: \scViol{\B_i}{d}{t})$ holds.
+that $\neg \scV{\B_i}{s}$ holds. 
 %
-Hence, by Definition~\ref{def:formation.violation}, $\neg \formViol{\B_i}{t}$.
-But, by Definition~\ref{def:global.ANDOR-cond}, we have $\formViol{\B_i}{t}$.
+Hence, by Definition~\ref{def:formation.violation}, $\neg \formViol{\B_i}{s}$.
+But, by Definition~\ref{def:global.ANDOR-cond}, we have $\formViol{\B_i}{s}$.
 Hence, we have the desired contradiction, and so the theorem holds.
 \end{proof}
 
@@ -205,65 +194,44 @@ Hence, we have the desired contradiction, and so the theorem holds.
 %   \input{globLinCond}
 
 In some cases, a simpler condition suffices to guarantee deadlock-freedom. This simpler condition is ``linear'', \ie it lacks the AND-OR alternation
-aspect of $\GAO$. After execution of a reachable transition $s \la{\act} t$ of $(\B, Q_0)$, 
+aspect of $\GAO$. After execution of a reachable transition $t \goesto[\act] s$ of $(\B, Q_0)$, 
 we consider the in-depth and out-depth of the components $\B_i \in \cmps{\act}$. There are three cases:
 %
 \begin{itemize}
 
-\item \emph{Case 1}. \label{case:finite-in} $\B_i$ has finite in-depth in $\wfg{\B}{t}$: then, if $\B_i \in \SC$, it can be removed and still leave a
-  supercycle $\SC'$, by Proposition~\ref{prop:supercycle:essential-subgraph-of}. Hence $\SC'$ exists in $\wfg{\B}{s}$, and so $\B_i$ is not essential
+\item \emph{Case 1}. \label{case:finite-in} $\B_i$ has finite in-depth in $\wfg{\B}{s}$: then, if $\B_i \in \SC$, it can be removed and still leave a
+  supercycle $\SC'$, by Proposition~\ref{prop:supercycle:essential-subgraph-of}. Hence $\SC'$ exists in $\wfg{\B}{t}$, and so $\B_i$ is not essential
   to the creation of a supercycle.
 
-\item \emph{Case 2}. \label{case:finite-out} $\B_i$ has finite out-depth in $\wfg{\B}{t}$: by \cor{supercycle:no-finite-outdepth}, $\B_i$ cannot be
-  part of a supercycle, and so $\SC \subg \wfg{\B}{s}$.
+\item \emph{Case 2}. \label{case:finite-out} $\B_i$ has finite out-depth in $\wfg{\B}{s}$: by \cor{supercycle:no-finite-outdepth}, $\B_i$ cannot be
+  part of a supercycle, and so $\SC \subg \wfg{\B}{t}$.
 
-\item \emph{Case 3}. \label{case:infinite-both} $\B_i$ has infinite in-depth and infinite out-depth in $\wfg{\B}{t}$: in this case, $\B_i$ is possibly
-  an essential part of $\SC$, \ie $\SC$ was created in going from $s$ to $t$.
+\item \emph{Case 3}. \label{case:infinite-both} $\B_i$ has infinite in-depth and infinite out-depth in $\wfg{\B}{s}$: in this case, $\B_i$ is possibly
+  an essential part of $\SC$, \ie $\SC$ was created in going from $t$ to $s$.
 
 \end{itemize}
-We thus impose a condition which guarantees that only 
-Case~1 %\ref{case:finite-in}   %labels give section numbers, not list item numbers
-or Case~2 %\ref{case:finite-out} 
-occur. 
+We thus impose a condition which guarantees that only Case~1 or Case~2 occur. 
 
 
 
 \begin{definition}[$\GLin(\B,Q_0,\act)$] \label{def:global:dfc}
-Let $s \goesto[\act] t$ be a reachable transition of $(\B, Q_0)$.
-Then, in $\wfg{\B}{t}$,  every component $\B_i$ of $\cmps{\act}$ either has finite in-depth, or has finite out-depth.
+Let $t \goesto[\act] s$ be a reachable transition of $(\B, Q_0)$.
+Then, in $\wfg{\B}{s}$,  every component $\B_i$ of $\cmps{\act}$ either has finite in-depth, or has finite out-depth.
 Formally, \\
-\ind  $\fa \B_i \in \cmps{a}: \widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega.$
+\ind  $\fa \B_i \in \cmps{a}: \widepth{\B}{\B_i}{s} < \omega \lor \wodepth{\B}{\B_i}{s} < \omega.$
 \end{definition}
 
 
 
 \begin{proposition} \label{prop:indepth-finite-implies-scViol}
-Assume that node $v$ of $\wfg{\B}{t}$ has a finite in-depth of $d$ in $\wfg{\B}{t}$, \ie 
-$\widepth{\B}{v}{t} = d$. Then $\connViol{v}{t}$.
+Assume that node $v$ of $\wfg{\B}{s}$ has a finite in-depth of $d$ in $\wfg{\B}{s}$, \ie 
+$\widepth{\B}{v}{s} = d$. Then $\connViol{v}{s}$.
 \end{proposition}
 %
 \begin{proof}
-A node with finite in-depth cannot be in a wait-for-cycle, and
-therefore cannot be in a strongly connected supercycle.
+A node with finite in-depth cannot be in a wait-for cycle (\ie a cycle
+of wait-for edges), and therefore cannot be in a strongly connected supercycle.
 \end{proof}
-
-
-% \prf{
-% Proof is by induction on $d$.
-
-% \noindent
-% \ul{Base case, $d=1$.} Hence by Definitions~\ref{def:path} and \ref{def:depth},  
-% $v$ has no incoming wait-for-edges in $\wfg{\B}{t}$. Hence by Definition~\ref{def:supercycle.violation},
-% $\viol{v}{1}{t}$.
-
-% \noindent
-% \ul{Inductive step, $d > 1$.}
-% By Definition~\ref{def:path} and \ref{def:depth}, all predecessors (\ie nodes $u$ such that $u \ar v \in \wfg{\B}{t}$)
-% of $v$ have an in-depth of at most $d-1$. Hence, by the induction hypothesis applied to $d-1$, we obtain 
-% $\viol{u}{d-1}{t}$ for all predecessors $u$ of $v$. Hence by Definition~\ref{def:supercycle.violation}, 
-% Clauses~\ref{def:supercycle.violation.component.in} and \ref{def:supercycle.violation.interaction.in},
-% $\viol{v}{1}{t}$.
-% }
 
 
 
@@ -275,21 +243,21 @@ $\fa \act \in \gamma: \GLin(\B, Q_0, \act) \imp \GAO(\B, Q_0, \act)$.
 \begin{proof}
 Assume, for arbitrary $\act \in \gamma$, that $\GLin(\B, Q_0, \act)$ holds. That is, 
  
-\ind For every reachable transition $s \goesto[\act] t$ of $(\B, Q_0)$,\\
-\ind \ind  $\fas \B_i \in \cmps{\act}: \widepth{\B}{\B_i}{t} < \omega \lor \wodepth{\B}{\B_i}{t} < \omega$.
+\ind For every reachable transition $t \goesto[\act] s$ of $(\B, Q_0)$,\\
+\ind \ind  $\fas \B_i \in \cmps{\act}: \widepth{\B}{\B_i}{s} < \omega \lor \wodepth{\B}{\B_i}{s} < \omega$.
 
 \noindent
 By Propositions~\ref{prop:indepth-finite-implies-scViol} and \ref{prop:outdepth-finite-implies-scViol}, 
 
-\ind For every reachable transition $s \goesto[\act] t$ of $(\B, Q_0)$,\\
-\ind \ind  $\fas \B_i \in \cmps{\act}:  \connViol{\B_i}{t} \lor (\ex d \ge 1: \viol{\B_i}{d}{t})$.
+\ind For every reachable transition $t \goesto[\act] s$ of $(\B, Q_0)$,\\
+\ind \ind  $\fas \B_i \in \cmps{\act}:  \connViol{\B_i}{s} \lor (\ex d \ge 1: \viol{\B_i}{d}{s})$.
 
 \noindent
 Hence by Definition~\ref{def:formation.violation}
 and \prop{globViol-equiv-globViolDist}, 
 
-\ind For every reachable transition $s \goesto[\act] t$ of $(\B, Q_0)$,\\
-\ind \ind  $\fas \B_i \in \cmps{\act} : \formViol{\B_i}{t}$
+\ind For every reachable transition $t \goesto[\act] s$ of $(\B, Q_0)$,\\
+\ind \ind  $\fas \B_i \in \cmps{\act} : \formViol{\B_i}{s}$
 
 \noindent
 Hence $\GAO(\B, Q_0, \act)$ holds.
@@ -305,8 +273,6 @@ Follows immediately from Lemma~\ref{lemma:glob-lin-implies-globANDOR} and Theore
 \end{proof}
 
 
-%Since $\GLin(\act)$ implies $\GAO(\act)$, and $(\fa \act \in \gamma: \GAO(\act))$ implies deadlock-freedom (assuming also that initial
-%state are deadlock-free), we obtain:
 
 
 
@@ -331,34 +297,6 @@ $(\B, Q_0)$ is free of local deadlock.
 Immediate from Theorems~\ref{thm:GAO.SC-free-preserving}, \ref{thm:GLin.SC-free-preserving}, and Corollary~\ref{cor:SC-free-preserving.deadlock-free}.
 \end{proof}
 
-
-
-%% \bt[Deadlock-freedom via \GLin] 
-%% \label{theorem:global:deadlock-free}
-%% \label{theorem:global.linear.deadlock-free}
-%% %Let $(B, Q_0)$ be a BIP system, with $B = \gamma(\B_1,\dots,\B_n)$.
-%% Assume that
-%% \bn
-%% \item \label{theorem:global.linear.deadlock-free.initial} 
-%%       for all $s_0 \in Q_0$, $\wfg{\B}{s_0}$ is supercycle-free, and
-%% \item \label{theorem:global.linear.deadlock-free.globalLinear}
-%%       for all interactions $\act$ of $B$ (\ie $\act \in \gamma$), $\GLin(\act)$ holds.
-%% \en
-%% Then for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
-%% \et
-%% %
-%% \prf{
-%% By Assumption~(\ref{theorem:global.linear.deadlock-free.globalLinear}) and 
-%% Proposition~\ref{prop:glob-lin-implies-globANDOR}, we have 
-%% $\fas \act \in \gamma: \GAO(\act)$. By this and
-%% Assumption~(\ref{theorem:global.linear.deadlock-free.initial}), we obtain that the 
-%% assumptions of Theorem~\ref{theorem:global.ANDOR.deadlock-free} hold. Hence, by applying 
-%% Theorem~\ref{theorem:global.ANDOR.deadlock-free}, we obtain the conclusion
-
-%% for every reachable state $u$ of $(\B, Q_0)$:  $\wfg{\B}{u}$ is supercycle-free.
-
-%% and we are done.
-%% }
 
 
 

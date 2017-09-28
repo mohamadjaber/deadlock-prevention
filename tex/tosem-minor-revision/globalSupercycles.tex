@@ -62,21 +62,21 @@ that are induced by \wfg{\B}{s}.
 
 
 
-\begin{definition}[$\mathit{blocks}$] \label{defn:blocks} 
+\begin{definition}[$\mathit{blocks}_s$] \label{defn:blocks} 
 Let $\XS \subg \wfg{\B}{s}$ and $\act, \B_i$ be nodes in $\wfg{\B}{s}$. Then 
-$\blocks{\act}{\XS} \df (\ex \B_i \in \XS : \act \ar \B_i \in \wfg{\B}{s})$, and 
-$\blocks{\B_i}{\XS} \df (\fa \act : \B_i \ar \act \in \wfg{\B}{s} \imp \act \in \XS)$.
+$\blocks{s}{\act}{\XS} \df (\ex \B_i \in \XS : \act \ar \B_i \in \wfg{\B}{s})$, and 
+$\blocks{s}{\B_i}{\XS} \df (\fa \act : \B_i \ar \act \in \wfg{\B}{s} \imp \act \in \XS)$.
 \end{definition}
 
 \begin{definition}[$\SFsymb$]  \label{defn:scFix} 
 Define $\SFsymb: \wfgS{\B}{s} \to \wfgS{\B}{s}$ as follows.
-$\SF{\XS}$ is the subgraph with nodes $\set{v \stt \blocks{v}{\XS} }$, together with their induced edges.
+$\SF{\XS}$ is the subgraph with nodes $\set{v \stt \blocks{s}{v}{\XS} }$, together with their induced edges.
 \end{definition}
 
 \begin{definition}[$\VFsymb_s$]  \label{defn:violFix}
 Define $\VFsymb_s: \wfgS{\B}{s} \to \wfgS{\B}{s}$ as follows.
 $\VFs{s}{\XS}$ is the subgraph with nodes
-$\set{v \stt \neg \blocks{v}{\compl{\XS}}}$, together with their induced edges.
+$\set{v \stt \neg \blocks{s}{v}{\compl{\XS}}}$, together with their induced edges.
 \end{definition}
 %
 Hence $\VFs{s}{\XS} = \overline{\SFs{S}{\overline{\XS}}}$, \ie $\VFsymb_s$ and $\SFsymb_s$ are duals.
@@ -95,15 +95,15 @@ $\SFsymb_s$ and $\VFsymb_s$ are monotone and continuous.
 \begin{proof}
 % show its monotnoe
 We show first that $\SFsymb_s$ is monotone, \ie $\XS \subg \YS \imp \SFs{s}{\XS} \subg \SFs{s}{\YS}$.
-Let $\ndv$ be an arbitrary node in $\SFs{s}{\XS}$, so that $\blocks{\ndv}{\XS}$ holds. There are two cases.\\
+Let $\ndv$ be an arbitrary node in $\SFs{s}{\XS}$, so that $\blocks{s}{\ndv}{\XS}$ holds. There are two cases.\\
 
 \emph{Case of $\ndv$ is an interaction $\act$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $\ex \B_i \in \XS  : \act \ar \B_i \in \wfg{\B}{s}$.
 Since $\XS \subg \YS$, this same $\B_i$ is also a node of $\YS$, and so  $\ex \B_i \in \YS  : \act \ar \B_i \in \wfg{\B}{s}$. 
-Hence  $\blocks{\act}{\YS}$, and so $\act \in \SFs{s}{\YS}$. \\
+Hence  $\blocks{s}{\act}{\YS}$, and so $\act \in \SFs{s}{\YS}$. \\
 
 \emph{Case of $\ndv$ is a component $\B_i$}. By Definitions~\ref{defn:scFix} and \ref{defn:blocks}, we have $(\fa \act : \B_i \ar \act \in \wfg{\B}{s} \imp \act \in \XS)$.
 Since $\XS \subg \YS$, we have  $(\fa \act : \B_i \ar \act \in \wfg{\B}{s} \imp \act \in \YS)$. 
-Hence $\blocks{\B_i}{\YS}$, and so $\B_i \in \SFs{s}{\YS}$. \\
+Hence $\blocks{s}{\B_i}{\YS}$, and so $\B_i \in \SFs{s}{\YS}$. \\
 
 In both cases, we have $\ndv \in \SFs{s}{\YS}$. Since $\ndv$ was chosen arbitrarily from $\SFs{s}{\XS} $, it follows that $\SFs{s}{\XS} \subg \SFs{s}{\YS}$. Hence
 $\SFsymb_s$ is monotone.
@@ -122,10 +122,10 @@ Let $\XS \ne \ewfg$ and $\XS \subg \wfg{\B}{s}$, \ie $\XS$ is a non-empty subgra
 %
 \begin{proof}
 Let $\XS$ be a supercycle in \wfg{\B}{s}. By \defn{supercycle}, every node in $\XS$ is blocked by $\XS$, \ie 
-$(\fa \ndx \in \XS: \blocks{\ndx}{\XS})$. By \defn{scFix}, $\XS \subg \SFs{s}{\XS}$.
+$(\fa \ndx \in \XS: \blocks{s}{\ndx}{\XS})$. By \defn{scFix}, $\XS \subg \SFs{s}{\XS}$.
 %
 Conversely, suppose $\XS \subg \SFs{s}{\XS}$ for some subgraph $\XS$ of \wfg{\B}{s}. Hence 
-$(\fa \ndx \in \XS: \ndx \in \SFs{s}{\XS})$, so by \defn{scFix}, $(\fa \ndx \in \XS: \blocks{\ndx}{\XS})$.
+$(\fa \ndx \in \XS: \ndx \in \SFs{s}{\XS})$, so by \defn{scFix}, $(\fa \ndx \in \XS: \blocks{s}{\ndx}{\XS})$.
 Hence every node in $\XS$ is blocked by $\XS$, and so $\XS$ satisfies \defn{supercycle}, and is therefore a supercycle.
 \end{proof}
 %
@@ -540,8 +540,8 @@ Proof is by induction on $d$.\\
 
 \noindent
 \ul{Base case, $d=0$.} Hence by $\wodepth{\B}{v}{s} = 0$ and Definitions~\ref{def:path} and \ref{def:depth},  
-$v$ has no outgoing wait-for-edges in $\wfg{\B}{s}$. Hence $\neg \blocks{v}{\wfg{\B}{s}}$, \ie $v$ is not blocked by the entire set of nodes in 
-$\wfg{\B}{s}$. Hence $\neg \blocks{v}{\compl{\ewfg}}$, since $\wfg{\B}{s} = \compl{\ewfg}$. So by \defn{violFix}, 
+$v$ has no outgoing wait-for-edges in $\wfg{\B}{s}$. Hence $\neg \blocks{s}{v}{\wfg{\B}{s}}$, \ie $v$ is not blocked by the entire set of nodes in 
+$\wfg{\B}{s}$. Hence $\neg \blocks{s}{v}{\compl{\ewfg}}$, since $\wfg{\B}{s} = \compl{\ewfg}$. So by \defn{violFix}, 
 $v \in \VFs{s}{\ewfg}$. By \defn{supercycle.violation}, $\scVd{v}{0}{s}$.\\
 
 %OLD Hence by Definition~\ref{def:supercycle.violation}, $\viol{v}{1}{t}$.
@@ -555,7 +555,7 @@ By the induction hypothesis applied to $d'$, we obtain $\viol{w}{d'}{s}$, and so
 Hence $w \in \VFsi{s}{\ewfg}{d-1}$, since, by monotonicity of $\VFsymb_s$, we have 
 $ \VFsi{s}{\ewfg}{d'} \subg  \VFsi{s}{\ewfg}{d}$ when $d' \le d$.
 Since  $w$ is an arbitrary successor of $v$, it follows that $v$ is only blocked by nodes in $\VFsi{s}{\ewfg}{d-1}$.
-Hence $\neg \blocks{v}{\compl{ \VFsi{s}{\ewfg}{d-1} } }$.
+Hence $\neg \blocks{s}{v}{\compl{ \VFsi{s}{\ewfg}{d-1} } }$.
 By \defn{violFix}, $v \in \VFs{s}{\VFsi{s}{\ewfg}{d-1}}$, \ie $v \in  \VFsi{s}{\ewfg}{d}$.
 By \defn{supercycle.violation}, $\scVd{v}{d}{s}$.
 % OLD Hence by Definition~\ref{def:supercycle.violation}, Clauses~\ref{def:supercycle.violation.component.out} and \ref{def:supercycle.violation.interaction.out}, $\viol{v}{d+1}{t}$.
