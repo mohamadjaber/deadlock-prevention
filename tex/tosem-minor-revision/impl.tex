@@ -286,7 +286,7 @@ aaa\= aa\= aa\= \kill
 \label{fig:implementation-checkDF}
 \end{figure}
 
-\paragraph{Complexity} 
+\paragraph{Time Complexity} 
 Let 
 $\l_\act$ be the smallest value of $\l$ for which $\LLin(\B, Q_0, \act, \l)$ holds, 
 $\Mdsk{\act}{\l}$ be the transition system of $\dsks{\act}{\l}$, 
@@ -299,7 +299,7 @@ $\lwfg{\B}{\sD}{\DS}$ can be done in linear time using depth-first graph search.
 %
 The running  time of \checkLinInt{$\B, Q_0, \act$}, is $O( \SUM_{1 \le \l \le \l_\act}   |\Mdsk{\act}{\l}| \mult |\dsks{\act}{\l}|)$.
 The running  time of \checkLin{$\B, Q_0$}\ is
-$O(\SUM_{\act \in \gamma}    \SUM_{1 \le \l \le \l_\act}   \    |\Mdsk{\act}{\l}| * |\dsks{\act}{\l}|)$.
+$O(\SUM_{\act \in \gamma}    \SUM_{1 \le \l \le \l_\act}   \    |\Mdsk{\act}{\l}| \mult |\dsks{\act}{\l}|)$.
 
 
 
@@ -357,34 +357,35 @@ Figure~\ref{fig:summaryProcedures} shows a summary of the procedures.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
-\paragraph{Complexity} 
+\paragraph{Time Complexity} 
 Let 
 $\l_\act$ be the smallest value of $\l$ for which  $\LAO(\B, Q_0, \act, \l)$ holds, 
 $\Mdsk{\act}{\l}$ be the transition system of $\dsks{\act}{\l}$, 
 $|\Mdsk{\act}{\l}|$ be the size (number of nodes plus number of edges) of $\Mdsk{\act}{\l}$, and
-$|\dsks{\act}{\l_\act}|$ be the size of the syntactic description of $\dsks{\act}{\l_\act}$.
+$|\dsks{\act}{\l}|$ be the size of the syntactic description of $\dsks{\act}{\l}$.
 %
-The running time of \cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, \sD$} is $O(nodes(\DS) \mult \card{\DS})$, since maximal strongly conected components
-are computable inlieanr time using Kosaraju;'s algorithm, and the wait-fir paths from $\B_i$ to the border can be checked in lear time bny first
-removing all nodes with supercycle violations, and then checking if such paths remain.....
+The time complexity of \cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, \sD$} is $O(nodes(\DS) \mult \card{\DS})$, since maximal strongly conected components
+are computable in linear time using Kosaraju's algorithm, and the wait-for paths $\pi$ from $\B_i$ to the border can be checked in linear time by first
+removing all nodes with supercycle violations, and then checking if such paths remain. If so, then there is a path from $\B_i$ to the border which
+contains no node with a supercycle violation.
+%
+The time complexity of \cLFV{$\B_i, \VS, \dsk{\act}{\l}, \sD$} is also $O(nodes(\DS) \mult \card{\DS})$.
 
-
-
-
-The running  time of \checkLAO{$\B, Q_0$}\ is
-$O(\SUM_{\act \in \gamma}\  |\Mdsk{\act}{\l_\act}| * |\dsks{\act}{\l_\act}|)$, 
-where 
-$\l_\act$ is the smallest value of $\l$ for which $\LAO(\B, Q_0, \act, \l)$ holds, 
-$\Mdsk{\act}{\l_\act}$ is the transition system of $\dsks{\act}{\l_\act}$, 
-$|\Mdsk{\act}{\l_\act}|$ is the size (number of nodes plus number of edges) of $\Mdsk{\act}{\l_\act}$, and
-$|\dsks{\act}{\l_\act}|$ is the size of the syntactic description of $\dsks{\act}{\l_\act}$.
+%
+The running time of \checkLAOIntDist{$\B, Q_0, \act, \l$} is $O(\card{\Mdsk{\act}{\l}} \mult nodes(\DS) \mult \card{\DS})$,
+since \cLFP{$\DS, \sD$} has time complexity in $O(nodes(\DS) \mult \card{\DS})$.
 %
 
+The running time of \checkLAOInt{$\B, Q_0, \act$} is $O(\SUM_{1 \le \l \le \l_\act} \card{\Mdsk{\act}{\l}} \mult nodes(\DS) \mult \card{\DS})$
+since \checkLAOInt{$\B, Q_0, \act$} iterates \checkLAOIntDist{$\B, Q_0, \act, \l$} until $\l = \l_\act$.
+%
+The running  time of \checkLAO{$\B, Q_0$} is
+$O(\SUM_{\act \in \gamma}  \SUM_{1 \le \l \le \l_\act} \card{\Mdsk{\act}{\l}} \mult nodes(\DS) \mult \card{\DS})$
+since \checkLAO{$\B, Q_0$} calls \checkLAOInt{$\B, Q_0, \act$} for every $\act \in \gamma$.
 
-The running time of \cLFV{$\B_i, \VS, \dsk{\act}{\l}, \sD$} is 
-The running time of \checkLAOIntDist{$\B, Q_0, \act, \l$} is
-The running time of \checkLAOInt{$\B, Q_0, \act$} is 
-The running time of \checkLAO{$\B, Q_0$} is 
+
+
+
 
 
 
@@ -424,7 +425,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \lio{\FORALLC{\mbox{reachable transitions $\tD \goesto[\act] \sD$ of $\dsk{\act}{\l}$}}}
    \litc{\VS \gets \cLFP{\dsk{\act}{\l},\sD}}{\cmnt see \fig{algcomputeLFP}}
    \lit{\FORALLC{\B_i \in \cmps{\act}}}
-      \lihc{\IF\ \neg \cLFV{\B_i, \VS, \dsk{\act}{\l},\sD}\ \THEN\ \RETURNE{\fff}\ \FI}{\cmnt return $\fff$ if no violation for $\B_i$}
+      \lihc{\IFC{\neg \cLFV{\B_i, \VS, \dsk{\act}{\l},\sD}} \RETURNE{\fff}\ \FI}{\cmnt return $\fff$ if no violation for $\B_i$}
 %         \lifc{\IFC{\neg \LF{\act}{\l}{t_\DS}{v}{\l}}\ 
    \lit{\ENDFOR}
 \lio{\ENDFOR}
@@ -452,18 +453,19 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \cmnt\ \ie $\B_i$ has a local strong connectedness supercycle formation violation in state $\sD$ of subsystem $\dsk{\act}{\l}$\\
 %\cmnt\ compute local supercycle violations in state $t_\DS$ of $\dsk{\act}{\l}$\\
 %\cmnt\ Postcondition: $\fas v \in \set{\B_1,\ldots,\B_n} \un \gamma, d' = 1,\ldots,dd: \VV{\act}{\l}{t_\DS}{v}{d'} = \lviol{v}{d'}{t_\DS}{\act}{\l}$\\
-\lio{\mbox{remove from $\lwfg{B}{\sD}{\DS}$ all nodes in $\VS$, \ie with a local supercycle violation}}
-\lio{\mbox{compute maximal strongly connected components of the resulting wait-for graph}}
-\lio{\FORALLC{\mbox{maximal strongly connected components $C$}}}
-   \lit{\mbox{\IF\ $C$ contains a non-trivial strongly connected supercycle which contains $B_i$ as a node \THEN}}
+\lio{\mbox{compute $\lwfg{B}{\sD}{\DS}$}}
+\lio{\mbox{$\WL \gets \lwfg{B}{\sD}{\DS} - \VS$, \ie remove from $\lwfg{B}{\sD}{\DS}$ all nodes with a local supercycle violation}}
+\lio{\mbox{compute maximal strongly connected components of $\WL$}}
+\lio{\FORALLC{\mbox{maximal strongly connected components $C$ of $\WL$}}}
+   \lit{\IFC{\mbox{$C$ contains a non-trivial strongly connected supercycle which contains $\B_i$ as a node}}}
       \lihc{\RETURNE{\fff} \, \FI}{\cmnt{Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.loc:scc} holds here}} 
 
 \lio{\FORALLC{\mbox{wait-for paths $\pi$ from $\B_i$ to the border of  $\dsk{\act}{\l}$}}}
-   \lit{\IF\ \mbox{some node $\ndv$ of $\pi$ is in $\VS$, \ie has a local supercycle violation}\ \THEN}
+   \lit{\IFC{\mbox{some node $\ndv$ of $\pi$ is in $\VS$, \ie has a local supercycle violation}}}
       \lihc{\RETURNE{\ttt}\ \FI}{\cmnt Clause~\ref{def:sConn.violation.loc:wait-for-out} holds}
 
 \lio{\FORALLC{\mbox{wait-for paths $\pi'$ from the border of $\dsk{\act}{\l}$ to $\B_i$}}}
-   \lit{\IF\ \mbox{some node $\ndv$ of $\pi'$ is in $\VS$, \ie has a local supercycle violation}\ \THEN}
+   \lit{\IFC{\mbox{some node $\ndv$ of $\pi'$ is in $\VS$, \ie has a local supercycle violation}}}
        \lihc{\RETURNE{\ttt}\ \FI}{\cmnt Clause~\ref{def:sConn.violation.loc:wait-for-in} holds}
 
 \liocn{\RETURNE{\fff}}{\cmnt  Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.border} does not hold}
