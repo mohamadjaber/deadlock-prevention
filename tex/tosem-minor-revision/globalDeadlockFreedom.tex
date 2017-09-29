@@ -65,7 +65,7 @@ strongly-connected supercycle:
 Hence, for a BIP system $(\B, Q_0)$, our fundamental criterion for the prevention of supercycles is that, for every reachable transition
 $t \goesto[\act] s$ resulting from execution of $\act$, in the resulting state $s$, every component $\B_i$ of $\act$ must violate at least one of the
 above two conditions.  Condition~(\ref{conditions:no-sc-member}) is just supercycle violation, as in \defn{supercycle.violation}.
-Condition~(\ref{conditions:no-strongly-connected}) is violation with respect to a strongly connnected supercycle, \ie non-membership in a strongly
+Condition~(\ref{conditions:no-strongly-connected}) is violation with respect to a strongly connected supercycle, \ie non-membership in a strongly
 connected supercycle. Technically, this is implied by supercycle violation, and so the disjunction of the two conditions is equivalent to 
 Condition~(\ref{conditions:no-sc-member}). It is however, convenient to use the disjunction of the two conditions, since
 we will formulate local versions of these violation conditions, and the implication does not necessarily hold for the local versions.
@@ -136,7 +136,7 @@ $\genViol{v}{s}  \df \scV{v}{s}  \lor \connViol{v}{s}$.
 Let $t \goesto[\act] s$ be a reachable transition. If, for every $\B_i \in \cmps{\act}$, $\formViol{v}{s}$ holds, then, as we show below,
 $t \goesto[\act] s$ does not introduce a supercycle, \ie if $t$ is supercycle-free, then so is $s$. As stated above, we formulate below a ``local''
 version of the general condition, which can be evaluated in ``small subsystems'', and so we often avoid state-explosion.
-We reitrate that $\scV{v}{s}$ implies that $v$ cannot be in a supercycle. Hence, $v$ cannot be in a strongly-connected supercycle.
+We reiterate that $\scV{v}{s}$ implies that $v$ cannot be in a supercycle. Hence, $v$ cannot be in a strongly-connected supercycle.
 Hence $\scV{v}{s} \imp \connViol{v}{s}$, so that 
 $\scV{v}{s}  \lor \connViol{v}{s} \ev  \connViol{v}{s}$.
 We give the formation violation condition in this manner, since 

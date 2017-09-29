@@ -113,12 +113,12 @@ that the edges of $\YS \join \set{\ndv}$ are induced from $\lwfg{B}{t_\act}{\DS}
 
 Let 
 $\Adj_v$ be the outdegree of $\ndv$ in $\lwfg{\B}{\tD}{\DS}$,
-$\cnodes{\DS}$ be the number of componets and interactions in $\DS$, \ie the number of nodes in $\lwfg{\B}{\sD}{\DS}$ and
+$\cnodes{\DS}$ be the number of components and interactions in $\DS$, \ie the number of nodes in $\lwfg{\B}{\sD}{\DS}$ and
 $\card{\DS}$ be the size of the syntactic description of $\DS$.
 %$\card{\lwfg{\B}{\sD}{\DS}}$ is the size (number of nodes plus number of edges) of $\lwfg{\B}{\sD}{\DS}$,
 %$\card{\DS}$ is the number of component and interactions in $\dsk{\act}{\l}$, which is also the number of nodes in $\lwfg{\B}{\tD}{\DS}$,
 %
-We assume that membership in $\XS$ and $\YS$ can be determined in constant time, \eg by using boolean arrays, and that evaluation of 
+We assume that membership in $\XS$ and $\YS$ can be determined in constant time, \eg by using Boolean arrays, and that evaluation of 
 transition guards in components takes time proportional to the length of the guards.
 %
 Then, the time complexity of \cLBL{$\ndv, \dsk{\act}{\l}, \sD, \XS$} is $O(\Adj_\ndv)$.
@@ -364,7 +364,7 @@ $\Mdsk{\act}{\l}$ be the transition system of $\dsks{\act}{\l}$,
 $|\Mdsk{\act}{\l}|$ be the size (number of nodes plus number of edges) of $\Mdsk{\act}{\l}$, and
 $|\dsks{\act}{\l}|$ be the size of the syntactic description of $\dsks{\act}{\l}$.
 %
-The time complexity of \cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, \sD$} is $O(\cnodes{\DS} \mult \card{\DS})$, since maximal strongly conected components
+The time complexity of \cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, \sD$} is $O(\cnodes{\DS} \mult \card{\DS})$, since maximal strongly connected components
 are computable in linear time using Kosaraju's algorithm, and the existence of paths in $\WL$ from $\B_i$ to the border of $\DS$ can be checked in linear time by 
 using depth-first graph search. 
 %

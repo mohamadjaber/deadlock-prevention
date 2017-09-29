@@ -1,7 +1,7 @@
 For the rest of the paper, let $\B$ denote an arbitrary fixed BIP system, which
 we use in all definitions, theorems etc.
 
-We characterize a supercycle as a post-fixpoint of a ``blocking operator'' $\SFsymb$, defined below, over the complete boolean lattice formed from the
+We characterize a supercycle as a post-fixpoint of a ``blocking operator'' $\SFsymb$, defined below, over the complete Boolean lattice formed from the
 subgraphs of \wfg{\B}{s}, with $\subg$ (\defn{wsubgraph}) as the ordering.
 %
 Roughly, $\SFsymb$ maps a subset $\XS$ of the nodes of a wait-for-graph (\ie some subset of the components and interactions in $(\B, Q_0)$)
@@ -36,7 +36,7 @@ whose elements are all the subgraphs of
 
 The following proposition follows immediately from the definitions; its proof is left to the reader.
 \begin{proposition} \label{prop:isALattice}
-$\lat{\B}{s} = \tpl{ \wfgS{\B}{s}, \subg }$ is a finite complete boolean lattice as follows:
+$\lat{\B}{s} = \tpl{ \wfgS{\B}{s}, \subg }$ is a finite complete Boolean lattice as follows:
 \be
 
 \item meet is given by graph intersection: 
@@ -108,7 +108,7 @@ Hence $\blocks{s}{\B_i}{\YS}$, and so $\B_i \in \SFs{s}{\YS}$. \\
 In both cases, we have $\ndv \in \SFs{s}{\YS}$. Since $\ndv$ was chosen arbitrarily from $\SFs{s}{\XS} $, it follows that $\SFs{s}{\XS} \subg \SFs{s}{\YS}$. Hence
 $\SFsymb_s$ is monotone.
 %
-Since the dual of a monotone mapping in a complete boolean lattice is also monotone, we have that $\VFsymb_s$ is monotone.
+Since the dual of a monotone mapping in a complete Boolean lattice is also monotone, we have that $\VFsymb_s$ is monotone.
 %
 Finally, since $\lat{\B}{s}$ is finite, it follows that $\SFsymb_s$ and $\VFsymb_s$ are continuous.
 \end{proof}
@@ -152,7 +152,7 @@ $\ndv \in  \lfp{\VFsymb_s}$ iff $\ndv$ is not a node in any supercycle of \wfg{\
 \end{proposition}
 %
 \begin{proof}
-From the Park conjugate (dual) fixpoint theorem in complete boolean lattices, we have 
+From the Park conjugate (dual) fixpoint theorem in complete Boolean lattices, we have 
 \lfp{\VFsymb_s} = \compl{\gfp{\SFsymb_s}}.
 By \prop{GFPisLargestSC}, \gfp{\SFsymb_s} is the largest supercycle in \wfg{\B}{s}. Hence the nodes not in 
 \gfp{\SFsymb_s} are exactly the nodes that are not in any supercycle. These are exactly the nodes in \lfp{\VFsymb_s}.
