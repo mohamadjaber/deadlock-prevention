@@ -172,7 +172,7 @@ that target safety properties can be used to prove
 global deadlock freedom. 
 %
 The aforementioned papers %works in~\cite{AbdullaHH13VMCAI,PnueliRZ01TACAS,CohenN09FMSD}
-target parametrized systems composed of $N$ communicating processes
+target parameterized systems composed of $N$ communicating processes
 $P_{i}, 1 \le i \le N$.
 They over-approximate the reachable state space of a system with 
 $N$ processes, using symbolic states from a system of size $K<N$.
@@ -196,7 +196,7 @@ about additional local variables.
 
 \redbox{
 \citeN{PnueliRZ01TACAS} targets a specific type of bounded data 
-parametrized systems with parameter $N$, where $N$ is the number of
+parameterized systems with parameter $N$, where $N$ is the number of
 processes, and 
 where safety is expressed using a specific type of assertions called $R$-assertions.
 They show that for a given such system, there exists an $N_0$ such that, an
@@ -231,7 +231,7 @@ with a bounded state transition diameter, and then applying bounded model checki
 %
 Our work differs from the above techniques in that 
 (1) we do not limit our technique to 
-parametrized systems, 
+parameterized systems, 
 (2) we characterize deadlock freedom with a structural supercycle property
 that governs the wait-for-graph of the system interactions, 
 (3) we compute our local subsystems based on interactions, 
@@ -239,7 +239,7 @@ that governs the wait-for-graph of the system interactions,
 check for each interaction using its local subsystems,  and
 (5) our technique is complete for BIP systems. 
 In the future, we would like to explore whether the local supercycle violation check
-is enough to prove deadlock-freedom of parametrized systems. 
+is enough to prove deadlock-freedom of parameterized systems. 
 We would also like to consider characterizing other interesting safety properties with
 similar structural checks in the context of BIP. 
 }
