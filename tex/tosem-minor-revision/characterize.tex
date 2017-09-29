@@ -29,7 +29,17 @@ Formally:\\
 \end{definition}
 
 \redbox{
-Intuitively, every reachable state $s'$ of subsystem $\B'$ (within the context of the overall system $\B$) is a projection of a reachable state $s$ of $\B$, i.e., $s' = s\pj \B'$. Hence, if $s$ enables an interaction $a$ of $\B'$, then so does $s' = s\pj \B'$.
+Note that every reachable state $s'$ of subsystem $\B'$ (within the context of the overall system $\B$) is a projection of a reachable state $s$ of $\B$, i.e., $s' = s\pj \B'$. 
+Our definition requires that, in every reachable state $s'$, $\B'$ is not prevented from executing \emph{some} interaction $\act$ due to blocking
+relationships \emph{within} $\B'$, which would constitute a \emph{local deadlock}. We thus require that $\B'$, \emph{considered in isolation from its
+  containing system $\B$}, must enable some interaction $\act$. Within $\B$ overall, it is permissible for $\act$ to be disabled because some 
+$\B_i \in \comps{\act}$ does not enable $\act$, provided that \emph{$\B_i$ is not a component of $\B'$}.
+%
+We now make these ideas precise.
+}
+
+%Hence, if $s$ enables an interaction $a$ of $\B'$, then so does $s' = s\pj \B'$. TRUE BUT NOT RELEVANT HERE
+%
 %  Intuitively, the state space $Q'$ of each susbsystem $\B'$ of $\B$ 
 %  overapproximates the state space $Q$ of $\B$. 
 %  Consequently, local deadlock freedom in subsystem $\B'$ 
@@ -37,7 +47,6 @@ Intuitively, every reachable state $s'$ of subsystem $\B'$ (within the context o
 %  that are reachable in $\B$ to enable interactions. 
 %  These states $s\in \rstates{B,Q_0}$ are captured by their 
 %  projections $s\pj \B'$ in $\B'$.  
-}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

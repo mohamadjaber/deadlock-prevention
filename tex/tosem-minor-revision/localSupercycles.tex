@@ -100,8 +100,12 @@ In the sequel, we fix a particular subsystem $\dsks{\act}{\l}$, which
 we refer to simply as \DS, with $\act$ and $\l$ being implicit (to
 avoid notational clutter with double-sub/superscripts). 
 We write $\DS.action = \act$ and $\DS.radius = \l$. 
-
-
+%
+As given above, for a state $\sD$ of $\DS$, the wait-for graph for $\DS$ only (\ie ignoring the components and interactions of $\B$ that are not in
+$\DS$) is denoted as $\lwfg{\B}{\sD}{\DS}$.
+%
+Note also that ``the nodes of $\DS$'' and ``the nodes of $\lwfg{\B}{\sD}{\DS}$'' denote the same set of components and interactions. 
+We will use either expression, depending on context.
 
 
 %\input{fixpointLoc}
@@ -179,7 +183,7 @@ $\llat{\B}{\sD}{\DS}  = \tpl{ \lwfgS{B}{\sD}{\DS},  \subg }$
 \end{proposition}
 
 \begin{definition}[$\mathit{lblocks}_{\sD}$] \label{defn:blocksLoc}
-Let $\XS \subg \lwfg{\B}{\sD}{\DS}$ and $\act, \B_i$ be nodes in $\lwfgS{B}{\sD}{\DS}$. Then 
+Let $\XS \subg \lwfg{\B}{\sD}{\DS}$ and $\act, \B_i$ be nodes in $\lwfg{B}{\sD}{\DS}$. Then 
 $\lblocks{\sD}{\act}{\XS} \df
 [ (\ex \B_i \in \XS : \act \ar \B_i \in \lwfg{B}{\sD}{\DS})
    \mbox{ or $\act$ is a border interaction of $\DS$} ]$, and 
@@ -204,6 +208,9 @@ Define $\lVFsymb_{\sD}: \lwfgS{B}{\sD}{\DS}  \to  \lwfgS{B}{\sD}{\DS}$ as follow
 $\lVF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \neg \lblocks{\sD}{\ndv}{\complLoc{\XS}} }$, together with the edges induced by \lwfg{B}{\sD}{\DS},
 where we take the complement $\complLoc{\XS}$ with respect to $\DS$.
 \end{definition}
+%
+Implicit in writing $\complLoc{\XS}$ is that $\XS \subg \DS$. Then  $\complLoc{\XS}$ contains all nodes that are in $\DS$ and not in $\XS$, together 
+the edges induced by $\lwfgS{B}{\sD}{\DS}$.
 %
 Hence $\lVFs{\sD}{\XS} = \complLoc{\lSFs{\sD}{\complLoc{\XS}}}$, \ie $\lVFsymb_{\sD}$ and $\lSFsymb_{\sD}$ are duals.
 Note that (as for $\SFsymb_s$ and $\VFsymb_s$) $\lSFsymb_{\sD}$ and $\lVFsymb_{\sD}$ are defined given a particular
