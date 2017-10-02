@@ -13,7 +13,7 @@
    \node[place, node distance=1.75]  (ttwr) [right=of twr]  {$TTwR$};
   
    \path[trans] (t) edge [] node {$\sendTokenToken$} (n); 
-   \path[trans] (n) edge [bend left] node {$\sendTokenToken$} (t); 
+   \path[trans] (n) edge [bend left] node {$\rcvTokenToken$} (t); 
 
    \path[trans] (t) edge [] node {$\sendTokenResource$} (twr); 
    \path[trans] (twr) edge [bend left] node {$\rcvTokenResource$} (t); 
