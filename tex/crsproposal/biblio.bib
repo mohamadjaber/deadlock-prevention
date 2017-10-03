@@ -1,462 +1,622 @@
+                  
 
-@article{S12,
-  author    = {Fatima K. Abu Salem and 
-               Lama Tamim},
-  title     = {Communication balancing in the parallel Gottfert algorithm},
-  journal   = {Parallel Processing Letters},
-  volume    = {22},
-  number    = {4},
+
+                  
+@Article{Att16a,
+author="Attie, Paul C.",
+title="Synthesis of large dynamic concurrent programs from dynamic specifications",
+journal="Formal Methods in System Design",
+year="2016",
+pages="1--54",
+abstract="We present two methods for synthesizing large concurrent programs from temporal logic specifications. The first method deals with finite-state concurrent programs that are static, i.e., the set of processes is fixed. It produces an infinite family of static finite-state concurrent programs. The second method deals with dynamic concurrent programs, i.e., new processes can be created and added at run-time. It produces a single dynamic concurrent program. A dynamic concurrent program may be viewed as a limiting case of an infinite family of static programs, and so the second method may be viewed as generalizing the first. Our methods are algorithmically efficient, with complexity polynomial in the number of component processes (of the program) that are ``alive'' at any time. We do not explicitly construct the automata-theoretic product of all processes that are alive, thereby avoiding state explosion. Instead, for each interacting pair of processes, we construct (from a pair-specification) a pair-structure which embodies the interaction of the two processes. From each pair-structure, we synthesize a pair-program to coordinate the two processes. Our second method allows pair-programs to be added dynamically at run-time. They are then ``composed conjunctively'' with the currently alive pair-programs to ``re-synthesize'' the program. We can thus add new behaviors, which result in new properties being satisfied, at run-time. This ``incremental composition'' step has complexity independent of the total number of processes; it only requires the mechanical analysis of the two processes in the pair-program, and their immediate neighbors, i.e., the other processes which they interact directly with. Thus, any state-explosion incurred is explosion in the product of only two processes. We establish ``large model'' theorems which show that the synthesized global program inherits correctness properties from the pair-programs.",
+issn="1572-8102",
+doi="10.1007/s10703-016-0252-9",
+url="http://dx.doi.org/10.1007/s10703-016-0252-9"
+}
+
+
+@article{Att16b,
+title = "Finite-state concurrent programs can be expressed in pairwise normal form ",
+journal = "Theoretical Computer Science ",
+volume = "619",
+number = "",
+pages = "1 - 31",
+year = "2016",
+note = "",
+issn = "0304-3975",
+doi = "http://dx.doi.org/10.1016/j.tcs.2015.11.032",
+url = "http://www.sciencedirect.com/science/article/pii/S0304397515011184",
+author = "Paul C. Attie",
+keywords = "Finite-state concurrent programs",
+keywords = "Expressive completeness",
+keywords = "Atomic registers",
+keywords = "State-explosion ",
+abstract = "Abstract We show that any finite-state shared-memory concurrent program can be transformed into pairwise normal form: all variables are shared between exactly two processes, and the guards on transitions are conjunctions of conditions over this pairwise shared state. Specifically, if P is a finite-state shared-memory concurrent program, then there exists a finite-state shared-memory concurrent program P expressed in pairwise normal form such that P is strongly bisimilar to P. Our result is constructive: we give an algorithm for producing P , given P. "
+}
+
+
+
+
+@book{DP02,
+  author    = {B. Davey and H. Priestly},
+  title     = {Itroduction to Lattices and Order},
+  publisher = {Cambridge University Press},
+  year      = {2002},
+  isbn      = {78-0-521-78451-1},
+}
+
+
+
+
+
+@book{milner,
+  author    = {Robin Milner},
+  title     = {Communication and concurrency},
+  series    = {{PHI} Series in computer science},
+  publisher = {Prentice Hall},
+  year      = {1989},
+  isbn      = {978-0-13-115007-2},
+  timestamp = {Wed, 27 Apr 2011 17:30:28 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/books/daglib/0067019},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+
+
+@inproceedings{AGR16,
+  author    = {Pedro Antonino and
+               Thomas Gibson{-}Robinson and
+               A. W. Roscoe},
+  title     = {Efficient Deadlock-Freedom Checking Using Local Analysis and {SAT}
+               Solving},
+  booktitle = {Integrated Formal Methods - 12th International Conference, {IFM} 2016,
+               Reykjavik, Iceland, June 1-5, 2016, Proceedings},
+  pages     = {345--360},
+  year      = {2016},
+  url       = {http://dx.doi.org/10.1007/978-3-319-33693-0_22},
+  doi       = {10.1007/978-3-319-33693-0_22},
+  timestamp = {Wed, 25 May 2016 12:29:41 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/ifm/AntoninoGR16},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+
+@phdthesis{Ma96,
+title = "The Design and Construction of Deadlock-Free Concurrent Systems",
+author = "Jeremy Malcolm Randolph Martin",
+school = "The University of Buckingham",
+year = "1996",
+}
+
+
+@article{RD87,
+title = "The pursuit of deadlock freedom",
+journal = "Information and Computation",
+volume = "75",
+number = "3",
+pages = "289 - 327",
+year = "1987",
+note = "",
+issn = "0890-5401",
+doi = "http://dx.doi.org/10.1016/0890-5401(87)90004-6",
+url = "http://www.sciencedirect.com/science/article/pii/0890540187900046",
+author = "A.W. Roscoe and Naiem Dathi",
+abstract = "We introduce some combinatorial techniques for establishing the deadlock freedom of concurrent systems which are similar to the variant/invariant method of proving loop termination. Our methods are based on the local analysis of networks, which is combinatorially far easier than analysing all global states. They are illustrated by proving numerous examples to be free of deadlock, some of which are useful classes of network."
+}
+
+
+@inproceedings{DFinder2,
+  author    = {Saddek Bensalem and
+               Andreas Griesmayer and
+               Axel Legay and
+               Thanh-Hung Nguyen and
+               Joseph Sifakis and
+               Rongjie Yan},
+  title     = {D-Finder 2: Towards Efficient Correctness of Incremental
+               Design},
+  booktitle = {NASA Formal Methods},
+  year      = {2011},
+  pages     = {453-458},
+}
+
+
+@article{BR91,
+year={1991},
+journal={Distributed Computing},
+volume={4},
+issue={4},
+title={Deadlock analysis in networks of communicating processes},
+publisher={Springer-Verlag},
+author={Brookes, S.D. and Roscoe, A.W.},
+pages={209-230},
+}
+
+
+
+@article{MM12,
+year={2012},
+issn={0925-9856},
+journal={FMSD},
+volume={41},
+issue={2},
+doi={10.1007/s10703-012-0160-6},
+title={Deadlock-freedom in component systems with architectural constraints},
+url={http://dx.doi.org/10.1007/s10703-012-0160-6},
+publisher={Springer US},
+keywords={Component systems; Deadlock-freedom; Architectural constraints; Interaction systems; Sufficient condition},
+author={Martens, Moritz and Majster-Cederbaum, Mila},
+pages={129-177},
+language={English}
+}
+
+
+@INPROCEEDINGS{GS03,
+    author = {Gregor G{\"o}ssler and Joseph Sifakis},
+    title = {Component-based Construction of Deadlock-free Systems},
+    booktitle = {FSTTCS},
+    year = {2003},
+    pages = {420--433},
+    publisher = {Springer}
+}
+
+
+
+
+
+@article{AB03,
+journal={FME},
+series={LNCS},
+title={{A General Approach to Deadlock Freedom Verification for Software Architectures}},
+keywords={software architecture; deadlock; process algebra},
+author={Aldini, Alessandro and Bernardo, Marco},
+year = 2003,
+pages={658-677},
+volume = 2805
+}
+
+
+
+@ARTICLE{gasstation, 
+author={Heimbold, David and Luckham, David}, 
+journal={Software, IEEE}, title={Debugging {A}da Tasking Programs}, 
+year={1985}, 
+month=mar, 
+volume={2}, 
+number={2}, 
+pages={47 -57}, 
+keywords={Concurrent computing;Debugging;Monitoring;Pressing;Programming profession;Runtime;Scheduling algorithm;System recovery;}, 
+doi={10.1109/MS.1985.230351}, 
+ISSN={0740-7459},
+}
+
+
+
+@article{bensalem2010compositional,
+  title={Compositional verification for component-based systems and application},
+  author={Bensalem, S. and Bozga, M. and Nguyen, T.H. and Sifakis, J.},
+  journal={Software, IET},
+  volume={4},
+  number={3},
+  pages={181--193},
+  year={2010},
+  publisher={IET},
+}
+
+
+
+
+
+@INPROCEEDINGS{Bensalem98computingabstractions,
+    author = {S. Bensalem and Y. Lakhnech and S. Owre},
+    title = {Computing abstractions of infinite state systems compositionally and automatically},
+    booktitle = {PROCEEDINGS OF CAV ’98},
+    year = {1998},
+    pages = {319--331},
+    publisher = {}
+}
+
+
+                  
+@article{AFG93,
+  author = {Attie, P.C. and Francez, N. and Grumberg, O.},
+  title = {{Fairness and Hyperfairness in Multiparty Interactions}},
+  journal = {Distributed Computing},
+  volume = 6,
+  pages = {245--254},
+  year = {1993}
+  }
+
+
+
+
+@inproceedings{DBLP:conf/soco/BozgaJMS12,
+  author    = {Marius Bozga and
+               Mohamad Jaber and
+               Nikolaos Maris and
+               Joseph Sifakis},
+  title     = {{Modeling Dynamic Architectures Using Dy-BIP}},
+  booktitle = {Software Composition},
   year      = {2012},
-  url       = {http://dx.doi.org/10.1142/S0129626412500119},
+  pages     = {1-16},
+  ee        = {http://dx.doi.org/10.1007/978-3-642-30564-1_1},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
 }
 
-
-@inproceedings{S14,
-  author    = {Fatima K. Abu Salem and 
-               Khalil El-Harake and 
-               Karl Gemayel
-               },
-  title     = {Factoring Sparse Bivariate Polynomials using the Priority Queue},
-  booktitle = {Proceedings of Computer Algebra in Scientific Computing},
-  volume    = 8660,
-  series = {Lecture Notes in Computer Science},
+@proceedings{DBLP:conf/soco/2012,
+  editor    = {Thomas Gschwind and
+               Flavio De Paoli and
+               Volker Gruhn and
+               Matthias Book},
+  title     = {Software Composition - 11th International Conference, SC
+               2012, Prague, Czech Republic, May 31 - June 1, 2012. Proceedings},
+  booktitle = {Software Composition},
   publisher = {Springer},
-  pages     = {388 -- 402},
-  year      = {2014},
-  url       = {},
-  doi       = {},
-  timestamp = {},
-  biburl    = {},
-  bibsource = {}
+  series    = {Lecture Notes in Computer Science},
+  volume    = {7306},
+  year      = {2012},
+  isbn      = {978-3-642-30563-4},
+  ee        = {http://dx.doi.org/10.1007/978-3-642-30564-1},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+                
+
+
+
+@article {springerlink:10.1023/A:1008744030390,
+   author = {Bensalem, Saddek and Lakhnech, Yassine},
+   title = {Automatic Generation of Invariants},
+   journal = {Formal Methods in System Design},
+   publisher = {Springer Netherlands},
+   issn = {0925-9856},
+   keyword = {Engineering},
+   pages = {75-92},
+   volume = {15},
+   issue = {1},
+   url = {http://dx.doi.org/10.1023/A:1008744030390},
+   note = {10.1023/A:1008744030390},
+   year = {1999}
 }
 
 
-@inproceedings{S15,
-  author    = {Fatima K. Abu Salem and 
-               Khalil El-Harake and 
-               Karl Gemayel
-               },
-  title     = {Cache oblivious sparse polynomial factoring using the Funnel heap},
-  booktitle = {Proceedings of International Workshop on Parallel Symbolic Computation},
-  publisher = {ACM Press},
-  pages     = {7--15},
-  year      = {2015},
-  url       = {},
-  doi       = {},
-  timestamp = {},
-  biburl    = {},
-  bibsource = {}
+
+
+@InProceedings{DFinder,
+   author = {Saddek Bensalem and Marius Bozga and Thanh-Hung Nguyen and Joseph Sifakis},
+   title =  {{D-Finder: A Tool for Compositional Deadlock Detection and Verification}},
+   booktitle = {CAV},
+   pages = {614--619},
+   year =	 2009,
+}
+                  
+
+
+
+@article{Dij75,
+   author = {Edsger W. Dijkstra},
+   title =  {Guarded commands, nondeterminacy and formal derivation of programs}, 
+   journal = {Communications of the ACM}, 
+   volume = 18,
+   number = 8,
+   year = 1975,
+   month = aug,
+   pages = {453--457},
 }
 
 
-@inproceedings{GhemawatGL03,
-  author    = {Sanjay Ghemawat and
-               Howard Gobioff and
-               Shun{-}Tak Leung},
-  title     = {The Google file system},
-  booktitle = {Proceedings of the 19th {ACM} Symposium on Operating Systems Principles
-               2003, {SOSP} 2003, Bolton Landing, NY, USA, October 19-22, 2003},
-  pages     = {29--43},
-  year      = {2003},
-  url       = {http://doi.acm.org/10.1145/945445.945450},
-  doi       = {10.1145/945445.945450},
-  timestamp = {Mon, 22 Jun 2015 17:24:47 +0200},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/sosp/GhemawatGL03},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
 
-@article{ChangDGHWBCFG08,
-  author    = {Fay Chang and
-               Jeffrey Dean and
-               Sanjay Ghemawat and
-               Wilson C. Hsieh and
-               Deborah A. Wallach and
-               Michael Burrows and
-               Tushar Chandra and
-               Andrew Fikes and
-               Robert E. Gruber},
-  title     = {Bigtable: {A} Distributed Storage System for Structured Data},
-  journal   = {{ACM} Trans. Comput. Syst.},
-  volume    = {26},
-  number    = {2},
-  year      = {2008},
-  url       = {http://doi.acm.org/10.1145/1365815.1365816},
-  doi       = {10.1145/1365815.1365816},
-  timestamp = {Thu, 19 Jun 2008 10:04:24 +0200},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/tocs/ChangDGHWBCFG08},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
+
+@InProceedings{bip06,
+  author = 	 {Ananda Basu and Marius Bozga and Joseph Sifakis},
+  title = 	 {{Modeling Heterogeneous Real-time Components in {BIP}}},
+  booktitle =	 {{SEFM}},
+  pages =	 {3--12},
+  year =	 2006,
+  month =	 sep
 }
 
 
-@misc{leafleft,
-    author = "{Leaflet}",
-    title = {{an open-source javascript library for mobile-friendly interactive maps}},
-    howpublished = {\url{http://leafletjs.com}}
+@article{BliudzeS08,
+author = {Simon Bliudze and Joseph Sifakis},
+title = {The Algebra of Connectors---Structuring Interaction in {BIP}},
+journal = {{IEEE} Transactions on Computers},
+volume = 57,
+number = 10,
+year = 2008,
+issn = {0018-9340},
+pages = {1315--1330},
+doi = {http://doi.ieeecomputersociety.org/10.1109/TC.2008.26},
+publisher = {IEEE Computer Society},
+address = {Los Alamitos, CA, USA},
 }
 
 
-@inproceedings{FinkelGM05,
-  author    = {Jenny Rose Finkel and
-               Trond Grenager and
-               Christopher D. Manning},
-  title     = {Incorporating Non-local Information into Information Extraction Systems
-               by Gibbs Sampling},
-  booktitle = {{ACL} 2005, 43rd Annual Meeting of the Association for Computational
-               Linguistics, Proceedings of the Conference, 25-30 June 2005, University
-               of Michigan, {USA}},
-  year      = {2005},
-  url       = {http://acl.ldc.upenn.edu/P/P05/P05-1045.pdf},
-  timestamp = {Fri, 02 Dec 2011 14:17:37 +0100},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/acl/FinkelGM05},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
+@inproceedings{flattening,
+  author    = {Marius Bozga and
+               Mohamad Jaber and
+               Joseph Sifakis},
+  title     = {Source-to-source architecture transformation for performance
+               optimization in BIP},
+  booktitle = {SIES},
+  year      = {2009},
+  pages     = {152-160},
+  ee        = {http://dx.doi.org/10.1109/SIES.2009.5196211},
+  crossref  = {DBLP:conf/sies/2009},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
 }
-@proceedings{DBLP:conf/acl/2005,
-  editor    = {Kevin Knight and
-               Hwee Tou Ng and
-               Kemal Oflazer},
-  title     = {{ACL} 2005, 43rd Annual Meeting of the Association for Computational
-               Linguistics, Proceedings of the Conference, 25-30 June 2005, University
-               of Michigan, {USA}},
-  publisher = {The Association for Computer Linguistics},
-  year      = {2005},
-  url       = {http://aclweb.org/anthology-new/P/P05/},
-  timestamp = {Fri, 02 Dec 2011 14:17:37 +0100},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/acl/2005},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
+
+@proceedings{DBLP:conf/sies/2009,
+  title     = {IEEE Fourth International Symposium on Industrial Embedded
+               Systems - SIES 2009, Ecole Polytechnique Federale de Lausanne,
+               Switzerland, July 8 - 10, 2009},
+  booktitle = {SIES},
+  publisher = {IEEE},
+  year      = {2009},
+  isbn      = {978-1-4244-4110-5},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
 }
 
 
-@inproceedings{toutanova1,
- author = {Toutanova, Kristina and Manning, Christopher D.},
- title = {Enriching the Knowledge Sources Used in a Maximum Entropy Part-of-speech Tagger},
- booktitle = {Proceedings of the 2000 Joint SIGDAT Conference on Empirical Methods in Natural Language Processing and Very Large Corpora: Held in Conjunction with the 38th Annual Meeting of the Association for Computational Linguistics - Volume 13},
- series = {EMNLP '00},
- year = {2000},
- location = {Hong Kong},
- pages = {63--70},
- numpages = {8},
- url = {http://dx.doi.org/10.3115/1117794.1117802},
- doi = {10.3115/1117794.1117802},
- acmid = {1117802},
- publisher = {Association for Computational Linguistics},
- address = {Stroudsburg, PA, USA},
-} 
-
-@inproceedings{toutanova2,
-  author    = {Kristina Toutanova and
-               Dan Klein and
-               Christopher D. Manning and
-               Yoram Singer},
-  title     = {Feature-Rich Part-of-Speech Tagging with a Cyclic Dependency Network},
-  booktitle = {{HLT-NAACL}},
-  year      = {2003},
-  url       = {http://acl.ldc.upenn.edu/N/N03/N03-1033.pdf},
-  timestamp = {Fri, 27 Feb 2004 10:08:28 +0100},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/naacl/ToutanovaKMS03},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-
-@inproceedings{topotext1,
-  author    = {Randa El Khatib and Julia El Zini and David Wrisley and Mohamad Jaber and Shady Elbassuoni},
-  title     = {{TopoText: Interactive Digital Mapping of Literary Text}},
-  booktitle = {{COLING} 2016, 26th International Conference on Computational Linguistics,
-               Proceedings of the Conference System Demonstrations, December 11-16,
-               2016, Osaka, Japan},
-  pages     = {(to appear)},
-  year      = {2016},
-  url       = {},
-  timestamp = {},
-  biburl    = {},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@inproceedings{topotext2,
-  author    = {Randa El Khatib and Julia El Zini and David Wrisley and Shady Elbassuoni and Mohamad Jaber},
-  title     = {{TopoText 2.0: Prototyping Modes of Interactive Mapping and Social Knowledge Creation}},
-  booktitle = {Innovative Interrogations: Modelling, Prototyping and Making, June 10-11,
-               2016, University of Victoria},
-  pages     = {},
-  year      = {2016},
-  url       = {},
-  timestamp = {},
-  biburl    = {},
-  bibsource = {http://inke.ca/projects/inke-dhsi-2016/}
-}
-
-
-@article{WetAl13a,
-  author    = {Felix Ming Fai Wong and
-               Chee{-}Wei Tan and
-               Soumya Sen and
-               Mung Chiang},
-  title     = {Quantifying Political Leaning from Tweets, Retweets, and Retweeters},
-  journal   = {{IEEE} Trans. Knowl. Data Eng.},
-  volume    = {28},
-  number    = {8},
-  pages     = {2158--2172},
-  year      = {2016},
-  url       = {http://dx.doi.org/10.1109/TKDE.2016.2553667},
-  doi       = {10.1109/TKDE.2016.2553667},
-  timestamp = {Mon, 11 Jul 2016 16:24:47 +0200},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/tkde/WongTSC16},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@inproceedings{WetAl13b,
-  author    = {Felix Ming Fai Wong and
-               Chee Wei Tan and
-               Soumya Sen and
-               Mung Chiang},
-  title     = {Quantifying Political Leaning from Tweets and Retweets},
-  booktitle = {Proceedings of the Seventh International Conference on Weblogs and
-               Social Media, {ICWSM} 2013, Cambridge, Massachusetts, USA, July 8-11,
-               2013.},
-  year      = {2013},
-  url       = {http://www.aaai.org/ocs/index.php/ICWSM/ICWSM13/paper/view/6105},
-  timestamp = {Tue, 20 Aug 2013 13:12:33 +0200},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/icwsm/WongTSC13},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@inproceedings{VetAl14,
-  author    = {Svitlana Volkova and
-               Glen Coppersmith and
-               Benjamin Van Durme},
-  title     = {Inferring User Political Preferences from Streaming Communications},
-  booktitle = {Proceedings of the 52nd Annual Meeting of the Association for Computational
-               Linguistics, {ACL} 2014, June 22-27, 2014, Baltimore, MD, USA, Volume
-               1: Long Papers},
-  pages     = {186--196},
-  year      = {2014},
-  url       = {http://aclweb.org/anthology/P/P14/P14-1018.pdf},
-  timestamp = {Mon, 28 Jul 2014 19:09:09 +0200},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/acl/VolkovaCD14},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@inproceedings{SetAl12,
-  author    = {Caroline Suen and
-               Sandy Huang and
-               Chantat Eksombatchai and
-               Rok Sosic and
-               Jure Leskovec},
-  title     = {{NIFTY:} a system for large scale information flow tracking and clustering},
-  booktitle = {22nd International World Wide Web Conference, {WWW} '13, Rio de Janeiro,
-               Brazil, May 13-17, 2013},
-  pages     = {1237--1248},
-  year      = {2013},
-  url       = {http://dl.acm.org/citation.cfm?id=2488496},
-  timestamp = {Sat, 24 Aug 2013 18:12:36 +0200},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/www/SuenHESL13},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@inproceedings{SetAl14,
-  author    = {Sandeep Soni and
-               Tanushree Mitra and
-               Eric Gilbert and
-               Jacob Eisenstein},
-  title     = {Modeling Factuality Judgments in Social Media Text},
-  booktitle = {Proceedings of the 52nd Annual Meeting of the Association for Computational
-               Linguistics, {ACL} 2014, June 22-27, 2014, Baltimore, MD, USA, Volume
-               2: Short Papers},
-  pages     = {415--420},
-  year      = {2014},
-  url       = {http://aclweb.org/anthology/P/P14/P14-2068.pdf},
-  timestamp = {Mon, 28 Jul 2014 19:50:44 +0200},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/acl/SoniMGE14},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@inproceedings{SetAl13,
-  author    = {Y. Sim and B. Acree and J. H. Gross and N. A. Smith},
-  title     = {{Measuring ideological proportions in political speeches}},
-  booktitle = {{International Conference on Empirical Methods on Natural Language Processing 2013}},
-  pages     = {},
-  year      = {2013},
-  url       = {},
-  timestamp = {},
-  biburl    = {},
-  bibsource = {}
-}
-
-@inproceedings{PS13,
-  author    = {A. Prat and D. Strömberg},
-  title     = {{The political economy of mass media}},
-  booktitle = {{Advances in Economics and Econometrics: Tenth World Congress, 2013}, Cambridge University Press},
-  pages     = {},
-  year      = {2013},
-  url       = {},
-  timestamp = {},
-  biburl    = {},
-  bibsource = {}
-}
-
-
-@article{NSZML15,
-  author    = {Vlad Niculae and
-               Caroline Suen and
-               Justine Zhang and
-               Cristian Danescu{-}Niculescu{-}Mizil and
-               Jure Leskovec},
-  title     = {{QUOTUS:} The Structure of Political Media Coverage as Revealed by
-               Quoting Patterns},
-  journal   = {CoRR},
-  volume    = {abs/1504.01383},
-  year      = {2015},
-  url       = {http://arxiv.org/abs/1504.01383},
-  timestamp = {Sat, 02 May 2015 17:50:32 +0200},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/corr/NiculaeSZDL15},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@inproceedings{NetAl13,
-  author    = {Viet{-}An Nguyen and
-               Jordan L. Boyd{-}Graber and
-               Philip Resnik},
-  title     = {Lexical and Hierarchical Topic Regression},
-  booktitle = {Advances in Neural Information Processing Systems 26: 27th Annual
-               Conference on Neural Information Processing Systems 2013. Proceedings
-               of a meeting held December 5-8, 2013, Lake Tahoe, Nevada, United States.},
-  pages     = {1106--1114},
-  year      = {2013},
-  url       = {http://papers.nips.cc/paper/5163-lexical-and-hierarchical-topic-regression},
-  timestamp = {Fri, 31 Jan 2014 12:11:40 +0100},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/nips/NguyenBR13},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@inproceedings{LetAl08,
-  author    = {Wei{-}Hao Lin and
-               Eric P. Xing and
-               Alexander G. Hauptmann},
-  title     = {A Joint Topic and Perspective Model for Ideological Discourse},
-  booktitle = {Machine Learning and Knowledge Discovery in Databases, European Conference,
-               {ECML/PKDD} 2008, Antwerp, Belgium, September 15-19, 2008, Proceedings,
-               Part {II}},
-  pages     = {17--32},
-  year      = {2008},
-  url       = {http://dx.doi.org/10.1007/978-3-540-87481-2_2},
-  doi       = {10.1007/978-3-540-87481-2_2},
-  timestamp = {Sat, 30 Aug 2008 14:46:22 +0200},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/pkdd/LinXH08},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@inproceedings{JetAl15,
-  author    = {Zubin Jelveh and
-               Bruce Kogut and
-               Suresh Naidu},
-  title     = {Detecting Latent Ideology in Expert Text: Evidence From Academic Papers
-               in Economics},
-  booktitle = {Proceedings of the 2014 Conference on Empirical Methods in Natural
-               Language Processing, {EMNLP} 2014, October 25-29, 2014, Doha, Qatar,
-               {A} meeting of SIGDAT, a Special Interest Group of the {ACL}},
-  pages     = {1804--1809},
-  year      = {2014},
-  url       = {http://aclweb.org/anthology/D/D14/D14-1191.pdf},
-  timestamp = {Sat, 15 Nov 2014 14:45:18 +0100},
-  biburl    = {http://dblp.dagstuhl.de/rec/bib/conf/emnlp/JelvehKN14},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@inproceedings{IetAl14,
-  author    = {Mohit Iyyer and
-               Peter Enns and
-               Jordan L. Boyd{-}Graber and
-               Philip Resnik},
-  title     = {Political Ideology Detection Using Recursive Neural Networks},
-  booktitle = {Proceedings of the 52nd Annual Meeting of the Association for Computational
-               Linguistics, {ACL} 2014, June 22-27, 2014, Baltimore, MD, USA, Volume
-               1: Long Papers},
-  pages     = {1113--1122},
-  year      = {2014},
-  url       = {http://aclweb.org/anthology/P/P14/P14-1105.pdf},
-  timestamp = {Mon, 28 Jul 2014 19:09:09 +0200},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/acl/IyyerEBR14},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-@misc{Isis,
-    author = "{Liveuamap}",
-    title = {{Interactive Live Map of Conflict News }},
-    howpublished = {\url{http://syria.liveuamap.com/}}
-}
-
-
-@misc{Eqlim,
-    author = "{Eqlim}",
-    title = {{Risk Intelligence Data For Global Supply Chains}},
-    howpublished = {\url{http://eqlim.com}}
-}
-
-@inproceedings{CR13,
-  author    = {Morgane Ciot and
-               Morgan Sonderegger and
-               Derek Ruths},
-  title     = {Gender Inference of Twitter Users in Non-English Contexts},
-  booktitle = {Proceedings of the 2013 Conference on Empirical Methods in Natural
-               Language Processing, {EMNLP} 2013, 18-21 October 2013, Grand Hyatt
-               Seattle, Seattle, Washington, USA, {A} meeting of SIGDAT, a Special
-               Interest Group of the {ACL}},
-  pages     = {1136--1145},
-  year      = {2013},
-  url       = {http://aclweb.org/anthology/D/D13/D13-1114.pdf},
-  timestamp = {Fri, 22 Nov 2013 12:57:23 +0100},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/emnlp/CiotSR13},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
-}
-
-
-@inproceedings{spark-cbs,
-  author    = {Bilal Abi Farraj and Wael Al Rahal Al Orabi and Chadi Helwe and Mohamad Jaber and Omar Kayali and Mohamad Nassar},
-  title     = {Reconfigurable and Adaptive Spark Applications},
-  booktitle = {Proceedings of the 32st Annual {ACM} Symposium on Applied Computing,
-               2017 (Submitted)},
-  pages     = {},
-  year      = {2017},
-  url       = {},
-  doi       = {},
-  timestamp = {},
-  biburl    = {},
-  bibsource = {}
-}
-
-@inproceedings{hbase-dynamique,
-  author    = {Ahmad Ghandour and
-               Mariam Moukalled and
-               Mohamad Jaber},
-  title     = {{User-Based Load Balancer in HBase}},
-  booktitle = {Proceedings of the 32st Annual {ACM} Symposium on Applied Computing,
-               2016 (submitted)},
-  pages     = {},
-  year      = {2017},
-  url       = {},
-  doi       = {},
-  timestamp = {},
-  biburl    = {},
-  bibsource = {}
-}
-
-@article{bip-distributed,
+@inproceedings{BonakdarpourBJQS10b,
   author    = {Borzoo Bonakdarpour and
                Marius Bozga and
                Mohamad Jaber and
                Jean Quilbeuf and
                Joseph Sifakis},
-  title     = {A framework for automated distributed implementation of component-based
-               models},
-  journal   = {Distributed Computing},
-  volume    = {25},
-  number    = {5},
-  pages     = {383--409},
-  year      = {2012},
-  url       = {http://dx.doi.org/10.1007/s00446-012-0168-6},
-  doi       = {10.1007/s00446-012-0168-6},
-  timestamp = {Tue, 25 Sep 2012 16:03:42 +0200},
-  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/dc/BonakdarpourBJQS12},
-  bibsource = {dblp computer science bibliography, http://dblp.org}
+  title     = {{From High-level Component-based Models to Distributed Implementations}},
+  booktitle = {EMSOFT},
+  year      = {2010},
+  pages     = {209-218},
+  ee        = {http://doi.acm.org/10.1145/1879021.1879049},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
 }
 
 
+@proceedings{DBLP:conf/emsoft/2010,
+  editor    = {Luca P. Carloni and
+               Stavros Tripakis},
+  title     = {Proceedings of the 10th International conference on Embedded
+               software, EMSOFT 2010, Scottsdale, Arizona, USA, October
+               24-29, 2010},
+  booktitle = {EMSOFT},
+  publisher = {ACM},
+  year      = {2010},
+  isbn      = {978-1-60558-904-6},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+
+
+@article{AE98,
+  author = {Paul C. Attie and E. Allen Emerson},
+  title = {{Synthesis of Concurrent Systems with Many Similar Processes}},
+  journal = {{TOPLAS}},
+  year = 1998,
+  month = jan,
+  pages = {51-115},
+  volume = 20,
+  number = 1
+}
+
+
+@inproceedings{Att99a,
+   author = {Paul C. Attie},
+   title = {Synthesis of large concurrent programs via pairwise
+            composition},
+   booktitle = {{CONCUR}'99},
+   year = {1999},
+   month = aug,
+   publisher = {Springer-Verlag},
+   series = {LNCS},
+   number = {1664}
+}
+
+
+
+@inproceedings{AC05,
+  author = {Paul C. Attie and H. Chockler},
+  title = {{Efficiently Verifiable Conditions for Deadlock-freedom of 
+           Large Concurrent Programs}},
+  booktitle = {VMCAI},
+  address = {France},
+  year = {2005},
+  month = jan,
+  }
+
+
+
+@inproceedings{LS92,
+   author = {P. Ladkin and B. Simons},
+   title = {Compile time analysis of communicating processes},
+   booktitle = {Proceedings of the International Conference on Supercomputing},
+   publisher = {{ACM} {P}ress},
+   pages = {248--259},
+   year = {1992},
+}
+
+
+@article{AAE04,
+  author = {Paul C. Attie and Anish Arora and E. Allen Emerson},
+  title = {Synthesis of fault-tolerant concurrent programs},
+  journal = toplas,
+  volume = 26,
+  number = 1,
+  month = jan,
+  year = 2004,
+  pages = {125--185},
+}
+
+
+
+
+@inproceedings{CousotCousot77-1,
+   author =    {Patrick Cousot and Radhia Cousot},
+   title =     {Abstract interpretation: a unified lattice model for static 
+                analysis of programs by construction or approximation of 
+                fixpoints},
+   pages =     {238--252},
+   booktitle = {Conference Record of the Fourth Annual ACM SIGPLAN-SIGACT 
+                Symposium on Principles of Programming Languages},
+   address =   {Los Angeles, California},
+   publisher = {ACM Press, New York, NY},
+   year =      1977,
+}
+
+
+
+@inproceedings{LS02,
+   author = {Ladkin P. and Simons B.},
+   title = {Compile time analysis of communicating processes},
+   booktitle = {Proceedings of the International Conference on Supercomputing},
+   publisher = {{ACM} {P}ress},
+   pages = {248--259},
+   year = {1992},
+}
+
+
+@book{papadimitriou1994computational,
+  title={Computational complexity},
+  author={Christos H. Papadimitriou},
+  isbn={9780201530827},
+  year={1994},
+  publisher={Addison-Wesley}
+}
+
+@inproceedings{FORTE13,
+  author    = {Paul C. Attie and
+               Saddek Bensalem and
+               Marius Bozga and
+               Mohamad Jaber and
+               Joseph Sifakis and
+               Fadi A. Zaraket},
+  title     = {An Abstract Framework for Deadlock Prevention in {BIP}},
+  booktitle = {Formal Techniques for Distributed Systems - Joint {IFIP} {WG} 6.1
+               International Conference, {FMOODS/FORTE} 2013, Held as Part of the
+               8th International Federated Conference on Distributed Computing Techniques,
+               DisCoTec 2013, Florence, Italy, June 3-5, 2013. Proceedings},
+  pages     = {161--177},
+  year      = {2013},
+  url       = {http://dx.doi.org/10.1007/978-3-642-38592-6_12},
+  doi       = {10.1007/978-3-642-38592-6_12},
+  timestamp = {Thu, 11 Dec 2014 17:22:43 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/forte/AttieBBJSZ13},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@inproceedings{AbdullaHH13VMCAI,
+  author    = {Parosh Aziz Abdulla and
+    Fr{\'{e}}d{\'{e}}ric Haziza and
+      Luk{\'{a}}s Hol{\'{\i}}k},
+  title     = {All for the Price of Few},
+  booktitle = {Verification, Model Checking, and Abstract Interpretation, International Conference, {VMCAI}},
+  pages     = {476--495},
+  year      = {2013},
+  month     = 1,
+  url       = {http://dx.doi.org/10.1007/978-3-642-35873-9_28},
+  doi       = {10.1007/978-3-642-35873-9_28},
+}
+
+@inproceedings{PnueliRZ01TACAS,
+  author    = {Amir Pnueli and
+    Sitvanit Ruah and
+      Lenore D. Zuck},
+  title     = {Automatic Deductive Verification with Invisible Invariants},
+  booktitle = {Tools and Algorithms for the Construction and Analysis of Systems,
+    {TACAS} }, 
+  pages     = {82--97},
+  year      = {2001},
+  url       = {http://dx.doi.org/10.1007/3-540-45319-9_7},
+  doi       = {10.1007/3-540-45319-9_7},
+}
+
+
+@article{CohenN09FMSD,
+  author    = {Ariel Cohen and
+    Kedar S. Namjoshi},
+  title     = {Local proofs for global safety properties},
+  journal   = {Formal Methods in System Design},
+  volume    = {34},
+  number    = {2},
+  pages     = {104--125},
+  year      = {2009},
+  month     = 5,
+  url       = {http://dx.doi.org/10.1007/s10703-008-0063-8},
+  doi       = {10.1007/s10703-008-0063-8},
+}
+
+
+@inproceedings{ClarkeKV10Memory,
+  author    = {Edmund M. Clarke and
+    Robert P. Kurshan and
+      Helmut Veith},
+  title     = {The Localization Reduction and Counterexample-Guided Abstraction Refinement},
+  booktitle = {Time for Verification, Essays in Memory of Amir Pnueli},
+  pages     = {61--71},
+  year      = {2010},
+  month     = 2,
+  url       = {http://dx.doi.org/10.1007/978-3-642-13754-9_4},
+  doi       = {10.1007/978-3-642-13754-9_4},
+}
+
+
+@inproceedings{BaumgartnerM05Charme,
+  author    = {Jason Baumgartner and
+    Hari Mony},
+  title     = {Maximal Input Reduction of Sequential Netlists via Synergistic Reparameterization
+    and Localization Strategies},
+  booktitle = {Correct Hardware Design and Verification Methods,
+    {CHARME}},
+  pages     = {222--237},
+  year      = {2005},
+  month     = 10,
+  url       = {https://doi.org/10.1007/11560548_18},
+  doi       = {10.1007/11560548_18},
+  timestamp = {Sun, 21 May 2017 00:18:09 +0200},
+}
+
+@inproceedings{BaumgartnerK04Date,
+  author    = {Jason Baumgartner and
+    Andreas Kuehlmann},
+  title     = {Enhanced Diameter Bounding via Structural Transformation},
+  booktitle = {Design, Automation and Test in Europe Conference and Exposition
+    {DATE}},
+  pages     = {36--41},
+  year      = {2004},
+  month     = {2},
+  url       = {http://dx.doi.org/10.1109/DATE.2004.1268824},
+  doi       = {10.1109/DATE.2004.1268824},
+}
+
+@inproceedings{BaumgartnerKA02CAV,
+  author    = {Jason Baumgartner and
+    Andreas Kuehlmann and
+      Jacob A. Abraham},
+  title     = {Property Checking via Structural Analysis},
+  booktitle = {Computer Aided Verification, {CAV} }, 
+  pages     = {151--165},
+  year      = {2002},
+  year      = {7},
+  url       = {http://dx.doi.org/10.1007/3-540-45657-0_12},
+  doi       = {10.1007/3-540-45657-0_12},
+}
+
+@book{Kurshan94,
+  author = {Kurshan, Robert P.},
+  title = {Computer-aided Verification of Coordinating Processes: The Automata-theoretic Approach},
+  year = {1994},
+  isbn = {0-691-03436-2},
+  publisher = {Princeton University Press},
+  address = {Princeton, NJ, USA},
+}
+
+@article{Glabbeek2009,
+  author    = {Rob J. van Glabbeek and
+    Bas Luttik and
+      Nikola Trcka},
+  title     = {Computation Tree Logic with Deadlock Detection},
+  journal   = {Logical Methods in Computer Science},
+  volume    = {5},
+  number    = {4},
+  year      = {2009},
+  month     = {10},
+}

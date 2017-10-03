@@ -1,5 +1,114 @@
 \section{Motivation and Background}
 
+Large distributed computational systems are an indispensable part of the crticial infrastruture of modern economics. The internet itself can be
+regarded as a large distributed system.
+%
+A distributed system functions by means of the exchange of information between various components, and also by the sharing of resources (\eg memory,
+communication links, etc). This requires that one component ocassionaly \emph{waits} for another component to send it the required information, or to
+relinquicsh a needed resource.  Due to faulty design and/or soiftware errors (``bugs''), it is possible for patterns of waiting to arise which cause a
+{\em deadlock}, \ie a subset of its components are locked forever in a waiting pattern and cannot make any further progress.
+%
+One example of a waiting pattern that leads to deadlock is a \emph{cycle}, \eg component 1 waits for component 2 to send it data, 
+component 2 waits for component 3 to send it data, and finally 
+component 3 waits for component 1 to send it data.
+%
+Existing work relies on preventing a cyclic waiting pattern, as illustrated above. However, consider rthe above example, but add to it component 4,
+and suppose that component 1 can take data from either component 2 or from componet 4. In this case, once compoent 4 sends data to component 1,
+component 1 can proceed with its computation, and case send data to component 3, which then sends data to component 2. Hence the cycle is broken and
+there is not deadlock.
+%
+This simple example illustrates the fact that, in a system in which components have a \emph{local choice} of action, waiting cycles are an
+\emph{incomplete} characterization of deadlock: existence of a deadlock implies the existence of at least one waiting cycle, but existence of a
+waiting cycle does not necessarily imply the existence of a deadlock.
+%
+The proposed work presents a better characterization of a deadlock, which we call a \emph{supercycle}. We will show that a supercycle is a 
+\emph{complete} characterization of deadlock: existence of a deadlock implies the existence of at least one supercycle, \emph{and} existence of a
+supercycle implies the existence of a deadlock.
+
+As noted in the abstract, a crucial design task is to ensure that a large dfistributed system does not enter a configuration in which some or all of
+its components are deadlocked. 
+A key problem is the conceptual complexity of large distributed computer systems: the number of possible configurations of a large system is 
+too large to be checked exhaustively. COnsider for example, a toy system with just one hundred components, each of which can be in
+one of only two states: (1) sending date to another compoennt, or (2) receiving date from another component. Thus there are overall $2^{100}$ possible
+configurations. 
+
+
+
+Thus all published work relies on checks that are 
+relatively easy to compute, and which imply freedom from deadlock. If the check succeeds, the system is guaranteed to be deadlock free, (no false
+positives), which if the check fails, then the system may or may not be deadlock-free (possible faise negative).  Existing work isplagues by this
+phonomenon of false negatives, which lilmits its usefullness.
+
+
+
+
+
+
+
+
+
+
+
+
+Researchers proposed methods to establish deadlock freedom
+with proposed restrictions to the specified systems. 
+%
+In published work, 
+we established a result that characterizes deadlock freedom
+with a structural property of each system state. 
+The work enables checking for global deadlock freedom
+by model checking a set of subsystems 
+of the overall large system. 
+The work constructs a {\em wait-for-graph} for each state
+in the considered subsytems
+and checks whether it has a {\em supercycle}. 
+%
+When the property being checked is satisfied, 
+it implies deadlock-freedom of the overall system. 
+If not satisfied, then we re-evaluate over larger subsystems,
+which improves the accuracy of the check.  
+When the subsystem being checked becomes the entire system, 
+our criterion becomes complete for
+deadlock-freedom.  
+%
+The results of the published work shows that our method
+addresses deadlock freedom for systems that are not possible 
+to address with existing methods and in reasonable time. 
+%
+This proposal aims to extend the global deadlock freedom 
+criteria in several directions. 
+First, we would like to consider criteria for {\em local deadlock}
+freedom where
+a subsystem is deadlocked while the rest of the system executes. 
+%
+Second, 
+we would like to exploit the {\em AND-OR} structural nature of the 
+wait-for-graph that we ignored in the published work. 
+%
+Third, 
+we would like to incorporate {\em counterexample refinement}
+to improve our method by growing the subsystem we consider in a
+guided manner rather than growing it in all directions as we do now. 
+%
+Fourth, 
+the current work analyses the connections and interactions
+between the components of the system, and does not exploit the 
+semantics of the conditions governing these connections. 
+We would like to benefit from these conditions to tighten 
+our criteria by leveraging the emerging {\em satisfiability 
+solver} and binary decision diagram technologies.
+%
+%Dynamic BIP
+%Design rules for prevention of deadlock
+%
+Finally, 
+we would like to explore whether our method applies to 
+(1) deadlock freedom of parametrized systems and 
+(2) properties other than deadlock that can be characterized 
+with structural checks. 
+
+
+Example: 
 Consider the committee coordination problem described by Chandy and Misra~\cite{MisraCommittee}. 
 
 \begin{quote}
