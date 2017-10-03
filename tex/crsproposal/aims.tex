@@ -11,33 +11,11 @@ takes a system specified for the Behavior Interaction Priority (BIP)
 framework and constructs a set of components connected 
 with interactions. 
 
-\item 
-Local deadlock freedom denotes the state where a set of the 
-system components may be deadlocked while the rest of the 
 
-Local deadlock denotes the state where a subset of the 
-system components are deadlocked while the rest of the 
-system can execute. 
 
-\item
-We will characterize the waiting relations in a system by means of a
-{\em wait-for-graph}. We will then characterize local deadlock by
+ We will then characterize local deadlock by
 means of a pattern of waiting that we call a \emph{supercycle}.
 %local deadlock freedom with a {structural property and build algorithms for checking local deadlock freedom.
-
-\item 
-Components communicate and execute through interactions. 
-An interaction is enabled to execute when all components that 
-are parts of it are ready. 
-So an edge from an interaction to a component in a wait-for-graph
-is an AND edge. 
-A component executes if any one of the interaction it is part of
-executes. So an edge from a component to an interaction is an OR
-edge. 
-The wait-for graph therefore is an AND-OR graph. 
-We will leverage this interesting structure to simplify the
-check for deadlock freedom. 
-A supercyle is the AND-OR generalization of a simple cycle.
 
 
 \item 
