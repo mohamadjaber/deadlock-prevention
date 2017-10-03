@@ -21,7 +21,8 @@ This simple example illustrates the fact that, in a system in which components h
 \emph{incomplete} characterization of deadlock: existence of a deadlock implies the existence of at least one waiting cycle, but existence of a
 waiting cycle does not necessarily imply the existence of a deadlock.
 %
-The proposed work presents a better characterization of a deadlock, which we call a \emph{supercycle}. We will show that a supercycle is a 
+The proposed work uses a better characterization of a deadlock, which we call a \emph{supercycle} \cite{FORTE13}. 
+A key contribution is that we will show that a supercycle is a 
 \emph{complete} characterization of deadlock: existence of a deadlock implies the existence of at least one supercycle, \emph{and} existence of a
 supercycle implies the existence of a deadlock.
 
@@ -43,8 +44,11 @@ theoretical limitations, but only due to lack of computational resources. Experi
 
 
 
-Researchers proposed methods to establish deadlock freedom with proposed restrictions to the specified systems.
+%Researchers proposed methods to establish deadlock freedom with proposed restrictions to the specified systems.
 %
+
+
+
 In published work, we established a result that characterizes deadlock freedom with a structural property of each system state.  The work enables
 checking for global deadlock freedom by model checking a set of subsystems of the overall large system.  The work constructs a {\em wait-for-graph}
 for each state in the considered subsytems and checks whether it has a {\em supercycle}.
