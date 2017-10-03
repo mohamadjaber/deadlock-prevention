@@ -2,7 +2,43 @@
 
 \subsection{Wait-for graphs}
 
+Local deadlock denotes the state where a subset of the system components are deadlocked while the rest of the system can execute.
+%
+We characterize the waiting relations in a system by means of a {\em wait-for-graph}. 
+If a component $\B_i$ is ready to execute an interaction $\act$ then there is an edge $\B_i ar \act$ from $\B_i$ to $\act$.
+If a component $\B_i$ is not ready to execute an interaction $\act$ then there is an edge $\act \ar \B_i$ from $\act$ to $\B_i$.
+A key point is that the wait-for graph depends on the currewnt configuration (\ie the current ``global state'') of the system.
+%
+Components communicate and execute through interactions. 
+An interaction is enabled to execute when all components that 
+are parts of it are ready. 
+So an edge from an interaction to a component in a wait-for-graph
+is an AND edge. 
+A component executes if any one of the interaction it is part of
+executes. So an edge from a component to an interaction is an OR
+edge. 
+The wait-for graph therefore is an AND-OR graph. 
+We will leverage this interesting structure to simplify the
+check for deadlock freedom. 
+
+
+
 \subsection{Supercyles}
+
+We characterize a deadlock as a particular waiting pattern in a wait-for graph.
+Roughly speaking, a supercycle $\SC$ is a subset of the compoenets and interactions such that every component and interaction in $\SC$ is blocked by
+the other components and interactions in $\SC$. 
+An intteraction $\act$ is blocked by $\SC$ iff there is some participant $\B_j$ of $\act$ such that $\B_j$ is in $\SC$ and $\B_j$ is not ready to
+execute $\act$.
+A component $\B_i$ is blocked by $\SC$ iff every interaction $\act$ that $\B_i$ is ready to execute happens to bein $\SC$.
+A supercyle is the AND-OR generalization of a simple cycle.
+
+
 
 \subsection{Preventing the formation of supercycles}
 
+A supercyle implies a deadlock, and so is stable: once a supercycle forms, it persists forever.
+Suppose there is no supercycel in global state $t$, and an interaction $\act$ is executed which leads to a new global state $s$ in which a supercyel $\SC$
+exists. 
+Then we show that some participant $\B_i$ of $'act$ must be in the newly formewd supercycle $\SC$. 
+We exploit this fact to impose constraints on the effewcts of executing $\act$, which prevent the formation of the supercycle $\SC$.
