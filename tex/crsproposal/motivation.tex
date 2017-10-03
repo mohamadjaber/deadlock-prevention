@@ -1,5 +1,7 @@
 \section{Motivation and Background}
 
+\subsection{Motivation and exampe}
+
 Large distributed computational systems are an indispensable part of the crticial infrastruture of modern economics. The internet itself can be
 regarded as a large distributed system.
 %
@@ -49,17 +51,18 @@ theoretical limitations, but only due to lack of computational resources. Experi
 
 
 
-In published work, we established a result that characterizes deadlock freedom with a structural property of each system state.  The work enables
-checking for global deadlock freedom by model checking a set of subsystems of the overall large system.  The work constructs a {\em wait-for-graph}
-for each state in the considered subsytems and checks whether it has a {\em supercycle}.
-%
-When the property being checked is satisfied, it implies deadlock-freedom of the overall system.  If not satisfied, then we re-evaluate over larger
-subsystems, which improves the accuracy of the check.  When the subsystem being checked becomes the entire system, our criterion becomes complete for
-deadlock-freedom.
-%
-The results of the published work shows that our method addresses deadlock freedom for systems that are not possible to address with existing methods
-and in reasonable time.
-%
+
+% In published work, we established a result that characterizes deadlock freedom with a structural property of each system state.  The work enables
+% checking for global deadlock freedom by model checking a set of subsystems of the overall large system.  The work constructs a {\em wait-for-graph}
+% for each state in the considered subsytems and checks whether it has a {\em supercycle}.
+% %
+% When the property being checked is satisfied, it implies deadlock-freedom of the overall system.  If not satisfied, then we re-evaluate over larger
+% subsystems, which improves the accuracy of the check.  When the subsystem being checked becomes the entire system, our criterion becomes complete for
+% deadlock-freedom.
+% %
+% The results of the published work shows that our method addresses deadlock freedom for systems that are not possible to address with existing methods
+% and in reasonable time.
+% %
 
 
 
@@ -89,39 +92,64 @@ and in reasonable time.
 %Dynamic BIP
 %Design rules for prevention of deadlock
 %
-Finally, 
-we would like to explore whether our method applies to 
-(1) deadlock freedom of parametrized systems and 
-(2) properties other than deadlock that can be characterized 
-with structural checks. 
+% Finally, 
+% we would like to explore whether our method applies to 
+% (1) deadlock freedom of parametrized systems and 
+% (2) properties other than deadlock that can be characterized 
+% with structural checks. 
 
 
-Example: 
-Consider the committee coordination problem described by Chandy and Misra~\cite{MisraCommittee}. 
-
+To motivate our work, consider a variant of 
+the committee coordination problem described by Chandy and Misra~\cite{MisraCommittee}:
 \begin{quote}
-  Professors in a certain university
-  have organized themselves into committees.
-  Each committee has an unchanging membership
-  roster of one or more professors. From
-  time to time, a professor may decide to attend
-  a committee meeting; it starts waiting
-  and remains waiting until a meeting of a committee
-  of which it is a member is started.
-  The restrictions on meetings are as follows:
-  (1) a committee meeting may be started only
-  if all members of that committee are waiting
-  and (2) no two committees may meet simultaneously
-  if they have a common member. 
-  Given that all meetings terminate in finite
-  time, the problem is to devise a protocol,
-  satisfying these restrictions, that also guarantees
-  that if all members of a committee are
-  waiting then at least one of them will attend
-  some meeting.
+  Professors in a certain university have organized themselves into committees.  Each committee has an unchanging membership roster of one or more
+  professors, and hence each professor belongs to a fixed set of committees.
+At any given time, a professor is ready to attend some subset of it committees, \eg Professor $\Prof_1$ may be in committees $\Cm_1, \Cm_2, \Cm_4, \Cm_7$, but may
+currently b ewilling to attend only committees $\Cm_2$ or $\Cm_5$.
+%From time to time, a professor may decide to attend a committee meeting; it starts waiting and remains waiting until a meeting of a
+%  committee of which it is a member is started.  
+The restrictions on meetings are as follows: (1) a committee meeting may be started only if all
+  members of that committee are willing to attend and (2) no two committees may meet simultaneously if they have a common member.  Given that all meetings
+  terminate in finite time, the problem is to devise a protocol, satisfying these restrictions, that also guarantees that if all members of a
+  committee are waiting then at least one of them will attend some meeting.
 \end{quote}
+A deadlock may arise when professors select committees in such a manner that no committee has all of its members willing to attend.  
+%
+For example, suppose that 
+committee $\Cm_1$ consists of professors $\Prof_1, \Prof_2, \Prof_4$, 
+committee $\Cm_2$ consists of professors $\Prof_1, \Prof_3, \Prof_4$, and 
+committee $\Cm_3$ consists of professors $\Prof_2, \Prof_3, \Prof_4$.
+%
+Suppose also that 
+Professor $\Prof_1$ is willing to attend committees $\Cm_1, \Cm_2$, 
+Professor $\Prof_2$ is willing to attend committee $\Cm_3$, %so C_2 disabled
+Professor $\Prof_3$ is willing to attend committee $\Cm_2$, and %so C_3 disabled
+Professor $\Prof_4$ is willing to attend committees $\Cm_2, \Cm_3$. % so C_1 disabled
+%
+Then no committee has all of its members available, and so no committee is able to convene. 
+Even though each professor is willing to attend \emph{some} committees, their individualy decisions about what to attend are 
+``inconsistent''. 
+Note that the obvious solution, of having every professor being always willing to attend every committee is not practical, since in practice,
+willingness to attend a comittee (or engage in such siimilar tasts) requires resources and effort, \eg preparation for the meeting. 
+Thus, we require solutions that are efficient, that that achieve the system objectives, with minimal expenditure of resources. 
+Brute force solutions, which always provide maximal resources, render the deadlock problem trivial, but are not acceptable from a cost perspective.
 
-A deadlock may arise when professors 
 
-Our proposed work aims to address all of the mentioned gaps. 
+%Our proposed work aims to address all of the mentioned gaps. 
 
+
+\subsection{Technical background}
+
+We express distrbuted system using the BIP \cite{bip06,BliudzeS08} framework. In BIP, an \emph{atomic component} $\B_i$ consists of a set of states and a set of
+transitions. A state represents a particular configuration of a component, \eg sending data, receiving data, performing internal computation, etc..
+A transition represents a change of configuration, \eg a component $\B_i$ executes a transition which moves $\B_i$ from a 
+state of receiving data to that of performing internal computation (\eg when all data has been received). Subsequently, when the internal computation
+is finished, $\B_i$ may execute another transition which moves from a state of internal computation to a state of sending data.
+Each transition of $\B_i$ is labeled with a port name $p_i$. 
+A large distributed system is represented by a \emph{composite component} $\B = \B_1 \pl \B_2 \pl \cdots \pl \B_n$. That is, $\B$ consists of $n$
+atomic components $\B_1, \B_2,  \ldots,  \B_n$ which execute ``at the same time'', \ie concurrently. 
+An \emph{interaction} $\act$ in BIP is a set $\{ p_j, p_k, p_{\l}, \ldots \}$ of ports, such that no two ports are taken from the same components.
+(Different components have different ports). Every component which contributes a port to an interaction is a \emph{participant} of the interaction.
+For example, if  $\act = \{ p_j, p_k, p_{\l}, p_m \}$ then the participants of $\act$ are the components $\B_j, \B_k, \B_{\l}, \B_m$.
+The interaction $\act$ is executed when every partipant executes a transition that is labeled with a port which occurs in $\act$. 
+The participants execute their respective transitions synchronously, \ie ``at the same time.'' 

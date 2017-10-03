@@ -4,6 +4,7 @@ This project is intended for two years.
 The main aims of this project are as follows.
 
 \begin{enumerate}
+
 \item 
 In all of our work we will use a front end tool that
 takes a system specified for the Behavior Interaction Priority (BIP)
@@ -13,11 +14,16 @@ with interactions.
 \item 
 Local deadlock freedom denotes the state where a set of the 
 system components may be deadlocked while the rest of the 
+
+Local deadlock denotes the state where a subset of the 
+system components are deadlocked while the rest of the 
 system can execute. 
-We will characterize local deadlock freedom with a 
-{\em wait-for-graph} structural
-property and build algorithms for checking local deadlock
-freedom. 
+
+\item
+We will characterize the waiting relations in a system by means of a
+{\em wait-for-graph}. We will then characterize local deadlock by
+means of a pattern of waiting that we call a \emph{supercycle}.
+%local deadlock freedom with a {structural property and build algorithms for checking local deadlock freedom.
 
 \item 
 Components communicate and execute through interactions. 
@@ -31,9 +37,11 @@ edge.
 The wait-for graph therefore is an AND-OR graph. 
 We will leverage this interesting structure to simplify the
 check for deadlock freedom. 
+A supercyle is the AND-OR generalization of a simple cycle.
+
 
 \item 
-When we detect a deadlock amenable system, we issue an alarm. 
+When we detect a deadlock-prone system, we issue an alarm. 
 We will improve the check to also compute a witness of the deadlock scenario 
 and return that witness in the form of a counterexample 
 to the developers of the system. 
@@ -69,7 +77,7 @@ We will build benchmarks for our work from real life examples.
 We will implement our algorithms and provide them to the research and 
 applied community. 
 We will start by an implementation that works for systems specified with 
-the Behavior Interaction Priority (BIP) ~\cite{bip} framework.
+the Behavior Interaction Priority (BIP) ~\cite{bip06} framework.
 
 \end{enumerate}
 
