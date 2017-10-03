@@ -54,7 +54,7 @@ Local deadlock denotes the state where a subset of the system components are dea
 We characterize the waiting relations in a system by means of a {\em wait-for-graph}. 
 If a component $\B_i$ is ready to execute an interaction $\act$ then there is an edge $\B_i ar \act$ from $\B_i$ to $\act$.
 If a component $\B_i$ is not ready to execute an interaction $\act$ then there is an edge $\act \ar \B_i$ from $\act$ to $\B_i$.
-A key point is that the wait-for graph depends on the currewnt configuration (\ie the current ``global state'') of the system.
+A key point is that the wait-for graph depends on the current configuration (\ie the current ``global state'') of the system.
 %
 Components communicate and execute through interactions. 
 An interaction is enabled to execute when all components that 
@@ -70,22 +70,32 @@ check for deadlock freedom.
 
 
 
-\subsection{Supercyles}
+\subsection{Supercycles}
 
 We characterize a deadlock as a particular waiting pattern in a wait-for graph.
-Roughly speaking, a supercycle $\SC$ is a subset of the compoenets and interactions such that every component and interaction in $\SC$ is blocked by
+Roughly speaking, a supercycle $\SC$ is a subset of the components and interactions such that every component and interaction in $\SC$ is blocked by
 the other components and interactions in $\SC$. 
-An intteraction $\act$ is blocked by $\SC$ iff there is some participant $\B_j$ of $\act$ such that $\B_j$ is in $\SC$ and $\B_j$ is not ready to
+An interaction $\act$ is blocked by $\SC$ iff there is some participant $\B_j$ of $\act$ such that $\B_j$ is in $\SC$ and $\B_j$ is not ready to
 execute $\act$.
-A component $\B_i$ is blocked by $\SC$ iff every interaction $\act$ that $\B_i$ is ready to execute happens to bein $\SC$.
-A supercyle is the AND-OR generalization of a simple cycle.
+A component $\B_i$ is blocked by $\SC$ iff every interaction $\act$ that $\B_i$ is ready to execute happens to be in $\SC$.
+A supercycle is the AND-OR generalization of a simple cycle.
 
 
 
 \subsection{Preventing the formation of supercycles}
 
-A supercyle implies a deadlock, and so is stable: once a supercycle forms, it persists forever.
-Suppose there is no supercycel in global state $t$, and an interaction $\act$ is executed which leads to a new global state $s$ in which a supercyel $\SC$
+A supercycle implies a deadlock, and so is stable: once a supercycle forms, it persists forever.
+Suppose there is no supercycle in global state $t$, and an interaction $\act$ is executed which leads to a new global state $s$ in which a supercycle $\SC$
 exists. 
-Then we show that some participant $\B_i$ of $\act$ must be in the newly formewd supercycle $\SC$. 
-We exploit this fact to impose constraints on the effewcts of executing $\act$, which prevent the formation of the supercycle $\SC$.
+Then we show that some participant $\B_i$ of $\act$ must be in the newly formed supercycle $\SC$. 
+We exploit this fact to impose constraints on the effects of executing $\act$, which prevent the formation of the supercycle $\SC$.
+
+\subsection{Aim 2: Counterexample based refinement} 
+
+\subsection{Aim 3: Enablement abstraction } 
+
+
+\subsection{Aim 4: Parameterized systems} 
+
+\subsection{Aim 5: Structural checks for other safety properties} 
+\subsection{Aim 6: Benchmarking and validation } 
