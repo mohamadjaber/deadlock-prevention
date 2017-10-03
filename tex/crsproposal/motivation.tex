@@ -28,75 +28,59 @@ supercycle implies the existence of a deadlock.
 As noted in the abstract, a crucial design task is to ensure that a large dfistributed system does not enter a configuration in which some or all of
 its components are deadlocked. 
 A key problem is the conceptual complexity of large distributed computer systems: the number of possible configurations of a large system is 
-too large to be checked exhaustively. COnsider for example, a toy system with just one hundred components, each of which can be in
+too large to be checked exhaustively. Consider for example, a toy system with just one hundred components, each of which can be in
 one of only two states: (1) sending date to another compoennt, or (2) receiving date from another component. Thus there are overall $2^{100}$ possible
-configurations. 
-
-
-
+configurations. Even if each can be checked in a nanosecond, it would still take more than $2^{60}$ years to check all configurations expliciutly.
+%
 Thus all published work relies on checks that are 
 relatively easy to compute, and which imply freedom from deadlock. If the check succeeds, the system is guaranteed to be deadlock free, (no false
-positives), which if the check fails, then the system may or may not be deadlock-free (possible faise negative).  Existing work isplagues by this
-phonomenon of false negatives, which lilmits its usefullness.
-
-
-
-
-
-
-
-
-
-
-
-
-Researchers proposed methods to establish deadlock freedom
-with proposed restrictions to the specified systems. 
+positives), which if the check fails, then the system may or may not be deadlock-free (possible faise negative).  Existing work is plagued by this
+phonomenon of false negatives, which limits its usefullness.
 %
-In published work, 
-we established a result that characterizes deadlock freedom
-with a structural property of each system state. 
-The work enables checking for global deadlock freedom
-by model checking a set of subsystems 
-of the overall large system. 
-The work constructs a {\em wait-for-graph} for each state
-in the considered subsytems
-and checks whether it has a {\em supercycle}. 
+Exisitng work relies on incomplete characterizations of deadlock, based on the occurrence of a waiting cycle. 
+As stated above, our work uses the complete, and more accurate, notion of a supercycle. Thus, our methods do not incur false negatives due to 
+theoretical limitations, but only due to lack of computational resources. Experimental results to date show that our check performs well in practice.
+
+
+
+Researchers proposed methods to establish deadlock freedom with proposed restrictions to the specified systems.
 %
-When the property being checked is satisfied, 
-it implies deadlock-freedom of the overall system. 
-If not satisfied, then we re-evaluate over larger subsystems,
-which improves the accuracy of the check.  
-When the subsystem being checked becomes the entire system, 
-our criterion becomes complete for
-deadlock-freedom.  
+In published work, we established a result that characterizes deadlock freedom with a structural property of each system state.  The work enables
+checking for global deadlock freedom by model checking a set of subsystems of the overall large system.  The work constructs a {\em wait-for-graph}
+for each state in the considered subsytems and checks whether it has a {\em supercycle}.
 %
-The results of the published work shows that our method
-addresses deadlock freedom for systems that are not possible 
-to address with existing methods and in reasonable time. 
+When the property being checked is satisfied, it implies deadlock-freedom of the overall system.  If not satisfied, then we re-evaluate over larger
+subsystems, which improves the accuracy of the check.  When the subsystem being checked becomes the entire system, our criterion becomes complete for
+deadlock-freedom.
 %
-This proposal aims to extend the global deadlock freedom 
-criteria in several directions. 
-First, we would like to consider criteria for {\em local deadlock}
-freedom where
-a subsystem is deadlocked while the rest of the system executes. 
+The results of the published work shows that our method addresses deadlock freedom for systems that are not possible to address with existing methods
+and in reasonable time.
 %
-Second, 
-we would like to exploit the {\em AND-OR} structural nature of the 
-wait-for-graph that we ignored in the published work. 
-%
-Third, 
-we would like to incorporate {\em counterexample refinement}
-to improve our method by growing the subsystem we consider in a
-guided manner rather than growing it in all directions as we do now. 
-%
-Fourth, 
-the current work analyses the connections and interactions
-between the components of the system, and does not exploit the 
-semantics of the conditions governing these connections. 
-We would like to benefit from these conditions to tighten 
-our criteria by leveraging the emerging {\em satisfiability 
-solver} and binary decision diagram technologies.
+
+
+
+% This proposal aims to extend the global deadlock freedom 
+% criteria in several directions. 
+% First, we would like to consider criteria for {\em local deadlock}
+% freedom where
+% a subsystem is deadlocked while the rest of the system executes. 
+% %
+% Second, 
+% we would like to exploit the {\em AND-OR} structural nature of the 
+% wait-for-graph that we ignored in the published work. 
+% %
+% Third, 
+% we would like to incorporate {\em counterexample refinement}
+% to improve our method by growing the subsystem we consider in a
+% guided manner rather than growing it in all directions as we do now. 
+% %
+% Fourth, 
+% the current work analyses the connections and interactions
+% between the components of the system, and does not exploit the 
+% semantics of the conditions governing these connections. 
+% We would like to benefit from these conditions to tighten 
+% our criteria by leveraging the emerging {\em satisfiability 
+% solver} and binary decision diagram technologies.
 %
 %Dynamic BIP
 %Design rules for prevention of deadlock
