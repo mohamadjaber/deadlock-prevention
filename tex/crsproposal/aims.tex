@@ -1,15 +1,70 @@
 \section{Specific Aims}
 
-This project is intended for one year. The main aims of this project as follows:
+This project is intended for two years.
+The main aims of this project are as follows.
 
 \begin{enumerate}
-\item All of the below aims will make use of distributed, real-time streaming, analysis and visualisation as follows. Several frameworks exist for real time streaming. Two of the most notable ones are Apache Storm and Apache Spark, which offer distributed real-time streaming and processing capabilities. Spark is a fast and general engine for big data processing. Spark allows small-scale batching while Storm allows one-at-a-time processing model. The output of the streaming phase will be directed to another analytics framework, such as Spark, for further credibility analysis as detailed below. The output of some Storm bolts and of Spark will be stored in a non-relational database such as HBase that will be used to validate and annotate our analyser.
-\item Collecting Data in English and Arabic, pulling it from different sources, such as social networks, news articles, and blogs. Some reports/data will originate from Facebook and Twitter users, as opposed to when users share sources from news or political organizations on those platforms. Our data will also be in different formats, such as text, videos, and MP3s. 
+\item 
+Local deadlock freedom denotes the state where a set of the 
+system components may be deadlocked while the rest of the 
+system can execute. 
+We will characterize local deadlock freedom with a 
+{\em wait-for-graph} structural
+property and build algorithms for checking local deadlock
+freedom. 
 
-\item Cleaning and modeling the obtained data, which will be big and wide. Big data refers to data that has large volume. Wide data refers to data that contains many features and comes from many different sources. Here, we spot check the data for accuracy, making sure it is consistent in format, and free of duplications and other anomalies, so that it can eventually be put in meaningful form. In this step, we need to draw on expertise in computational linguistics to incorporate natural language processing (NLP) tools that can be applied on the streamed data, particularly, for tasks such as automated syntactic and semantic translation. Syntactic translation through machine translation models will be sought to resolve duplication and inconsistencies amongst articles in the same language. Semantic translation will be sought to resolve duplication and inconsistencies amongst articles in different languages. 
-\item Analysing the news for dishonesty: in this step, we draw on expertise in media studies, to help develop qualitative detection mechanisms by which news articles are flagrantly cast as dishonest, with insight from previous experiences where news have indeed been deemed hishonest. Media bias is one of a number of factors that would predict with some likelihood whether reports are faked. Other factors may include the source of the report, the presence of news frames, or the platform of circulation. Further insight from media studies is required to advise whether a filtering or else a ranking approach to the problem fits best. This step should also incorporate a semi-supervised approach, where we learn from a small set of supervised (labeled) data and then carry on using a significantly larger unsupervised set. 
-\item Running the model on unsupervised data, and validating our learning model, thus paving the grounds for further model enhancements, as we repeat the above step several times as needed to monitor how well previous mechanisms are working. We aim to release news based on strong, medium, and weak predictions of their honesty.
-\item Visualisation mapping credible news to location: the output of Spark will be redirected to maps and dashboards that mimic critical stories in real-time. Interactive maps can be implemented using several open-source tools such as Leaflet or Shiny, which is an open-source JavaScript library for interactive maps. 
+\item 
+Components communicate and execute through interactions. 
+An interaction is enabled to execute when all components that 
+are parts of it are ready. 
+So an edge from an interaction to a component in a wait-for-graph
+is an AND edge. 
+A component executes if any one of the interaction it is part of
+executes. So an edge from a component to an interaction is an OR
+edge. 
+The wait-for graph therefore is an AND-OR graph. 
+We will leverage this interesting structure to simplify the
+check for deadlock freedom. 
+
+\item 
+When we detect a deadlock amenable system, we issue an alarm. 
+We will improve the check to also compute a witness of the deadlock scenario 
+and return that witness in the form of a counterexample 
+to the developers of the system. 
+The developers can use to counterexample to refine the system and solve
+the deadlock problem. 
+
+\item 
+System components are connected through ports and interactions
+These ports and interactions are typically annotated with predicates
+that constrain the semantics of the connectivity. 
+We will use these predicates with emerging satisfiability modulo theory (SMT) 
+solvers to improve the quality of the deadlock freedom check.
+
+		
+\item 
+A system is paramterized with parameter $N>1$ 
+in case it connects $N$ interaction components of the 
+same type and functionality in a specified connectivity topology. 
+Existing work study model checking parametrized systems for safty properties
+such as freedom of race conditions. 
+We will explore the applicability of our method to deadlock freedom 
+of parametrized systems
+		. 
+
+\item
+Other system safety properties can also be characterized with structural 
+properties of smaller subsystems. 
+We will explore applying our methodology to characterize safety properties 
+othe than deadlock freedom with structural checks. 
+
+\item 
+We will build benchmarks for our work from real life examples.
+We will implement our algorithms and provide them to the research and 
+applied community. 
+We will start by an implementation that works for systems specified with 
+the Behavior Interaction Priority (BIP) ~\cite{bip} framework.
+
 \end{enumerate}
 
 
