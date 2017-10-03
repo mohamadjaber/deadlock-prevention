@@ -1,5 +1,52 @@
 \section{Methods of Inquiry and Analysis}
 
+\begin{figure}[t]
+  \begin{center}
+
+    \resizebox{\textwidth}{!}{
+     \input{fig/arch.pdf_t}
+   }
+    \caption{Methodology overview.}
+    \label{fig:overview}
+  \end{center}
+\end{figure}
+
+\subsection{Overview} 
+
+The diagram in Figure~\ref{fig:overview} illustrates the 
+methodology we will use to achieve the aims of the proposal. 
+The front end will take a BIP specification and produce
+a BOP system $\B$. 
+The subsystem selection will produce a subsystem$B'$ of $\B$. 
+
+Structural analysis considers the subsystem $B'$ and builds
+a wait-for graph $W_s$ for each reachable state $s$ of $B'$. 
+In case $B'$ is found to be deadlock free, we conclude. 
+In case $B'$ is found to be deadlock prone, we compute 
+a counterexample. 
+
+Semantic analysis takes $B'$ and considers the predicates
+annotating the ports and interactions. 
+It constructs an enablement abstraction around from 
+port enablement and interaction enablement. 
+The abstraction is expressed in a first order logic (FOL)
+formula that we pass to an SMT SAT solver. 
+The result of the SMT SAT solver refines the set of reachable 
+states. 
+
+The subsystem selection makes use of the counterexamples 
+and the reachable states to
+guide the construction of the next subsystem. 
+The structural analysis also leverages the reachable state
+results from the semantic analysis to improve its runtime. 
+
+In what follows we provide detailed description of the 
+different parts of our methodology and illustrate how 
+the methodology will help us achieve the specific aims
+of Section~\ref{sec:aims}
+
+
+
 \subsection{Wait-for graphs}
 
 Local deadlock denotes the state where a subset of the system components are deadlocked while the rest of the system can execute.
@@ -14,7 +61,7 @@ An interaction is enabled to execute when all components that
 are parts of it are ready. 
 So an edge from an interaction to a component in a wait-for-graph
 is an AND edge. 
-A component executes if any one of the interaction it is part of
+A component executes if any one of the interactions it is part of
 executes. So an edge from a component to an interaction is an OR
 edge. 
 The wait-for graph therefore is an AND-OR graph. 
