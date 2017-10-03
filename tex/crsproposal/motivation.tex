@@ -1,16 +1,30 @@
 \section{Motivation and Background}
 
-Well into its fifth year, the Syrian war continues to plunge into increasingly more troubling levels of violence. As world and regional powers get more embroiled in the conflict, serious questions arise surrounding the credibility of news emerging from and around Syria. An overwhelming amount of unstructured data exists, but very little is known about the credibility of news affecting humanitarian and geopolitical conditions in Syria. Subject to bias and a highly unstable situation that fluctuates with time, it becomes imperative to explore a data scientific approach to make sense of the plethora of data, and to transform the results of the analytics into stories that non-experts and a general audience can understand. Unlike bias that is perceived in news, dishonesty in news reporting around military conflicts affect people's lives, by impacting decisions they have to make regarding their movement, as well as humanitarian initiatives that deliver aid to distraught communities. 
+Consider the committee coordination problem described by Chandy and Misra~\cite{MisraCommittee}. 
 
-To disseminate onto a wider audience and put the verdicts to good use, credible, honest news covering aspects of humanitarian conditions and plights need to be identified. If one can map those news to their respective geographic locations, thus rendering an interactive map that tells a critical story in real-time, the results would be useful for aid agencies in charge of refugees and besieged communities, or more generally, for risk analysis essential for global supply chains. Honesty in reporting news will help us gauge critical assertions related to life-threatening situations, for example, (1) to what extent is the humanitarian condition at a specific location dire? (2) Who is really in control of a specific location? Which locations are suffering from a tight-bounded siege that is hampering civilians attempts to flee? (3) Which locations are witnessing significantly more civilian casualties than military? (4) In which locations are people used as human shields? to name a few. 
+\begin{quote}
+  Professors in a certain university
+  have organized themselves into committees.
+  Each committee has an unchanging membership
+  roster of one or more professors. From
+  time to time, a professor may decide to attend
+  a committee meeting; it starts waiting
+  and remains waiting until a meeting of a committee
+  of which it is a member is started.
+  The restrictions on meetings are as follows:
+  (1) a committee meeting may be started only
+  if all members of that committee are waiting
+  and (2) no two committees may meet simultaneously
+  if they have a common member. 
+  Given that all meetings terminate in finite
+  time, the problem is to devise a protocol,
+  satisfying these restrictions, that also guarantees
+  that if all members of a committee are
+  waiting then at least one of them will attend
+  some meeting.
+\end{quote}
 
-An extentsive body of literature addresses theoretical and empirical accounts of media accounts and its effects (see \cite{PS13} for a recent comprehensive survey of media bias as studied in political science, economics, and communication studies). Recently, natural language processing techniques were applied to identify ideologies in a variety of large scale text collections, \cite{CR13,IetAl14,JetAl15,LetAl08,NetAl13,SetAl13,VetAl14,WetAl13a,WetAl13b}. Recent work has focused on quoting practices and on the task of efficiently tracking and matching quote snippets \cite{SetAl14, SetAl12}. The work in \cite{NSZML15} proposes a frameowrk based on quoting patterns for quantifying and characterizing the degree to which media outlets exhibit systematic bias. Their work reveals a latent media bias that aligns well with the political ideology and outlet type. On the other hand, several online initiatives have attempted to map unstructured data emanating from the Syrian conflict to online maps that interpret this data. For example, EQLIM attempts to improve the collection and interpretation of risk intelligence data, essential to global supply chains, in a realtime manner \cite{Eqlim}. Liveuamap is another open data-driven media platform that also attempts to deliver news by mapping them interactively from known conflict zones \cite{Isis}. 
+A deadlock may arise when professors 
 
-However, to the best of our knowledge, all of the above work do not dwell on the data learning needed to cast a prediction by which pieces of news are likely to be dishonest. Particularly, \cite{Isis} do not seem to employ any analytics at all. In addition, the analytics employed in \cite{Eqlim} are not revealed to the public.
-%
-Additionally, they do not seem to focus on news that directly reveal humanitarian conditions and it is not clear on what basis their news get ranked before they are mapped interactively. The authors are under the impression that existing tools are mostly concerned with global supply chains and the geopolitical transformations. 
-%
-Finally, the proposed architectures do not support high-frequency of real-time streaming. This is mainly due to the fact that their underlying architectures are not based on technologies, tools and platforms allowing to store and process Big and Wide Data in a distributed environment across clusters of computers and using simple programming models (e.g., Spark, HBase, etc.).
-%
 Our proposed work aims to address all of the mentioned gaps. 
 
