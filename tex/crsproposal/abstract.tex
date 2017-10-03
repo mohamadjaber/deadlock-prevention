@@ -1,0 +1,74 @@
+A computational system is said to be at {\em deadlock} 
+when a subset of its components are constrained 
+from making progress with no intervention from outside 
+the subset. 
+%
+Deadlock freedom is a crucial property of concurrent and 
+distributed hardware and software computational systems. 
+%
+With multicore systems becoming commodity hardware, 
+increasing software system complexity, 
+and with cloud programming taking prominence, 
+the challenge of assuring deadlock freedom and other 
+correctness properties becomes even greater.  
+%
+Deciding deadlock freedom of finite-state concurrent 
+programs is PSPACE-complete; a very expensive computational 
+category in terms of required memory and runtime resources. 
+%
+Researchers proposed methods to establish deadlock freedom
+with proposed restrictions to the specified systems. 
+%
+In published work, 
+we established a result that characterizes deadlock freedom
+with a structural property of each system state. 
+The work enables checking for global deadlock freedom
+by model checking a set of subsystems 
+of the overall large system. 
+The work constructs a {\em wait-for-graph} for each state
+in the considered subsytems
+and checks whether it has a {\em supercycle}. 
+%
+When the property being checked is satisfied, 
+it implies deadlock-freedom of the overall system. 
+If not satisfied, then we re-evaluate over larger subsystems,
+which improves the accuracy of the check.  
+When the subsystem being checked becomes the entire system, 
+our criterion becomes complete for
+deadlock-freedom.  
+%
+The results of the published work shows that our method
+addresses deadlock freedom for systems that are not possible 
+to address with existing methods and in reasonable time. 
+%
+This proposal aims to extend the global deadlock freedom 
+criteria in several directions. 
+First, we would like to consider criteria for {\em local deadlock}
+freedom where
+a subsystem is deadlocked while the rest of the system executes. 
+%
+Second, 
+we would like to exploit the {\em AND-OR} structural nature of the 
+wait-for-graph that we ignored in the published work. 
+%
+Third, 
+we would like to incorporate {\em counterexample refinement}
+to improve our method by growing the subsystem we consider in a
+guided manner rather than growing it in all directions as we do now. 
+%
+Fourth, 
+the current work analyses the connections and interactions
+between the components of the system, and does not exploit the 
+semantics of the conditions governing these connections. 
+We would like to benefit from these conditions to tighten 
+our criteria by leveraging the emerging {\em satisfiability 
+solver} and binary decision diagram technologies.
+%
+%Dynamic BIP
+%Design rules for prevention of deadlock
+%
+Finally, 
+we would like to explore whether our method applies to 
+(1) deadlock freedom of parametrized systems and 
+(2) properties other than deadlock that can be characterized 
+with structural checks. 
