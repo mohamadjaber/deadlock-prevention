@@ -1,31 +1,38 @@
-Distributed computational systems have become ubiquitous, and today pervade all aspects of life: workflow, banking, trading, 
-social media, medical informatics, etc.
-%
-A distributed system functions by means of the exchange of information between various components, which requires 
-that one component ocassionaly \emph{waits} for another component to send it the required information. 
-Due to faulty design and/or soiftware errors (``bugs''), it is possiblew for patterns of waiting to arise which cause a 
-{\em deadlock}, \ie a subset of its components are locked forever in a waiting pattern and cannot make any further progress.
-%
-One example of a waiting pattern that leads to deadlock is a \emph{cycle}, \eg component 1 waits for component 2 to send it data, 
-component 2 waits for component 3 to send it data, and finally 
-component 3 waits for component 1 to send it data.
-%
-%Deadlock freedom is a crucial property of concurrent and distributed hardware and software computational systems.
-%
-With multicore systems becoming commodity hardware, and with cloud programming taking prominence, the challenge
-of assuring deadlock freedom and other correctness properties becomes even greater,  due to the increasiong complexity of both hardware and software,
-and in the incerase in complexity of the interaction between the hardware and ther software. Such complexity leads to counter-intuitive behavior, \eg
-in some cases, providing more reaosurces actually \emph{slows down} the system.
+Distributed computational systems have become ubiquitous, and today pervade all
+aspects of life: workflow, banking, trading, social media, medical informatics,
+etc.  A distributed system functions by means of the exchange of information
+between various components, which requires that one component occasionaly
+\emph{waits} for another component to send it the required information.  Due to
+faulty design and/or software errors (``bugs''), it is possible for patterns of
+waiting to arise which cause a {\em deadlock}, \ie a subset of its components
+are locked forever in a waiting pattern and cannot make any further progress.
+One example of a waiting pattern that leads to deadlock is a \emph{cycle}, \eg
+component 1 waits for component 2 to send it data, component 2 waits for
+component 3 to send it data, and finally component 3 waits for component 1 to
+send it data.
 
-It is therefore of great importance to be able to design systems so that they do not end up in a deadlock to begin with. 
-Exhaustive checking is impractical, as large system are usually too complex. Thus all published work relies on checks that are 
-relatively easy to compute, and which imply freedom from deadlock. If the check succeeds, the system is guaranteed to be deadlock free, (no false
-positives), which if the check fails, then the system may or may not be deadlock-free (possible faise negative).  Existing work isplagues by this
-phonomenon of false negatives, which limits its usefullness.
+With multicore systems becoming commodity hardware, and with cloud programming
+taking prominence, the challenge of assuring deadlock freedom and other
+correctness properties becomes even greater, due to the increasing complexity of
+both hardware and software, and in the increase in complexity of the interaction
+between the hardware and the software. Such complexity leads to
+counter-intuitive behavior, \eg in some cases, providing more resources actually
+\emph{slows down} the system.
 
-The proposed work develops a check for deadlock which is more flexible than existing work: by doing more computation, our check becomes more 
-accurate. Thus, if an initial ``quick'') version of the check fails, we can invest more time in a ``slower but more accurate'' check. 
-Our check has this flexibility because it is ''theoretically complete'', unlike existing methods, which are not.
+It is therefore of great importance to be able to design systems so that they do
+not end up in a deadlock to begin with.  Exhaustive checking is impractical, as
+large system are usually too complex. Thus all published work relies on checks
+that are relatively easy to compute, and which imply freedom from deadlock. If
+the check succeeds, the system is guaranteed to be deadlock free, (no false
+positives), which if the check fails, then the system may or may not be
+deadlock-free (possible false negative).  Existing work is plagued by this
+phenomenon of false negatives, which limits its usefulness.
+
+The proposed work develops a check for deadlock which is more flexible than
+existing work: by doing more computation, our check becomes more accurate. Thus,
+if an initial ``quick'') version of the check fails, we can invest more time in
+a ``slower but more accurate'' check.  Our check has this flexibility because it
+is ''theoretically complete'', unlike existing methods, which are not.
 
 
 

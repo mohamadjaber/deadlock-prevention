@@ -1,21 +1,24 @@
 \section{Motivation and Background}
 
-\subsection{Motivation and exampe}
+\subsection{Motivation and example}
 
-Large distributed computational systems are an indispensable part of the crticial infrastruture of modern economics. The internet itself can be
-regarded as a large distributed system.
-%
-A distributed system functions by means of the exchange of information between various components, and also by the sharing of resources (\eg memory,
-communication links, etc). This requires that one component ocassionaly \emph{waits} for another component to send it the required information, or to
-relinquicsh a needed resource.  Due to faulty design and/or soiftware errors (``bugs''), it is possible for patterns of waiting to arise which cause a
-{\em deadlock}, \ie a subset of its components are locked forever in a waiting pattern and cannot make any further progress.
+Large distributed computational systems are an indispensable part of the
+critical infrastructure of modern economics. The internet itself can be regarded
+as a large distributed system.  A distributed system functions by means of the
+exchange of information between various components, and also by the sharing of
+resources (\eg memory, communication links, etc). This requires that one
+component occasionally \emph{waits} for another component to send it the required
+information, or to relinquish a needed resource.  Due to faulty design and/or
+software errors (``bugs''), it is possible for patterns of waiting to arise
+which cause a {\em deadlock}, \ie a subset of its components are locked forever
+in a waiting pattern and cannot make any further progress.
 %
 One example of a waiting pattern that leads to deadlock is a \emph{cycle}, \eg component 1 waits for component 2 to send it data, 
 component 2 waits for component 3 to send it data, and finally 
 component 3 waits for component 1 to send it data.
 %
-Existing work relies on preventing a cyclic waiting pattern, as illustrated above. However, consider rthe above example, but add to it component 4,
-and suppose that component 1 can take data from either component 2 or from componet 4. In this case, once compoent 4 sends data to component 1,
+Existing work relies on preventing a cyclic waiting pattern, as illustrated above. However, consider the above example, but add to it component 4,
+and suppose that component 1 can take data from either component 2 or from component 4. In this case, once component 4 sends data to component 1,
 component 1 can proceed with its computation, and case send data to component 3, which then sends data to component 2. Hence the cycle is broken and
 there is not deadlock.
 %
@@ -28,19 +31,19 @@ A key contribution is that we will show that a supercycle is a
 \emph{complete} characterization of deadlock: existence of a deadlock implies the existence of at least one supercycle, \emph{and} existence of a
 supercycle implies the existence of a deadlock.
 
-As noted in the abstract, a crucial design task is to ensure that a large dfistributed system does not enter a configuration in which some or all of
+As noted in the abstract, a crucial design task is to ensure that a large distributed system does not enter a configuration in which some or all of
 its components are deadlocked. 
 A key problem is the conceptual complexity of large distributed computer systems: the number of possible configurations of a large system is 
 too large to be checked exhaustively. Consider for example, a toy system with just one hundred components, each of which can be in
-one of only two states: (1) sending date to another compoennt, or (2) receiving date from another component. Thus there are overall $2^{100}$ possible
-configurations. Even if each can be checked in a nanosecond, it would still take more than $2^{60}$ years to check all configurations expliciutly.
+one of only two states: (1) sending date to another component, or (2) receiving date from another component. Thus there are overall $2^{100}$ possible
+configurations. Even if each can be checked in a nanosecond, it would still take more than $2^{60}$ years to check all configurations explicitly.
 %
 Thus all published work relies on checks that are 
 relatively easy to compute, and which imply freedom from deadlock. If the check succeeds, the system is guaranteed to be deadlock free, (no false
-positives), which if the check fails, then the system may or may not be deadlock-free (possible faise negative).  Existing work is plagued by this
-phonomenon of false negatives, which limits its usefullness.
+positives), which if the check fails, then the system may or may not be deadlock-free (possible false negative).  Existing work is plagued by this
+phenomenon of false negatives, which limits its usefulness.
 %
-Exisitng work relies on incomplete characterizations of deadlock, based on the occurrence of a waiting cycle. 
+Existing work relies on incomplete characterizations of deadlock, based on the occurrence of a waiting cycle. 
 As stated above, our work uses the complete, and more accurate, notion of a supercycle. Thus, our methods do not incur false negatives due to 
 theoretical limitations, but only due to lack of computational resources. Experimental results to date show that our check performs well in practice.
 
@@ -52,8 +55,7 @@ theoretical limitations, but only due to lack of computational resources. Experi
 
 
 
-% In published work, we established a result that characterizes deadlock freedom with a structural property of each system state.  The work enables
-% checking for global deadlock freedom by model checking a set of subsystems of the overall large system.  The work constructs a {\em wait-for-graph}
+
 % for each state in the considered subsytems and checks whether it has a {\em supercycle}.
 % %
 % When the property being checked is satisfied, it implies deadlock-freedom of the overall system.  If not satisfied, then we re-evaluate over larger
@@ -100,12 +102,12 @@ theoretical limitations, but only due to lack of computational resources. Experi
 
 
 To motivate our work, consider a variant of 
-the committee coordination problem described by Chandy and Misra~\cite{MisraCommittee}:
+the committee coordination problem described by Chandy and Misra: %~\cite{MisraCommittee}:
 \begin{quote}
   Professors in a certain university have organized themselves into committees.  Each committee has an unchanging membership roster of one or more
   professors, and hence each professor belongs to a fixed set of committees.
 At any given time, a professor is ready to attend some subset of it committees, \eg Professor $\Prof_1$ may be in committees $\Cm_1, \Cm_2, \Cm_4, \Cm_7$, but may
-currently b ewilling to attend only committees $\Cm_2$ or $\Cm_5$.
+currently be willing to attend only committees $\Cm_2$ or $\Cm_5$.
 %From time to time, a professor may decide to attend a committee meeting; it starts waiting and remains waiting until a meeting of a
 %  committee of which it is a member is started.  
 The restrictions on meetings are as follows: (1) a committee meeting may be started only if all
@@ -127,10 +129,10 @@ Professor $\Prof_3$ is willing to attend committee $\Cm_2$, and %so C_3 disabled
 Professor $\Prof_4$ is willing to attend committees $\Cm_2, \Cm_3$. % so C_1 disabled
 %
 Then no committee has all of its members available, and so no committee is able to convene. 
-Even though each professor is willing to attend \emph{some} committees, their individualy decisions about what to attend are 
+Even though each professor is willing to attend \emph{some} committees, their individually decisions about what to attend are 
 ``inconsistent''. 
 Note that the obvious solution, of having every professor being always willing to attend every committee is not practical, since in practice,
-willingness to attend a comittee (or engage in such siimilar tasts) requires resources and effort, \eg preparation for the meeting. 
+willingness to attend a committee (or engage in such similar tasks) requires resources and effort, \eg preparation for the meeting. 
 Thus, we require solutions that are efficient, that that achieve the system objectives, with minimal expenditure of resources. 
 Brute force solutions, which always provide maximal resources, render the deadlock problem trivial, but are not acceptable from a cost perspective.
 
@@ -140,7 +142,7 @@ Brute force solutions, which always provide maximal resources, render the deadlo
 
 \subsection{Technical background}
 
-We express distrbuted system using the BIP \cite{bip06,BliudzeS08} framework. In BIP, an \emph{atomic component} $\B_i$ consists of a set of states and a set of
+We express distributed system using the BIP \cite{bip06,BliudzeS08} framework. In BIP, an \emph{atomic component} $\B_i$ consists of a set of states and a set of
 transitions. A state represents a particular configuration of a component, \eg sending data, receiving data, performing internal computation, etc..
 A transition represents a change of configuration, \eg a component $\B_i$ executes a transition which moves $\B_i$ from a 
 state of receiving data to that of performing internal computation (\eg when all data has been received). Subsequently, when the internal computation
