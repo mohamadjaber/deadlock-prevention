@@ -45,12 +45,16 @@ different parts of our methodology and illustrate how
 the methodology will help us achieve the specific aims
 of Section~\ref{sec:aims}
 
+In what follows, we provide necessary background 
+that covers completed work and then we present our 
+methods to address the specific aims one at a time. 
+
 \subsection{Wait-for graphs}
 
 Local deadlock denotes the state where a subset of the system components are deadlocked while the rest of the system can execute.
 %
 We characterize the waiting relations in a system by means of a {\em wait-for-graph}. 
-If a component $\B_i$ is ready to execute an interaction $\act$ then there is an edge $\B_i ar \act$ from $\B_i$ to $\act$.
+If a component $\B_i$ is ready to execute an interaction $\act$ then there is an edge $\B_i \ar \act$ from $\B_i$ to $\act$.
 If a component $\B_i$ is not ready to execute an interaction $\act$ then there is an edge $\act \ar \B_i$ from $\act$ to $\B_i$.
 A key point is that the wait-for graph depends on the current configuration (\ie the current ``global state'') of the system.
 %
@@ -169,17 +173,17 @@ supercycle check.
 
 \subsection{Aim 4: Parameterized systems} 
 
-A parametrized system $B=\B_1 \pl B_1 \ldots \pl B_1$ is a 
+A parameterized system $B=\B_1 \pl B_1 \ldots \pl B_1$ is a 
 composite system of $N>1$ $B_1$ components. 
-Our method naturally extends to address parametrized systems 
+Our method naturally extends to address parameterized systems 
 of a specific size $N=n_0$. 
 
-An interesting question is that given a parametrized system $B$, 
+An interesting question is that given a parameterized system $B$, 
 can we devise a method that answers the deadlock freedom
 question for any $N$. 
 
 We will explore ways to extend our method to answer the 
-parametrized deadlock freedom question. 
+parameterized deadlock freedom question. 
 We can start by checking the symmetry of the connections between
 the $B_1$ components.
 The symmetry can allow us to generalize the method. 
@@ -242,7 +246,7 @@ imply order violations.
 \subsection{Aim 6: Benchmarking and validation } 
  
  We will devise a general resource allocation system
- in BIP  that we can parametrize.
+ in BIP  that we can parameterized.
  The system will be a multi-token system 
  with a set of $N$ arbiters, a set of $M$ components,
  and $k$ tokens. 
