@@ -92,10 +92,93 @@ We exploit this fact to impose constraints on the effects of executing $\act$, w
 
 \subsection{Aim 2: Counterexample based refinement} 
 
+When the method detects a supercycle, it issues an alarm of a 
+deadlock prone system. 
+The supercycle characterizes the deadlock as an interdependent 
+set of components and interactions
+at a specific state. 
+We will extend the method to compute a counterexample
+that illustrates the deadlock. 
+First, we will compute an execution path that leads 
+to the reachable state from the initial state. 
+Then we will translate the set of components and interactions
+into a sequence of interactions that will lead to the deadlock. 
+
+The counterexample can also be used to devise a method to
+select the next subsystem. 
+We will inspect the variables that are assigned
+in the counterexample and those that are not assigned. 
+The assigned variables force a deadlock and the values of the
+other variables do not matter. 
+We will explore extending the subsystem in the direction of 
+the assigned 
+variables instead of extending it in all directions uniformly 
+as the current method does. 
+
 \subsection{Aim 3: Enablement abstraction } 
 
+The method currently iterates over all reachable states of
+a subsystem, constructs a wait-for graph structure and 
+performs a supercycle check. 
+The reachable states in a subsystem are an over-approximation
+of the reachable states in the whole system. 
+
+We will extend the method to tighten this over-approximation. 
+Interactions connect components through ports. 
+%
+We will extend the formalization to include predicates 
+that annotate the ports and the interactions. 
+These predicates are Boolean expressions that range over the
+variables of the system and all fall within 
+the Presburger arithmetic theory. 
+%
+We will encode each state of a component with a Boolean 
+variable.
+Then, we perform a strongest postcondition computation to 
+obtain a system of equations that constrains the reachable 
+states.
+%
+The system of equations can now eliminate some of the states
+we used to visit in our supercycle checks. 
+
+The system of equations can also act as an enablement abstraction.
+The wait-for graph currently contains component and interaction nodes. 
+We can extend it to contain ports. 
+The AND-OR structure becomes now an AND-$\phi$-OR structure
+where $\phi$ is a first order logic formula projected from
+the system of equations over a specific port. 
+This allows the composition of formula that indicates
+a tighter supercycle check. 
+In case the formula has a satisfying assignment, then
+a supercycle exists. 
+
+We will use SMT solvers to check whether a state 
+satisfies the system of equations for reachable state 
+enumeration. 
+We will also use SMT solvers to perform a symbolic
+supercycle check.
 
 \subsection{Aim 4: Parameterized systems} 
+
+A parametrized system $B=\B_1 \pl B_1 \ldots \pl B_1$ is a 
+composite system of $N>1$ $B_1$ components. 
+Our method naturally extends to address parametrized systems 
+of a specific size $N=n_0$. 
+
+An interesting question is that given a parametrized system $B$, 
+can we devise a method that answers the deadlock freedom
+question for any $N$. 
+
+We will explore ways to extend our method to answer the 
+parametrized deadlock freedom question. 
+We can start by checking the symmetry of the connections between
+the $B_1$ components.
+The symmetry can allow us to generalize the method. 
+For example, if all $B^3=B_1\pl B_1 \pl B_1$ 
+($3-$component subsystems) of $B$ are equivalent,
+then deadlock freedom of $B^3$ implies deadlock freedom 
+of $B$. 
+
 
 \subsection{Aim 5: Structural checks for other safety properties} 
 \subsection{Aim 6: Benchmarking and validation } 
