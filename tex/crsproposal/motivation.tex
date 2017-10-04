@@ -3,7 +3,7 @@
 \subsection{Motivation and example}
 
 Large distributed computational systems are an indispensable part of the
-critical infrastructure of modern economics. The internet itself can be regarded
+critical infrastructure of modern economies. The internet itself can be regarded
 as a large distributed system.  A distributed system functions by means of the
 exchange of information between various components, and also by the sharing of
 resources (\eg memory, communication links, etc). This requires that one
@@ -20,7 +20,7 @@ component 3 waits for component 1 to send it data.
 Existing work relies on preventing a cyclic waiting pattern, as illustrated above. However, consider the above example, but add to it component 4,
 and suppose that component 1 can take data from either component 2 or from component 4. In this case, once component 4 sends data to component 1,
 component 1 can proceed with its computation, and case send data to component 3, which then sends data to component 2. Hence the cycle is broken and
-there is not deadlock.
+there is no deadlock.
 %
 This simple example illustrates the fact that, in a system in which components have a \emph{local choice} of action, waiting cycles are an
 \emph{incomplete} characterization of deadlock: existence of a deadlock implies the existence of at least one waiting cycle, but existence of a
@@ -36,7 +36,7 @@ its components are deadlocked.
 A key problem is the conceptual complexity of large distributed computer systems: the number of possible configurations of a large system is 
 too large to be checked exhaustively. Consider for example, a toy system with just one hundred components, each of which can be in
 one of only two states: (1) sending date to another component, or (2) receiving date from another component. Thus there are overall $2^{100}$ possible
-configurations. Even if each can be checked in a nanosecond, it would still take more than $2^{60}$ years to check all configurations explicitly.
+configurations. Even if each can be checked in a nanosecond, it would still take more than $10^{12}$ years to check all configurations explicitly.
 %
 Thus all published work relies on checks that are 
 relatively easy to compute, and which imply freedom from deadlock. If the check succeeds, the system is guaranteed to be deadlock free, (no false
@@ -102,7 +102,7 @@ theoretical limitations, but only due to lack of computational resources. Experi
 
 
 To motivate our work, consider a variant of 
-the committee coordination problem described by Chandy and Misra: %~\cite{MisraCommittee}:
+the committee coordination problem described by Chandy and Misra \cite{CM88}:
 \begin{quote}
   Professors in a certain university have organized themselves into committees.  Each committee has an unchanging membership roster of one or more
   professors, and hence each professor belongs to a fixed set of committees.
@@ -129,7 +129,7 @@ Professor $\Prof_3$ is willing to attend committee $\Cm_2$, and %so C_3 disabled
 Professor $\Prof_4$ is willing to attend committees $\Cm_2, \Cm_3$. % so C_1 disabled
 %
 Then no committee has all of its members available, and so no committee is able to convene. 
-Even though each professor is willing to attend \emph{some} committees, their individually decisions about what to attend are 
+Even though each professor is willing to attend \emph{some} committees, their individual decisions about what to attend are 
 ``inconsistent''. 
 Note that the obvious solution, of having every professor being always willing to attend every committee is not practical, since in practice,
 willingness to attend a committee (or engage in such similar tasks) requires resources and effort, \eg preparation for the meeting. 
@@ -160,5 +160,5 @@ The participants execute their respective transitions synchronously,
 Hence, a component $\B_i$ is ready to execute an interaction $\act$
 if and only if $\B_i$ is ready to execute a transition that is labeled
 with a port $p_i$ which is in $\act$.
-An interaction $'act$ can be executed if and only if all of its
+An interaction $\act$ can be executed if and only if all of its
 participants are ready to execute it.

@@ -2,13 +2,12 @@
 
 We have already applied our deadlock freedom check to some 
 examples including the classical dining philosopher 
-example and a multi-token based resource allocation system that
-subsumes several arbiters and schedulers.
+example.
 %
 Our results show that the method successfully 
 and efficiently detects deadlocks when systems are 
 deadlock prone.
-The method effectively report deadlock free systems 
+The method effectively reports deadlock free systems 
 where other methods fail to complete analysis. 
 Part of the results are published~\cite{FORTE13}. 
 
@@ -23,12 +22,13 @@ We consider the traditional dining philosopher problem as depicted in
 Figure~\ref{fig:dining}, which shows $4$ philosophers and $4$ forks modeled in BIP. 
 
 Each philosopher component has $2$ states, and each fork component has $3$ states. 
-Thus, the total number of states is $2^n \times 3^n$. 
+Thus, the total number of states is $2^n \times 3^n$, for a system
+with $n$ philosophers and $n$ forks.
 
 We evaluated our method by increasing $n$ and applying both 
 the structural check across all reachable states for a
 subsystem and compared against the best configuration 
-we could compute with DFinder2. 
+we could compute with DFinder2 \cite{DFinder2}.
 DFinder2 allows for several techniques to be applied. 
 The most efficient one is 
 the Incremental Positive Mapping (IPM) technique \cite{DFinder2}. 

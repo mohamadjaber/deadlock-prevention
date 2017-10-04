@@ -16,16 +16,16 @@
 The diagram in Figure~\ref{fig:overview} illustrates the 
 methodology we will use to achieve the aims of the proposal. 
 The front end will take a BIP specification and produce
-a BOP system $\B$. 
-The subsystem selection will produce a subsystem$B'$ of $\B$. 
+a BIP system $\B$. 
+The subsystem selection will produce a subsystem $\B'$ of $\B$. 
 
-Structural analysis considers the subsystem $B'$ and builds
-a wait-for graph $W_s$ for each reachable state $s$ of $B'$. 
-In case $B'$ is found to be deadlock free, we conclude. 
-In case $B'$ is found to be deadlock prone, we compute 
+Structural analysis considers the subsystem $\B'$ and builds
+a wait-for graph $\wfg{\B'}{s}$ for each reachable state $s$ of $\B'$. 
+In case $\B'$ is found to be deadlock free, we conclude. 
+In case $\B'$ is found to be deadlock prone, we compute 
 a counterexample. 
 
-Semantic analysis takes $B'$ and considers the predicates
+Semantic analysis takes $\B'$ and considers the predicates
 annotating the ports and interactions. 
 It constructs an enablement abstraction around from 
 port enablement and interaction enablement. 
@@ -45,15 +45,14 @@ different parts of our methodology and illustrate how
 the methodology will help us achieve the specific aims
 of Section~\ref{sec:aims}
 
-In what follows, we provide necessary background 
-that covers completed work and then we present our 
-methods to address the specific aims one at a time. 
+
 
 \subsection{Wait-for graphs}
 
 Local deadlock denotes the state where a subset of the system components are deadlocked while the rest of the system can execute.
 %
-We characterize the waiting relations in a system by means of a {\em wait-for-graph}. 
+We characterize the waiting relations in a system by means of a {\em
+  wait-for graph}. 
 If a component $\B_i$ is ready to execute an interaction $\act$ then there is an edge $\B_i \ar \act$ from $\B_i$ to $\act$.
 If a component $\B_i$ is not ready to execute an interaction $\act$ then there is an edge $\act \ar \B_i$ from $\act$ to $\B_i$.
 A key point is that the wait-for graph depends on the current configuration (\ie the current ``global state'') of the system.
@@ -100,7 +99,7 @@ the whole system is deadlock free.
 We will extend the method to traverse these subsystems
 in a careful manner and to ensure a stronger structural 
 condition such that we ensure the property 
-``There is no subsystem of $B$ that has a deadlock''. 
+``There is no subsystem of $\B$ that has a deadlock''. 
 With that our method will cover local deadlock freedom. 
 
 \subsection{Aim 2: Counterexample based refinement} 
@@ -130,7 +129,9 @@ as the current method does.
 
 \subsection{Aim 3: Enablement abstraction } 
 
-The method currently iterates over all reachable states of
+Prior work used (predicate) abstraction to simplify model checking
+netlists arising from hardware designs \cite{BaumgartnerM05Charme,BaumgartnerK04Date,BaumgartnerKA02CAV}.
+Our method currently iterates over all reachable states of
 a subsystem, constructs a wait-for graph structure and 
 performs a supercycle check. 
 The reachable states in a subsystem are an over-approximation
@@ -173,29 +174,32 @@ supercycle check.
 
 \subsection{Aim 4: Parameterized systems} 
 
-A parameterized system $B=\B_1 \pl B_1 \ldots \pl B_1$ is a 
-composite system of $N>1$ $B_1$ components. 
+A parameterized system $\B=\B_1 \pl \B_1 \ldots \pl \B_1$ is a 
+composite system of $N>1$ $\B_1$ components. 
 Our method naturally extends to address parameterized systems 
 of a specific size $N=n_0$. 
 
-An interesting question is that given a parameterized system $B$, 
+An interesting question \cite{AbdullaHH13VMCAI,ClarkeKV10Memory} 
+is that given a parameterized system $\B$, 
 can we devise a method that answers the deadlock freedom
 question for any $N$. 
 
 We will explore ways to extend our method to answer the 
 parameterized deadlock freedom question. 
 We can start by checking the symmetry of the connections between
-the $B_1$ components.
+the $\B_1$ components.
 The symmetry can allow us to generalize the method. 
-For example, if all $B^3=B_1\pl B_1 \pl B_1$ 
-($3-$component subsystems) of $B$ are equivalent,
-then deadlock freedom of $B^3$ implies deadlock freedom 
-of $B$. 
+For example, if all $\B^3=\B_1\pl \B_1 \pl \B_1$ 
+($3-$component subsystems) of $\B$ are equivalent,
+then deadlock freedom of $\B^3$ implies deadlock freedom 
+of $\B$. 
 
 
 \subsection{Aim 5: Structural checks for other safety properties} 
 
-Researches addressed safety properties of distributed and 
+Prior work
+\cite{AGR16,DBLP:conf/soco/BozgaJMS12,flattening,BonakdarpourBJQS10b,Att99a,AC05,LS92,CousotCousot77-1,LS02,AbdullaHH13VMCAI,PnueliRZ01TACAS,ClarkeKV10Memory}
+addressed safety properties of distributed and 
 component based system using a variety of model checking
 approaches that are mostly state based. 
 These approaches are inherently expensive due to the state
@@ -246,7 +250,7 @@ imply order violations.
 \subsection{Aim 6: Benchmarking and validation } 
  
  We will devise a general resource allocation system
- in BIP  that we can parameterized.
+ in BIP  that we can parameterize.
  The system will be a multi-token system 
  with a set of $N$ arbiters, a set of $M$ components,
  and $k$ tokens. 
