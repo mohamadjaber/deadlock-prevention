@@ -2,28 +2,53 @@
 
 Below we elaborate on several aspects behind the significance of the proposed work:
 
+
 \subsection{Novelty of the proposal}
 
-First theoretically complete characterization of deadllock in systems
-with local choice of actions.
+Our work presents the first theoretically complete characterization of deadlock
+in distributed systems where each component has a local choice of actions.
+Despite the deadlock problem being extensively studied for several decades \cite{Kn87}
+out work is the first to supply a sound and complete characterization of
+deadlock in concurrent programs with nondeterministic choice of actions.
+
+Our work is also one of the first to use the idea of \emph{projecting a global condition
+onto a small subsystem} in order to obtain a sound (but incomplete) condition
+which can be evaluated quickly, and which guarantees deadlock freedom in case it
+evaluates to true.
+
 
 
 \subsection{Importance of the project's interdisciplinary aspects}
 
-Applies to both software and hardware,  to embedded systems, and to
-distributed information systems, eg. medical informatics....
+From an application point of view, 
+deadlock-freedom is an issue in any large distributed software system, and such
+systems pervade almost every discipline. Examples are the internet itself, the
+world wide web, stock trading systems, banking systems, medical information
+systems, etc.
+Deadlock freedom is also an issue in complex hardware system, \eg
+instruction pipelines in modern CPU's are subject to locking, which is a hardware
+form of deadlock.
+
+From a theoretical and foundational point of view, the analysis of deadlock
+freedom requires methods from both theoretical computer science (modeling of
+distributed systems as automata and state-transition systems) and also from
+applied logic, to evaluate the deadlock freedom checks, and to construct
+suitable abstractions for extending the current work.
+
+
 
 
 \subsection{Expected impact of the project's outcomes}
 
-
+We will implement our methods and place our implementation on the web
+for download. We expect that others will utilize our work to check deadlock
+freedom of systems that they are developing.
 
 
 
 \subsection{Dissemination plan of results}
 
-We will implement our methods and place our iomplementation on the web
-for download ....
+We ....
 
 
 \subsection{Project's relevance at the local, regional, and international levels}
