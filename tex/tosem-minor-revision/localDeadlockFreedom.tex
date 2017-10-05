@@ -369,24 +369,49 @@ Hence $\GLin(\B, Q_0, \act)$.
 %% size of the transition system of $\dsk{a}{\l}$.
 
 
-\begin{proposition}[Finite out-depth implies local supercycle-violation]
+\begin{proposition} %[Finite out-depth implies local supercycle-violation]
 \label{prop:finOutDepth-Implies-locScViol}
-For $d < \l$: $(\wodepth{\dsk{\act}{\l}}{v}{\sD} = d)  \imp \locScViol{v}{d+1}{\sD}{\act}{\l}$.
+Let $d < \l$ and assume that node $v$ of $\lwfg{\B}{\sD}{\DS}$ 
+has finite out-depth of $d \ge 1$ in $\lwfg{\B}{\sD}{\DS}$, \ie $\wodepth{\dsk{\act}{\l}}{v}{\sD} = d$.
+Then $\locScViol{v}{d+1}{\sD}{\act}{\l}$.
 \end{proposition}
 %
 \begin{proof}
 Proof is by induction on $d$. 
 
 \vspace{1.0ex}
-\ul{Base case, $d=0$.}
-Then $v$ has no outgoing wait-for edges. Hence $\locScViol{v}{1}{\sD}{\act}{\l}$ by Definition~\ref{def:supercycle.violation.local}.
+\ul{Base case, $d=0$.} 
+Hence by $\wodepth{\dsk{\act}{\l}}{v}{\sD} = 0$, and  Definitions~\ref{def:path} and \ref{def:depth},  
+$v$ has no outgoing wait-for edges in $\lwfg{\B}{\sD}{\DS}$.
+Hence $\neg \lblocks{\sD}{v}{\lwfg{\B}{\sD}{\DS}}$. 
+ Hence $\locScViol{v}{1}{\sD}{\act}{\l}$ by Definition~\ref{def:supercycle.violation.local}.
 
 \vspace{1.0ex}
 \ul{Induction step, $d > 0$.}
-Assume $(\wodepth{\dsk{\act}{\l}}{v}{\sD} = d)$. Then, every outgoing wait-for edge of $v$ is to some $v'$ such that 
-$(\wodepth{\dsk{\act}{\l}}{v'}{\sD} = d' < d)$. By the induction hypothesis, $\locScViol{v'}{d'+1}{\sD}{\act}{\l}$.
-Hence, by Definition~\ref{def:supercycle.violation.local},  $\locScViol{v}{d+1}{\sD}{\act}{\l}$.
+Assume $(\wodepth{\dsk{\act}{\l}}{v}{\sD} = d)$. 
+Let $w$ be an arbitrary successor of $v$, \ie a node $w$ such that $v \ar w \in \lwfg{\B}{\sD}{\DS}$.
+By Definitions~\ref{def:path} and \ref{def:depth}, $w$ has an out-depth $d'$ that is less than $d$. 
+
+By the induction hypothesis applied to $d'$, we obtain $\locScViol{w}{d'+1}{\sD}{\act}{\l}$, and so $w \in \lVFsi{\sD}{\ewfg}{d'+1}$ by \defn{supercycle.local.violation}.
+Hence $w \in \lVFsi{\sD}{\ewfg}{d}$, since, by monotonicity of $\lVFsymb_{\sD}$, we have 
+$ \lVFsi{\sD}{\ewfg}{d'} \subg  \lVFsi{\sD}{\ewfg}{d}$ when $d' \le d$.
+Since  $w$ is an arbitrary successor of $v$, it follows that $v$ is only blocked by nodes in $\lVFsi{\sD}{\ewfg}{d'+1}$.
+Hence $\neg \lblocks{\sD}{v}{\lVFsi{\sD}{\ewfg}{d'+1}}$.
+
+By \defn{violFix}, $v \in \lVFs{\sD}{\lVFsi{\sD}{\ewfg}{d}}$, \ie $v \in  \lVFsi{\sD}{\ewfg}{d+1}$.
+By \defn{supercycle.violation}, $\locScViol{v}{1}{\sD}{\act}{\l}$.
+
+
+%OLD
+%Then, every outgoing wait-for edge of $v$ is to some $v'$ such that 
+%$(\wodepth{\dsk{\act}{\l}}{v'}{\sD} = d' < d)$. By the induction hypothesis, $\locScViol{v'}{d'+1}{\sD}{\act}{\l}$.
+%Hence, by Definition~\ref{def:supercycle.violation.local},  $\locScViol{v}{d+1}{\sD}{\act}{\l}$.
 \end{proof}
+
+
+
+
+
 
 
 \begin{lemma}
