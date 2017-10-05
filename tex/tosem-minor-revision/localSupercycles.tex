@@ -29,22 +29,20 @@ on the projection of state $s$ onto $\B'$.
 %$\lwfg{B}{s}{\act,\l} \df \wfg{\B}{s} \pj \dsk{\act}{\l}$.
 \end{definition}
 
+We now show that wait-for behavior in $\B$ ``projects down''
+to any subcomponent $\B'$, and that wait-for behavior in $\B'$ ``projects up'' to $\B$.
 
 
 \begin{proposition}[Wait-for edge projection] \label{prop:edge-projection}
 %Let $(B, Q_0)$ be a BIP system, and 
-Let $(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$. Let $s$ be a state of
-$(\B, Q_0)$, and $s' = s \pj \B'$.  Let $\act$ be an interaction of
-$(\B', Q'_0)$, and $\B_i \in \cmps{\act}$ be an atomic component of
-$(\B', Q'_0)$.  Then (1) $\act \ar \B_i \in \wfg{\B}{s}$ iff
+Let $\B'$ be a subcomponent of $\B$. Let $s$ be a state of
+$\B$, and $s' = s \pj \B'$.  Let $\act$ be an interaction of
+$\B'$, and $\B_i \in \cmps{\act}$ be an atomic component of
+$\B'$.  Then (1) $\act \ar \B_i \in \wfg{\B}{s}$ iff
 $\act \ar \B_i \in \wfg{\B'}{s'}$, and (2)
 $\B_i \ar \act \in \wfg{\B}{s}$ iff $\B_i \ar \act \in \wfg{\B'}{s'}$.
 \end{proposition}
 %
-% \prfs{
-% Since $s' = s \pj \B'$, all port enablement conditions of components in $\B'$ have the same value in $s$ and in
-% $s'$. The proposition then follows by straightforward application of Definition~\ref{def:static:wait-for-graph}.
-%}
 \begin{proof}
 By Definition~\ref{def:static:wait-for-graph}, $\act \ar \B_i \in \wfg{\B}{s}$ iff $s \pj \B_i (\gd{\act}{\B_i}) = \false$.
 Since $s' = s \pj \B'$, we have $s' \pj \B_i = s \pj \B_i$. Hence

@@ -157,10 +157,11 @@ Hence we conclude that $\genViol{v}{s}$ holds.
 The actual local condition, \LAO, is given by applying the general local supercycle violation condition to every reachable transition 
 of the subsystem $\dsk{\act}{\l}$ being considered, and to every component $B_i \in \cmps{\act}$.
 
-\begin{definition}[$\LAO(\B, Q_0, \act, \l)$] \label{def:lao}
-Let $\l \ge 1$, and let $\tD \goesto[\act] \sD$ be an arbitrary reachable transition of $\DS = \dsks{\act}{\l}$.
+\begin{definition}[$\LAO(\B, Q_0, \act, \l)$] \label{def:lao} \label{defn:lao}
+Let $\l \ge 1$, $\DS = \dsks{\act}{\l}$, $\QDS = Q_0 \pj \DS$.
+Let $\tD \goesto[\act] \sD$ be an arbitrary reachable transition of the subsystem $(\DS, \QDS)$. 
 Then, in $\sD$, the following holds. 
-For every component $\B_i$ of $\cmps{\act}$:  
+For every $\B_i \in \cmps{\act}$:  
 $\B_i$ has a general local supercycle violation that can be confirmed within $\dsk{\act}{\l}$.
 Formally,\\
 \ind  $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{\sD}{\act}{\l}$.
@@ -172,6 +173,7 @@ We showed previously that $\GAO$ implies deadlock-freedom, and so it remains to 
 
 
 \begin{lemma}
+\label{lem:loc.ANDOR.implies.glob.AND-OR}
 \label{lemma:loc.ANDOR.implies.glob.AND-OR}
 \label{LAOGAO}
 Let $\act \in \gamma$ be an interaction of BIP-system $(\B, Q_0)$. Then\\
@@ -179,15 +181,16 @@ Let $\act \in \gamma$ be an interaction of BIP-system $(\B, Q_0)$. Then\\
 \end{lemma}
 %
 \begin{proof}
-Assume $\LAO(\B, Q_0, \act, \l)$ for some $\l \ge 1$. 
+Assume $\LAO(\B, Q_0, \act, \l)$ for some $\l \ge 1$, and let $\DS = \dsks{\act}{\l}$, $\QDS = Q_0 \pj \DS$.
 %
 Let $t \goesto[\act] s$ be an arbitrary reachable transition of BIP-system $(\B, Q_0)$, and let 
-$\tD \goesto[\act] \sD$ be the projection of $t \goesto[\act] s$ onto $\dsk{\act}{\l}$.
-By Corollary~\ref{cor:bip.reachability}, $\tD \goesto[\act] \sD$ is a reachable transition of $\dsk{\act}{\l}$.
+$\tD = t \pj \DS$, $\sD = s \pj \DS$, so that 
+$\tD \goesto[\act] \sD$ is the projection of $t \goesto[\act] s$ onto $\dsk{\act}{\l}$.
+By \cor{bip.reachability}, $\tD \goesto[\act] \sD$ is a reachable transition of $(\DS, \QDS)$.
 
 \noindent
-By Definition~\ref{def:lao}, we have for some $\l \ge 1$:\\
-\ind for every reachable transition $\tD \goesto[\act] \sD$ of $\dsk{\act}{\l}$:\\
+By \defn{lao},\\
+\ind for every reachable transition $\tD \goesto[\act] \sD$ of $(\DS, \QDS)$:\\
 \ind \ind $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{\sD}{\act}{\l}$.
 
 \noindent
@@ -196,22 +199,21 @@ From this and Proposition~\ref{prop:locFromViol-implies-formViol},\\
 \ind \ind $\fa \B_i \in \cmps{\act} : \formViol{\B_i}{s}$
 
 \noindent
-Hence, by Definition~\ref{def:global.ANDOR-cond}, $\GAO(\B, Q_0, \act)$ holds.
+Hence, by \defn{global.ANDOR-cond}, $\GAO(\B, Q_0, \act)$ holds.
 \end{proof}
 
 
 
 \begin{theorem} \label{thm:LAO.SC-free-preserving}
-$\LAO$ is supercycle-freedom preserving
+$\LAO$ is supercycle-freedom preserving.
 \end{theorem}
 %
 \begin{proof}
-Follows immediately from Lemma~\ref{lemma:loc.ANDOR.implies.glob.AND-OR} and Theorem~\ref{thm:GAO.SC-free-preserving}.
+Follows immediately from \thm{GAO.SC-free-preserving} and \lem{loc.ANDOR.implies.glob.AND-OR}.
 \end{proof}
-
-
-Notice that Definition~\ref{def:lao} calls $\locFormViol{v}{\sD}{\act}{\l}$ on components, which by definition should be connected to at least one non-border interaction. 
-As such, the trivial local supercycles, i.e., consisting only of border interactions, have no effect on supercycle formation. 
+%
+Notice that \defn{lao} calls $\locFormViol{v}{\sD}{\act}{\l}$ on components, which by definition should be connected to at least one non-border interaction. 
+As such, the trivial local supercycles, \ie consisting only of border interactions, have no effect on supercycle formation. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{figure}[t]
@@ -256,40 +258,32 @@ $\locFormViol{v}{\sD}{\act}{\l}$ & $v$ locally determined to not contribute to a
    \label{s:condition}
 %   \input{locLinCond}
 
-We now formulate a local version of $\GLin$.
-Observe that if
+We now formulate a local version of $\GLin$. Observe that if
 $\widepth{\B}{\B_i}{s} < \omega \lor \wodepth{\B}{\B_i}{s} < \omega$,
 then there is some finite $\l$ such that 
 $\widepth{\B}{\B_i}{s} = \l \lor \wodepth{\B}{\B_i}{s} = \l$.
 
 
-
-
 \begin{definition}[$\LLin(\B, Q_0, \act, \l)$] \label{def:ldfc-k}
-\label{def:locLinear}
+\label{def:locLinear} \label{defn:LLin}
 %Let $(B, Q_0)$ be a BIP system, with $B =\gamma(\B_1,\dots,\B_n)$.
 %Let $a$ be an interaction of $(B, Q_0)$, \ie $a \in \gamma$.
-Let $\l \ge 1$ and $\tD \goesto[\act] \sD$ be an arbitrary reachable transition of $\DS = \dsks{\act}{\l}$.
+Let $\l \ge 1$, $\DS = \dsks{\act}{\l}$, $\QDS = Q_0 \pj \DS$.
+Let $\tD \goesto[\act] \sD$ be an arbitrary reachable transition of the subsystem $(\DS, \QDS)$. 
 Then, in $\sD$, the following holds. 
-For every component $\B_i$ of $\cmps{\act}$:  
+For every $\B_i \in \cmps{\act}$:  
 either $\B_i$ has in-depth less than $2\l - 1$, or out-depth less than $2\l - 1$, in $\wfg{\dsk{\act}{\l}}{\sD}$. 
 Formally,\\
 \ind  $\fa \B_i \in \cmps{\act}: 
 \widepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1$.
 \end{definition}
-
-
-To infer deadlock-freedom in $(\B, Q_0)$ by checking $\LLin(\B, Q_0, a, \l)$,
-% which is a condition on the behavior of the subsystem $\ds{a}$,
- we show that wait-for behavior in $\B$ ``projects down''
-to any subcomponent $\B'$, and that wait-for behavior in $\B'$ ``projects up'' to $\B$.
-
-Since wait-for-edges project up and down, it follows that wait-for-paths
-project up and down, provided that the subsystem contains the entire wait-for-path.
+%
+To infer deadlock-freedom in $(\B, Q_0)$ by checking $\LLin(\B, Q_0, a, \l)$, we use \prop{edge-projection}: since wait-for edges project up and down,
+it follows that wait-for paths project up and down, provided that the subsystem contains the entire wait-for path.
 
 \begin{proposition}[In-projection, Out-projection] \label{prop:in-out-projection}
 Let $\l \ge 1$, let $\B_i$ be an atomic component of $\B$, and let 
-$(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$ which is based on a superset of $\ssg{a}{2\l}$.
+$(\B', Q'_0)$ be a subsystem of $(\B, Q_0)$ which is based on a superset of $\ssg{\act}{2\l}$.
 Let $s$ be a state of $(B, Q_0)$, and $s' = s \pj B'$. Then
 (1) $\widepth{\B}{\B_i}{s} < 2\l-1$ iff $\widepth{\B'}{\B_i}{s'} < 2\l-1$, and
 (2) $\wodepth{\B}{\B_i}{s} < 2\l-1$ iff $\wodepth{\B'}{\B_i}{s'} < 2\l-1$.
@@ -308,9 +302,9 @@ Assume that $\widepth{\B}{\B_i}{s} < 2\l-1$.
 Let $\pi$ be an arbitrary wait-for path in $\wfg{\B'}{s'}$ that ends in $\B_i$. 
 %
 Since $(\B', Q'_0)$ is a subsystem of $(\B, Q_0)$, by Definition~\ref{def:static:wait-for-graph} and $s' = s \pj \B'$,
-$\wfg{\B'}{s'}$ is a subgraph of $\wfg{\B}{s}$.
+$\wfg{\B'}{s'}$ is a subgraph of $\wfg{\B}{s}$, \ie $\wfg{\B'}{s'} \subg \wfg{\B}{s}$.
 %
-Hence $\pi$ is a wait-for-path in $\wfg{\B}{s}$.
+Hence $\pi$ is a wait-for path in $\wfg{\B}{s}$.
 By $\widepth{\B}{\B_i}{s} < 2\l-1$, we have $|\pi| < 2\l-1$. 
 Hence $\widepth{\B'}{\B_i}{s'} < 2\l-1$ since $\pi$ was arbitrarily chosen.
 
@@ -321,10 +315,10 @@ Hence $\widepth{\B'}{\B_i}{s'} < 2\l-1$ since $\pi$ was arbitrarily chosen.
 \ul{$\widepth{\B'}{\B_i}{s'} < 2\l-1$ implies $\widepth{\B}{\B_i}{s} < 2\l-1$}:
 %
 Assume that $\widepth{\B}{\B_i}{s} \ge 2\l-1$. Then there exists a wait-for path $\pi$ in $\wfg{\B}{s}$ such that 
-$|\pi| \ge 2\l-1$. Let $\rho$ be the prefix of $\pi$ with length $2\l-1$. 
+$|\pi| \ge 2\l-1$ and $\pi$ ends in $\B_i$. Let $\rho$ be the suffix of $\pi$ with length $2\l-1$. 
 %
 Since $(\B', Q'_0)$ is based on a superset of $\ssg{a}{2\l}$, and since the distance from $\B_i$ to the border of 
-$\ssg{a}{2\l}$ is $2\l-1$, we conclude that $\rho$ is a wait-for path
+$\ssg{\act}{2\l}$ is $2\l-1$, we conclude that $\rho$ is a wait-for path
 that is wholly contained in $\wfg{\B'}{s'}$. Hence we have $\widepth{\B'}{\B_i}{s'} \ge 2\l-1$.
 %
 We have thus established 
@@ -346,14 +340,15 @@ We now show that $\LLin(\B, Q_0, \act, \l)$ implies $\GLin(\B, Q_0, \act)$, whic
 \label{lemma:loc-implies-glob}
 \label{lemma:locLinear-implies-globlinear}
 \label{LLinGLin}
-Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
+Let $\act$ be an interaction of BIP system $(\B, Q_0)$, \ie $\B = \gamma(\B_1,\dots,\B_n)$ and $\act \in \gamma$.
 If $\LLin(\B, Q_0, \act, \l)$ holds for some finite $\l \ge 1$, then $\GLin(\B, Q_0, \act)$ holds.
 \end{lemma}
 %
 \begin{proof}
-Let $t \la{\act} s$ be a reachable transition of $(\B, Q_0)$ and let 
-$\B_i \in \cmps{\act}$, $\sD = s \pj \dsk{\act}{\l}$, $\tD = t \pj \dsk{\act}{\l}$.
-Then $\tD \la{\act} \sD$ is a reachable transition of $\DS = \dsks{\act}{\l}$ by Corollary~\ref{cor.bip.reachability}.
+Let $t \la{\act} s$ be a reachable transition of $(\B, Q_0)$ and let $\B_i \in \cmps{\act}$.
+Let $\DS = \dsks{\act}{\l}$ and $\QDS = Q_0 \pj \DS$.
+Let $\sD = s \pj \DS$, $\tD = t \pj \DS$.
+Then $\tD \la{\act} \sD$ is a reachable transition of $\DS$ by \cor{bip.reachability}.
 By $\LLin(\B, Q_0, \act, \l)$, 
 $\widepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1$.
 Hence by Proposition~\ref{prop:in-out-projection},
