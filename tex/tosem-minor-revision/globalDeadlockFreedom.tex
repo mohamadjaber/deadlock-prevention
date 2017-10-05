@@ -9,14 +9,14 @@ to define a condition that must hold whenever a supercycle is created. Negating 
 
 
 \begin{proposition}[Supercycle formation condition] \label{prop:supercycle-formation}
-Assume that $t \goesto[\act] s$ is a transition of $(\B, Q_0)$, $\wfg{\B}{t}$ is supercycle-free, and that $\wfg{\B}{s}$
-contains a supercycle.  Then, in $\wfg{\B}{s}$, there exists a $\CC$ such that
+Assume that $t \goesto[\act] s$ is a transition of BIP-composite component $\B = \gamma(\B_1,\ldots,\B_n)$,
+$\wfg{\B}{t}$ is supercycle-free, and that $\wfg{\B}{s}$ contains a supercycle.  Then, in $\wfg{\B}{s}$, there exists a $\CC$ such that
 \bn
-\item $\CC$ is a subgraph of $\wfg{\B}{s}$, \ie $\CC \subg \wfg{\B}{s}$
-\item $\CC$ is strongly connected
-\item $\CC$ is a supercycle
-\item  in $\wfg{\B}{s}$, there is no wait-for edge from a node in $\CC$ to a node outside of $\CC$
-\item there exists a component $\B_i \in \cmps{\act}$ such that $\B_i$ is in $\CC$
+\item $\CC$ is a subgraph of $\wfg{\B}{s}$, \ie $\CC \subg \wfg{\B}{s}$,
+\item $\CC$ is strongly connected,
+\item $\CC$ is a supercycle,
+\item  in $\wfg{\B}{s}$, there is no wait-for edge from a node in $\CC$ to a node outside of $\CC$, and
+\item there exists a component $\B_i \in \cmps{\act}$ such that $\B_i$ is in $\CC$.
 \en
 \end{proposition}
 %
@@ -37,8 +37,8 @@ of interactions in state $t$ as in state $s$. Also, in $\wfg{\B}{s}$, all of $\B
 must end in an interaction that is in $\CC$, since $\CC$ is a supercycle in $\wfg{\B}{s}$. Hence the
 same holds in $\wfg{\B}{t}$.
 %
-If $v$ is an interaction, it must also have a wait-for-edge $e'$ to some component $\B_j \in \CC$,
-since $\CC$ is a supercycle in $\wfg{\B}{s}$. Hence this also holds in $\wfg{\B}{t}$.
+If $v$ is an interaction, it must have a wait-for edge $e'$ to some component $\B_j \in \CC$,
+since $\CC$ is a supercycle in $\wfg{\B}{s}$. Hence this also holds in $\wfg{\B}{t}$, since $s \pj \B_j = t \pj \B_j$.
 %
 Hence $v$ has enough successors in $\CC$ to satisfy the supercycle definition (\defn{supercycle}).
 %
@@ -50,7 +50,7 @@ Clause~5 is established.
 
 %% overview of the four criteria: intrroduce strong connectedness violation
 
-The supercycle formation condition (Proposition~\ref{prop:supercycle-formation}) tells us that, when a supercycle $\SC$ is created, some component
+The supercycle formation condition (\prop{supercycle-formation}) tells us that, when a supercycle $\SC$ is created, some component
 $\B_i$ that participates in the interaction $\act$ whose execution created $\SC$, must be a node of a strongly connected component $\CC$ of $\SC$, and
 moreover $\CC$ is itself a supercycle in its own right. In a sense, $\CC$ is the ``essential'' part of $\SC$.  We use this to formulate a condition
 that prevents the formation of supercycles. For transition $t \goesto[\act] s$, we determine for every component $\B_i \in \cmps{\act}$ whether it is
@@ -83,7 +83,7 @@ hence deadlock-freedom. We exploit this in two ways:
 \bn
 
 \item To define a ``linear'' condition, $\GLin$, that is easier to evaluate than $\GAO$, since it requires only the
-evaluation of lengths of wait-for-paths, \ie it does not have the ``alternating'' character of $\GAO$.  It also implies $\GAO$.
+evaluation of lengths of wait-for paths, \ie it does not have the ``alternating'' character of $\GAO$.  It also implies $\GAO$.
 
 \item To define ``local variants'' of $\GAO$ and $\GLin$, which we denote as $\LAO$ and $\LLin$, respectively.  $\LAO$ and $\LLin$ can be evaluated in
   small subsystems of $(\B, Q_0)$. When either $\LAO$ or $\LLin$ holds in a small subsystem, we confirm deadlock freedom of $(\B, Q_0)$ without
@@ -92,7 +92,7 @@ evaluation of lengths of wait-for-paths, \ie it does not have the ``alternating'
 \en
 %
 We therefore now have four deadlock-freedom conditions: $\GAO$ (global alternating), $\LAO$ (local alternating), $\GLin$ (global linear), and $\LLin$
-(local linear). There are all concrete instances of the abstract version of the deadlock-freedom condition given in \secn{abstract-scfree-conditions}.
+(local linear). These are all concrete instances of the abstract version of the deadlock-freedom condition given in \secn{abstract-scfree-conditions}.
 
 
 
@@ -115,6 +115,7 @@ Towards this end, we first formalize violation of strong connectedness
 
 \begin{definition}[Strong connectedness violation, $\connViol{v}{s}$]
 \label{def:sConn.violation}
+\label{defn:sConn.violation}
  Let $v$ be a node of $\wfg{\B}{s}$.   Then $\connViol{v}{s}$ holds iff there does not exist a 
 strongly connected supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{\B}{s}$.
 \end{definition}
@@ -195,7 +196,9 @@ Hence, we have the desired contradiction, and so the theorem holds.
 
 In some cases, a simpler condition suffices to guarantee deadlock-freedom. This simpler condition is ``linear'', \ie it lacks the AND-OR alternation
 aspect of $\GAO$. After execution of a reachable transition $t \goesto[\act] s$ of $(\B, Q_0)$, 
-we consider the in-depth and out-depth of the components $\B_i \in \cmps{\act}$. There are three cases:
+we consider the in-depth and out-depth of the components $\B_i \in \cmps{\act}$. 
+Suppose that there exists a supercycle $\SC \subg \wfg{\B}{s}$.
+There are three cases:
 %
 \begin{itemize}
 

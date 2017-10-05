@@ -41,7 +41,8 @@ assumptions about the system, any deadlock state would contain a proper cycle of
 In a model of concurrency which includes choice of actions
 (\eg BIP, CSP, I/O automata, CCS), a wait-for cycle is an \emph{incomplete} characterization of
 deadlock, since a process can be in a wait-for cycle, but not deadlocked, due to having a choice of
-interaction with another process not in the wait-for cycle (see Figure \ref{fig:cycleOK}).
+interaction with another process not in the wait-for cycle (see Figure
+\ref{fig:cycleOK} below).
 
 Our method, in contrast, characterizes deadlock by the occurrence of a \emph{supercycle} \cite{AE98,AC05}, which, very roughly, is the AND-OR analogue
 of a wait-for cycle: a subset of processes constitutes a supercycle $\SC$ iff every possible action of every process in $\SC$ is blocked by another
@@ -55,7 +56,7 @@ the system. We first present a ``global'' version of our criterion, which is bot
 \wrt absence of supercycles, and then a ``local'' version, which is sound \wrt absence of
 supercycles, and can be evaluated over small subsystems.
 
-In addition our criterion guarantees freedom from local (and therefore global) deadlock. A local deadlock occurs when 
+Our criterion guarantees freedom from local (and therefore global) deadlock. A local deadlock occurs when 
 a subsystem is deadlocked while the rest of the system can execute. Other criteria in the literature \cite{AGR16,Ma96,RD87,DFinder2,BR91,MM12,GS03,AB03} guarantee only global deadlock freedom.
 
 This paper significantly extends a preliminary conference version \cite{FORTE13} as
@@ -73,7 +74,8 @@ Our criterion is, to the best of our knowledge, the first criterion that is soun
 for global and \emph{local} deadlock-freedom in
 concurrent programs with nondeterministic local choice, \ie a process can nondeterministically choose among enabled actions.
 
-We present experimental results for dining philosophers and for a multi token-based resource allocation system, which generalizes Milner's token based
+We present experimental results for dining philosophers and for a
+multi-token based resource allocation system, which generalizes Milner's token based
 scheduler~\cite{milner}.  These show that our method compares favorably with existing approaches.
 
 
@@ -83,7 +85,7 @@ edges called a supercycle (see discussion above).   Section~\ref{secn:globalSupe
 supercycles, \ie those that occur in the overall system being considered, characterizes these as the greatest fixpoint of a ``blocking'' operator, and
 presents some structural properties of supercycles. Section~\ref{secn:globalDeadlockFreedom} presents global conditions for the prevention of the
 formation of supercycles. Global means that these conditions are evaluated in the entire system.  Section~\ref{secn:localSupercycles} considers
-``local'' supercycles, \ie those that occur in a given subsystem of the overall system being considered.  These are also characterized as the greatest
+``local'' supercycles, \ie those that occur in a given subsystem of the overall system being considered.  These are characterized as the greatest
 fixpoint of a ``local blocking'' operator, which pessimistically assumes that nodes on the boundary of the subsystem are blocked. This pessimistic
 assumption ensures soundness, at the expense of completeness.  Section~\ref{secn:localDeadlockFreedom} presents local conditions for the prevention of
 the formation of supercycles. These can be evaluated in (small) subsystems of the overall system, and are obtained by ``projecting'' the global

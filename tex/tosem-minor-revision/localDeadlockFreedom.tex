@@ -11,8 +11,8 @@ We define local versions of both $\scViol{v}{d}{s}$ and $\connViol{v}{s}$.
 
 To achieve a local and conservative approximation of $\scViol{v}{d}{s}$, we make the ``pessimistic'' assumption that the violation status of border
 nodes of $\dsk{\act}{\l}$ cannot be known, since it depends on nodes outside of $\dsk{\act}{\l}$.  Now, if an internal node $v$ of $\dsk{\act}{\l}$
-can be marked with a level-$d$ \emph{local} sc-violation, by applying \defn{supercycle.violation.local} to $\dsk{\act}{\l}$, and with the
-border nodes marked as non-violating, then it is also the case, as we show below, that $v$ also has a level-$d$ \emph{global} sc-violation, as per \defn{supercycle.violation}.
+can be marked with a level-$d$ \emph{local} supercycle-violation, by applying \defn{supercycle.violation.local} to $\dsk{\act}{\l}$, and with the
+border nodes marked as non-violating, then it is also the case, as we show below, that $v$ also has a level-$d$ \emph{global} supercycle-violation, as per \defn{supercycle.violation}.
 
 To achieve a local and conservative approximation of
 $\connViol{v}{s}$, we project onto the subsystem \DS.
@@ -20,7 +20,7 @@ $\connViol{v}{s}$, we project onto the subsystem \DS.
 
 \subsubsection{Local strong connectedness condition}
 
-We now present the local version of the strong connectedness violation condition, given above in Definition~\ref{def:sConn.violation}.
+We now present the local version of the strong connectedness violation condition, given above in \defn{sConn.violation}.
 
 \begin{definition}[Local strong connectedness violation, $\locConnViol{v}{\sD}{\act}{\l}$]
 \label{def:sConn.violation.loc}
@@ -69,15 +69,16 @@ We show that the local strong connectedness condition implies the global strong 
 \begin{proposition}
 \label{prop:locConnViol-implies-ConnViol}
  \label{prop:locConnViol-implies-connViol}
-Let $s$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
+Let $s$ be an arbitrary state of $\B$.
 For all interactions $\act \in \gamma$, and $\l \ge 1$, let $\DS = \dsks{\act}{\l}$, $\sD = s \pj \dsk{\act}{\l}$, and let $\ndv$ be an arbitrary node in $\dsk{\act}{\l}$.
 Then\\
 \ind $\locConnViol{v}{\sD}{\act}{\l} \imp \connViol{v}{s}$.
 \end{proposition}
 %
 \begin{proof}
-By contradiction. Assume there exists a node $v$ in $\dsk{a}{\l}$ such that $\locConnViol{v}{\sD}{\act}{\l} \land \neg \connViol{v}{s}$.
-By $\neg \connViol{v}{s}$ and Definition~\ref{def:sConn.violation}, there exists a strongly connected
+By contradiction. Assume for some state $s$ of $\B$ and some node $v$ in $\dsk{a}{\l}$ that $\locConnViol{v}{\sD}{\act}{\l} \land \neg
+\connViol{v}{s}$ holds.
+By $\neg \connViol{v}{s}$ and \defn{sConn.violation}, there exists a strongly connected
 supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{\B}{s}$. Then, there are two cases:
 %
 \bn
@@ -89,10 +90,10 @@ supercycle $\SSC$ such that $v \in \SSC$ and $\SSC \subg \wfg{\B}{s}$. Then, the
   Thus Clause~\ref{def:sConn.violation.loc:scc} of Definition~\ref{def:sConn.violation.loc} is violated.
 
 \item $\SSC \not\subg \wfg{\dsk{a}{\l}}{\sD}$: then there exists a node $x \in \SSC - \wfg{\dsk{a}{\l}}{\sD}$.
-  Now $v \in \SSC$ and $\SSC$ is strongly connected. Hence there must exist a wait-for path $\pi$
-  from $v$ to $x$ and a wait-for path $\pi'$ from $x$ to
+  Now $v \in \SSC$ and $\SSC$ is strongly connected. Hence there must exist a wait-for path $\pi$ in $\lwfg{\B}{\sD}{\DS}$
+  from $v$ to $x$ and a wait-for path $\pi'$ in $\lwfg{\B}{\sD}{\DS}$ from $x$ to
   $v$. Since $v \in \dsk{a}{\l}$ and $x \not\in \dsk{a}{\l}$, it
-  follows that both $\pi$, $\pi'$  cross a border node of
+  follows that both $\pi$ and $\pi'$  cross a border node of
   $\dsk{a}{\l}$. Furthermore, since $\pi$, $\pi'$ are paths in $\SSC$, every node $\ndw$ that is
   in $\pi$ or in $\pi'$ must be in a supercycle, and so cannot have a supercycle violation, \ie $\neg \scV{\ndw}{s}$. 
   By Proposition~\ref{prop:locScViol-implies-scViol}, every node $\ndw$ that is
@@ -116,20 +117,20 @@ strong connectedness violation implies global strong connectedness violation.  T
 supercycle violation condition is the disjunction of global supercycle violation and global strong
 connectedness violation.  Hence, we formulate the general local supercycle violation condition as the
 disjunction of local supercycle violation and local strong connectedness violation.  It follows that
-the local supercycle formation condition implies the global supercycle formation condition.
+the general local supercycle violation condition implies the general global supercycle violation condition.
 
 
 \begin{definition}[General local supercycle violation, $\locFormViol{v}{\sD}{\act}{\l}$]
 \label{def:locFormation.violation}
 \label{defn:locFormation.violation}
-Let $\ndv$ be an arbitrary node of $\dsk{\act}{\l}$ and $\sD$ be an arbitrary reachable state of $\dsk{\act}{\l}$.
+Let $\ndv$ be an arbitrary node of $\dsk{\act}{\l}$ and $\sD$ be an arbitrary  state of $\dsk{\act}{\l}$.
 Then $\locFormViol{v}{\sD}{\act}{\l}  \df \scVL{v}{\sD}{\act}{\l} \lor \locConnViol{v}{\sD}{\act}{\l}$.
 \end{definition}
 
 
 \begin{proposition} \label{prop:locFromViol-implies-formViol}
 \label{prop:locformviol-implies-formviol}
-Let $s$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
+Let $s$ be an arbitrary state of BIP composite component $\B$.
 For all interactions $\act \in \gamma$, and $\l \ge 1$, let $\DS = \dsks{\act}{\l}$ and $\sD = s \pj \dsk{\act}{\l}$.
 Also let $\ndv$ be an arbitrary node of $\dsk{\act}{\l}$.
 Then\\
@@ -153,14 +154,14 @@ Hence we conclude that $\genViol{v}{s}$ holds.
 
 \subsubsection{Local AND-OR Condition}
 
-The actual local condition, \LAO, is given by applying the local supercycle formation condition to every reachable transition 
+The actual local condition, \LAO, is given by applying the general local supercycle violation condition to every reachable transition 
 of the subsystem $\dsk{\act}{\l}$ being considered, and to every component $B_i \in \cmps{\act}$.
 
 \begin{definition}[$\LAO(\B, Q_0, \act, \l)$] \label{def:lao}
 Let $\l \ge 1$, and let $\tD \goesto[\act] \sD$ be an arbitrary reachable transition of $\DS = \dsks{\act}{\l}$.
 Then, in $\sD$, the following holds. 
 For every component $\B_i$ of $\cmps{\act}$:  
-$\B_i$ has a supercycle formation violation that can be confirmed within $\dsk{\act}{\l}$.
+$\B_i$ has a general local supercycle violation that can be confirmed within $\dsk{\act}{\l}$.
 Formally,\\
 \ind  $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{\sD}{\act}{\l}$.
 \end{definition}
@@ -174,7 +175,7 @@ We showed previously that $\GAO$ implies deadlock-freedom, and so it remains to 
 \label{lemma:loc.ANDOR.implies.glob.AND-OR}
 \label{LAOGAO}
 Let $\act \in \gamma$ be an interaction of BIP-system $(\B, Q_0)$. Then\\
-\ind $(\ex \l \ge 1: \LAO(\B, Q_0, \act, \l))$ implies $\GAO(\B, Q_0, \act)$
+\ind $(\ex \l \ge 1: \LAO(\B, Q_0, \act, \l))$ implies $\GAO(\B, Q_0, \act)$. 
 \end{lemma}
 %
 \begin{proof}

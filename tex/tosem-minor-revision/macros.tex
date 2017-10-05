@@ -189,7 +189,7 @@
 
 \newcommand{\nodes}[1]{\ensuremath{\MATHID{nodes}(#1)}}  % reachable states
 \newcommand{\cnodes}[1]{\ensuremath{\card{\MATHID{nodes}(#1)}}}  % reachable states
-
+\newcommand{\nodesPow}[1]{\ensuremath{\power{\MATHID{nodes}(#1)}}}  % reachable states
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% DEADLOCK SPECIFIC MACROS
@@ -247,8 +247,8 @@
 \newcommand{\scscyc}[3]{\ensuremath{\MATHIDN{scscyc}_{#1}^{#2}({#3})}}
 
 
-\newcommand{\preds}[3]{\ensuremath{\MATHID{preds}_{#1}({#2, #3})}}
-\newcommand{\succs}[3]{\ensuremath{\MATHID{succs}_{#1}({#2, #3})}}
+\newcommand{\preds}[3]{\ensuremath{\MATHID{preds}_{#1}({#3, #2})}}
+\newcommand{\succs}[3]{\ensuremath{\MATHID{succs}_{#1}({#3, #2})}}
 
 
 \newcommand{\SC}{\ensuremath{\MATHIDN{SC}}}

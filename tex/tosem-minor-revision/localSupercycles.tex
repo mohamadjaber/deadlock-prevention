@@ -4,7 +4,7 @@
 
 Evaluating the global restrictions $\GAO(\B,Q_0,\act)$, $\GLin(\B,Q_0,\act)$ requires checking all reachable transitions of
 $(\B, Q_0)$, which is, in general, subject to state-explosion.
-We need restrictions which imply a global restriction, 
+We need restrictions which imply $\GAO(\B,Q_0,\act)$, $\GLin(\B,Q_0,\act)$,
 and which can be checked efficiently.
 %
 To this end, we first develop some terminology, and a projection result, for relating the waiting-behavior in a
@@ -46,18 +46,18 @@ $\B_i \ar \act \in \wfg{\B}{s}$ iff $\B_i \ar \act \in \wfg{\B'}{s'}$.
 % $s'$. The proposition then follows by straightforward application of Definition~\ref{def:static:wait-for-graph}.
 %}
 \begin{proof}
-By Definition~\ref{def:static:wait-for-graph}, $\act \ar \B_i \in \wfg{\B}{s}$ iff $s \pj i (\gd{\act}{\B_i}) = \false$.
-Since $s' = s \pj \B'$, we have $s' \pj i = s \pj i$. Hence
-$s \pj i (\gd{\act}{\B_i}) = s' \pj i (\gd{\act}{\B_i})$.
+By Definition~\ref{def:static:wait-for-graph}, $\act \ar \B_i \in \wfg{\B}{s}$ iff $s \pj \B_i (\gd{\act}{\B_i}) = \false$.
+Since $s' = s \pj \B'$, we have $s' \pj \B_i = s \pj \B_i$. Hence
+$s \pj \B_i (\gd{\act}{\B_i}) = s' \pj \B_i (\gd{\act}{\B_i})$.
 By Definition~\ref{def:static:wait-for-graph}, 
-$a \ar \B_i \in \wfg{\B'}{s'}$ iff $s' \pj i (\gd{\act}{\B_i}) = \false$.
+$a \ar \B_i \in \wfg{\B'}{s'}$ iff $s' \pj \B_i (\gd{\act}{\B_i}) = \false$.
 Putting together these three equalities gives us Clause (1).
 
 By Definition~\ref{def:static:wait-for-graph},
 $\B_i \ar \act \in \wfg{\B}{s}$ iff 
-$s \pj i (\gd{\act}{\B_i}) = \true$.
-Since $s' = s \pj \B'$, we have $s' \pj i = s \pj i$. Hence
-$s \pj i (\gd{\act}{\B_i}) = s' \pj i (\gd{\act}{\B_i})$.
+$s \pj \B_i (\gd{\act}{\B_i}) = \true$.
+Since $s' = s \pj \B'$, we have $s' \pj \B_i = s \pj \B_i$. Hence
+$s \pj \B_i (\gd{\act}{\B_i}) = s' \pj \B_i (\gd{\act}{\B_i})$.
 By Definition~\ref{def:static:wait-for-graph},
 $\B_i \ar \act \in \wfg{\B'}{s'}$ iff $s' \pj i (\gd{\act}{\B_i}) = \true$.
 Putting the above three equalities together gives us clause (2).
@@ -158,11 +158,11 @@ not necessarily imply a global supercyle.
 
 
 We carry over the definition of subgraph $\subg$ from \secn{supercycle-fixpoint}, and develop the analogous definitions for an arbitrary subsystem \DS
-of $\B$.
+of $\B$. In the sequel, let \sD be an arbitrary state of \DS.
 
 
 \begin{definition}[Set of subgraphs] \label{defn:wsetOfSubgraphsLoc}
-Let $\sD$ be a state of $\DS$. Then 
+%Let $\sD$ be a state of $\DS$. Then 
 $\lwfgS{B}{\sD}{\DS} \df  \set{ \XS \stt \XS \subg \lwfg{B}{\sD}{\DS} }$.
 \end{definition}
 
@@ -196,21 +196,19 @@ $\act$ is in $\XS$, and $\B_i$ does not enable $\act$.
 A component $\B_i$ is blocked by $\XS$ if all of the interactions that $\B_i$ enables are in $\XS$.
 
 
-\begin{definition}[$\lSFsymb$] \label{defn:scFixLoc}
-%Define $\lSFsymb:  \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
+\begin{definition}[$\lSFsymb_{\sD}$] \label{defn:scFixLoc}
 Define $\lSFsymb_{\sD}:  \lwfgS{B}{\sD}{\DS}  \to  \lwfgS{B}{\sD}{\DS}$ as follows.
-$\lSF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \lblocks{\sD}{\ndv}{\XS} }$, together with the edges induced by \lwfg{B}{\sD}{\DS}.
+$\lSFs{\sD}{\XS}$ is the subgraph with nodes $\set{\ndv \stt \lblocks{\sD}{\ndv}{\XS} }$, together with the edges induced by \lwfg{B}{\sD}{\DS}.
 \end{definition}
 
-\begin{definition}[$\lVFsymb$] \label{defn:violFixLoc}
-%Define $\lVFsymb: \lwfgS{B}{s}{\act,\l}  \to  \lwfgS{B}{s}{\act,\l}$ as follows.
+\begin{definition}[$\lVFsymb_{\sD}$] \label{defn:violFixLoc}
 Define $\lVFsymb_{\sD}: \lwfgS{B}{\sD}{\DS}  \to  \lwfgS{B}{\sD}{\DS}$ as follows.
-$\lVF{\XS}$ is the subgraph with nodes $\set{\ndv \stt \neg \lblocks{\sD}{\ndv}{\complLoc{\XS}} }$, together with the edges induced by \lwfg{B}{\sD}{\DS},
+$\lVFs{\sD}{\XS}$ is the subgraph with nodes $\set{\ndv \stt \neg \lblocks{\sD}{\ndv}{\complLoc{\XS}} }$, together with the edges induced by \lwfg{B}{\sD}{\DS},
 where we take the complement $\complLoc{\XS}$ with respect to $\DS$.
 \end{definition}
 %
 Implicit in writing $\complLoc{\XS}$ is that $\XS \subg \DS$. Then  $\complLoc{\XS}$ contains all nodes that are in $\DS$ and not in $\XS$, together 
-the edges induced by $\lwfgS{B}{\sD}{\DS}$.
+with the edges induced by $\lwfg{B}{\sD}{\DS}$.
 %
 Hence $\lVFs{\sD}{\XS} = \complLoc{\lSFs{\sD}{\complLoc{\XS}}}$, \ie $\lVFsymb_{\sD}$ and $\lSFsymb_{\sD}$ are duals.
 Note that (as for $\SFsymb_s$ and $\VFsymb_s$) $\lSFsymb_{\sD}$ and $\lVFsymb_{\sD}$ are defined given a particular
@@ -221,7 +219,7 @@ Since the subsystem $\DS$ is fixed, we will omit $\DS$ from the subscript of $\l
 
 
 \begin{proposition} \label{prop:monotoneLoc}
-$\lSFsymb$ and $\lVFsymb$ are monotone and continuous.
+$\lSFsymb_{\sD}$ and $\lVFsymb_{\sD}$ are monotone and continuous.
 \end{proposition}
 %
 \begin{proof}
@@ -253,7 +251,7 @@ Finally, since $\llat{\B}{\sD}{\DS}$ is finite, it follows that $\lSFsymb_{\sD}$
 
 
 \begin{proposition} \label{prop:locGFP} \label{prop:supercycleGFPLoc}
-Let $\XS \ne \ewfg$ and $\XS \subg \lwfg{B}{s}{\DS}$, \ie $\XS$ is a non-empty subgraph of $\lwfg{\B}{\sD}{\DS}$.
+Let $\XS \ne \ewfg$ and $\XS \subg \lwfg{B}{\sD}{\DS}$, \ie $\XS$ is a non-empty subgraph of $\lwfg{\B}{\sD}{\DS}$.
 Then, $\XS$ is a local supercycle in $\lwfg{\B}{\sD}{\DS}$ iff $\XS \subg \lSFs{\sD}{\XS}$.
 \end{proposition}
 %
@@ -261,14 +259,13 @@ Then, $\XS$ is a local supercycle in $\lwfg{\B}{\sD}{\DS}$ iff $\XS \subg \lSFs{
 Let $\XS$ be a local supercycle in $\lwfg{B}{\sD}{\DS}$. By \defn{supercycleLoc}, every node in $\XS$ is blocked by $\XS$ or is a border interaction, \ie 
 $(\fa \ndx \in \XS: \lblocks{\sD}{\ndx}{\XS})$. By \defn{scFix}, $\XS \subg \lSFs{\sD}{\XS}$.
 
-Conversely, suppose $\XS \subg \lSFs{\sD}{\XS}$ for some subgraph $\XS$ of $\lwfg{B}{s}{\DS}$. Hence 
+Conversely, suppose $\XS \subg \lSFs{\sD}{\XS}$ for some subgraph $\XS$ of $\lwfg{B}{\sD}{\DS}$. Hence 
 $(\fa \ndx \in \XS: \ndx \in \lSFs{\sD}{\XS})$, so by \defn{scFixLoc}, $(\fa \ndx \in \XS: \lblocks{\sD}{\ndx}{\XS})$.
 Hence every node in $\XS$ is blocked by $\XS$ or is a border interaction, and so $\XS$ satisfies \defn{supercycleLoc}, and is therefore a local supercycle.
 \end{proof}
 
 \begin{proposition} \label{prop:supercycleLoc:union}
-Let $\SC, \SC'$ be local supercycles in $\lwfg{B}{s}{\DS}$. Then $\SC \join \SC'$ is
-a local supercycle in $\lwfg{B}{s}{\DS}$.
+Let $\SC, \SC'$ be local supercycles in $\lwfg{B}{\sD}{\DS}$. Then $\SC \join \SC'$ is a local supercycle in $\lwfg{B}{\sD}{\DS}$.
 \end{proposition}
 %
 \begin{proof}
@@ -279,17 +276,17 @@ the proposition follows by applying \prop{locGFP} again.
 
 
 \begin{proposition} \label{prop:GFPisLargestSCLoc}
-Let $\SC$ be the greatest fixpoint of $\lSFsymb$. Then either
+Let $\SC$ be the greatest fixpoint of $\lSFsymb_{\sD}$. Then either
 (a) $\lwfg{\B}{\sD}{\DS}$ is supercycle-free and $\SC = \ewfg$, or 
-(b) $\lwfg{\B}{\sD}{\DS}$ contains supercycles, and $\SC$ is the largest supercycle in $\lwfg{\B}{\sD}{\DS}$ 
+(b) $\lwfg{\B}{\sD}{\DS}$ contains local supercycles, and $\SC$ is the largest local supercycle in $\lwfg{\B}{\sD}{\DS}$ 
 \end{proposition}
 %
 \begin{proof}
 By the Knaster-Tarski theorem, the greatest fixpoint is the join of all the post-fixpoints. 
-If $\lwfg{B}{s}{\DS}$ is supercycle-free, then by \prop{supercycleGFPLoc}, the set of post-fixpoints of $\lSFsymb$ is empty. 
+If $\lwfg{B}{\sD}{\DS}$ is supercycle-free, then by \prop{supercycleGFPLoc}, the only post-fixpoint of $\lSFsymb_{\sD}$ is \ewfg.
 Hence $\SC = \ewfg$ (this is possible since there may be no border interactions). %CHECK DEF BORDER INTERACTION
-If $\lwfg{B}{s}{\DS}$ contains supercycles, then by \prop{supercycleGFPLoc},  the set of post-fixpoints of $\lSFsymb_{\sD}$ is exactly the set of 
-local supercycles of $\lwfg{B}{s}{\DS}$, and so $\SC$ is the join of all these local supercycles, and so $\SC$ is the largest local supercycle in 
+If $\lwfg{B}{\sD}{\DS}$ contains supercycles, then by \prop{supercycleGFPLoc},  the set of post-fixpoints of $\lSFsymb_{\sD}$ is exactly the set of 
+local supercycles of $\lwfg{B}{\sD}{\DS}$. Hence $\SC$ is the join of all these local supercycles. By \prop{supercycleLoc:union}, $\SC$ is the largest local supercycle in 
 $\lwfg{\B}{\sD}{\DS}$.
 \end{proof}
 
@@ -302,8 +299,8 @@ $v \in \lfp{\lVFsymb_{\sD}}$ iff $v$ is not a node in any local supercycle of $\
 \begin{proof}
 From the Park conjugate (dual) fixpoint theorem in complete Boolean lattices, we have 
 \lfp{\VFsymb_{\sD}} = \complLoc{\gfp{\SFsymb_{\sD}}}.
-By \prop{GFPisLargestSC}, \gfp{\SFsymb_{\sD}} is the largest local supercycle in \wfg{\B}{s}. Hence the nodes not in 
-\gfp{\SFsymb_{\sD}} are exactly the nodes that have local supercycle violations. These are exactly the nodes in \lfp{\VFsymb_{\sD}}.
+By \prop{GFPisLargestSC}, \gfp{\SFsymb_{\sD}} is the largest local supercycle in \wfg{\DS}{\sD}. Hence the nodes not in 
+\gfp{\SFsymb_{\sD}} are exactly the nodes that are not in any local supercycle. These are exactly the nodes in \lfp{\VFsymb_{\sD}}.
 \end{proof}
 
 Define $\lVFsi{\sD}{\XS}{1} = \lVFs{\sD}{\XS}$, and for $d > 1$, 
@@ -348,13 +345,13 @@ $\scVL{v}{\sD}{\act}{\l} \ev (\ex d \ge 1: \scVLd{v}{d}{\sD}{\act}{\l})$.
 \begin{proof}
 By \defn{supercycle.violation.local}, $\scVL{\ndv}{\sD}{\act}{\l} \ev v \in \lfp{\lVFsymb_{\sD}}$.
 By \prop{computeLocLFP}, $v \in \lfp{\lVFsymb_{\sD}} \ev v \in \JOIN_{d \ge 1} \lVFsi{\sD}{\ewfg}{d}$.
-By \defn{supercycle.violation.local}, $\fa d \ge 1: (\scVLd{v}{d}{\sD}{\act}{\l} \ev v \in \lVFsi{\sD}{\ewfg}{d}$.
+By \defn{supercycle.violation.local}, $\fa d \ge 1: \scVLd{v}{d}{\sD}{\act}{\l} \ev v \in \lVFsi{\sD}{\ewfg}{d}$.
 Chaining these equivalences establishes the proposition.
 \end{proof}
 %
 $\scVLd{v}{d}{\sD}{\act}{\l}$ defines a local supercycle violation that can be confirmed within $d$ iterations of $\lVFsymb_{\sD}$, which we call a
 \emph{level-$d$ local supercycle violation}.
-$\scVL{v}{\sD}{\act}{\l}$ requires, in general, the entire least fixed point of $\lVFsymb_{\sD}$.
+$\scVL{v}{\sD}{\act}{\l}$ requires, in general, the entire least fixpoint of $\lVFsymb_{\sD}$.
 
 
 
@@ -362,7 +359,7 @@ $\scVL{v}{\sD}{\act}{\l}$ requires, in general, the entire least fixed point of 
 \label{exm:loc-dphils-viols}
 Figures~\ref{fig:violsLocGrab}, \ref{fig:violsLocGrabGrab}, and \ref{fig:violsLocGrabGrabRel} illustrate local supercycle violations corresponding to
 Figures~\ref{fig:violsGrab}, \ref{fig:violsGrabGrab}, \ref{fig:violsGrabGrabRel} respectively. The subsystem used, in each case, is based on the last interaction
-executed, \ie $\Grab_0$, $\Grab_2$, and $\Rel_0$, respectively, and with a distance of 1 in all cases.
+executed, \ie $\Grab_0$, $\Grab_2$, and $\Rel_0$, respectively, and with a radius of 1 in all cases.
 The border interactions are shown underlined, and 
 for each node $\ndv$ (interaction or component), we include a small positive integer after its name, giving the smallest $d$ such that $v \in \lVFi{\ewfg}{d}$, 
 \ie the local supercycle violation level.
@@ -394,8 +391,8 @@ We now show that a local supercycle violation implies (global) supercycle violat
 
 \begin{proposition}
 \label{prop:lV-subg-V}
-Let $s$ be a global state of $\B$, and let $\sD = s \pj \DS$.\\
-(a) Let $\XS \subg \lwfg{B}{s}{\DS}$. Then $\lVFs{\sD}{\XS} \subg \VFs{s}{\XS}$.\\
+Let $s$ be an arbitrary global state of $\B$, and let $\sD = s \pj \DS$.\\
+(a) Let $\XS \subg \lwfg{B}{\sD}{\DS}$. Then $\lVFs{\sD}{\XS} \subg \VFs{s}{\XS}$.\\
 (b) Let $d \ge 1$. Then $\lVFsi{\sD}{\ewfg}{d} \subg \VFsi{s}{\ewfg}{d}$.
 \end{proposition}
 %
@@ -405,13 +402,13 @@ Now $\ndv$ is either an interaction $\act$ or a component $\B_i$.
 
 By \defn{blocksLoc}, if $\ndv$ is an interaction $\act$, then it is not a border interaction, and furthermore there is no
 component $\B_i \in \complL{\XS}$ such that $\act \ar \B_i \in \lwfg{\B}{\sD}{\DS}$. 
-Since $\complL{\XS} \subg \compl{\XS}$, we conclude $\neg \blocks{\sD}{\ndv}{\compl{\XS}}$, and so $\ndv \in \VFs{\sD}{\XS}$.
+Since $\complL{\XS} \subg \compl{\XS}$, we conclude $\neg \blocks{s}{\ndv}{\compl{\XS}}$, and so $\ndv \in \VFs{s}{\XS}$.
 
 By \defn{blocksLoc}, if $\ndv$ is a component $\B_i$, then there exists an interaction $\act$ such that 
 $\B_i \ar \act \in \lwfg{\B}{\sD}{\DS}$ and $\act \not\in \complL{\XS}$. Hence $\act \in \XS$, and so $\act \not\in \compl{\XS}$.
-Hence  $\neg \blocks{\sD}{\ndv}{\compl{\XS}}$, and so $\ndv \in \VFs{\sD}{\XS}$.
+Hence  $\neg \blocks{s}{\ndv}{\compl{\XS}}$, and so $\ndv \in \VFs{s}{\XS}$.
 
-In both cases, the arbitrary element $\ndv$ of $\lVFs{\sD}{\XS}$ is also an element of $\VFs{\sD}{\XS}$, and so 
+In both cases, the arbitrary element $\ndv$ of $\lVFs{\sD}{\XS}$ is also an element of $\VFs{s}{\XS}$, and so 
 $\lVFs{\sD}{\XS} \subg \VFs{s}{\XS}$.
 
 We establish (b) by induction on $d$. The base case is $d=1$, which is given by (a).
@@ -427,10 +424,10 @@ $\lVFsi{\sD}{\ewfg}{d}   \subg \VFsi{s}{\ewfg}{d}$, and so (b) is established.
 \begin{proposition}
 \label{prop:locScViol-implies-scViol}
 \label{prop:lviol-implies-viol}
-Let $s$ be an arbitrary reachable state of BIP-system $(\B, Q_0)$.
+Let $s$ be an arbitrary global state of $\B$.
 For all interactions $\act \in \gamma$ and $\l \ge 1$, let $\DS = \dsks{\act}{\l}$ and $\sD = s \pj \dsk{\act}{\l}$.
 Then\\
-\ind (a) $\fa d \ge 1:  (\scVLd{\ndv}{d}{\sD}{\act}{\l} \imp \scVd{v}{d}{s}) $, and\\
+\ind (a) $\fa d \ge 1:  \scVLd{\ndv}{d}{\sD}{\act}{\l} \imp \scVd{v}{d}{s} $, and\\
 \ind (b) $\scVL{\ndv}{\sD}{\act}{\l} \imp \scV{v}{s}$.
 \end{proposition}
 %
