@@ -1,5 +1,5 @@
-Recall that $(\B, Q_0)$ is an arbitrary fixed BIP-system, which
-we use in all definitions, theorems etc.
+Recall that $(\B, Q_0)$ is an arbitrary fixed BIP-system, (with $\B = \gamma(\B_1,\dots,\B_n)$),
+which we use in all definitions, theorems etc.
 %
 We characterize a supercycle as a post-fixpoint of a ``blocking operator'' $\SFsymb$ (defined below) over the complete Boolean lattice formed from the
 subgraphs of \wfg{\B}{s}, with $\subg$ (\defn{wsubgraph}) as the ordering.
@@ -7,7 +7,7 @@ subgraphs of \wfg{\B}{s}, with $\subg$ (\defn{wsubgraph}) as the ordering.
 Roughly, $\SFsymb$ maps a subset $\XS$ of the nodes of $\wfg{\B}{s}$ (\ie some subset of the components and interactions in $(\B, Q_0)$)
 to a set of nodes $\YS$ whose execution is blocked by $\XS$. An interaction $\act$ in $\YS$ is blocked by $\XS$ if some participant of $\act$ is in $\XS$ and does
 not enable $\act$. A component $\B_i$  in $\YS$ is blocked by $\XS$ if every interaction that $\B_i$ enables is in $\XS$. In terms of $\wfg{\B}{s}$,
-$\act$ is blocked by $\XS$ if there is a wait-for edge from $\act$ to a node in $\XS$, and $\B_i$ is blocked by $\XS$ if every wait-for edge from $\B_i$ is to a
+$\act$ is blocked by $\XS$ if there is a wait-for edge from $\act$ to some node in $\XS$, and $\B_i$ is blocked by $\XS$ if every wait-for edge from $\B_i$ is to a
 node in $\XS$. 
 
 Since $\SFsymb$ is monotone, its greatest fixpoint $\SC$ exists.  If \wfg{\B}{s} is supercycle-free, then $\SC$ is the empty wait-for graph \ewfg.
@@ -52,9 +52,9 @@ $\XS \meet \YS$ consists of the nodes that are present in both $\XS$ and $\YS$, 
 it is possible for $\XS$ and $\YS$ to have nodes and edges in common. Note also that $\XS \join \YS$ may contain edges not present in either $\XS$ nor $\YS$,
 since the edges are those induced by \wfg{\B}{s}. 
 
-\item \wfg{\B}{s}  is the top element 
+\item \wfg{\B}{s}  is the top element.
 
-\item  the empty wait-for graph, denoted by \ewfg, is the bottom element
+\item  the empty wait-for graph \ewfg is the bottom element.
 
 \item the complement \compl{\XS} of $\XS$ is obtained by taking all the nodes of \wfg{\B}{s} that are not in $\XS$, together with the induced edges.
 \ee
@@ -102,11 +102,11 @@ $\SFsymb_s$ and $\VFsymb_s$ are monotone and continuous.
 We show first that $\SFsymb_s$ is monotone, \ie $\XS \subg \YS \imp \SFs{s}{\XS} \subg \SFs{s}{\YS}$.
 Let $\ndv$ be an arbitrary node in $\SFs{s}{\XS}$, so that $\blocks{s}{\ndv}{\XS}$ holds. There are two cases.\\
 
-\emph{Case of $\ndv$ is an interaction $\act$}. By Definitions~\ref{defn:blocks} and\ref{defn:scFix}, and  we have $\ex \B_i \in \XS  : \act \ar \B_i \in \wfg{\B}{s}$.
+\emph{Case of $\ndv$ is an interaction $\act$}. By Definitions~\ref{defn:blocks} and \ref{defn:scFix}, we have $(\ex \B_i \in \XS  : \act \ar \B_i \in \wfg{\B}{s})$.
 Since $\XS \subg \YS$, this same $\B_i$ is also a node of $\YS$, and so  $\ex \B_i \in \YS  : \act \ar \B_i \in \wfg{\B}{s}$. 
 Hence  $\blocks{s}{\act}{\YS}$, and so $\act \in \SFs{s}{\YS}$. \\
 
-\emph{Case of $\ndv$ is a component $\B_i$}. By Definitions~ \ref{defn:blocks} and \ref{defn:scFix}, and, we have $(\fa \act : \B_i \ar \act \in \wfg{\B}{s} \imp \act \in \XS)$.
+\emph{Case of $\ndv$ is a component $\B_i$}. By Definitions~ \ref{defn:blocks} and \ref{defn:scFix}, we have $(\fa \act : \B_i \ar \act \in \wfg{\B}{s} \imp \act \in \XS)$.
 Since $\XS \subg \YS$, we have  $(\fa \act : \B_i \ar \act \in \wfg{\B}{s} \imp \act \in \YS)$. 
 Hence $\blocks{s}{\B_i}{\YS}$, and so $\B_i \in \SFs{s}{\YS}$. \\
 
@@ -215,7 +215,7 @@ $\scV{\ndv}{s}$ iff  $(\ex d \ge 1: \scVd{\ndv}{d}{s})$.
 \begin{proof}
 By \defn{supercycle.violation}, $\scV{\ndv}{s} \ev \ndv \in \lfp{\VFsymb_s}$.
 By \prop{computeLFP}, $\ndv \in \lfp{\VFsymb_s} \ev v \in \JOIN_{d \ge 1} \VFsi{s}{\ewfg}{d}$.
-By \defn{supercycle.violation}, $\fa d \ge 1: \scVd{v}{d}{s} \ev v \in \VFsi{s}{\ewfg}{d}$.
+By \defn{supercycle.violation}, $(\fa d \ge 1: \scVd{v}{d}{s} \ev v \in \VFsi{s}{\ewfg}{d})$.
 Chaining these equivalences establishes the proposition.
 \end{proof}
 %
@@ -344,9 +344,8 @@ We deal with each clause in turn.
 %%%%%%%%%%%%%%%%%%%%%
 \textit{Proof of \clause{sc-membership:comp-out}}.
 %
-Assume $\scyc{\B}{s}{\B_i}$, and let $\SC \subg \wfg{\B}{s}$ be the supercycle containing $\B_i$.  Let
-$\actp \in \succs{\B}{s}{\B_i}$.  By \defn{supercycle}, \clause{supercycle.component-blocked},
-$\actp \in \SC$.  Hence $(\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
+Assume $\scyc{\B}{s}{\B_i}$, and let $\SC \subg \wfg{\B}{s}$ be the supercycle containing $\B_i$.
+By \defn{supercycle}, \clause{supercycle.component-blocked}, $(\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
 We conclude
 $\scyc{\B}{s}{\B_i} \imp (\fa \act \in \succs{\B}{s}{\B_i} : \scyc{\B}{s}{\act})$.
 %
@@ -538,7 +537,7 @@ reach any non-trivial MSCC.
 
 
 \begin{proposition} \label{prop:outdepth-finite-implies-scViol}
-Assume that node $v$ of $\wfg{\B}{s}$ has a finite out-depth of $d \ge 1$ in $\wfg{\B}{s}$, \ie 
+Assume that node $v$ of $\wfg{\B}{s}$ has a finite out-depth of $d \ge 0$ in $\wfg{\B}{s}$, \ie 
 $\wodepth{\B}{v}{s} = d$. Then $\viol{v}{d+1}{s}$. 
 \end{proposition}
 %
@@ -558,7 +557,7 @@ By Definitions~\ref{def:path} and \ref{def:depth}, $w$ has an out-depth $d'$ tha
 That is, $\wodepth{\B}{u}{s} = d' < d$.
 By the induction hypothesis applied to $d'$, we obtain $\viol{w}{d'+1}{s}$, and so $w \in \VFsi{s}{\ewfg}{d'+1}$ by \defn{supercycle.violation}.
 Hence $w \in \VFsi{s}{\ewfg}{d}$, since, by monotonicity of $\VFsymb_s$, we have 
-$ \VFsi{s}{\ewfg}{d'} \subg  \VFsi{s}{\ewfg}{d}$ when $d' \le d$.
+$ \VFsi{s}{\ewfg}{n'} \subg  \VFsi{s}{\ewfg}{n}$ when $n' \le n$.
 Since  $w$ is an arbitrary successor of $v$, it follows that $v$ is only blocked by nodes in $\VFsi{s}{\ewfg}{d}$.
 Hence $\neg \blocks{s}{v}{\compl{ \VFsi{s}{\ewfg}{d} } }$.
 By \defn{violFix}, $v \in \VFs{s}{\VFsi{s}{\ewfg}{d}}$, \ie $v \in  \VFsi{s}{\ewfg}{d+1}$.
@@ -614,7 +613,7 @@ definition~(\ref{def:supercycle}).
 Let $v$ be an arbitrary vertex of $\SC'$.  Thus $v \in \SC$ and $\idepth{\SC}{v} = \omega$ by definition of $\SC'$. Let
 $w$ be an arbitrary successor of $v$ in $\SC$, \ie $v \ar w \in \SC$.
 Hence $\idepth{\SC}{w} = \omega$ by \defn{depth}. Hence $w \in \SC'$, by definition of $SC'$.
-Furthermore, $v \ar w \in \SC'$, since $\SC'$ consists of
+Furthermore, $v \ar w \in \SC'$, since $\SC'$ contains
 \emph{all} nodes of $\SC$ with infinite in-depth. Hence the successors of $v$ in $\SC'$ are
 the same as the successors of $v$ in $\SC$
 %

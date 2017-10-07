@@ -21,9 +21,9 @@ Formally, $\fa s \in \rstates{\B,Q_0}, \ex \act : s \enb{\act}{\B}$.
 A BIP-system $(\B, Q_0)$ is \emph{free of local deadlock} iff 
 for every subsystem $(\B', Q'_0)$ of  $(\B, Q_0)$, and every reachable state $s$ of $(\B, Q_0)$,
 $(\B', Q'_0)$ has some interaction enabled in state $s \pj \B'$.
-Formally:\\
+Formally:\\[0.5ex]
 \ind for every subsystem $(\B', Q'_0)$ of  $(\B, Q_0)$:\\
-\ind \ind $\fa s \in \rstates{\B,Q_0},  \ex \act : s \pj \B' \enb{\act \ints P'}{\B'}$\\
+\ind \ind $\fa s \in \rstates{\B,Q_0},  \ex \act : s \pj \B' \enb{\act \ints P'}{\B'}$\\[0.7ex]
 where $P'$ is the set of ports of $\B'$.
 %A BIP-system $(\B, Q_0)$ is \emph{local deadlock prone}  iff there exists a subsystem $(\B', Q'_0)$ of  $(\B, Q_0)$
 %and a reachable state $s$ of $(\B, Q_0)$ such that $(\B', Q'_0)$ has no interaction enabled in state $s \pj \B'$.
@@ -403,9 +403,10 @@ $\BC$ is a predicate on the effects of a particular interaction $\act$ within a 
 $(\B, Q_0)$.
 
 \begin{definition}[Supercycle-freedom preserving] \label{def:SC-free-preserving} \label{defn:SC-free-preserving}
-A behavioral restriction condition $\BC$ is \introdf{supercycle-freedom preserving} iff, for every system 
-$(\B, Q_0)$ and $\act \in \gamma$ such that $\BC(\B, Q_0, \act) = \ttt$, the following holds:\\%[0.5ex]
+A behavioral restriction condition $\BC$ is \introdf{supercycle-freedom preserving} iff, for every BIP-system 
+$(\B, Q_0)$ and interaction $\act \in \gamma$ of $(\B, Q_0)$: \\
 %
+\ind if $\BC(\B, Q_0, \act) = \ttt$, then\\
 \ind \ind for every reachable transition $t \goesto[\act] s$ of $(\B, Q_0)$\\
 \ind \ind \ind if $t$ is supercycle-free, then $s$ is supercycle-free.
 \end{definition}

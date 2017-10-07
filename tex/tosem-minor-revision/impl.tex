@@ -1,4 +1,4 @@
-To implement our deadlock freedom criteria, we must:
+To implement our deadlock-freedom conditions, we must:
 \bn
 \item \label{task:check-init} Check that all initial states are supercycle-free
 \item \label{task:evaluate-lao} Evaluate $\LAO$
@@ -6,9 +6,10 @@ To implement our deadlock freedom criteria, we must:
 \en
 %
 Tasks \ref{task:check-init} and \ref{task:evaluate-lao} require the computation of $\lfp{\lVFsymb_{\sD}}$.
-\fig{algcomputeLFP} presents an algorithm that computes
-$\lfp{\lVFsymb_{\sD}}$. Its correctness follows immediately from \defn{blocksLoc} and \defn{violFixLoc}.
-
+\fig{algcomputeLFP} presents an algorithm that does this. Its
+correctness follows immediately from 
+%\defn{blocksLoc} and \defn{violFixLoc}.
+Definitions~\ref{defn:blocksLoc} and \ref{defn:violFixLoc}.
 
 %\subsection{Computing the least fixpoint of $\lVFs$}
    \label{secn:computeLFP}
@@ -29,15 +30,14 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 
 \lio{\XS \gts \ewfg;}
 
-\lio{\REPEAT}
+\lio{\WHILEC{\true}}
    \lit{\mbox{\cmnt loop invariant: at end of $i$'th iteration, $\XS = \lVFsi{\sD}{\ewfg}{i} =  \JOIN_{1 \le d \le i} \lVFsi{\sD}{\ewfg}{d}$}}
-   \lit{\YS \gts \cVL{\dsk{\act}{\l}, \sD, \XS}}
-   \lit{\XS \gts \YS}
-\lio{\UNTIL\ \XS = \YS;}
-
-\lion{\RETURNE{\XS}}
+   \lit{\YS \gts \cVL{\dsk{\act}{\l}, \sD, \XS};}
+   \litc{\IF \XS = \YS \ \RETURNE{\XS};}{\cmnt reached fixpoint}
+   \litc{\XS \gts \YS}{\cmnt $\XS \ne \YS$, so keep iterating}
+\lion{\ENDWHILE}
 \end{tabbing}
-\caption{Procedure to compute all supercycle-violations in state $\sD$ of $\dsk{\act}{\l}$}
+\caption{Procedure to compute $\lfp{\lVFsymb_{\sD}}$.}
 \label{fig:algcomputeLFP}
 \end{figure}
 
@@ -52,8 +52,8 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \cmnt\ precondition: $\sD$ is a state of $\dsk{\act}{\l}$ and $X \subg \lwfg{\B}{\sD}{\dsk{\act}{\l}}$\\
 \cmnt\ postcondition: returns $\lVFs{\sD}{X}$\\ %  in state $t_\DS$ of $\dsk{\act}{\l}$,\\
 \\
-\lio{\mbox{compute $\lwfg{\B}{\sD}{\dsk{\act}{\l}}$}}
-\lio{\YS \gts \ewfg}
+\lio{\mbox{compute $\lwfg{\B}{\sD}{\dsk{\act}{\l}}$};}
+\lio{\YS \gts \ewfg;}
 
 \lio{\FORALLC{\ndv \in \lwfg{\B}{\sD}{\DS}}}
 
@@ -78,16 +78,15 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \cmnt\ postcondition: returns  $\lblocks{\sD}{\ndv}{X}$\\
 
 
-   \lit{\IFC{\mbox{$v$ is an border interaction $\act$ and } 
-                          \neg (\ex \B_i : \act \ar \B_i \in \lwfg{\B}{\sD}{\DS})}}
+   \lit{\IFC{\mbox{$v$ is an border interaction of $\DS$}}}
        \lihc{\RETURNE{\true}}{\cmnt border interaction pessimistically assumed to be blocked}
 
     \lit{\ELSFC{\mbox{$v$ is an interior interaction $\act$ and } 
-                        (\ex \B_i : \act \ar \B_i \in \lwfg{\B}{\sD}{\DS}  :  \B_i \in \XS )}}
+                        (\ex \B_i \in \XS : \act \ar \B_i \in \lwfg{\B}{\sD}{\DS})}}
         \lihc{\RETURNE{\true}}{\cmnt some outgoing wait-for edge goes to a component in $\XS$}
 
     \lit{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
-                          (\fa \act : \B_i \ar \act \in \lwfg{\B}{\sD}{\DS}  : \act \in \XS )}}
+                          (\fa \act : \B_i \ar \act \in \lwfg{\B}{\sD}{\DS}  \imp \act \in \XS )}}
          \lihc{\RETURNE{\true}}{\cmnt all outgoing wait-for edges go to an interaction in $\XS$}
 
     \lit{\ELSE}
@@ -108,7 +107,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 
 Note that $\YS \join \set{\ndv}$ is the join of the wait-for-subgraph $\YS$ with the 
 wait-for-subgraph $\ndv$ consisting of the single node $\ndv$. Recall
-that the edges of $\YS \join \set{\ndv}$ are induced from $\lwfg{B}{t_\act}{\DS}$.
+that the edges of $\YS \join \set{\ndv}$ are induced from $\lwfg{B}{\sD}{\DS}$.
 
 
 Let 
@@ -124,8 +123,11 @@ transition guards in components takes time proportional to the length of the gua
 Then, the time complexity of \cLBL{$\ndv, \dsk{\act}{\l}, \sD, \XS$} is $O(\Adj_\ndv)$.
 %
 Hence the time complexity of \cVL{$\DS, \sD, \XS$} is 
-$O(\card{\DS} + \lwfg{\B}{\tD}{\DS})$, since each edge in $\lwfg{\B}{\tD}{\DS}$ is examined at most once, over all calls of \cLBL{$\ndv, \dsk{\act}{\l}, \sD, \XS$}.
-Since $\lwfg{\B}{\tD}{\DS}$ is $O(\card{\DS})$, this is just $O(\card{\DS}$.
+$O(\card{\DS} + \card{\lwfg{\B}{\tD}{\DS}})$, since each edge in
+$\lwfg{\B}{\tD}{\DS}$ is examined at most once, over all calls of
+\cLBL{$\ndv, \dsk{\act}{\l}, \sD, \XS$},
+and computing $\lwfg{\B}{\tD}{\DS}$ can be done in time $O(\card{\DS})$.
+Since $\card{\lwfg{\B}{\tD}{\DS}}$ is $O(\card{\DS})$, this is just $O(\card{\DS})$.
 %
 %The time complexity of \cLFP{$\DS, \sD$} is then $O(\Fix \mult (\card{\lwfg{\B}{\sD}{\DS}} + \card{\DS} \mult \Adj))$
 The time complexity of \cLFP{$\DS, \sD$} is then $O(\Fix \mult \card{\DS})$
@@ -140,7 +142,8 @@ Thus the time complexity of  \cLFP{$\DS, \sD$} is $O(\cnodes{\DS} \mult \card{\D
 
 \thm{local.deadlock-free} requires that all initial states be supercycle-free. 
 We assume that the number of initial states is small, so that we can check each explicitly. 
-\fig{checkInitSCFree}  presents an algorithm that checks if a given state is supercycle-free.
+\fig{checkInitSCFree}  presents an algorithm which checks that all
+initial states are supercycle-free.
 
 % \subsection{Checking that initial states are supercycle-free}
    \label{s:initSCFree}
@@ -193,7 +196,7 @@ If all initial states are supercycle-free, the for loop terminates, and
 
 Let
 %$\card{\wfg{\B}{s_0}}$ be the size (number of nodes plus number of edges) of $\wfg{\B}{s_0}$,
-$\card{\B}$ be the size of the syntactic description of $\B$ 
+$\card{\B}$ be the size of the syntactic description of $\B$, 
 $\cnodes{\B}$ be the number of components and interactions in $\B$, which is also the number of nodes in $\wfg{\B}{s_0}$, and
 $\card{Q_0}$ be the number of states in $Q_0$, \ie the number of initial states,
 %$\Adj$ is the largest outdegree (\ie length of longest adjacency list) of $\wfg{\B}{s_0}$, and 
@@ -232,7 +235,7 @@ latter case, $\LLin(\B, Q_0, \act, \l)$ does not hold for any finite $\l$, and, 
 computation would halt before $\dsk{\act}{\l}$ had become the entire system, due to exhaustion of
 resources. Evaluation of $\LLin(\B, Q_0, \act, \l)$ is done by 
 \checkLinIntDist{$\B, Q_0, \act, \l$}, which examines every reachable transition
-that executes $a$, and checks that the final state satisfies
+that executes $\act$, and checks that the final state satisfies
 Definition~\ref{def:ldfc-k}. 
 
 %If $\LDFC(a, \l)$ does not hold for any finite $\l$, then the
@@ -272,6 +275,7 @@ aaa\= aa\= aa\= \kill
 \cmnt\ returns $\ttt$ iff $\LLin(\B, Q_0, \act, \l))$\\
 \lio{\mbox{let $\DS = \dsks{\act}{\l}$}}
 \lio{\FORALLC{\mbox{reachable transitions $\tD \goesto[\act] \sD$ of $\DS$}}}
+   \lit{\mbox{compute $\lwfg{\B}{\sD}{\DS}$};}
    \lit{\IFC{\neg(\fa \B_i \in \cmps{\act}:  \widepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l - 1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l -1)}}
   	\lihc{\RETURNE{\fff}}{\cmnt\ check Definition~\ref{def:ldfc-k}}
   \lit{\FI}
@@ -286,14 +290,15 @@ aaa\= aa\= aa\= \kill
 \label{fig:implementation-checkDF}
 \end{figure}
 
-\paragraph{Time Complexity} 
+\paragraph{Time complexity} 
 Let 
 $\l_\act$ be the smallest value of $\l$ for which $\LLin(\B, Q_0, \act, \l)$ holds, 
 $\Mdsk{\act}{\l}$ be the transition system of $\dsks{\act}{\l}$, 
 $|\Mdsk{\act}{\l}|$ be the size (number of nodes plus number of edges) of $\Mdsk{\act}{\l}$, and
-$|\dsks{\act}{\l_\act}|$ be the size of the syntactic description of $\dsks{\act}{\l_\act}$.
+$|\dsks{\act}{\l}|$ be the size of the syntactic description of $\dsks{\act}{\l}$.
 %
 Then the running  time of \checkLinIntDist{$\B, Q_0, \act, \l$} is $O( |\Mdsk{\act}{\l}| \mult |\dsks{\act}{\l}|)$, since 
+computing $\lwfg{\B}{\sD}{\DS}$ can be done in time $O(|\dsks{\act}{\l}|)$, and 
 $\lwfg{\B}{\sD}{\DS}$ has size in $O(|\dsks{\act}{\l}|)$, and computing in-depth and out-depth in 
 $\lwfg{\B}{\sD}{\DS}$ can be done in linear time using depth-first graph search.
 %
@@ -309,8 +314,8 @@ $O(\SUM_{\act \in \gamma}    \SUM_{1 \le \l \le \l_\act}   \    |\Mdsk{\act}{\l}
 %   \input{implANDOR}
 
 
-Figure~\ref{fig:impl.locANDOR} presents the pseudocode for our algorithm \checkLAO{$\B, Q_0$}\ to evaluate $\LAO$.  This uses the algorithm for
-computing supercycle violations based on $\dsk{\act}{\l}$, given in Figure~\ref{fig:algcomputeLFP}.
+Figure~\ref{fig:impl.locANDOR} presents the pseudocode for our algorithm \checkLAO{$\B, Q_0$}\ to evaluate $\LAO$.  This uses the 
+\cLFP{$\dsk{\act}{\l},\sD$} algorithm for computing local supercycle violations in $\dsk{\act}{\l}$, given in Figure~\ref{fig:algcomputeLFP}.
 
 \checkLAO{$\B, Q_0$} iterates over each interaction $\act$ of ($\B, Q_0$), and 
 invokes \checkLAOInt{$\B, Q_0, \act$} to evaluate $(\ex \l \ge 1: \LAO(\B, Q_0, \act, \l))$.
@@ -325,7 +330,7 @@ supercycle-violation can be confirmed.
 
 Evaluation of $\LAO(\B, Q_0, \act, \l)$ is done by 
 \checkLAOIntDist{$\B, Q_0, \act, \l$}, which invokes
-$\cLFP{\dsk{\act}{\l},t_\DS}$ to compute the supercycle violations.
+$\cLFP{\dsk{\act}{\l},t_\DS}$ to compute the local supercycle violations.
 The pseudocode is a straightforward translation of
 Definitions~\ref{def:sConn.violation.loc} and \ref{def:locFormation.violation}.
 %

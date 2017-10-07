@@ -57,7 +57,7 @@ $s \pj \B_i (\gd{\act}{\B_i}) = \true$.
 Since $s' = s \pj \B'$, we have $s' \pj \B_i = s \pj \B_i$. Hence
 $s \pj \B_i (\gd{\act}{\B_i}) = s' \pj \B_i (\gd{\act}{\B_i})$.
 By Definition~\ref{def:static:wait-for-graph},
-$\B_i \ar \act \in \wfg{\B'}{s'}$ iff $s' \pj i (\gd{\act}{\B_i}) = \true$.
+$\B_i \ar \act \in \wfg{\B'}{s'}$ iff $s' \pj \B_i (\gd{\act}{\B_i}) = \true$.
 Putting the above three equalities together gives us clause (2).
 \end{proof}
 
@@ -98,6 +98,8 @@ In the sequel, we fix a particular subsystem $\dsks{\act}{\l}$, which
 we refer to simply as \DS, with $\act$ and $\l$ being implicit (to
 avoid notational clutter with double-sub/superscripts). 
 We write $\DS.action = \act$ and $\DS.radius = \l$. 
+Also, let $\QDS = Q_0 \pj \DS$, \ie $\QDS$ is the set of initial states of $\DS$, and
+let $\sD$ be an arbitrary state of \DS.
 %
 As given above, for a state $\sD$ of $\DS$, the wait-for graph for $\DS$ only (\ie ignoring the components and interactions of $\B$ that are not in
 $\DS$) is denoted as $\lwfg{\B}{\sD}{\DS}$.
@@ -155,8 +157,8 @@ $\DS$. In particular, one or more border interactions necessarily form a local s
 not necessarily imply a global supercyle.
 
 
-We carry over the definition of subgraph $\subg$ from \secn{supercycle-fixpoint}, and develop the analogous definitions for an arbitrary subsystem \DS
-of $\B$. In the sequel, let \sD be an arbitrary state of \DS.
+We carry over the definition of subgraph $\subg$ from \secn{supercycle-fixpoint}, and develop the analogous definitions for the subsystem \DS
+of $\B$. 
 
 
 \begin{definition}[Set of subgraphs] \label{defn:wsetOfSubgraphsLoc}
@@ -276,7 +278,7 @@ the proposition follows by applying \prop{locGFP} again.
 \begin{proposition} \label{prop:GFPisLargestSCLoc}
 Let $\SC$ be the greatest fixpoint of $\lSFsymb_{\sD}$. Then either
 (a) $\lwfg{\B}{\sD}{\DS}$ is supercycle-free and $\SC = \ewfg$, or 
-(b) $\lwfg{\B}{\sD}{\DS}$ contains local supercycles, and $\SC$ is the largest local supercycle in $\lwfg{\B}{\sD}{\DS}$ 
+(b) $\lwfg{\B}{\sD}{\DS}$ contains local supercycles, and $\SC$ is the largest local supercycle in $\lwfg{\B}{\sD}{\DS}$.
 \end{proposition}
 %
 \begin{proof}
@@ -343,7 +345,7 @@ $\scVL{v}{\sD}{\act}{\l} \ev (\ex d \ge 1: \scVLd{v}{d}{\sD}{\act}{\l})$.
 \begin{proof}
 By \defn{supercycle.violation.local}, $\scVL{\ndv}{\sD}{\act}{\l} \ev v \in \lfp{\lVFsymb_{\sD}}$.
 By \prop{computeLocLFP}, $v \in \lfp{\lVFsymb_{\sD}} \ev v \in \JOIN_{d \ge 1} \lVFsi{\sD}{\ewfg}{d}$.
-By \defn{supercycle.violation.local}, $\fa d \ge 1: \scVLd{v}{d}{\sD}{\act}{\l} \ev v \in \lVFsi{\sD}{\ewfg}{d}$.
+By \defn{supercycle.violation.local}, $(\fa d \ge 1: \scVLd{v}{d}{\sD}{\act}{\l} \ev v \in \lVFsi{\sD}{\ewfg}{d})$.
 Chaining these equivalences establishes the proposition.
 \end{proof}
 %

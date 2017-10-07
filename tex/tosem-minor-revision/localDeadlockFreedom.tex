@@ -128,13 +128,14 @@ Then $\locFormViol{v}{\sD}{\act}{\l}  \df \scVL{v}{\sD}{\act}{\l} \lor \locConnV
 \end{definition}
 
 
-\begin{proposition} \label{prop:locFromViol-implies-formViol}
+\begin{proposition}[Local violation implies global violation] 
+\label{prop:locFromViol-implies-formViol}
 \label{prop:locformviol-implies-formviol}
 Let $s$ be an arbitrary state of BIP composite component $\B$.
 For all interactions $\act \in \gamma$, and $\l \ge 1$, let $\DS = \dsks{\act}{\l}$ and $\sD = s \pj \dsk{\act}{\l}$.
 Also let $\ndv$ be an arbitrary node of $\dsk{\act}{\l}$.
 Then\\
-\ind $ \locFormViol{v}{\sD}{\act}{\l} \imp \genViol{v}{s}$.
+\ind $ \locFormViol{v}{\sD}{\act}{\l}\ \impliess\ \genViol{v}{s}$.
 \end{proposition}
 %
 \begin{proof}
@@ -177,7 +178,7 @@ We showed previously that $\GAO$ implies deadlock-freedom, and so it remains to 
 \label{lemma:loc.ANDOR.implies.glob.AND-OR}
 \label{LAOGAO}
 Let $\act \in \gamma$ be an interaction of BIP-system $(\B, Q_0)$. Then\\
-\ind $(\ex \l \ge 1: \LAO(\B, Q_0, \act, \l))$ implies $\GAO(\B, Q_0, \act)$. 
+\ind $(\ex \l \ge 1: \LAO(\B, Q_0, \act, \l)) \impliess \GAO(\B, Q_0, \act)$. 
 \end{lemma}
 %
 \begin{proof}
@@ -220,9 +221,9 @@ As such, the trivial local supercycles, \ie consisting only of border interactio
 
 \begin{tabular}{|l|l|}
 \hline
-$\scViol{v}{d}{s}$  & $v$ confirmed at depth $d$ to not be in supercycle\\ 
+$\scViol{v}{d}{s}$  & $v$ determined at depth $d$ to not be in supercycle\\ 
               %supercycle violation condition
-$\locScViol{v}{d}{\sD}{\act}{\l}$ & $v$ locally determined to not be in a supercycle\\
+$\locScViol{v}{d}{\sD}{\act}{\l}$ & $v$ locally determined at depth $d$ to not be in a supercycle\\
               % local supercycle violation condition:
 
 $\connViol{v}{s}$ & $v$ not in a strongly connected supercycle \\
@@ -338,9 +339,10 @@ We now show that $\LLin(\B, Q_0, \act, \l)$ implies $\GLin(\B, Q_0, \act)$, whic
 
 \begin{lemma}
 \label{lemma:loc-implies-glob}
+\label{lem:locLinear-implies-globlinear}
 \label{lemma:locLinear-implies-globlinear}
 \label{LLinGLin}
-Let $\act$ be an interaction of BIP system $(\B, Q_0)$, \ie $\B = \gamma(\B_1,\dots,\B_n)$ and $\act \in \gamma$.
+Let $\act$ be an interaction of BIP-system $(\B, Q_0)$, \ie $\B = \gamma(\B_1,\dots,\B_n)$ and $\act \in \gamma$.
 If $\LLin(\B, Q_0, \act, \l)$ holds for some finite $\l \ge 1$, then $\GLin(\B, Q_0, \act)$ holds.
 \end{lemma}
 %
@@ -348,7 +350,7 @@ If $\LLin(\B, Q_0, \act, \l)$ holds for some finite $\l \ge 1$, then $\GLin(\B, 
 Let $t \la{\act} s$ be a reachable transition of $(\B, Q_0)$ and let $\B_i \in \cmps{\act}$.
 Let $\DS = \dsks{\act}{\l}$ and $\QDS = Q_0 \pj \DS$.
 Let $\sD = s \pj \DS$, $\tD = t \pj \DS$.
-Then $\tD \la{\act} \sD$ is a reachable transition of $\DS$ by \cor{bip.reachability}.
+Then $\tD \la{\act} \sD$ is a reachable transition of $(\DS, \QDS)$ by \cor{bip.reachability}.
 By $\LLin(\B, Q_0, \act, \l)$, 
 $\widepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1$.
 Hence by Proposition~\ref{prop:in-out-projection},
@@ -383,8 +385,9 @@ Proof is by induction on $d$.
 \ul{Base case, $d=0$.} 
 Hence by $\wodepth{\dsk{\act}{\l}}{v}{\sD} = 0$, and  Definitions~\ref{def:path} and \ref{def:depth},  
 $v$ has no outgoing wait-for edges in $\lwfg{\B}{\sD}{\DS}$.
-Hence $\neg \lblocks{\sD}{v}{\lwfg{\B}{\sD}{\DS}}$. 
- Hence $\locScViol{v}{1}{\sD}{\act}{\l}$ by Definition~\ref{def:supercycle.violation.local}.
+By \defn{blocksLoc}, $\neg \lblocks{\sD}{v}{\lwfg{\B}{\sD}{\DS}}$. 
+By \defn{violFixLoc}, $v \in \lVFs{\sD}{\ewfg}$.
+Hence $\locScViol{v}{1}{\sD}{\act}{\l}$ by \defn{supercycle.violation.local}.
 
 \vspace{1.0ex}
 \ul{Induction step, $d > 0$.}
@@ -392,20 +395,14 @@ Assume $(\wodepth{\dsk{\act}{\l}}{v}{\sD} = d)$.
 Let $w$ be an arbitrary successor of $v$, \ie a node $w$ such that $v \ar w \in \lwfg{\B}{\sD}{\DS}$.
 By Definitions~\ref{def:path} and \ref{def:depth}, $w$ has an out-depth $d'$ that is less than $d$. 
 
-By the induction hypothesis applied to $d'$, we obtain $\locScViol{w}{d'+1}{\sD}{\act}{\l}$, and so $w \in \lVFsi{\sD}{\ewfg}{d'+1}$ by \defn{supercycle.local.violation}.
+By the induction hypothesis applied to $d'$, we obtain $\locScViol{w}{d'+1}{\sD}{\act}{\l}$, and so $w \in \lVFsi{\sD}{\ewfg}{d'+1}$ by \defn{supercycle.violation.local}.
 Hence $w \in \lVFsi{\sD}{\ewfg}{d}$, since, by monotonicity of $\lVFsymb_{\sD}$, we have 
-$ \lVFsi{\sD}{\ewfg}{d'} \subg  \lVFsi{\sD}{\ewfg}{d}$ when $d' \le d$.
-Since  $w$ is an arbitrary successor of $v$, it follows that $v$ is only blocked by nodes in $\lVFsi{\sD}{\ewfg}{d'+1}$.
-Hence $\neg \lblocks{\sD}{v}{\lVFsi{\sD}{\ewfg}{d'+1}}$.
-
-By \defn{violFix}, $v \in \lVFs{\sD}{\lVFsi{\sD}{\ewfg}{d}}$, \ie $v \in  \lVFsi{\sD}{\ewfg}{d+1}$.
-By \defn{supercycle.violation}, $\locScViol{v}{1}{\sD}{\act}{\l}$.
-
-
-%OLD
-%Then, every outgoing wait-for edge of $v$ is to some $v'$ such that 
-%$(\wodepth{\dsk{\act}{\l}}{v'}{\sD} = d' < d)$. By the induction hypothesis, $\locScViol{v'}{d'+1}{\sD}{\act}{\l}$.
-%Hence, by Definition~\ref{def:supercycle.violation.local},  $\locScViol{v}{d+1}{\sD}{\act}{\l}$.
+$ \lVFsi{\sD}{\ewfg}{n'} \subg  \lVFsi{\sD}{\ewfg}{n}$ when $n' \le n$.
+Since  $w$ is an arbitrary successor of $v$, it follows that $v$ is only blocked by nodes in $\lVFsi{\sD}{\ewfg}{d}$.
+Hence $\neg \lblocks{\sD}{v}{\complLoc{\lVFsi{\sD}{\ewfg}{d}}} $.
+%
+By \defn{violFixLoc}, $v \in \lVFs{\sD}{\lVFsi{\sD}{\ewfg}{d}}$, \ie $v \in  \lVFsi{\sD}{\ewfg}{d+1}$.
+By \defn{supercycle.violation.local}, $\locScViol{v}{d+1}{\sD}{\act}{\l}$.
 \end{proof}
 
 
@@ -416,16 +413,17 @@ By \defn{supercycle.violation}, $\locScViol{v}{1}{\sD}{\act}{\l}$.
 
 \begin{lemma}
 %\label{lemma:loc-implies-glob}
+\label{lem:locLinear-implies-locANDOR}
 \label{lemma:locLinear-implies-locANDOR}
 \label{LLinLAO}
 Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
-Then $\LLin(\B, Q_0, \act, \l)$ implies $\LAO(\B, Q_0, \act, \l)$.
+Then\\ $\LLin(\B, Q_0, \act, \l)\ \impliess\ \LAO(\B, Q_0, \act, \l)$.
 \end{lemma}
 %
 \begin{proof}
 Assume $\LLin(\B, Q_0, \act, \l)$. Let $\tD \goesto[\act] \sD$ be an arbitrary reachable transition of $\dsk{\act}{\l}$,
 and let $\B_i$ be an arbitrary component of $\cmps{\act}$.
-Then, from Definition~\ref{def:locLinear}, we have:
+Then, from \defn{LLin}, we have:
   $$\widepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1 \lor \wodepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1.$$
 The proof proceeds by two cases. 
 
@@ -433,14 +431,15 @@ The proof proceeds by two cases.
 \ul{ $\widepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1$}:
 Hence $\B_i$ cannot be in a strongly connected supercycle, because $\B_i$ would then lie on at least one wait-for cycle, and so would have infinite
 in-depth. Hence $\locConnViol{\B_i}{\sD}{\act}{\l}$ by Definition~\ref{def:sConn.violation.loc}, Clause~\ref{def:sConn.violation.loc:scc}.
-Hence by Definition~\ref{def:locFormation.violation}, $\locFormViol{\B_i}{\sD}{\act}{\l}$.
+Hence by \defn{locFormation.violation}, $\locFormViol{\B_i}{\sD}{\act}{\l}$.
 
 \vspace{1.0ex}
 \ul{$\wodepth{\dsk{\act}{\l}}{\B_i}{\sD} < 2\l-1$}:
 Hence $\wodepth{\dsk{\act}{\l}}{\B_i}{\sD} = d$ for some $d < 2\l-1$.
 By Proposition~\ref{prop:finOutDepth-Implies-locScViol}, $\locScViol{\B_i}{d+1}{\sD}{\act}{\l}$.
-Hence by Definition~\ref{def:locFormation.violation}, $\locFormViol{\B_i}{\sD}{\act}{\l}$.
+Hence by \defn{locFormation.violation}, $\locFormViol{\B_i}{\sD}{\act}{\l}$.
 
+\vspace{1.0ex}
 \noindent
 In both cases, we have $\locFormViol{\B_i}{\sD}{\act}{\l}$.
 Since $\B_i$ is an arbitrarily chosen  component of $\cmps{\act}$, we have $\fa \B_i \in \cmps{\act} : \locFormViol{\B_i}{\sD}{\act}{\l}$.
@@ -454,9 +453,7 @@ $\LLin$ is supercycle-freedom preserving
 \end{theorem}
 %
 \begin{proof}
-Follows immediately from
-Lemma~\ref{lemma:locLinear-implies-globlinear} and
-Theorem~\ref{thm:GLin.SC-free-preserving}.
+Follows immediately from \thm{GLin.SC-free-preserving} and \lem{locLinear-implies-globlinear}.
 %
-Also follows immediately from Lemma~\ref{lemma:locLinear-implies-locANDOR} and Theorem~\ref{thm:GAO.SC-free-preserving}
+Also follows immediately from \thm{GAO.SC-free-preserving} and \lem{locLinear-implies-locANDOR}.
 \end{proof}
