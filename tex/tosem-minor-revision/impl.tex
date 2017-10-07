@@ -25,7 +25,7 @@ Definitions~\ref{defn:blocksLoc} and \ref{defn:violFixLoc}.
 aaa\= aa\= aa\= aa\= aa\=\kill
 \cLFP{$\dsk{\act}{\l},\sD$}\\
 \cmnt\ Precondition: $\sD$ is a state of $\dsk{\act}{\l}$\\
-\cmnt\ Postcondition: returns least fixpoint of $\lVFsymb_{\sD}$ \ie $\lfp{\lVFsymb_{\sD}} = \JOIN_{d \ge 1} \lVFsi{\sD}{\ewfg}{d}$.\\
+\cmnt\ Postcondition: returns least fixpoint of $\lVFsymb_{\sD}$ \ie $\lfp{\lVFsymb_{\sD}} = \JOIN_{d \ge 1} \lVFsi{\sD}{\ewfg}{d}$\\
 %in state $t_\DS$ of $\dsk{\act}{\l}$, \ie $\lfp{\lVFs} = \UN_{d \ge 0} \lVFs^{d} (\ewfg)$.\\
 
 \lio{\XS \gts \ewfg;}
@@ -330,7 +330,10 @@ supercycle-violation can be confirmed.
 
 Evaluation of $\LAO(\B, Q_0, \act, \l)$ is done by 
 \checkLAOIntDist{$\B, Q_0, \act, \l$}, which invokes
-$\cLFP{\dsk{\act}{\l},t_\DS}$ to compute the local supercycle violations.
+$\cLFP{\dsk{\act}{\l},t_\DS}$ to compute the local supercycle violations and 
+$\cLFV{\B_i, \VS, \dsk{\act}{\l},\sD}$ to compute the general local supercycle violations.
+$\cLFV{\B_i, \VS, \dsk{\act}{\l},\sD}$ invokes \cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, \sD$} to compute the 
+ local strong connectedness violation.
 The pseudocode is a straightforward translation of
 Definitions~\ref{def:sConn.violation.loc} and \ref{def:locFormation.violation}.
 %
@@ -366,8 +369,9 @@ Figure~\ref{fig:summaryProcedures} shows a summary of the procedures.
 Let 
 $\l_\act$ be the smallest value of $\l$ for which  $\LAO(\B, Q_0, \act, \l)$ holds, 
 $\Mdsk{\act}{\l}$ be the transition system of $\dsks{\act}{\l}$, 
-$|\Mdsk{\act}{\l}|$ be the size (number of nodes plus number of edges) of $\Mdsk{\act}{\l}$, and
-$|\dsks{\act}{\l}|$ be the size of the syntactic description of $\dsks{\act}{\l}$.
+$|\Mdsk{\act}{\l}|$ be the size (number of nodes plus number of edges) of $\Mdsk{\act}{\l}$, 
+$|\dsks{\act}{\l}|$ be the size of the syntactic description of $\dsks{\act}{\l}$, and 
+$\cnodes{\dsks{\act}{\l}}$ be the number of components and interactions in $\dsks{\act}{\l}$.
 %
 The time complexity of \cLconnScV{$\B_i, \VS, \dsks{\act}{\l}, \sD$} is $O(\cnodes{\dsks{\act}{\l}} \mult \card{\dsks{\act}{\l}})$, since maximal strongly connected components
 are computable in linear time using Kosaraju's algorithm, and the existence of paths in $\WL$ from $\B_i$ to the border of $\dsks{\act}{\l}$ can be checked in linear time by 
@@ -455,7 +459,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 aaa\= aa\= aa\= aa\= aa\=\kill
 \cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, \sD$}\\
 \cmnt\ returns true iff $\locConnViol{\B_i}{\sD}{\act}{\l}$ holds (Definition~\ref{def:sConn.violation.loc})\\
-\cmnt\ \ie $\B_i$ has a local strong connectedness supercycle formation violation in state $\sD$ of subsystem $\dsk{\act}{\l}$\\
+\cmnt\ \ie $\B_i$ has a local strong connectedness violation in state $\sD$ of subsystem $\dsk{\act}{\l}$\\
 %\cmnt\ compute local supercycle violations in state $t_\DS$ of $\dsk{\act}{\l}$\\
 %\cmnt\ Postcondition: $\fas v \in \set{\B_1,\ldots,\B_n} \un \gamma, d' = 1,\ldots,dd: \VV{\act}{\l}{t_\DS}{v}{d'} = \lviol{v}{d'}{t_\DS}{\act}{\l}$\\
 %\lio{\mbox{compute $\lwfg{B}{\sD}{\DS}$;}}
