@@ -298,9 +298,9 @@ $|\Mdsk{\act}{\l}|$ be the size (number of nodes plus number of edges) of $\Mdsk
 $|\dsks{\act}{\l}|$ be the size of the syntactic description of $\dsks{\act}{\l}$.
 %
 Then the running  time of \checkLinIntDist{$\B, Q_0, \act, \l$} is $O( |\Mdsk{\act}{\l}| \mult |\dsks{\act}{\l}|)$, since 
-computing $\lwfg{\B}{\sD}{\DS}$ can be done in time $O(|\dsks{\act}{\l}|)$, and 
-$\lwfg{\B}{\sD}{\DS}$ has size in $O(|\dsks{\act}{\l}|)$, and computing in-depth and out-depth in 
-$\lwfg{\B}{\sD}{\DS}$ can be done in linear time using depth-first graph search.
+computing $\lwfg{\B}{\sD}{\dsks{\act}{\l}}$ can be done in time $O(|\dsks{\act}{\l}|)$, and 
+$\lwfg{\B}{\sD}{\dsks{\act}{\l}}$ has size in $O(|\dsks{\act}{\l}|)$, and computing in-depth and out-depth in 
+$\lwfg{\B}{\sD}{\dsks{\act}{\l}}$ can be done in linear time using depth-first graph search.
 %
 The running  time of \checkLinInt{$\B, Q_0, \act$}, is $O( \SUM_{1 \le \l \le \l_\act}   |\Mdsk{\act}{\l}| \mult |\dsks{\act}{\l}|)$.
 The running  time of \checkLin{$\B, Q_0$}\ is
@@ -362,27 +362,29 @@ Figure~\ref{fig:summaryProcedures} shows a summary of the procedures.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
-\paragraph{Time Complexity} 
+\paragraph{Time complexity} 
 Let 
 $\l_\act$ be the smallest value of $\l$ for which  $\LAO(\B, Q_0, \act, \l)$ holds, 
 $\Mdsk{\act}{\l}$ be the transition system of $\dsks{\act}{\l}$, 
 $|\Mdsk{\act}{\l}|$ be the size (number of nodes plus number of edges) of $\Mdsk{\act}{\l}$, and
 $|\dsks{\act}{\l}|$ be the size of the syntactic description of $\dsks{\act}{\l}$.
 %
-The time complexity of \cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, \sD$} is $O(\cnodes{\DS} \mult \card{\DS})$, since maximal strongly connected components
-are computable in linear time using Kosaraju's algorithm, and the existence of paths in $\WL$ from $\B_i$ to the border of $\DS$ can be checked in linear time by 
-using depth-first graph search. 
+The time complexity of \cLconnScV{$\B_i, \VS, \dsks{\act}{\l}, \sD$} is $O(\cnodes{\dsks{\act}{\l}} \mult \card{\dsks{\act}{\l}})$, since maximal strongly connected components
+are computable in linear time using Kosaraju's algorithm, and the existence of paths in $\WL$ from $\B_i$ to the border of $\dsks{\act}{\l}$ can be checked in linear time by 
+using depth-first graph search. Also, checking for supercycles (via least-fixpoint computation) within the strongly connected component $C$ can be done in time 
+$O(\cnodes{\dsks{\act}{\l}} \mult \card{\dsks{\act}{\l}})$, amortized over all such $C$.
 %
-The time complexity of \cLFV{$\B_i, \VS, \dsk{\act}{\l}, \sD$} is also $O(\cnodes{\DS} \mult \card{\DS})$.
+The time complexity of \cLFV{$\B_i, \VS, \dsks{\act}{\l}, \sD$} is also $O(\cnodes{\dsks{\act}{\l}} \mult \card{\dsks{\act}{\l}})$.
 %
-The running time of \checkLAOIntDist{$\B, Q_0, \act, \l$} is $O(\card{\Mdsk{\act}{\l}} \mult \cnodes{\DS} \mult \card{\DS})$,
-since \cLFP{$\DS, \sD$} has time complexity in $O(nodes(\DS) \mult \card{\DS})$.
+The running time of \checkLAOIntDist{$\B, Q_0, \act, \l$} is $O(\card{\Mdsk{\act}{\l}} \mult \cnodes{\dsks{\act}{\l}} \mult \card{\dsks{\act}{\l}})$,
+since \cLFP{$\dsks{\act}{\l}, \sD$} has time complexity in $O(\cnodes{\dsks{\act}{\l}} \mult \card{\dsks{\act}{\l}})$, and computing 
+$\lwfg{\B}{\sD}{\dsks{\act}{\l}}$ can be done in time $O(\card{\dsks{\act}{\l}})$.
 %
-The running time of \checkLAOInt{$\B, Q_0, \act$} is $O(\SUM_{1 \le \l \le \l_\act} \card{\Mdsk{\act}{\l}} \mult \cnodes{\DS} \mult \card{\DS})$
+The running time of \checkLAOInt{$\B, Q_0, \act$} is $O(\SUM_{1 \le \l \le \l_\act} \card{\Mdsk{\act}{\l}} \mult \cnodes{\dsks{\act}{\l}} \mult \card{\dsks{\act}{\l}})$
 since \checkLAOInt{$\B, Q_0, \act$} iterates \checkLAOIntDist{$\B, Q_0, \act, \l$} until $\l = \l_\act$.
 %
 The running  time of \checkLAO{$\B, Q_0$} is
-$O(\SUM_{\act \in \gamma}  \SUM_{1 \le \l \le \l_\act} \card{\Mdsk{\act}{\l}} \mult \cnodes{\DS} \mult \card{\DS})$
+$O(\SUM_{\act \in \gamma}  \SUM_{1 \le \l \le \l_\act} \card{\Mdsk{\act}{\l}} \mult \cnodes{\dsks{\act}{\l}} \mult \card{\dsks{\act}{\l}})$
 since \checkLAO{$\B, Q_0$} calls \checkLAOInt{$\B, Q_0, \act$} for every $\act \in \gamma$.
 
 
@@ -397,7 +399,7 @@ since \checkLAO{$\B, Q_0$} calls \checkLAOInt{$\B, Q_0, \act$} for every $\act \
 \begin{tabbing}\label{alg:check.LAO}
 aa\= aa\= aa\= \kill
 \checkLAO{$\B, Q_0$},  where $\B \df \gamma(\B_1,\dots,\B_n)$\\
-\cmnt\ returns $\ttt$ iff $(\fa \act \in \gamma, \ex \l \ge 1: \LAO(\act, \l))$\\
+\cmnt\ returns $\ttt$ iff $(\fa \act \in \gamma, \ex \l \ge 1: \LAO(\B, Q_0, \act, \l))$\\
 \lio{\FORALLC{\mbox{interactions $\act \in \gamma$}}}
    \lit{\IFC{\checkLAOInt{\B, Q_0, \act} = \fff}\ \RETURNE{\fff}\ \FI}
 \lio{\ENDFOR;}
@@ -408,7 +410,7 @@ aa\= aa\= aa\= \kill
 \begin{tabbing}\label{alg:check.LAO.Int}
 aaa\= aa\= aa\= \kill
 \checkLAOInt{$\B, Q_0, \act$},  where $\B \df \gamma(\B_1,\dots,\B_n), \act \in \gamma$\\
-\cmnt\ returns $\ttt$ iff $(\ex \l \ge 1: \LAO(B, Q_0, \act, \l))$\\
+\cmnt\ returns $\ttt$ iff $(\ex \l \ge 1: \LAO(\B, Q_0, \act, \l))$\\
 \lioc{\l \gts 1;}{\cmnt\ start with $\l = 1$}
 \lio{\WHILEC{\ttt}}
    \litc{\IFC{\checkLAOIntDist{\B, Q_0, \act, \l} = \ttt}\ \RETURNE{\ttt}\ \FI;}{\cmnt\ success, so return true}
@@ -425,9 +427,10 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \cmnt\ returns $\ttt$ iff $\LAO(\B, Q_0, \act, \l)$\\
 \lio{\mbox{let $\DS = \dsks{\act}{\l}$}}
 \lio{\FORALLC{\mbox{reachable transitions $\tD \goesto[\act] \sD$ of $\dsk{\act}{\l}$}}}
+   \lit{\mbox{compute $\lwfg{\B}{\sD}{\DS}$};}
    \litc{\VS \gets \cLFP{\dsk{\act}{\l},\sD};}{\cmnt see \fig{algcomputeLFP}}
    \lit{\FORALLC{\B_i \in \cmps{\act}}}
-      \lihc{\IFC{\neg \cLFV{\B_i, \VS, \dsk{\act}{\l},\sD}} \RETURNE{\fff}\ \FI}{\cmnt return $\fff$ if no violation for $\B_i$}
+      \lihc{\IFC{\neg \cLFV{\B_i, \VS, \dsk{\act}{\l},\sD}} \RETURNE{\fff}\ \FI}{\cmnt no violation for $\B_i$}
 %         \lifc{\IFC{\neg \LF{\act}{\l}{t_\DS}{v}{\l}}\ 
    \lit{\ENDFOR}
 \lio{\ENDFOR;}
@@ -442,7 +445,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 aaa\= aa\= aa\= aa\= aa\=\kill
 \cLFV{$\B_i, \VS, \dsk{\act}{\l}, \sD$}\\
 \cmnt\ returns true iff $\locFormViol{\B_i}{\sD}{\act}{\l}$ holds (Definition~\ref{def:locFormation.violation})\\
-\cmnt\ \ie $\B_i$ has a local supercycle formation violation in state $\sD$ of subsystem $\dsk{\act}{\l}$\\
+\cmnt\ \ie $\B_i$ has a general local supercycle violation in state $\sD$ of subsystem $\dsk{\act}{\l}$\\
 \lion{\RETURNE{\B_i \in \VS \, \lor \, \mbox{\cLconnScV{$\B_i, \VS, \dsk{\act}{\l}, \sD$}}}}
 \end{tabbing}
 
@@ -455,7 +458,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \cmnt\ \ie $\B_i$ has a local strong connectedness supercycle formation violation in state $\sD$ of subsystem $\dsk{\act}{\l}$\\
 %\cmnt\ compute local supercycle violations in state $t_\DS$ of $\dsk{\act}{\l}$\\
 %\cmnt\ Postcondition: $\fas v \in \set{\B_1,\ldots,\B_n} \un \gamma, d' = 1,\ldots,dd: \VV{\act}{\l}{t_\DS}{v}{d'} = \lviol{v}{d'}{t_\DS}{\act}{\l}$\\
-\lio{\mbox{compute $\lwfg{B}{\sD}{\DS}$;}}
+%\lio{\mbox{compute $\lwfg{B}{\sD}{\DS}$;}}
 \lio{\mbox{$\WL \gets \lwfg{B}{\sD}{\DS} - \VS$, \ie remove from $\lwfg{B}{\sD}{\DS}$ all nodes with a local supercycle violation};}
 \lio{\mbox{compute maximal strongly connected components of $\WL$};}
 \lio{\FORALLC{\mbox{maximal strongly connected components $C$ of $\WL$}}}
