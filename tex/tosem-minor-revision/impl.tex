@@ -628,11 +628,11 @@ Figures~\ref{fig:client},
 show BIP atomic components for client, resource and manager components. 
 
 The client in Figure~\ref{fig:client} requests resources $R_0$ and $R_2$ in sequence. It has $5$ ports. 
-Ports $SR_0$ and $SR_2$ send requests for 
+Ports $\SR_0$ and $\SR_2$ send requests for 
 resources $R_0$ and $R_2$, respectively.
-Ports $RG_0$ and $RG_2$ receive grants for 
+Ports $\RG_0$ and $\RG_2$ receive grants for 
 resources $R_0$ and $R_2$, respectively.
-Port $rel$ releases all resources. 
+Port $\rel$ releases all resources. 
 The behavior of the client depends on its request sequence. 
 
 \begin{figure}[H]
@@ -644,10 +644,10 @@ The behavior of the client depends on its request sequence.
 \end{figure}
 
 Figure~\ref{fig:resource} shows a resource component. 
-A resource component waits for a request from a connected client on port $RR$. 
+A resource component waits for a request from a connected client on port $\RR$. 
 Once a request is received, the resource component transitions to a state where it is ready to 
-receive a token from the corresponding resource manager using port $RTT$.
-The resource transitions to a state where it grants the client request using port $STC$ and waits until it is released on port $done$. 
+receive a token from the corresponding resource manager using port $\RTT$.
+The resource transitions to a state where it grants the client request using port $\STC$ and waits until it is released on port $\done$. 
 There, it returns the token back to the resource manager and transitions to the start state. 
 
 \begin{figure}[H]
@@ -662,17 +662,17 @@ Figure~\ref{fig:conflict-token} shows a resource manager.
 A resource manager $M$ has four states. 
 \begin{itemize}
   \item State $T$ denotes that $M$ has a token. $M$ may send the token to either 
-    (1) a resource on port $STR$ and transition to state $TwR$ (token with resource), or 
-    (2) the next resource manager on port $STT$ and transition to state $N$ (no token).
+    (1) a resource on port $\STR$ and transition to state $\TwR$ (token with resource), or 
+    (2) the next resource manager on port $\STT$ and transition to state $N$ (no token).
   \item State $N$ denotes that $N$ has no token. 
-    It may receive a token from a neighboring resource manager in the ring on port $RTT$ 
+    It may receive a token from a neighboring resource manager in the ring on port $\RTT$ 
     and transition to state $T$. 
-  \item State $TwR$ denotes that $M$ has already passed a token to one of its resources. 
-    $M$ may either receive (1) the assigned token back from the resource using port $RTR$ and transition to state $T$, 
-    or (2) another token from a neighboring manager using port $RTT$ and transition to state $TTwR$ (token and token with resource).
-  \item State $TTwR$ denotes that $M$ has a token and has already passed a token to one of its resources. 
+  \item State $\TwR$ denotes that $M$ has already passed a token to one of its resources. 
+    $M$ may either receive (1) the assigned token back from the resource using port $\RTR$ and transition to state $T$, 
+    or (2) another token from a neighboring manager using port $\RTT$ and transition to state $\TTwR$ (token and token with resource).
+  \item State $\TTwR$ denotes that $M$ has a token and has already passed a token to one of its resources. 
     In this state $M$ cannot send the token it has to a resource it manages to respect the conflict constraint. 
-    $M$ may send the token to the next manager on port $STT$ and transition back to state $TwR$. 
+    $M$ may send the token to the next manager on port $\STT$ and transition back to state $\TwR$. 
 \end{itemize}
 
 \begin{figure}[H]
@@ -683,7 +683,7 @@ A resource manager $M$ has four states.
 \end{center}
 \end{figure}
 
-The connections between a resource manager $M$ and its resources on ports $STR$ and $RTR$ specify that the 
+The connections between a resource manager $M$ and its resources on ports $\STR$ and $\RTR$ specify that the 
 resources are conflicting. 
 A system should have at least $x$ resource managers where $x$ is the maximum between the number of sets of conflicting resources 
 and $k$.
@@ -699,9 +699,9 @@ Figure \ref{fig:resourceallocation} shows a configuration system with $5$ client
 \end{itemize}
 
 The system has three resource managers to specify the conflicting resources. 
-$RM_{01}$ manages conflicting resources $\{R_0,R_1\}$. 
-$RM_{23}$ managers conflicting resources $\{R_2,R_3\}$.
-$RM_{4}$ manages resource $R_4$. 
+$\RM_{01}$ manages conflicting resources $\{R_0,R_1\}$. 
+$\RM_{23}$ managers conflicting resources $\{R_2,R_3\}$.
+$\RM_{4}$ manages resource $R_4$. 
 
 \begin{figure}[H]
 \begin{center}
