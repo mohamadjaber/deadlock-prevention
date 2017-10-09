@@ -62,7 +62,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \lio{\ENDFOR;}
 \lion{\RETURNE{\YS}}
 \end{tabbing}
-\caption{Procedure to compute $\lVFs{\sD}{X}$}
+\caption{Procedure to compute $\lVFs{\sD}{X}$.}
 \label{fig:algcomputeVL}
 \end{figure}
 
@@ -93,7 +93,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 
     \lit{\FI}
 \end{tabbing}
-\caption{Procedure to compute $\lblocks{\sD}{\ndv}{X}$}
+\caption{Procedure to compute $\lblocks{\sD}{\ndv}{X}$.}
 \label{fig:algcomputeLBL}
 \end{figure}
 
@@ -163,7 +163,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \lio{\ENDFOR;}
 \liocn{\RETURNE{\ttt}}{\cmnt all initial states are supercycle-free}
 \end{tabbing}
-\caption{Procedure to check that all initial states are supercycle-free}
+\caption{Procedure to check that all initial states are supercycle-free.}
 \label{fig:checkInitSCFree}
 \end{figure}
 
@@ -213,7 +213,7 @@ $O(\card{Q_0} \mult \cnodes{\B} \mult \card{\B})$.
 
 
 
-   \subsection{Implementation of the Linear Condition $\LLin$}
+   \subsection{Implementation of the linear condition $\LLin$}
    \label{s:implLin}
 %   \input{implLin}
   
@@ -282,7 +282,7 @@ aaa\= aa\= aa\= \kill
 \liocn{\RETURNE{\ttt}}{\cmnt\ return $\ttt$ if check succeeds for all transitions}
 \end{tabbing}
 
-\caption{Pseudocode for the implementation of the linear condition.}
+\caption{Pseudocode for the implementation of $\LLin$.}
 
 \label{fig:impl.locLin} 
 \label{fig:implementation}
@@ -308,7 +308,7 @@ $O(\SUM_{\act \in \gamma}    \SUM_{1 \le \l \le \l_\act}   \    |\Mdsk{\act}{\l}
 
 
  
-   \subsection{Implementation of the AND-OR Condition $\LAO$}
+   \subsection{Implementation of the AND-OR condition $\LAO$}
    \label{s:implANDOR}
 %   \input{implANDOR}
 
@@ -357,7 +357,7 @@ Figure~\ref{fig:summaryProcedures} shows a summary of the procedures.
 \hline
 \end{tabular}
 }
-\caption{Summary of procedures}
+\caption{Summary of procedures.}
 \label{fig:summaryProcedures}
 \end{figure}
 
@@ -487,7 +487,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \liocn{\RETURNE{\fff}}{\cmnt  \defn{sConn.violation.loc}, Clauses~\ref{def:sConn.violation.loc:scc} and \ref{def:sConn.violation.border} both violated}
 \end{tabbing}
 
-\caption{Pseudocode for the implementation of the local AND-OR condition.}
+\caption{Pseudocode for the implementation of \LAO.}
 \label{fig:impl.locANDOR}
 \end{figure}
 
@@ -526,7 +526,7 @@ Examples:
   java -jar ldfc.jar -debug input.bip # deadlock freedom using default LALT
   java -jar ldfc.jar -condition=LLIN -debug input.bip # deadlock freedom using LLIN
 \end{lstlisting}
-\caption{\deadlocktool{} Command Line Interface}
+\caption{\deadlocktool{} Command Line Interface.}
 \label{code:cmd-ldfc}
 \end{figure}
 
@@ -638,7 +638,7 @@ The behavior of the client depends on its request sequence.
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=1.2]{compiledfigures/client-crop.pdf}
-\caption{Client}
+\caption{Client.}
 \label{fig:client}
 \end{center}
 \end{figure}
@@ -653,7 +653,7 @@ There, it returns the token back to the resource manager and transitions to the 
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=1.2]{compiledfigures/resource-crop.pdf}
-\caption{Resource}
+\caption{Resource.}
 \label{fig:resource}
 \end{center}
 \end{figure}
@@ -678,7 +678,7 @@ A resource manager $M$ has four states.
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=1.2]{compiledfigures/token-crop.pdf}
-\caption{Token Resource Manager}
+\caption{Token Resource Manager.}
 \label{fig:conflict-token}
 \end{center}
 \end{figure}
@@ -706,7 +706,7 @@ $\RM_{4}$ manages resource $R_4$.
 \begin{figure}[H]
 \begin{center}
 \includegraphics[scale=0.9]{compiledfigures/resourceallocation-crop.pdf}
-\caption{Conflict-Resource Allocation System}
+\caption{Conflict-Resource Allocation System.}
 \label{fig:resourceallocation}
 \end{center}
 \end{figure}
