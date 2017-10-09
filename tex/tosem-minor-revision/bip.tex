@@ -8,7 +8,7 @@ since priority enforces a choice between possible transitions from a state, and 
 least one transition from every (reachable) state.  Hence if a BIP system without priorities is deadlock-free, then the
 same system with priorities added will also be deadlock-free.
 
-\begin{definition}[Atomic Component]
+\begin{definition}[Atomic component]
 An  {\em atomic component} $\B_i$ is a labeled transition system represented by a triple
 $(Q_i, P_i, \goesto_i)$ where $Q_i$ is a set of {\em states}, $P_i$ is a set of {\em communication ports}, and
 $\goesto_i\, \subseteq Q_i \times P_i \times Q_i$ is a set of \emph{transitions}, each labeled by some port.
@@ -95,7 +95,7 @@ $\cmps{\act} = \{\B_i \st p_i \in \act\}$.
 
 
 
-\begin{definition}[Composite Component]\label{def.bip.composition} A {\em composite
+\begin{definition}[Composite component]\label{def.bip.composition} A {\em composite
   component} (or simply {\em component}) 
  $\B \df \gamma(\B_1,\dots,\B_n)$
 is defined by a composition
@@ -134,7 +134,7 @@ Note that interactions are the only means of inter-component communication and s
 %$\cmps{\act} = \{\B_i \st p_i \in \act\}$. 
 %Given a component $\B_i$, we denote by $A_i$ the
 %interactions that $\B_i$ participates in, formally: $A_i = \set{a \st P_i \ints a \ne \emptyset}$.
-\begin{example}[Composite Component]
+\begin{example}[Composite component]
 Figure \ref{fig:diningbip} shows a composite component consisting of
 four philosophers and the four forks between them. Each philosopher $\Phl_i\ (0 \le i \le 3)$
 and its two neighboring forks share two interactions: 
@@ -180,13 +180,13 @@ in it to execute. That might not be the case as $\act$ may be blocked by another
 component $\B_j \ne \B_i$. Therefore the assumption is not enough to guarantee deadlock freedom. 
 }
 
-\begin{definition}[Local Enablement Assumption] \label{def.bip.local-enablement}
+\begin{definition}[Local enablement assumption] \label{def.bip.local-enablement}
 For every component  $\B_i = (Q_i,P_i,\goesto_i)$, the following holds. 
   In every $s_i \in Q_i$, $\B_i$ enables some
 interaction $\act$.
 \end{definition}
 
-\begin{definition}[BIP System]\label{def.bip.system} Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component with transition system $(Q,\gamma,
+\begin{definition}[BIP-system]\label{def.bip.system} Let $\B = \gamma(\B_1,\dots,\B_n)$ be a composite component with transition system $(Q,\gamma,
 \goestog)$, and let $Q_0 \sub Q$ be a set of initial states. Then
 $(\B,Q_0)$ is a BIP system.  
 \end{definition}
@@ -261,7 +261,7 @@ Then the subsystem $(\B', Q'_0)$ of  $(\B, Q_0)$ based on $\set{\B_{i_1},\dots,\
 \end{definition}
 
 
-\begin{definition}[Execution Projection]\label{def.bip.execution.projection}
+\begin{definition}[Execution projection]\label{def.bip.execution.projection}
 %Let $(\B, Q_0)$ be a BIP system where $\B = \gamma(\B_1,\dots,\B_n)$, and 
 Let $(\B', Q'_0)$, with $\B' = \gamma'(\B_{i_1},\dots,\B_{i_k})$ be the subsystem of $(\B, Q_0)$ based on $\set{\B_{i_1},\dots,\B_{i_k}}$.
 Let $P' = P_{i_1} \un \cdots \un P_{i_k}$, \ie $P'$ is the set of ports of $(\B', Q'_0)$.
@@ -283,7 +283,7 @@ interaction by its projection onto the port set $P'$.
 
 
 
-\begin{proposition} [Execution Projection]\label{prop.bip.execution.projection}
+\begin{proposition} [Execution projection]\label{prop.bip.execution.projection}
 %Let $(\B, Q_0)$ be a BIP system where $\B = \gamma(\B_1,\dots,\B_n)$, and
 Let $(\B', Q'_0)$, with $\B' = \gamma'(\B_{i_1},\dots,\B_{i_k})$ be the subsystem of $(\B, Q_0)$ based on $\set{\B_{i_1},\dots,\B_{i_k}}$.
 Let $P' = P_{i_1} \un \cdots \un P_{i_k}$,  \ie the union of the ports of $\set{\B_{i_1},\dots,\B_{i_k}}$.
