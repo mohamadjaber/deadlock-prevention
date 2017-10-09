@@ -72,7 +72,7 @@ We show that the local strong connectedness condition implies the global strong 
 Let $s$ be an arbitrary state of $\B$.
 For all interactions $\act \in \gamma$, and $\l \ge 1$, let $\DS = \dsks{\act}{\l}$, $\sD = s \pj \dsk{\act}{\l}$, and let $\ndv$ be an arbitrary node in $\dsk{\act}{\l}$.
 Then\\
-\ind $\locConnViol{v}{\sD}{\act}{\l} \imp \connViol{v}{s}$.
+\ind $\locConnViol{v}{\sD}{\act}{\l}\ \impliess\ \connViol{v}{s}$.
 \end{proposition}
 %
 \begin{proof}
@@ -416,8 +416,8 @@ By \defn{supercycle.violation.local}, $\locScViol{v}{d+1}{\sD}{\act}{\l}$.
 \label{lem:locLinear-implies-locANDOR}
 \label{lemma:locLinear-implies-locANDOR}
 \label{LLinLAO}
-Let $\act$ be an interaction of $\B$, \ie $\act \in \gamma$.
-Then\\ $\LLin(\B, Q_0, \act, \l)\ \impliess\ \LAO(\B, Q_0, \act, \l)$.
+For all interactions $\act$ of $\B$, \ie $\act \in \gamma$, \\
+\ind $\LLin(\B, Q_0, \act, \l)\ \impliess\ \LAO(\B, Q_0, \act, \l)$.
 \end{lemma}
 %
 \begin{proof}

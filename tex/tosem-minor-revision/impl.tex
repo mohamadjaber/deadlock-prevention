@@ -33,7 +33,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \lio{\WHILEC{\true}}
    \lit{\mbox{\cmnt loop invariant: at end of $i$'th iteration, $\XS = \lVFsi{\sD}{\ewfg}{i} =  \JOIN_{1 \le d \le i} \lVFsi{\sD}{\ewfg}{d}$}}
    \lit{\YS \gts \cVL{\dsk{\act}{\l}, \sD, \XS};}
-   \litc{\IF \XS = \YS \ \RETURNE{\XS};}{\cmnt reached fixpoint}
+   \litc{\IF\ (\XS = \YS) \ \RETURNE{\XS};}{\cmnt reached fixpoint}
    \litc{\XS \gts \YS}{\cmnt $\XS \ne \YS$, so keep iterating}
 \lion{\ENDWHILE}
 \end{tabbing}
@@ -51,7 +51,6 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \cVL{$\dsk{\act}{\l}, \sD, \XS$}\\
 \cmnt\ precondition: $\sD$ is a state of $\dsk{\act}{\l}$ and $X \subg \lwfg{\B}{\sD}{\dsk{\act}{\l}}$\\
 \cmnt\ postcondition: returns $\lVFs{\sD}{X}$\\ %  in state $t_\DS$ of $\dsk{\act}{\l}$,\\
-\\
 \lio{\mbox{compute $\lwfg{\B}{\sD}{\dsk{\act}{\l}}$};}
 \lio{\YS \gts \ewfg;}
 
@@ -78,7 +77,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 \cmnt\ postcondition: returns  $\lblocks{\sD}{\ndv}{X}$\\
 
 
-   \lit{\IFC{\mbox{$v$ is an border interaction of $\DS$}}}
+   \lit{\IFC{\mbox{$v$ is a border interaction of $\DS$}}}
        \lihc{\RETURNE{\true}}{\cmnt border interaction pessimistically assumed to be blocked}
 
     \lit{\ELSFC{\mbox{$v$ is an interior interaction $\act$ and } 
@@ -87,7 +86,7 @@ aaa\= aa\= aa\= aa\= aa\=\kill
 
     \lit{\ELSFC{\mbox{$v$ is a component $\B_i$ and }
                           (\fa \act : \B_i \ar \act \in \lwfg{\B}{\sD}{\DS}  \imp \act \in \XS )}}
-         \lihc{\RETURNE{\true}}{\cmnt all outgoing wait-for edges go to an interaction in $\XS$}
+         \lihc{\RETURNE{\true}}{\cmnt every outgoing wait-for edge goes to some interaction in $\XS$}
 
     \lit{\ELSE}
          \lihc{\RETURNE{\false}}{\cmnt all cases for blocking do not hold, cf.~\defn{blocksLoc}}
@@ -434,11 +433,11 @@ aaa\= aa\= aa\= aa\= aa\=\kill
    \lit{\mbox{compute $\lwfg{\B}{\sD}{\DS}$};}
    \litc{\VS \gets \cLFP{\dsk{\act}{\l},\sD};}{\cmnt see \fig{algcomputeLFP}}
    \lit{\FORALLC{\B_i \in \cmps{\act}}}
-      \lihc{\IFC{\neg \cLFV{\B_i, \VS, \dsk{\act}{\l},\sD}} \RETURNE{\fff}\ \FI}{\cmnt no violation for $\B_i$}
+      \lihc{\IFC{\neg \cLFV{\B_i, \VS, \dsk{\act}{\l},\sD}}\ \RETURNE{\fff}\ \FI}{\cmnt no violation for $\B_i$}
 %         \lifc{\IFC{\neg \LF{\act}{\l}{t_\DS}{v}{\l}}\ 
    \lit{\ENDFOR}
 \lio{\ENDFOR;}
-\liocn{\RETURNE{\ttt}}{\cmnt return $\ttt$ if all $\B_i \in \cmps{\act}$ violate local supercycle formation}
+\liocn{\RETURNE{\ttt}}{\cmnt all $\B_i \in \cmps{\act}$ have a general local supercycle violation}
 \end{tabbing}
 
 
@@ -570,7 +569,7 @@ with the results reported in \citeN{DFinder2}.
 
 Table~\ref{bench:dining} shows the results. Both $\LAO$ and $\LLin$ outperform the best performance of DFinder2 by several orders of magnitude 
 for $n\leq 3,000$. Both $\LAO$ and $\LLin$ successfully completed the deadlock freedom check for $3,000 \leq n \leq 10,000$ 
-in less than one minute, where DFinder2 timed out (~1 Hour). The sole exception being that
+in less than one minute, where DFinder2 timed out (1 Hour). The sole exception being that
 $\LLin$ required $62$ seconds for $n=10,000$. 
 
 
