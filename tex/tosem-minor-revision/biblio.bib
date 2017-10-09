@@ -8,6 +8,8 @@ title="Synthesis of large dynamic concurrent programs from dynamic specification
 journal="Formal Methods in System Design",
 year="2016",
 pages="1--54",
+volume = "48",
+number = "1--2",
 abstract="We present two methods for synthesizing large concurrent programs from temporal logic specifications. The first method deals with finite-state concurrent programs that are static, i.e., the set of processes is fixed. It produces an infinite family of static finite-state concurrent programs. The second method deals with dynamic concurrent programs, i.e., new processes can be created and added at run-time. It produces a single dynamic concurrent program. A dynamic concurrent program may be viewed as a limiting case of an infinite family of static programs, and so the second method may be viewed as generalizing the first. Our methods are algorithmically efficient, with complexity polynomial in the number of component processes (of the program) that are ``alive'' at any time. We do not explicitly construct the automata-theoretic product of all processes that are alive, thereby avoiding state explosion. Instead, for each interacting pair of processes, we construct (from a pair-specification) a pair-structure which embodies the interaction of the two processes. From each pair-structure, we synthesize a pair-program to coordinate the two processes. Our second method allows pair-programs to be added dynamically at run-time. They are then ``composed conjunctively'' with the currently alive pair-programs to ``re-synthesize'' the program. We can thus add new behaviors, which result in new properties being satisfied, at run-time. This ``incremental composition'' step has complexity independent of the total number of processes; it only requires the mechanical analysis of the two processes in the pair-program, and their immediate neighbors, i.e., the other processes which they interact directly with. Thus, any state-explosion incurred is explosion in the product of only two processes. We establish ``large model'' theorems which show that the synthesized global program inherits correctness properties from the pair-programs.",
 issn="1572-8102",
 doi="10.1007/s10703-016-0252-9",
@@ -424,16 +426,36 @@ address = {Los Alamitos, CA, USA},
 
 
 
+
+
 @inproceedings{AC05,
-  author = {Paul C. Attie and H. Chockler},
-  title = {{Efficiently Verifiable Conditions for Deadlock-freedom of 
-           Large Concurrent Programs}},
+  author    = {Paul C. Attie and
+               Hana Chockler},
+  title     = {Efficiently Verifiable Conditions for Deadlock-Freedom of
+               Large Concurrent Programs.},
   booktitle = {VMCAI},
-  publisher={Springer-Verlag},
-  address = {France},
-  year = {2005},
-  month = jan,
-  }
+  year      = {2005},
+  address = {Paris, France},
+  pages     = {465-481},
+  ee        = {http://springerlink.metapress.com/openurl.asp?genre=article{\&}issn=0302-9743{\&}volume=3385{\&}spage=465},
+  crossref  = {DBLP:conf/vmcai/2005},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@proceedings{DBLP:conf/vmcai/2005,
+  editor    = {Radhia Cousot},
+  title     = {Verification, Model Checking, and Abstract Interpretation,
+               6th International Conference, VMCAI 2005, Paris, France,
+               January 17-19, 2005, Proceedings},
+  booktitle = {VMCAI},
+  publisher = {Springer},
+  series    = {Lecture Notes in Computer Science},
+  volume    = {3385},
+  year      = {2005},
+  isbn      = {3-540-24297-X},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
 
 
 
@@ -644,6 +666,7 @@ address = {Paris, France},
   journal   = {Logical Methods in Computer Science},
   volume    = {5},
   number    = {4},
+  pages = {1--24},
   year      = {2009},
   month     = {10},
 }
