@@ -154,7 +154,7 @@ $(\ex \B_j : \act \ar \B_j \in \lwfg{\B}{\sD}{\DS} \land \act \ar \B_j \in \SC)$
 Intuitively, $\SC$ is a supercycle iff every node in $\SC$ is blocked from executing by other nodes in $\SC$, or is a border interaction. We pessimistically consider a border
 interaction $\act$ to be blocked, since the subsystem $\DS$ cannot provide information about the participant components of $\act$ that are outside of
 $\DS$. In particular, one or more border interactions necessarily form a local supercycle. Yet, it is important to notice that a blocked border interaction $\act$ does
-not necessarily imply a global supercyle.
+not necessarily imply a global supercycle.
 
 
 We carry over the definition of subgraph $\subg$ from \secn{supercycle-fixpoint}, and develop the analogous definitions for the subsystem \DS
@@ -297,7 +297,8 @@ $v \in \lfp{\lVFsymb_{\sD}}$ iff $v$ is not a node in any local supercycle of $\
 \end{proposition}
 %
 \begin{proof}
-From the Park conjugate (dual) fixpoint theorem in complete Boolean lattices, we have 
+From the Park conjugate (dual) fixpoint theorem in complete Boolean
+lattices \cite{Pa69}, we have 
 \lfp{\VFsymb_{\sD}} = \complLoc{\gfp{\SFsymb_{\sD}}}.
 By \prop{GFPisLargestSC}, \gfp{\SFsymb_{\sD}} is the largest local supercycle in \wfg{\DS}{\sD}. Hence the nodes not in 
 \gfp{\SFsymb_{\sD}} are exactly the nodes that are not in any local supercycle. These are exactly the nodes in \lfp{\VFsymb_{\sD}}.

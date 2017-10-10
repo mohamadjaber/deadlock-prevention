@@ -373,7 +373,7 @@ $|\dsks{\act}{\l}|$ be the size of the syntactic description of $\dsks{\act}{\l}
 $\cnodes{\dsks{\act}{\l}}$ be the number of components and interactions in $\dsks{\act}{\l}$.
 %
 The time complexity of \cLconnScV{$\B_i, \VS, \dsks{\act}{\l}, \sD$} is $O(\cnodes{\dsks{\act}{\l}} \mult \card{\dsks{\act}{\l}})$, since maximal strongly connected components
-are computable in linear time using Kosaraju's algorithm, and the existence of paths in $\WL$ from $\B_i$ to the border of $\dsks{\act}{\l}$ can be checked in linear time by 
+are computable in linear time using Tarjan's algorithm \cite{Ta72}, and the existence of paths in $\WL$ from $\B_i$ to the border of $\dsks{\act}{\l}$ can be checked in linear time by 
 using depth-first graph search. Also, checking for supercycles (via least-fixpoint computation) within the strongly connected component $C$ can be done in time 
 $O(\cnodes{\dsks{\act}{\l}} \mult \card{\dsks{\act}{\l}})$, amortized over all such $C$.
 %
