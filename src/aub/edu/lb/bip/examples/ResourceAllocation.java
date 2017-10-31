@@ -589,12 +589,11 @@ public class ResourceAllocation {
 	}
 
 	public static void main(String[] args) throws FileNotFoundException {
-		generateTokenRingConflict51();
-		generateTokenRingConflict4();
-		generateTokenRingConflict5();
-		generateTokenRingConflict();
+		//generateTokenRingConflict51(); // -- buttler
+		//generateTokenRingConflict4();
+		//generateTokenRingConflict5();
+		// generateTokenRingConflict();
 
-		/*
 		for(int i = 2; i <= 30; i+=2) {
 			generateTokenRingBench(i, i/2);
 			generateTokenRingBench(i, i);
@@ -602,7 +601,7 @@ public class ResourceAllocation {
 			generateTokenRingBench(i, 4*i);
 			generateTokenRingBench(i, 6*i);
 		}
-		*/
+		
 	}
 
 }

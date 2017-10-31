@@ -123,9 +123,17 @@ public class LALT implements CheckableCondition {
 	private boolean localFormViolation(Component component, Kripke kripke, GlobalState state) {
 		WaitForGraph wfg = new WaitForGraph(state);
 		LocalScViolation localScViolation = new LocalScViolation(component, wfg, subSystem);
-		if(localScViolation.islocalScViolation()) return true;
+		if(localScViolation.islocalScViolation()) {
+			log.info("Supercycle formation violation\n");
+			return true;
+		}
 		LocalSconnViolation localSconnViolation = new LocalSconnViolation(localScViolation);
-		return localSconnViolation.isLocalSconnViolation();
+		if(localSconnViolation.isLocalSconnViolation()) {
+			log.info("Strong connectedness violation\n");
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public boolean initialSuperCycle() {
